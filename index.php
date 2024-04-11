@@ -26,13 +26,13 @@
                 <form class="form" method="post" action="CadastroLogin/cadastro.php" id="formlogin" name="formlogin">
                     <label class="label-input" for="">
                         <i class="far fa-user icon-modify"></i>
-                        <input type="text" placeholder="Nome" id="nomeUsuario" name="nomeUsuario">
+                        <input type="text" placeholder="Nome" id="nomeUsuario" name="nomeUsuario" required>
                     </label>
                     
 
                     <label class="label-input" for="">
                         <i class="far fa-envelope icon-modify"></i>
-                        <select id="tipoUsuario" name="tipoUsuario">
+                        <select id="tipoUsuario" name="tipoUsuario" required>
                             <option>Selecione:</option>
                             <option>Aluno</option>
                             <option>Professor</option>
@@ -41,12 +41,17 @@
 
                     <label class="label-input" for="">
                         <i class="far fa-envelope icon-modify"></i>
-                        <input type="email" placeholder="Email" id="emailUsuario" name="emailUsuario">
+                        <input type="turma" placeholder="Turma" id="turmaUsuario" name="turmaUsuario" required>
+                    </label>
+
+                    <label class="label-input" for="">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <input type="email" placeholder="Email" id="emailUsuario" name="emailUsuario" required>
                     </label>
                     
                     <label class="label-input" for="">
                         <i class="fas fa-lock icon-modify"></i>
-                        <input type="password" placeholder="Senha" id="senhaUsuario" name="senhaUsuario">
+                        <input type="password" placeholder="Senha" id="senhaUsuario" name="senhaUsuario" required>
                     </label>
                     
                     
@@ -69,15 +74,15 @@
                 
                     <label class="label-input" for="">
                         <i class="far fa-envelope icon-modify"></i>
-                        <input type="email" placeholder="Email" id="emailUsuario" name="emailUsuario">
+                        <input type="email" placeholder="Email" id="emailUsuario" name="emailUsuario" required>
                     </label>
                 
                     <label class="label-input" for="">
                         <i class="fas fa-lock icon-modify"></i>
-                        <input type="password" placeholder="Senha" id="senhaUsuario" name="senhaUsuario">
+                        <input type="password" placeholder="Senha" id="senhaUsuario" name="senhaUsuario" required>
                     </label>
                 
-                    <a class="password" href="#">Esqueceu sua senha?</a>
+                    <a class="password" href="RecuperarSenha/recuperarsenha.php">Esqueceu sua senha?</a>
                     <button class="btn btn-second">LOGIN</button>
                 </form>
             </div>

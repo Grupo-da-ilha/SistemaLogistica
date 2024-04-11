@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/perfil.css"/>
+    <link rel="stylesheet" href="../css/ajuda.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
@@ -22,8 +22,8 @@
 		
 	$conexao = new mysqli($hostname,$user,$password,$database);
 
-	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `turmaUsuario`  FROM `cadastro`";
-    
+	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario` FROM `cadastro`";
+
 	$resultado = $conexao->query($sql);
 
 		if (empty($_SESSION['nome'])){
@@ -64,32 +64,49 @@
                 </header>
                 <main>
                     <div class="container-prin">
-                        <div class="perfil-container">
-                            <img class="fotoperfil" src="../css/cssimg/perfil.png">
-                            <div class="info-dados-perfil">
-                            <h5>'.$_SESSION['nome'].'</h5>
-                        </div>
-                        </div>
-                        <div class="form-dados">
-                            <div class="title-dados">
-                                <h3>DADOS:</h2>
+                        <div class="ajuda-container">
+                            <div class="tipos-ajuda">
+                                <ul class="ul-button">
+                                    <li class="li-vertical-menu"><a class="a-vertical-menu" href="">AJUDA</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">NOVO PROJETO</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">CONTINUAR PROJETO</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">ADICIONAR PRODUTO</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">RETIRAR PRODUTO</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">CRIAR PRATELEIRA</a></li>
+                                </ul>
                             </div>
-                            <div class="info-dados">
-                                <h3>Turma:</h3>
-                                <h4>'.$_SESSION['turmaUsuario'].'</h4>
-                            </div>
-                            <div class="info-dados">
-                                <h3>Email:</h3>
-                                <h4>'.$_SESSION['email'].'</h4>
-                            </div>
-                            <div class="info-dados">
-                                <h3>Aluno/Professor:</h3>
-                                <h4>'.$_SESSION['senha'].'</h4>
-                            </div>
-                            <div class="info-dados-end">
-                                <h3>Data de entrada:</h3>
-                                <h4>'.$_SESSION['data_entrada'].'</h4>
-                            </div>
+                                <div class="ajuda">
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-1</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-1</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-2</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-3</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-4</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </main> ' 

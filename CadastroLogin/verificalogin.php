@@ -7,7 +7,7 @@ session_start();
 // Conexão com o banco de dados
 $hostname = "127.0.0.1";
 $user = "root";
-$password = "usbw";
+$password = "";
 $database = "logistica";
 
 $conexao = new mysqli($hostname, $user, $password, $database);
@@ -22,7 +22,7 @@ if ($conexao->connect_errno) {
     $senha = $conexao->real_escape_string($_POST['senhaUsuario']);
 
     // Query para buscar usuário
-    $sql = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha` FROM `cadastro` 
+    $sql = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha`, `turmaUsuario` FROM `cadastro` 
             WHERE `email` = '" . $email . "' 
             AND `senha` = '" . hash('sha256', $senha) . "' 
             AND ativo = 's';";
@@ -41,11 +41,12 @@ if ($conexao->connect_errno) {
         $_SESSION['data_entrada'] = $row[4];
         $_SESSION['ativo'] = $row[5];
         $_SESSION['tipousuario'] = $row[6];
+        $_SESSION['turmaUsuario'] = $row[7];
         $conexao->close();
 
         // Redirecionar de acordo com o tipo de usuário
         if ($row['tipousuario'] === 'Aluno') {
-            header('Location: ../Paginas/site.php', true, 301);
+            header('Location: ../Paginas/aluno.php', true, 301);
           } else if ($row['tipousuario'] === 'Professor') {
             header('Location: ../Paginas/site2.php', true, 301);
           } else {
@@ -65,5 +66,5 @@ if ($conexao->connect_errno) {
     }
 }
 		?>
-	</body> 
+	</body>
 </html>
