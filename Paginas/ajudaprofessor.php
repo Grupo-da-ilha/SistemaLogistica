@@ -8,8 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/sobrenos.css"/>
-    <link rel="stylesheet" href="css/unpkg.com_swiper@8.1.6_swiper-bundle.min.css">
+    <link rel="stylesheet" href="../css/ajuda.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
@@ -65,61 +64,52 @@
                 </header>
                 <main>
                     <div class="container-prin">
-                    <div class="caixaria">
-                    <div class="caixaslider">
-                       <div class="img-slider">
-                                   <div class="slide active">
-                                       <img src="../css/imgsobrenos/teste.png" alt="">
-                                       <div class="information">
-                                           <h4>Iago Souza</h4>
-                                           <p>Biografia</p>
-                                       </div>
-                                   </div>
-                                   <div class="slide">
-                                       <img src="../css/imgsobrenos/kauvan.png" alt="">
-                                       <div class="information">
-                                           <h4>Elias Alves</h4>
-                                           <p>Biografia</p>
-                                       </div>
-                                   </div>
-                                   <div class="slide">
-                                    <img src="../css/imgsobrenos/kauvan.png" alt="">
-                                    <div class="information">
-                                        <h4>Kauan Burguer</h4>
-                                        <p>Biografia</p>
+                        <div class="ajuda-container">
+                            <div class="tipos-ajuda">
+                                <ul class="ul-button">
+                                    <li class="li-vertical-menu"><a class="a-vertical-menu" href="">AJUDA</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">NOVO PROJETO</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">CONTINUAR PROJETO</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">ADICIONAR PRODUTO</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">RETIRAR PRODUTO</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">CRIAR PRATELEIRA</a></li>
+                                </ul>
+                            </div>
+                                <div class="ajuda">
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-1</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-1</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-2</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-3</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
+                                    </div>
+                                    <div class="card-ajuda">
+                                        <div class="titulo-ajuda">
+                                            <h4>AJUDA-4</h4>
+                                        </div>
+                                        <div class="conteudo-ajuda"></div>
                                     </div>
                                 </div>
-                                <div class="slide">
-                                    <img src="" alt="">
-                                    <div class="information">
-                                        <h4>Jonas Frees</h4>
-                                        <p>Biografia</p>
-                                    </div>
-                                </div>
-                                <div class="slide">
-                                    <img src="" alt="">
-                                    <div class="information">
-                                        <h4>Silverado</h4>
-                                        <p>Biografia</p>
-                                    </div>
-                                </div>
-                                   
-                                   <div class="navigationslider">
-                                       <div class="btn active"></div>
-                                       <div class="btn"></div>
-                                       <div class="btn"></div>
-                                       <div class="btn"></div>
-                                       <div class="btn"></div>
-                                   </div>
-                       </div>
-                   </div>
-                    </div>
+                        </div>
                     </div>
                 </main> ' 
         ; }?>
 </body>
-<script src="../js/unpkg.com_swiper@8.1.6_swiper-bundle.min.js"></script>
-<script src="../js/script.js"></script>
-<script src="../js/modal.js"></script>
-<script src="../js/slider.js"></script>
 </html>

@@ -22,7 +22,7 @@
 		
 	$conexao = new mysqli($hostname,$user,$password,$database);
 
-	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`  FROM `cadastro`";
+	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`  FROM `cadastro`";
     
 	$resultado = $conexao->query($sql);
 
@@ -45,10 +45,10 @@
                                     <nav>
                                         <ul class="ul-button">
                                             <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="prof.php">MENU</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="perfil.php">PERFIL</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="ajuda.php">AJUDA</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="sobrenos.php">SOBRE NÓS</a></li>
+                                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
+                                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
+                                            <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
+                                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
                                             <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
                                             <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                                         </ul>
@@ -73,10 +73,6 @@
                         <div class="form-dados">
                             <div class="title-dados">
                                 <h3>DADOS:</h2>
-                            </div>
-                            <div class="info-dados">
-                                <h3>Turma:</h3>
-                                <h4>'.$_SESSION['codTurma'].'</h4>
                             </div>
                             <div class="info-dados">
                                 <h3>Email:</h3>

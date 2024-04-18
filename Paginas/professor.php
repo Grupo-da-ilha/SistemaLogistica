@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/aluno.css"/>
+    <link rel="stylesheet" href="../css/professor.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
@@ -35,10 +35,10 @@
                         <nav>
                             <ul class="ul-button">
                             <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="perfil.php">PERFIL</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="ajuda.php">AJUDA</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="sobrenos.php">SOBRE NÓS</a></li>
+                                <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
+                                <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
+                                <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
+                                <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
@@ -57,6 +57,8 @@
             <a href=""><div class="options-senai-new">
             </div></a>
             <a href=""><div class="options-senai-continue">
+            </div></a>
+            <a href="turmas.php"><div class="options-senai-turma">
             </div></a>
         </div>
     </main>'; } ?>

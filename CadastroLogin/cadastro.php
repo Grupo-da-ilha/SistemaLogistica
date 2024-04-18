@@ -20,7 +20,7 @@
 				$turmausuario = $conexao -> real_escape_string($_POST['turmaUsuario']);
 
 				$sql = "INSERT INTO `logistica`.`cadastro`
-							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `turmaUsuario` )
+							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma` )
 						VALUES
 							('".$nome."', '".$email."', '".hash('sha256',$senha)."', '".date('Y-m-d')."', 's', '".$tipousuario."','".$turmausuario."');";
 
