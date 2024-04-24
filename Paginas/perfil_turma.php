@@ -8,29 +8,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/perfil.css"/>
+    <link rel="stylesheet" href="../css/infoturma.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
 <?php
-	// iniciar uma sessão
-	session_start();
+    // iniciar uma sessão
+    session_start();
     $hostname = "127.0.0.1";
-	$user = "root";
-	$password = "";
-	$database = "logistica";
-		
-	$conexao = new mysqli($hostname,$user,$password,$database);
+    $user = "root";
+    $password = "";
+    $database = "logistica";
+        
+    $conexao = new mysqli($hostname,$user,$password,$database);
 
-	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`  FROM `cadastro`";
-    
-	$resultado = $conexao->query($sql);
+    // Verifica se o código da turma está definido
+    if(isset($_GET['codTurma'])) {
+        $codTurma = $_GET['codTurma'];
 
-		if (empty($_SESSION['nome'])){
-		header('Location: sair.php');
-		exit();
-	    } else {
-        echo '
+        // Consulta SQL para selecionar os alunos da turma específica
+        $sql="SELECT cadastro.nome, cadastro.email, cadastro.senha 
+              FROM cadastro 
+              WHERE cadastro.codTurma = '$codTurma'";
+
+        $resultado = $conexao->query($sql);
+
+        if($resultado->num_rows > 0) {
+            // Turma encontrada, exibe os alunos
+            echo '
                 <header>
                     <div class="container">
                         <div class="main-horizontal">
@@ -64,31 +69,39 @@
                 </header>
                 <main>
                     <div class="container-prin">
-                        <div class="perfil-container">
-                            <img class="fotoperfil" src="../css/cssimg/perfil.png">
-                            <div class="info-dados-perfil">
-                            <h5>'.$_SESSION['nome'].'</h5>
-                        </div>
-                        </div>
-                        <div class="form-dados">
-                            <div class="title-dados">
-                                <h3>DADOS:</h2>
+                        <div class="alunos-turma">
+                            <div class="titulo-turmas">
+                                <h5>ALUNOS:</h5>
                             </div>
-                            <div class="info-dados">
-                                <h3>Email:</h3>
-                                <h4>'.$_SESSION['email'].'</h4>
-                            </div>
-                            <div class="info-dados">
-                                <h3>Aluno/Professor:</h3>
-                                <h4>'.$_SESSION['senha'].'</h4>
-                            </div>
-                            <div class="info-dados-end">
-                                <h3>Data de entrada:</h3>
-                                <h4>'.$_SESSION['data_entrada'].'</h4>
-                            </div>
+                            <table class="table-alunos">
+                                <tr>
+                                    <th>Nome:</th>
+                                    <th>Email:</th>
+                                    <th>Senha:</th>
+                                </tr>';
+
+            // Exibe as informações dos alunos da turma em uma tabela HTML
+            while($row = $resultado->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $row['nome'] . "</td>";
+                echo "<td>" . $row['email'] . "</td>";
+                echo "<td>" . $row['senha'] . "</td>"; // Exibe o hash SHA-256 da senha
+                echo "</tr>";
+            }
+
+            echo '
+                            </table>
                         </div>
                     </div>
-                </main> ' 
-        ; }?>
+                </main>';
+        } else {
+            // Não foram encontrados alunos para esta turma
+            echo "Nenhum aluno encontrado para esta turma.";
+        }
+    } else {
+        // Código da turma não definido
+        echo "Código da turma não especificado.";
+    }
+?>
 </body>
 </html>

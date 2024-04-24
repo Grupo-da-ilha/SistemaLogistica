@@ -41,7 +41,7 @@
 
                     <label class="label-input" for="">
                         <i class="far fa-envelope icon-modify"></i>
-                        <input type="turma" placeholder="Turma" id="turmaUsuario" name="turmaUsuario" required>
+                        <input type="text" placeholder="Turma" id="turmaUsuario" name="turmaUsuario" required>
                     </label>
 
                     <label class="label-input" for="">
@@ -81,8 +81,6 @@
                         <i class="fas fa-lock icon-modify"></i>
                         <input type="password" placeholder="Senha" id="senhaUsuario" name="senhaUsuario" required>
                     </label>
-                
-                    <a class="password" href="RecuperarSenha/recuperarsenha.php">Esqueceu sua senha?</a>
                     <button class="btn btn-second">LOGIN</button>
                 </form>
             </div>

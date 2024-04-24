@@ -24,7 +24,7 @@ if ($conexao->connect_errno) {
     // Query para buscar usuário
     $sql = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha`, `codTurma` FROM `cadastro` 
             WHERE `email` = '" . $email . "' 
-            AND `senha` = '" . hash('sha256', $senha) . "' 
+            AND `senha` = '" . $senha . "' 
             AND ativo = 's';";
 
     $resultado = $conexao->query($sql);

@@ -17,9 +17,9 @@
                 $codigo = $conexao -> real_escape_string($_POST['codTurma']);
 
 				$sql = "INSERT INTO `logistica`.`turmas`
-							(`nomeTurma`, `codTurma`)
+							(`nomeTurma`, `codTurma`, `data_turma`)
 						VALUES
-							('".$nome."', '".$codigo."');";
+							('".$nome."', '".$codigo."', '".date('Y-m-d')."');";
 
 				$resultado = $conexao->query($sql);
 				

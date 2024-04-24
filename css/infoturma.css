@@ -24,6 +24,13 @@ h2 {
     text-shadow: 0 0 2px rgb(0, 119, 255);
     cursor: default;
 }
+h5 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    color: #000000;
+    text-shadow: 0 0 5px rgb(255, 255, 255);
+    cursor: default;
+}
 .container {
     width: 100%;
     height: 100vh;
@@ -175,32 +182,64 @@ nav {
     justify-content: center;
     align-items: center;
 }
-.options-senai-new, .options-senai-continue, .options-senai-turma {
-    margin: 30px;
-    width: 300px;
-    height: 300px;
-    border-radius: 30px;
-    box-shadow: 0 0 7px white;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
+.alunos-turma {
+    width: 95%;
+    height: 95%;
+    overflow-y: auto;
+    border-radius: 30px 10px 10px 30px;
+    box-shadow: 0 0 15px rgb(0, 119, 255);
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-.options-senai-new:hover, .options-senai-continue:hover, .options-senai-turma:hover {
-    -moz-transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    transform: scale(1.05);
-    animation: animate 1s linear infinite;
-    box-shadow: 0 0 30px white;
+.alunos-turma::-webkit-scrollbar {
+    width: 2vh;   
+  }
+  
+  .alunos-turma::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255); 
+    border-radius: 0 15px 15px 0;     
+  }
+ 
+  .alunos-turma::-webkit-scrollbar-thumb {
+    background-color: rgb(0, 119, 255);    
+    border-radius: 0 15px 15px 0;       
+    border: 3px solid rgb(255, 255, 255);  
+  }
+.titulo-turmas {
+    width: 100%;
+    height: 7vh;
+    border-radius: 0;
+    background-color: rgb(0, 119, 255);
+    box-shadow: 0 0 7px rgb(0, 119, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.options-senai-new {
-    background-image: url("cssimg/newproject.png");
+.table-alunos {
+    width: 98%;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid rgb(0, 119, 255);
+    background-color: rgb(0, 119, 255);
+    box-shadow: 0 0 7px rgb(0, 119, 255);
 }
-.options-senai-continue {
-    background-image: url("cssimg/conproject.png");
+tr {
+    background-color: #fff;
 }
-.options-senai-turma {
-  background-image: url("cssimg/turmas.png");
+th {
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 0 7px rgb(0, 119, 255);
+    background-color: rgb(93, 160, 236);
+}
+td {
+    height: 2vh;
+    background-color: rgb(255, 255, 255);
+    color: #000000bb;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+tr,th, td {
+    border-radius: 3px;
+    box-shadow: 0 0 2px rgb(0, 119, 255);
 }

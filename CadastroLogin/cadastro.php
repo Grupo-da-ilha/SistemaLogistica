@@ -22,7 +22,7 @@
 				$sql = "INSERT INTO `logistica`.`cadastro`
 							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma` )
 						VALUES
-							('".$nome."', '".$email."', '".hash('sha256',$senha)."', '".date('Y-m-d')."', 's', '".$tipousuario."','".$turmausuario."');";
+							('".$nome."', '".$email."', '".$senha."', '".date('Y-m-d')."', 's', '".$tipousuario."','".$turmausuario."');";
 
 				$resultado = $conexao->query($sql);
 				
