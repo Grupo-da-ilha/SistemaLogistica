@@ -1,7 +1,7 @@
 <html>	
     <body>
 		<?php
-			session_status();
+			session_start();
 			
 			$hostname = "127.0.0.1";
 			$user = "root";
@@ -18,7 +18,7 @@
 				$nome = $conexao -> real_escape_string($_POST['nomeUsuario']);
                 $email = $conexao -> real_escape_string($_POST['emailUsuario']);
 				$senha = $conexao -> real_escape_string($_POST['senhaUsuario']);
-				$tipousuario = $conexao -> real_escape_string($_POST['tipoUsuario']);
+				$tipousuario = $conexao -> real_escape_string($_SESSION['tipoUsuario']);
 				$turmausuario = $conexao -> real_escape_string($_POST['turmaUsuario']);
 
 				if($tipousuario == "Aluno"){

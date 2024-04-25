@@ -21,78 +21,91 @@ if ($conexao->connect_errno) {
     $email = $conexao->real_escape_string($_POST['emailUsuario']);
     $senha = $conexao->real_escape_string($_POST['senhaUsuario']);
 
-    // Query para buscar usuário
-    $sql = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha` FROM `aluno` 
-            WHERE `email` = '" . $email . "' 
-            AND `senha` = '" . $senha . "' 
-            AND ativo = 's';";
 
-    $resultado = $conexao->query($sql);
+    if($tipousuario == "Aluno"){
+      $sql = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha` FROM `aluno` 
+      WHERE `email` = '" . $email . "' 
+      AND `senha` = '" . $senha . "' 
+      AND ativo = 's';";
 
-    // Verificação de login
-    if ($resultado->num_rows === 1) {
-        $row = $resultado->fetch_array();
+        $resultado = $conexao->query($sql);
 
-        // Armazenar informações do usuário na sessão
-        $_SESSION['id'] = $row[0];
-        $_SESSION['nome'] = $row[1];
-        $_SESSION['email'] = $row[2];
-        $_SESSION['senha'] = $row[3];
-        $_SESSION['data_entrada'] = $row[4];
-        $_SESSION['ativo'] = $row[5];
-        $_SESSION['tipousuario'] = $row[6];
-        $_SESSION['codTurma'] = $row[7];
-        $conexao->close();
+        // Verificação de login
+        if ($resultado->num_rows === 1) {
+          $row = $resultado->fetch_array();
 
-        // Redirecionar de acordo com o tipo de usuário
+          // Armazenar informações do usuário na sessão
+          $_SESSION['id'] = $row[0];
+          $_SESSION['nome'] = $row[1];
+          $_SESSION['email'] = $row[2];
+          $_SESSION['senha'] = $row[3];
+          $_SESSION['data_entrada'] = $row[4];
+          $_SESSION['ativo'] = $row[5];
+          $_SESSION['tipousuario'] = $row[6];
+          $_SESSION['codTurma'] = $row[7];
+          $conexao->close();
+
+          // Redirecionar de acordo com o tipo de usuário
         if ($row['tipousuario'] === 'Aluno') {
-            header('Location: ../Paginas/aluno.php', true, 301);
-          } else if ($row['tipousuario'] === 'Professor') {
-            header('Location: ../Paginas/professor.php', true, 301);
-          } else {
-            // Exibir alerta de login não autorizado
-            echo "<script>alert('Acesso negado. Tipo de usuário inválido.');</script>";
-            header('Location: ../index.php', true, 301);
-          }
-    } elseif($resultado-> num_rows === 0) {
-            $sql2 = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha`, `codTurma` FROM `professor` 
-            WHERE `email` = '" . $email . "' 
-            AND `senha` = '" . $senha . "' 
-            AND ativo = 's';";
-            
-            $resultado2 = $conexao->query($sql2);
-            $row = $resultado->fetch_array();
+              header('Location: ../Paginas/aluno.php', true, 301);
+            } else {
+              // Exibir alerta de login não autorizado
+              echo "<script>alert('Acesso negado. Tipo de usuário inválido.');</script>";
+              header('Location: ../index.php', true, 301);
+            }
+        } else{
+          $conexao->close();
 
-        // Armazenar informações do usuário na sessão
-            $_SESSION['id'] = $row[0];
-            $_SESSION['nome'] = $row[1];
-            $_SESSION['email'] = $row[2];
-            $_SESSION['senha'] = $row[3];
-            $_SESSION['data_entrada'] = $row[4];
-            $_SESSION['ativo'] = $row[5];
-            $_SESSION['tipousuario'] = $row[6];
-            $_SESSION['codTurma'] = $row[7];
-            $conexao->close();
+          // Mensagem de erro de login
+          echo "<script>alert('Acesso negado, usuário inválido.');</script>";
 
-            // Redirecionar de acordo com o tipo de usuário
-            if ($row['tipousuario'] === 'Aluno') {
-                header('Location: ../Paginas/aluno.php', true, 301);
-              } else if ($row['tipousuario'] === 'Professor') {
-                header('Location: ../Paginas/professor.php', true, 301);
-              } else {
-                // Exibir alerta de login não autorizado
-                echo "<script>alert('Acesso negado. Tipo de usuário inválido.');</script>";
-                header('Location: ../index.php', true, 301);
-              }
-      } else{
-        $conexao->close();
+          // Redirecionar após 10 segundos
+          echo "<script>setTimeout(function() { window.location.href = '../index.php'; }, 100);</script>";
+          exit();
+        }
+    } else{
+      $sql = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha` FROM `professor` 
+      WHERE `email` = '" . $email . "' 
+      AND `senha` = '" . $senha . "' 
+      AND ativo = 's';";
 
-        // Mensagem de erro de login
-        echo "<script>alert('Acesso negado, usuário inválido.');</script>";
+        $resultado = $conexao->query($sql);
 
-        // Redirecionar após 10 segundos
-        echo "<script>setTimeout(function() { window.location.href = '../index.php'; }, 100);</script>";
-        exit();
+        // Verificação de login
+        if ($resultado->num_rows === 1) {
+          $row = $resultado->fetch_array();
+
+          // Armazenar informações do usuário na sessão
+          $_SESSION['id'] = $row[0];
+          $_SESSION['nome'] = $row[1];
+          $_SESSION['email'] = $row[2];
+          $_SESSION['senha'] = $row[3];
+          $_SESSION['data_entrada'] = $row[4];
+          $_SESSION['ativo'] = $row[5];
+          $_SESSION['tipousuario'] = $row[6];
+          $_SESSION['codTurma'] = $row[7];
+          $conexao->close();
+
+          // Redirecionar de acordo com o tipo de usuário
+          if ($row['tipousuario'] === 'Aluno') {
+              header('Location: ../Paginas/aluno.php', true, 301);
+            } else if ($row['tipousuario'] === 'Professor') {
+              header('Location: ../Paginas/professor.php', true, 301);
+            } else {
+              // Exibir alerta de login não autorizado
+              echo "<script>alert('Acesso negado. Tipo de usuário inválido.');</script>";
+              header('Location: ../index.php', true, 301);
+            }
+        } else{
+          $conexao->close();
+
+          // Mensagem de erro de login
+          echo "<script>alert('Acesso negado, usuário inválido.');</script>";
+
+          // Redirecionar após 10 segundos
+          echo "<script>setTimeout(function() { window.location.href = '../index.php'; }, 100);</script>";
+          exit();
+        }
       }
   }
 		?>
