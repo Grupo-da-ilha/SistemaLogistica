@@ -34,8 +34,8 @@
                         <i class="far fa-envelope icon-modify"></i>
                         <select id="tipoUsuario" name="tipoUsuario" required>
                             <option>Selecione:</option>
-                            <option>Aluno</option>
-                            <option>Professor</option>
+                            <option>alunos</option>
+                            <option>professor</option>
                         </select>
                     </label>
 

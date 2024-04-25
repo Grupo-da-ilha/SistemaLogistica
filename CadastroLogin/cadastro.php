@@ -5,7 +5,7 @@
 			
 			$hostname = "127.0.0.1";
 			$user = "root";
-			$password = "root";
+			$password = "";
 			$database = "login";
 		
 			$conexao = new mysqli($hostname,$user,$password,$database);
@@ -18,10 +18,12 @@
 				$nome = $conexao -> real_escape_string($_POST['nomeUsuario']);
                 $email = $conexao -> real_escape_string($_POST['emailUsuario']);
 				$senha = $conexao -> real_escape_string($_POST['senhaUsuario']);
-				$tipousuario = $conexao -> real_escape_string($_SESSION['tipoUsuario']);
+				$tipousuario = $conexao -> real_escape_string($_POST['tipoUsuario']);
 				$turmausuario = $conexao -> real_escape_string($_POST['turmaUsuario']);
 
-				if($tipousuario == "Aluno"){
+				$_SESSION['usertype'] = $tipousuario;
+
+				if($tipousuario == "alunos"){
 					$sql = "INSERT INTO `login`.`alunos`
 							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma` )
 						VALUES
@@ -32,7 +34,7 @@
 					$conexao -> close();
 					header('Location: ../Paginas/aluno.php', true, 301);
 
-				} elseif($tipousuario == "Professor"){
+				} elseif($tipousuario == "professor"){
 					$sql = "INSERT INTO `login`.`professor`
 							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`)
 					VALUES
@@ -41,7 +43,7 @@
 					$resultado = $conexao->query($sql);
 
 					$conexao -> close();
-					header('Location: ../Paginas/aluno.php', true, 301);
+					header('Location: ../Paginas/teste.php', true, 301);
 				}
 			}
 		?>
