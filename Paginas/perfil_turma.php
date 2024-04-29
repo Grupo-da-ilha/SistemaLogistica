@@ -12,7 +12,7 @@
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
-<?php
+    <?php
     // iniciar uma sessão
     session_start();
     $hostname = "127.0.0.1";
@@ -27,7 +27,7 @@
         $codTurma = $_GET['codTurma'];
 
         // Consulta SQL para selecionar os alunos da turma específica
-        $sql="SELECT cadastro.nome, cadastro.email, cadastro.senha 
+        $sql="SELECT cadastro.id, cadastro.nome, cadastro.email, cadastro.senha 
               FROM cadastro 
               WHERE cadastro.codTurma = '$codTurma'";
 
@@ -73,24 +73,32 @@
                             <div class="titulo-turmas">
                                 <h5>ALUNOS:</h5>
                             </div>
-                            <table class="table-alunos">
-                                <tr>
-                                    <th>Nome:</th>
-                                    <th>Email:</th>
-                                    <th>Senha:</th>
-                                </tr>';
+                            <form method="post" action="alterar_senha.php"> <!-- Formulário para enviar as novas senhas -->
+                                <table class="table-alunos">
+                                    <tr>
+                                        <th>Nome:</th>
+                                        <th>Email:</th>
+                                        <th>Senha:</th>
+                                        <th>Nova Senha:</th>
+                                        <th>Ação:</th>
+                                    </tr>';
 
             // Exibe as informações dos alunos da turma em uma tabela HTML
             while($row = $resultado->fetch_assoc()) {
                 echo "<tr>";
                 echo "<td>" . $row['nome'] . "</td>";
                 echo "<td>" . $row['email'] . "</td>";
-                echo "<td>" . $row['senha'] . "</td>"; // Exibe o hash SHA-256 da senha
+                echo "<td>" . $row['senha'] . "</td>";
+                // Adiciona campo de entrada para nova senha para cada usuário
+                echo '<td><input id="novasenha" type="text" name="nova_senha['.$row['id'].']" placeholder="Nova Senha"></td>';
+                // Adiciona botão para enviar alteração de senha para cada usuário
+                echo '<td><button class="button-alterarsenha" type="submit" name="alterar_senha['.$row['id'].']">ALTERAR SENHA</button></td>';
                 echo "</tr>";
             }
 
             echo '
-                            </table>
+                                </table>
+                            </form>
                         </div>
                     </div>
                 </main>';
