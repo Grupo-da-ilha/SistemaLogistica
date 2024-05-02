@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/professor.css"/>
+    <link rel="stylesheet" href="../css/projetos.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
@@ -35,10 +35,10 @@ if (empty($_SESSION['nome'])){
                     <nav>
                         <ul class="ul-button">
                             <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="perfil.php">PERFIL</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="ajuda.php">AJUDA</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="sobrenos.php">SOBRE NÓS</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                         </ul>
@@ -79,12 +79,20 @@ if (empty($_SESSION['nome'])){
 
         // Verificar se há resultados de projetos
         if ($result_projetos->num_rows > 0) {
-            echo '<h1>Projetos do usuário: ' . $_SESSION['nome'] . '</h1>';
-            echo '<ul>';
+            echo '<div class="titulo-projetos">';
+            echo '<h3>Projetos de  ' . $_SESSION['nome'] . '</h3>';
+            echo '</div>';
+            echo '<div class="projetos-do-usuario">';
             while ($row = $result_projetos->fetch_assoc()) {
-                echo '<li>' . $row['nome'] . '</li>';
+                echo '<div class="card-projetos">';
+                echo '
+                    <div class="apagar-projeto">
+                        <button type="button" class="button-apagar-projeto" data-projeto-id="' . $row['idprojeto'] . '">X</button>
+                    </div>';
+                echo '<h4>' . $row['nome'] . '</h4>';
+                echo '</div>';
             }
-            echo '</ul>';
+            echo '</div>';
         } else {
             echo '<p>Nenhum projeto encontrado para este usuário.</p>';
         }
@@ -98,5 +106,33 @@ if (empty($_SESSION['nome'])){
 ?>
     </div>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var buttons = document.querySelectorAll('.button-apagar-projeto');
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var projetoId = button.dataset.projetoId;
+            if (confirm('Tem certeza de que deseja apagar este projeto?')) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'excluir_projeto.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            console.log('Projeto excluído com sucesso');
+                            window.location.reload();
+                        } else {
+                            console.error('Erro ao excluir projeto');
+                        }
+                    }
+                };
+                xhr.send('projeto_id=' + projetoId);
+            }
+        });
+    });
+});
+</script>
+
 </body>
 </html>
