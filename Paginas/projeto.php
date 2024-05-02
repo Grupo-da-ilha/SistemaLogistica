@@ -68,6 +68,8 @@
                 </div>
                 <div class="card-function-log-controle">
                 </div>
+                <div class="card-function-log-cadas">
+                </div>
             </div>
         </div>
     </main>'; } ?>
