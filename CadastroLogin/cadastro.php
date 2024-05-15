@@ -21,29 +21,32 @@
 				$tipousuario = $conexao -> real_escape_string($_POST['tipoUsuario']);
 				$turmausuario = $conexao -> real_escape_string($_POST['turmaUsuario']);
 
-				$_SESSION['usertype'] = $tipousuario;
+
+				//Definindo o fuso horário, para a função date buscar o horário correto
+				date_default_timezone_set('America/Sao_Paulo');
+				$data_entrada = date("Y-m-d H:i:s");
 
 				if($tipousuario == "alunos"){
 					$sql = "INSERT INTO `login`.`alunos`
-							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma` )
+							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`)
 						VALUES
-							('".$nome."', '".$email."', '".$senha."', '".date('Y-m-d')."', 's', '".$tipousuario."','".$turmausuario."');";
+							('".$nome."', '".$email."', '".$senha."', '".$data_entrada."', 's', '".$tipousuario."', '".$turmausuario."');";
 
 					$resultado = $conexao->query($sql);
 				
 					$conexao -> close();
-					header('Location: ../Paginas/aluno.php', true, 301);
+					header('Location: ../index.php', true, 301);
 
 				} elseif($tipousuario == "professor"){
 					$sql = "INSERT INTO `login`.`professor`
 							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`)
 					VALUES
-							('".$nome."', '".$email."', '".$senha."', '".date('Y-m-d')."', 's', '".$tipousuario."', '".$turmausuario."');";
+							('".$nome."', '".$email."', '".$senha."', '".$data_entrada."', 's', '".$tipousuario."', '".$turmausuario."');";
 
 					$resultado = $conexao->query($sql);
 
 					$conexao -> close();
-					header('Location: ../Paginas/teste.php', true, 301);
+					header('Location: ../index.php', true, 301);
 				}
 			}
 		?>

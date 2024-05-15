@@ -4,7 +4,7 @@
 			$hostname = "127.0.0.1";
 			$user = "root";
 			$password = "";
-			$database = "logistica";
+			$database = "login";
 		
 			$conexao = new mysqli($hostname,$user,$password,$database);
 
@@ -16,10 +16,14 @@
 				$nome = $conexao -> real_escape_string($_POST['nomeTurma']);
                 $codigo = $conexao -> real_escape_string($_POST['codTurma']);
 
-				$sql = "INSERT INTO `logistica`.`turmas`
-							(`nomeTurma`, `codTurma`, `data_turma`)
+				//Definindo o fuso horário, para a função date buscar o horário correto
+				date_default_timezone_set('America/Sao_Paulo');
+				$data_entrada = date("Y-m-d H:i:s");
+
+				$sql = "INSERT INTO `login`.`turma`
+							(`codTurma`, `nome`, `data_criacao`)
 						VALUES
-							('".$nome."', '".$codigo."', '".date('Y-m-d')."');";
+							('".$codigo."', '".$nome."', '".$data_entrada."');";
 
 				$resultado = $conexao->query($sql);
 				

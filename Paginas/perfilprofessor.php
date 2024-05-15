@@ -18,11 +18,11 @@
     $hostname = "127.0.0.1";
 	$user = "root";
 	$password = "";
-	$database = "logistica";
+	$database = "login";
 		
 	$conexao = new mysqli($hostname,$user,$password,$database);
 
-	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`  FROM `cadastro`";
+	$sql="SELECT `codProf`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`  FROM `professor`";
     
 	$resultado = $conexao->query($sql);
 
@@ -79,7 +79,7 @@
                                 <h4>'.$_SESSION['email'].'</h4>
                             </div>
                             <div class="info-dados">
-                                <h3>Aluno/Professor:</h3>
+                                <h3>Senha:</h3>
                                 <h4>'.$_SESSION['senha'].'</h4>
                             </div>
                             <div class="info-dados-end">

@@ -14,44 +14,70 @@ if ($conexao->connect_errno) {
     exit();
 } else {
 
-    // Escape de caracteres para evitar SQL Injection
+    // Escape de caracteres para evitar SQL Injection e criando as variáveis para armazenar as informações dos inputs
     $email = $conexao->real_escape_string($_POST['emailUsuario']);
     $senha = $conexao->real_escape_string($_POST['senhaUsuario']);
+    $tipo_usuario = $conexao->real_escape_string($_POST['tipoUsuario']);
 
-    $sql = "SELECT `codProf`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha` FROM " .$_SESSION['usertype']. "
+    //Criando if/else para fazer a consulta e verificar a senha e usuario na tabela correta
+    if($tipo_usuario == "professor"){
+      $sql = "SELECT `codProf`, `nome`, `email`, `data_entrada`, `tipousuario`, `ativo`, `senha` FROM " .$tipo_usuario. "
       WHERE `email` = '" . $email . "' 
       AND `senha` = '" . $senha . "' 
       AND ativo = 's';";
 
-    $resultado = $conexao->query($sql);
-        if ($resultado->num_rows === 1) {
-          $row = $resultado->fetch_array();
+      $resultado = $conexao->query($sql);
+          if ($resultado->num_rows === 1) {
+            $row = $resultado->fetch_array();
 
-          // Armazenar informações do usuário na sessão
-          $_SESSION['id'] = $row['id'];
-          $_SESSION['nome'] = $row['nome'];
-          $_SESSION['email'] = $row['email'];
-          $_SESSION['senha'] = $row['senha'];
-          $_SESSION['data_entrada'] = $row['data_entrada'];
-          $_SESSION['ativo'] = $row['ativo'];
-          $_SESSION['tipousuario'] = $row['tipousuario'];
-          $_SESSION['codTurma'] = $row['codTurma'];
+            // Armazenar informações do usuário na sessão
+            $_SESSION['id'] = $row['codProf'];
+            $_SESSION['nome'] = $row['nome'];
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['senha'] = $row['senha'];
+            $_SESSION['data_entrada'] = $row['data_entrada'];
+            $_SESSION['ativo'] = $row['ativo'];
+            $_SESSION['tipousuario'] = $row['tipousuario'];
+            $_SESSION['codTurma'] = $row['codTurma'];
 
-          $conexao->close();
+            header('Location: ../Paginas/professor.php');
+            exit();
+            $conexao->close();
+            
+          }else{
+            echo "Acesso negado. Tipo de usuário inválido.";
+            header('Location: ../index.php', true, 301);
+            exit();
+          }
+    }elseif($tipo_usuario == "alunos"){
+      $sql = "SELECT `codAluno`, `nome`, `email`, `data_entrada`, `tipousuario`, `ativo`, `senha` FROM " .$tipo_usuario. "
+      WHERE `email` = '" . $email . "' 
+      AND `senha` = '" . $senha . "' 
+      AND ativo = 's';";
 
-          // Redirecionar de acordo com o tipo de usuário
-          if ($_SESSION['tipousuario'] === 'alunos') {
-              header('Location: ../Paginas/aluno.php', true, 301);
-              exit();
-          } elseif ($_SESSION['tipousuario'] === 'professor') {
-              header('Location: ../Paginas/professor.php', true, 301);
-              exit();
-          } else {
+      $resultado = $conexao->query($sql);
+          if ($resultado->num_rows === 1) {
+            $row = $resultado->fetch_array();
+
+            // Armazenar informações do usuário na sessão
+            $_SESSION['id'] = $row['codAluno'];
+            $_SESSION['nome'] = $row['nome'];
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['senha'] = $row['senha'];
+            $_SESSION['data_entrada'] = $row['data_entrada'];
+            $_SESSION['ativo'] = $row['ativo'];
+            $_SESSION['tipousuario'] = $row['tipousuario'];
+            $_SESSION['codTurma'] = $row['codTurma'];
+
+            header('Location: ../Paginas/aluno.php');
+            exit();
+            $conexao->close();  
+        }else {
               // Exibir alerta de login não autorizado
               echo "Acesso negado. Tipo de usuário inválido.";
               header('Location: ../index.php', true, 301);
               exit();
-          }
+        }
       } else{
         $conexao->close();
 

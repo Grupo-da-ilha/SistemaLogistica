@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/turmas.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
-    <script>
+    <!--<script>
         function verMais(codTurma) {
             window.location.href = "perfil_turma.php?codTurma=" + codTurma;
         }
@@ -35,7 +35,7 @@
             xhr.send("codTurma=" + codTurma);
         }
     }
-    </script>
+    </script>-->
 </head>
 <body>
 <?php
@@ -103,31 +103,30 @@
                     </div>
                     <div class="turmas-criadas">';
 
-                // Database connection (replace with your actual credentials)
+                //Conexão com a database
                 $hostname = "127.0.0.1";
                 $user = "root";
                 $password = "";
-                $database = "logistica";
+                $database = "login";
 
-                // Create connection (with error handling)
-                $conn = new mysqli($hostname, $user, $password, $database);
-                if ($conn->connect_error) {
-                    die("Connection failed: " . $conn->connect_error);
-                }
+                //criando conexão com o banco de dados
+                $conexao = new mysqli($hostname, $user, $password, $database);
 
-                // Prepare and execute the query (assuming table name is 'turmas')
-                $sql = "SELECT turmas.nomeTurma, turmas.codTurma, turmas.data_turma, COUNT(cadastro.id) AS total_alunos 
-                        FROM turmas 
-                        LEFT JOIN cadastro ON turmas.codTurma = cadastro.codTurma 
-                        GROUP BY turmas.codTurma";
+                if ($conexao->connect_errno) {
+                    echo "Falha na conexão com o MySQL: " . $conexao->connect_error;
+                    exit();
+                }else
+                //criando a consulta para puxar as informações da turma, contar a quantidade de alunos e juntar as tabelas
+                $sql = "SELECT turma.codTurma, turma.nome, COUNT(alunos.codAluno) AS total_alunos, turma.data_criacao
+                        FROM turma
+                        INNER JOIN alunos ON turma.codTurma = alunos.codTurma
+                        GROUP BY turma.codTurma, turma.nome, turma.data_criacao";
 
-                $result = $conn->query($sql);
+                $result = $conexao->query($sql);
 
-                // Check for query execution errors
                 if (!$result) {
-                    echo "Error: " . $conn->error;
+                    echo "Error: " . $conexao->error;
                 } else {
-                    // Loop through results and display information
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                             echo "
@@ -136,14 +135,20 @@
                                         <button class=\"delete-input\" onclick=\"deletarTurma('".$row["codTurma"]."')\">X</button>
                                     </div>
                                     <div class=\"nome-turmas\">
-                                        <h5>". $row["nomeTurma"] ."</h5>
+                                        <h5>". $row["nome"] ."</h5>
                                     </div>
                                     <div class=\"info-turmas\">
                                         <h6>Código: ". $row["codTurma"] ."</h6>
                                         <h6>Alunos matriculados: ". $row["total_alunos"] ."</h6>
-                                        <h6>Data: ". $row["data_turma"] ."</h6>
+                                        <h6>Data: ". $row["data_criacao"] ."</h6>
                                         <div class=\"vermaisdiv\">
-                                            <button class=\"vermais\" onclick=\"verMais('".$row["codTurma"]."')\">VER MAIS</button>
+                                            <form action=\"perfil_turma.php\" method=\"POST\" >
+                                                <button class=\"vermais\">
+                                                    <input type=\"submit\" name=\"Enviar\" value=\"VER MAIS\">
+                                                    <input type=\"hidden\" name=\"codTurma\" value=\"" . $row['codTurma'] . "\">
+                                                    VER MAIS
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +160,7 @@
                 }
 
                 // Close the connection
-                $conn->close();
+                $conexao->close();
 
             echo '</div>
                 </div>

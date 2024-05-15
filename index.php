@@ -81,6 +81,15 @@
                         <i class="fas fa-lock icon-modify"></i>
                         <input type="password" placeholder="Senha" id="senhaUsuario" name="senhaUsuario" required>
                     </label>
+
+                    <label class="label-input" for="">
+                        <i class="far fa-envelope icon-modify"></i>
+                        <select id="tipoUsuario" name="tipoUsuario" required>
+                            <option>Selecione:</option>
+                            <option>alunos</option>
+                            <option>professor</option>
+                        </select>
+                    </label>
                     <button class="btn btn-second">LOGIN</button>
                 </form>
             </div>

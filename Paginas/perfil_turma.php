@@ -18,18 +18,19 @@
     $hostname = "127.0.0.1";
     $user = "root";
     $password = "";
-    $database = "logistica";
+    $database = "login";
         
     $conexao = new mysqli($hostname,$user,$password,$database);
 
     // Verifica se o código da turma está definido
-    if(isset($_GET['codTurma'])) {
-        $codTurma = $_GET['codTurma'];
+    if(isset($_POST['codTurma'])) {
+        $codTurma = $_POST['codTurma'];
+        $_SESSION['codigoTurma'] = $codTurma;
 
         // Consulta SQL para selecionar os alunos da turma específica
-        $sql="SELECT cadastro.id, cadastro.nome, cadastro.email, cadastro.senha 
-              FROM cadastro 
-              WHERE cadastro.codTurma = '$codTurma'";
+        $sql="SELECT alunos.codAluno, alunos.nome, alunos.email, alunos.senha 
+              FROM alunos
+              WHERE alunos.codTurma = '$codTurma'";
 
         $resultado = $conexao->query($sql);
 
@@ -89,11 +90,16 @@
                 echo "<td>" . $row['nome'] . "</td>";
                 echo "<td>" . $row['email'] . "</td>";
                 echo "<td>" . $row['senha'] . "</td>";
-                // Adiciona campo de entrada para nova senha para cada usuário
-                echo '<td><input id="novasenha" type="text" name="nova_senha['.$row['id'].']" placeholder="Nova Senha"></td>';
-                // Adiciona botão para enviar alteração de senha para cada usuário
-                echo '<td><button class="button-alterarsenha" type="submit" name="alterar_senha['.$row['id'].']">ALTERAR SENHA</button></td>';
-                echo "</tr>";
+                echo "
+                    <form action=\"alterar_senha.php\" method=\"POST\">
+                        <td>
+                            <input id=\"novasenha\" type=\"text\" name=\"nova_senha\" placeholder=\"Nova Senha\">
+                            <input type=\"hidden\" name=\"codAluno\" value=\"" . $row['codAluno'] . "\">
+                        </td>
+                            <td><button class=\"button-alterarsenha\" type=\"submit\" name=\"alterar_senha\">ALTERAR SENHA</button>
+                        </td>
+                    </form>    
+                </tr>";
             }
 
             echo '

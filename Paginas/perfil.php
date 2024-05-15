@@ -22,7 +22,7 @@
 		
 	$conexao = new mysqli($hostname,$user,$password,$database);
 
-	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`  FROM `cadastro`";
+	$sql="SELECT `codAluno`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`  FROM `alunos`";
     
 	$resultado = $conexao->query($sql);
 
