@@ -62,6 +62,7 @@ if (empty($_SESSION['nome'])){
         <div class="container-prin">
             <div class="submenu">
                 <li class="lisubmenu">
+                    <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
                     <a href="#" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="#" class="functions-menu">ESTOQUE</a>
                     <a href="#" class="functions-menu">PICKING</a>
@@ -71,6 +72,9 @@ if (empty($_SESSION['nome'])){
                 </li>
             </div>
             <div class="recebimentocontainer">
+                <div class="titulo-recebimento">
+                    <h3>VISTORIA E CONFERÊNCIA</h3>    
+                </div>
             </div>
         </div>
     </main>'; } ?>
