@@ -12,17 +12,17 @@ body {
   background: #ffffff;
 }
 h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 30px;
-    text-shadow: 0 0 2px rgb(0, 119, 255);
-    cursor: default;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  text-shadow: 0 0 2px rgb(0, 119, 255);
+  cursor: default;
 }
 h2 {
-    margin-left: 140vh ;
-    font-family: 'Poppins', sans-serif;
-    font-size: 25px;
-    text-shadow: 0 0 2px rgb(0, 119, 255);
-    cursor: default;
+  margin-left: 155vh ;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  text-shadow: 0 0 2px rgb(0, 119, 255);
+  cursor: default;
 }
 h3{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -406,4 +406,203 @@ nav {
   transform: scale(1.05);
   animation: animate 1s linear infinite;
   background-color: rgb(80, 157, 245);
+}
+
+@media only screen and (max-width: 600px) {
+  h1 {
+    font-size: 25px;
+}
+  h2 {
+    margin-left: 9vh ;
+    font-size: 25px;
+}
+}
+
+@media only screen and (max-width: 900px) {
+  h1 {
+    font-size: 30px;
+}
+  h2 {
+    margin-left: 9vh ;
+    font-size: 25px;
+}
+}
+
+@media only screen and (min-width: 1200px) {
+.container-turmas {
+height: 750px;
+}
+.criar-turmas {
+width: 20%;
+height: 100%;
+}
+.titulo-criar-turmas {
+width: 100%;
+height: 15%;
+}
+h3 {
+  font-size: 30px;
+}
+h4{
+  font-size: 25px;
+}
+#nomeTurma {
+width: 80%;
+height: 40px;
+border: 1px solid rgb(0, 119, 255);
+border-radius: 7px;
+outline: none;
+background-color: #fff;
+}
+#codTurma {
+display: flex;
+text-align: center;
+width: 80%;
+height: 40px;
+border: 1px solid rgb(0, 119, 255);
+border-radius: 7px;
+outline: none;
+background-color: #fff;
+}
+.button-criar-turma {
+cursor: pointer;
+width: 80%;
+height: 40px;
+border: none;
+background-color: rgb(0, 119, 255);
+border-radius: 20px;
+box-shadow: 0 0 15px rgb(0, 119, 255);
+-moz-transition: all 0.3s;
+-webkit-transition: all 0.3s;
+transition: all 0.3s;
+}
+.button-criar-turma:hover {
+-moz-transform: scale(1.1);
+-webkit-transform: scale(1.1);
+transform: scale(1.05);
+animation: animate 1s linear infinite;
+background-color: rgb(80, 157, 245);
+}
+.turmas-criadas {
+width: 80%;
+height: 100%;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+}
+.card-turmas {
+z-index: 0;
+cursor: pointer;
+width: 35vh;
+height: 35vh;
+margin: 15px;
+background-color: rgb(255, 255, 255);
+box-shadow: 0 0 15px rgb(0, 119, 255);
+border-radius: 30px;
+display: flex;
+flex-direction: column;
+justify-content: baseline;
+align-items: center;
+-moz-transition: all 0.3s;
+-webkit-transition: all 0.3s;
+transition: all 0.9s;
+}
+.card-turmas:hover {
+-moz-transform: scale(1.1);
+-webkit-transform: scale(1.1);
+transform: scale(1.05);
+animation: animate 1s linear infinite;
+}
+.delete-div {
+width: 100%;
+display: flex;
+justify-content: flex-end;
+align-items: flex-end;
+border-radius: 30px 30px 0 0;
+background-color: rgb(0, 119, 255);
+}
+.delete-input {
+cursor: pointer;
+color: red;
+z-index: 10;
+margin-left: 5px;
+width: 40px;
+font-size: 20px;
+border: none;
+border-radius: 0 30px 0 30px;
+background-color: rgb(255, 255, 255);
+box-shadow: 0 0 15px rgb(255, 255, 255);
+-moz-transition: all 0.3s;
+-webkit-transition: all 0.3s;
+transition: all 0.9s;
+}
+.delete-input:hover {
+background-color: rgb(255, 118, 118);
+box-shadow: 0 0 15px rgb(255, 5, 5);
+-moz-transform: scale(1.1);
+-webkit-transform: scale(1.1);
+transform: scale(1.05);
+animation: animate 3s linear infinite;
+}
+.nome-turmas {
+z-index: 3;
+cursor: pointer;
+width: 100%;
+height: 90%;
+display: flex;
+justify-content: center;
+align-items: center;
+border-radius: 0 0 30px 0;
+background-color: rgb(0, 119, 255);
+box-shadow: 0 0 7px rgb(0, 119, 255);
+}
+.info-turmas {
+cursor: pointer;
+margin-top: -100px;
+z-index: 2;
+width: 100%;
+height: 35vh;
+border-radius: 0 30px 30px 30px;
+background-color: rgb(255, 255, 255);
+display: flex;
+flex-direction: column;
+justify-content: first baseline;
+align-items: first baseline;
+-moz-transition: all 0.3s;
+-webkit-transition: all 0.3s;
+transition: all 0.3s;
+}
+.info-turmas:hover {
+z-index: 10;
+transition: all 3s;
+align-items: first baseline;
+}
+.vermaisdiv {
+width: 92%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: center;
+}
+.vermais {
+margin: 12px;
+cursor: pointer;
+width: 80%;
+height: 40px;
+border: none;
+background-color: rgb(0, 119, 255);
+border-radius: 20px;
+box-shadow: 0 0 15px rgb(0, 119, 255);
+-moz-transition: all 0.3s;
+-webkit-transition: all 0.3s;
+transition: all 0.3s;
+}
+.vermais:hover {
+-moz-transform: scale(1.1);
+-webkit-transform: scale(1.1);
+transform: scale(1.05);
+animation: animate 1s linear infinite;
+background-color: rgb(80, 157, 245);
+}
 }

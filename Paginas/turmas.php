@@ -71,7 +71,7 @@
                             </nav>
                         </li>
                         <li class="li-main">
-                            <h1>SENAI SCP</h1>
+                            <h1>SENAI</h1>
                             <h2>'.$_SESSION['nome'].'</h2>
                         </li>
                     </ul>
