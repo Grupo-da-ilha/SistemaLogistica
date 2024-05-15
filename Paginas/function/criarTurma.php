@@ -24,7 +24,7 @@
 				$resultado = $conexao->query($sql);
 				
 				$conexao -> close();
-				header('Location: ../Paginas/turmas.php', true, 301);
+				header('Location: ../turmas.php', true, 301);
 			}
 		?>
 	</body>
