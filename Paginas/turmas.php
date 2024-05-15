@@ -19,7 +19,7 @@
         if (confirm("Tem certeza que deseja excluir esta turma e todos os seus cadastros?")) {
             console.log("Excluindo turma com codTurma:", codTurma);
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "deletarTurma.php", true);
+            xhr.open("POST", "function/deletarTurma.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {

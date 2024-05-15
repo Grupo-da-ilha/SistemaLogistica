@@ -73,7 +73,7 @@
                             <div class="titulo-turmas">
                                 <h5>ALUNOS:</h5>
                             </div>
-                            <form method="post" action="alterar_senha.php"> <!-- Formulário para enviar as novas senhas -->
+                            <form method="post" action="function/alterar_senha.php"> <!-- Formulário para enviar as novas senhas -->
                                 <table class="table-alunos">
                                     <tr>
                                         <th>Nome:</th>

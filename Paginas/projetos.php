@@ -56,7 +56,7 @@ if (empty($_SESSION['nome'])){
     <div class="container-prin">
 <?php
     // Construir o caminho do arquivo de inclusão de forma relativa
-    $caminho_inclusao = __DIR__ . '/funcoes_banco.php';
+    $caminho_inclusao = __DIR__ . 'function/funcoes_banco.php';
 
     // Verificar se o arquivo existe antes de incluí-lo
     if (file_exists($caminho_inclusao)) {
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function() {
             var projetoId = button.dataset.projetoId;
             if (confirm('Tem certeza de que deseja apagar este projeto?')) {
                 var xhr = new XMLHttpRequest();
-                xhr.open('POST', 'excluir_projeto.php', true);
+                xhr.open('POST', 'function/excluir_projeto.php', true);
                 xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                 xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
