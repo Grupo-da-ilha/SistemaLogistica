@@ -8,60 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/professor.css"/>
+    <link rel="stylesheet" href="../css/recebimento.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
-<style>
-        /* Estilos para o formulário */
-        #project_form {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 160px;
-            transform: translate(-50%, -50%);
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 7px rgb(0, 119, 255);
-        }
-        /* Estilo personalizado para o input project_name */
-        #project_name_form {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            outline: none;
-            display: block;
-        }
-
-        #project_name_form:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        /* Estilo para o botão Criar Projeto */
-        #save_button {
-            margin-top: 10px;
-            margin-left: 25%;
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        #save_button:hover {
-            transform: scale(1.05);
-            animation: animate 1s linear infinite;
-            background-color: #0056b3;
-        }
-    </style>
 <body>
 <?php
 // Iniciar uma sessão
@@ -111,7 +60,18 @@ if (empty($_SESSION['nome'])){
     </header>
     <main>
         <div class="container-prin">
-                
+            <div class="submenu">
+                <li class="lisubmenu">
+                    <a href="#" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="#" class="functions-menu">ESTOQUE</a>
+                    <a href="#" class="functions-menu">PICKING</a>
+                    <a href="#" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="#" class="functions-menu">RELATÓRIOS</a>
+                    <a href="#" class="functions-menu">CONTROLE</a>
+                </li>
+            </div>
+            <div class="recebimentocontainer">
+            </div>
         </div>
     </main>'; } ?>
 </body>
