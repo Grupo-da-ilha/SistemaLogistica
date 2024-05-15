@@ -204,3 +204,14 @@ nav {
 .options-senai-turma {
   background-image: url("cssimg/turmas.png");
 }
+
+@media only screen and (min-width: 1200px) {
+
+  .options-senai-new, .options-senai-continue, .options-senai-turma {
+    margin: 30px;
+    width: 500px;
+    height: 500px;
+    border-radius: 30px;
+    box-shadow: 0 0 7px white;
+}
+}
