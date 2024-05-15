@@ -144,6 +144,7 @@ function saveProject() {
             alert(xhr.responseText);
             // Redirecionar após salvar o projeto com sucesso
             window.location.href = "projeto.php";
+            
         }
     };
     xhr.send("person_id=" + personId + "&project_name=" + projectName);
