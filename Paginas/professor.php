@@ -137,14 +137,14 @@ function saveProject() {
 
     // Enviar os dados para o PHP usando AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_project.php", true);
+    xhr.open("POST", "function/save_project.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             // Manipular a resposta do servidor, se necessário
             alert(xhr.responseText);
             // Redirecionar após salvar o projeto com sucesso
-            window.location.href = "projeto.php";
+            window.location.href = "projetoprofessor.php";
             
         }
     };
@@ -153,7 +153,7 @@ function saveProject() {
 
 function getAndDisplayProjects() {
     var cadastroId = '<?php echo $_SESSION['id']; ?>';
-    window.location.href = "projetos.php?cadastro_id=" + cadastroId;
+    window.location.href = "projetosprofessor.php?cadastro_id=" + cadastroId;
 }
 </script>
 </body>
