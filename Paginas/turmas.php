@@ -119,7 +119,7 @@
                 //criando a consulta para puxar as informações da turma, contar a quantidade de alunos e juntar as tabelas
                 $sql = "SELECT turma.codTurma, turma.nome, COUNT(alunos.codAluno) AS total_alunos, turma.data_criacao
                         FROM turma
-                        INNER JOIN alunos ON turma.codTurma = alunos.codTurma
+                        LEFT JOIN alunos ON turma.codTurma = alunos.codTurma
                         GROUP BY turma.codTurma, turma.nome, turma.data_criacao";
 
                 $result = $conexao->query($sql);
