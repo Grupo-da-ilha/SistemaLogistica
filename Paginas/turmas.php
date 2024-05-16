@@ -19,7 +19,7 @@
         if (confirm("Tem certeza que deseja excluir esta turma e todos os seus cadastros?")) {
             console.log("Excluindo turma com codTurma:", codTurma);
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "deletarTurma.php", true);
+            xhr.open("POST", "function/deletarTurma.php", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -82,7 +82,7 @@
             <div class="container-prin">
                 <div class="container-turmas">
                     <div class="criar-turmas">
-                        <form class="form" method="post" action="../turmasSenai/criarTurma.php" id="formturma" name="formturma">
+                        <form class="form" method="post" action="function/criarTurma.php" id="formturma" name="formturma">
                             <div class="titulo-criar-turmas">
                                 <h3>CRIAR TURMA</h3>
                             </div>

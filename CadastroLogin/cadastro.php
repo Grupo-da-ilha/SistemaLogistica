@@ -21,6 +21,14 @@
 				$tipousuario = $conexao -> real_escape_string($_POST['tipoUsuario']);
 				$turmausuario = $conexao -> real_escape_string($_POST['turmaUsuario']);
 
+				//Definindo o fuso horário, para a função date buscar o horário correto
+				date_default_timezone_set('America/Sao_Paulo');
+				$data_entrada = date("Y-m-d H:i:s");
+
+				$sql = "INSERT INTO `logistica`.`cadastro`
+							(`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma` )
+						VALUES
+							('".$nome."', '".$email."', '".$senha."', '".$data_entrada."', 's', '".$tipousuario."','".$turmausuario."');";
 
 				//Definindo o fuso horário, para a função date buscar o horário correto
 				date_default_timezone_set('America/Sao_Paulo');
