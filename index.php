@@ -63,7 +63,7 @@
             <div class="first-column">
                 <h2 class="title title-primary">Olá, amigo!</h2>
                 <p class="description description-primary">Insira seus dados pessoais</p>
-                <p class="description description-primary">e comece a jornada conosco</p>
+                <p class="description description-primary">e comece a jornada conosco </p>
                 <button id="signup" class="btn btn-primary">CADASTRAR</button>
             </div>
             <div class="second-column">
