@@ -31,6 +31,29 @@ h3 {
     text-shadow: 0 0 10px rgb(0, 0, 0);
     cursor: default;
 }
+h4 {
+  margin-top: 4vh;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-size: 40px;
+  text-shadow: 0 0 10px rgb(0, 119, 255);
+  cursor: default;
+}
+h5 {  
+  margin-top: 1vh;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-size:  29px;
+  cursor: default;
+}
+h6 {  
+  margin-left: 10px;
+  margin-top: 1vh;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-size:  20px;
+  cursor: default;
+}
 .container {
     width: 100%;
     height: 100vh;
@@ -119,6 +142,7 @@ input[type=checkbox]:checked~nav {
     transform: translate(350px);
 }
 nav {
+  z-index: 1;
   width: 20em;
   height: 90dvh;
   position: absolute;
@@ -169,6 +193,7 @@ nav {
   color: rgb(0, 119, 255);
 }
 .container-prin {
+    z-index: -2;
     margin-top: -91vh;
     width: 100%;
     height: 91vh;
@@ -221,22 +246,145 @@ nav {
     animation: animate 1s linear infinite;
     text-shadow: 0 0 16px rgb(0, 119, 255);
 }
-.recebimentocontainer {
+.criar-pedido-container {
+    z-index: 0;
     width: 95%;
     min-height: 91%;
-    background-color: #fff;
+    background-color: #ffffff;;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
     justify-content:first baseline;
     align-items: first baseline;
 }
-.titulo-recebimento {
+.titulo-pedido {
+    z-index: 2;
     width: 100%;
     height: 10vh;
-    border-radius: 30px 30px 30px 15px;
+    border-radius: 30px 30px 30px 5px;
     background-color: rgb(0, 119, 255);
     display: flex;
     justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px rgb(0, 119, 255);
+}
+.info-total {
+  z-index: 1;
+  background-color: #ffffff00;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+.criar-pedido {
+  background-color: #ff000000;
+  display: flex;
+  flex-direction: row;
+}
+.submenus-pedidos {
+  z-index: 3;
+  margin-top: -1vh;
+  width: 50vh;
+  height: 74vh;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: center;
+  border-radius: 0 30px 30px 30px;
+  box-shadow: 0 0 15px rgb(0, 119, 255);
+}
+.info-pedido {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: first baseline;
+}
+.button-pedidos{
+    margin-top: 15px;
+    color: rgb(0, 93, 199);
+    text-decoration: none;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.button-pedidos:hover {
+    color: rgb(0, 119, 255);
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.05);
+    animation: animate 1s linear infinite;
+    text-shadow: 0 0 16px rgb(0, 119, 255);
+}
+#enviar-criar-pedidos{
+  cursor: pointer;
+  margin-top: 25vh;
+  display: block;
+  width: 100%;
+  height: 60px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  background-color: rgb(0, 119, 255);
+  box-shadow: 0 0 7px rgb(0, 119, 255);
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#enviar-criar-pedidos:hover {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.05);
+  animation: animate 1s linear infinite;
+  text-shadow: 0 0 16px rgb(0, 119, 255);
+  background-color: #3691fa;;
+}
+.criar-pedidos-container {
+  margin-top: -1vh;
+  width: 70.2vw;
+  height: 74vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: center;
+  border-radius: 0 0px 30px 0px;
+  box-shadow: 0 0 15px rgb(0, 119, 255);
+}
+#idpedido {
+  margin-top: 10px;
+  display: block;
+  width: 60%;
+  height: 40px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 0 0 7px rgb(0, 119, 255);
+}
+.options-pedido {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 0, 0, 0);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.produtos-pedido {
+    margin-top: 30px;
+    width: 25%;
+    height: 80%;
+    background-color: #eeeeee;
+    border-radius: 30px 0 0 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: first baseline;
     align-items: center;
 }

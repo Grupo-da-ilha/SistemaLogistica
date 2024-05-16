@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/recebimento.css"/>
+    <link rel="stylesheet" href="../css/pedido.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
@@ -20,13 +20,6 @@ if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
 } else {
-    // Função para obter os projetos do usuário com base no ID do cadastro
-    function getProjetosDoUsuario($cadastro_id) {
-        // Conectar ao banco de dados e realizar a consulta dos projetos
-        // Substitua esta parte com a lógica de consulta real ao banco de dados
-        return array(); // Aqui, retornamos um array vazio como exemplo
-    }
-    
     echo ' <header>
         <div class="container">
             <div class="main-horizontal">
@@ -63,6 +56,7 @@ if (empty($_SESSION['nome'])){
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
+                    <a href="carga.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="#" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="#" class="functions-menu">ESTOQUE</a>
                     <a href="#" class="functions-menu">PICKING</a>
@@ -71,9 +65,39 @@ if (empty($_SESSION['nome'])){
                     <a href="#" class="functions-menu">CONTROLE</a>
                 </li>
             </div>
-            <div class="recebimentocontainer">
-                <div class="titulo-recebimento">
-                    <h3>VISTORIA E CONFERÊNCIA</h3>    
+            <div class="criar-pedido-container">
+                <div class="titulo-pedido">
+                    <h3>CRIAÇÃO DO PEDIDO</h3>    
+                </div>
+                <div class="info-total">
+                    <div class="criar-pedido">
+                        <div class="submenus-pedidos">
+                            <h4> INFORMAÇÕES </h4>
+                            <div class="info-pedido">
+                                <h5>PEDIDOS:</h5>
+                                    <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
+                                    <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
+                                <h5>NOTA FISCAL:</h5>
+                                    <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
+                                    <a href="meuspedidos.php" class="button-pedidos">Minhas DANFE</a>
+                                <input type="submit" id="enviar-criar-pedidos" value="ENVIAR">
+                            </div>
+                        </div>
+                        <div class="criar-pedidos-container">
+                            <h4>CRIAR:</h4>
+                            <h5>N° DO PEDIDO:</h5>
+                            <input type="text" id="idpedido" class="idpedido" value="N° do pedido:">
+                            <div class="options-pedido">
+                                <div class="produtos-pedido">
+                                    <h5>PRODUTOS:</h5>
+                                         <input type="text" class="nome-produto" id="nome-produto" value="PRODUTO 1:">
+                                        <input type="text" class="nome-produto" id="nome-produto" value="PRODUTO 2:">
+                                        <input type="text" class="nome-produto" id="nome-produto" value="PRODUTO 3:">
+                                        <input type="text" class="nome-produto" id="nome-produto" value="PRODUTO 4:">
+                                        <input type="text" class="nome-produto" id="nome-produto" value="PRODUTO 5:">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

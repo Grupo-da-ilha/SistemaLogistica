@@ -136,7 +136,7 @@ function saveProject() {
 
     // Enviar os dados para o PHP usando AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "save_project.php", true);
+    xhr.open("POST", "function/save_project.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
