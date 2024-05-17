@@ -9,7 +9,7 @@
     <meta name="description" content="Projeto gerenciamento de estoque para o Senai de Itajaí-SC">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/index.css"/>
-    <link rel="shortcut icon" type="imagex/png" href="#"/>
+    <link rel="shortcut icon" type="imagex/png" href="css/cssimg/logo.png"/>
 </head>
 <body>
     <div class="container">
