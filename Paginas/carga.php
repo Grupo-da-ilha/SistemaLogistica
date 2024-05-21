@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/pedido.css"/>
+    <link rel="stylesheet" href="../css/carga.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
@@ -57,7 +57,7 @@ if (empty($_SESSION['nome'])){
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
                     <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
-                    <a href="#" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="#" class="functions-menu">ESTOQUE</a>
                     <a href="#" class="functions-menu">PICKING</a>
                     <a href="#" class="functions-menu">EXPEDIÇÃO</a>

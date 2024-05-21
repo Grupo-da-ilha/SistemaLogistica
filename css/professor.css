@@ -176,6 +176,7 @@ nav {
     align-items: center;
 }
 .options-senai-new, .options-senai-continue, .options-senai-turma {
+    cursor: pointer;
     margin: 30px;
     width: 300px;
     height: 300px;
