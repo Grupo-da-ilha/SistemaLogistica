@@ -87,8 +87,7 @@ if (empty($_SESSION['nome'])){
                             <form action="criarpedido.php" method="POST" class="criarpedidos">
                                 <h4>CRIAR:</h4>
                             <div class="options-criarpedido">
-                                
-                                <input type="text" name="codPedido" style="display: block;">
+                                <input type="text" name="codPedido" style="display: block;" required>
                             </div>
                                 Selecione o fabricante que fornecerá os materiais
                                 <label class="label-input" for="">
