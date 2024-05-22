@@ -346,27 +346,26 @@ nav {
 }
 .criar-pedidos-container {
   margin-top: -1vh;
-  width: 70.2vw;
+  width: 141vh;
   height: 74vh;
   background-color: #ffffff;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: first baseline;
   align-items: center;
   border-radius: 0 0px 30px 0px;
   box-shadow: 0 0 15px rgb(0, 119, 255);
 }
-#idpedido {
-  margin-top: 10px;
-  display: block;
-  width: 60%;
-  height: 40px;
-  outline: none;
-  border: none;
-  border-radius: 20px;
-  text-align: center;
-  background-color: #ffffff;
-  box-shadow: 0 0 7px rgb(0, 119, 255);
+.criarpedidos {
+    margin: 30px;
+    width:80%;
+    height: 80%;
+    background-color: #eeeeee;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: first baseline;
+    align-items: center;
 }
 .options-pedido {
   width: 100%;

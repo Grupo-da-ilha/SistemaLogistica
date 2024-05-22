@@ -84,13 +84,12 @@ if (empty($_SESSION['nome'])){
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
-                            <h4>CRIAR:</h4>
-                            <form action="criarpedido.php" method="POST">
-                                <br><br>
-                                Cod do pedido: 
+                            <form action="criarpedido.php" method="POST" class="criarpedidos">
+                                <h4>CRIAR:</h4>
+                            <div class="options-criarpedido">
+                                
                                 <input type="text" name="codPedido" style="display: block;">
-                                <br>
-                                <br>
+                            </div>
                                 Selecione o fabricante que fornecerá os materiais
                                 <label class="label-input" for="">
                                     <i class="far fa-envelope icon-modify"></i>
@@ -118,8 +117,8 @@ if (empty($_SESSION['nome'])){
                                 Cod do Produto - coloque aqui os códigos dos produtos para adicioná-los ao pedido
                                 <input type="text" name="codProduto" style="display: block;"> 
                                 <input type="submit" name="enviar_produto" value="OK" style="display: block;"> 
+                                <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="CADASTRAR PRODUTOS"></a>
                             </form>
-                            <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="CADASTRAR PRODUTOS"></a>
                             <div class="options-pedido">
                                 <div class="produtos-pedido">
                                     <h5>PRODUTOS:</h5>'?>
