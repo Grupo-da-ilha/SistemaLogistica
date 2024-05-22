@@ -134,7 +134,7 @@ if (empty($_SESSION['nome'])){
                                             if ($conexao->connect_errno) {
                                                 echo "Failed to connect to MySQL: " . $conexao->connect_error;
                                                 exit();
-                                            }
+                                            }else{
 
                                             if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
                                                 $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
@@ -266,8 +266,9 @@ if (empty($_SESSION['nome'])){
 
                                             $conexao->close();
                                         }
-                                        ?>
-<? echo'
+                                    }
+                                    
+echo'
                                 </div>
                             </div>
                         </div>
@@ -275,6 +276,6 @@ if (empty($_SESSION['nome'])){
                 </div>
             </div>
         </div>
-    </main>'; } ?>  
+    </main>'; ?>
 </body>
 </html>
