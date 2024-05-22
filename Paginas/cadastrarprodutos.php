@@ -93,7 +93,7 @@ if (empty($_SESSION['nome'])){
                                 <h5>NCM:</h5>
                                 <input type="text" name="NCM"  placeholder="NCM:" class="button-cadastro-produtos">
                             </div>
-                            <input type="submit" name="Enviar" class="button-cadastro-enviar">
+                            <input type="submit" name="Enviar" class="button-cadastro-enviar" value="CADASTRAR">
                         </form>
                     </div>';
                     
