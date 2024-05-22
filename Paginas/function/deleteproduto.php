@@ -19,9 +19,9 @@
 
             $result = $conexao->query($sql);
 
-            header('Location: produtos.php', true, 301);
+            header('Location: ../cadastrarprodutos.php', true, 301);
         } else{
-            header('Location: produtos.php', true, 301);
+            header('Location: ../cadastrarprodutos.php', true, 301);
         }
     }
 ?>

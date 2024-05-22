@@ -72,18 +72,18 @@ if (empty($_SESSION['nome'])){
                 </div>
                 <div class="container-cadastro-produto">
                     <div class="registerbox">
-                        <form action="cadastrarprodutos.php" method="POST" class="formcadastro-produto">
+                        <form action="function/criarproduto.php" method="POST" class="formcadastro-produto">
                             <div class="detalhes-produtos">
                                 <h5>NOME:</h5>
                                 <input type="text" name="nome" placeholder="Nome:" class="button-cadastro-produtos">
                             </div>
                             <div class="detalhes-produtos">
-                                <h5>PREÇO POR UNIDADE:</h5>
-                                <input type="text" name="preco" placeholder="Preço por Unidade:" class="button-cadastro-produtos">
+                                <h5>UN DO PRODUTO:</h5>
+                                <input type="text" name="UN" placeholder="UN:" class="button-cadastro-produtos">
                             </div>
                             <div class="detalhes-produtos">
-                                <h5>EMBALAGEM:</h5>
-                                <input type="text" name="embalagem" placeholder="Embalagem:" class="button-cadastro-produtos">
+                                <h5>PREÇO POR UNIDADE:</h5>
+                                <input type="text" name="preco" placeholder="Preço por Unidade:" class="button-cadastro-produtos">
                             </div>
                             <div class="detalhes-produtos">
                                 <h5>PESO EM GRAMAS:</h5>
@@ -109,7 +109,7 @@ if (empty($_SESSION['nome'])){
                         echo "Failed to connect to MySQL: " . $conexao -> connect_error;
                         exit();
                     } else{
-                        $sql="SELECT `cod_produto`, `precoUNI`, `Nome`, `Embalagem`, `PesoGramas`, `NCM` FROM `produtos`";
+                        $sql="SELECT `cod_produto`, `PrecoUNI`, `Nome`, `PesoGramas`, `NCM`, `UN` FROM `produtos`";
                     }
                     $result= $conexao->query($sql);
                 
@@ -123,7 +123,7 @@ if (empty($_SESSION['nome'])){
                                             <th>Código do Produto</th>
                                             <th>Nome</th>
                                             <th>Preço UNI</th>
-                                            <th>Embalagem</th>
+                                            <th>Peso Gramas</th>
                                             <th>Peso Gramas</th>
                                             <th>NCM</th>
                                         </tr>";
@@ -132,12 +132,12 @@ if (empty($_SESSION['nome'])){
                                                 <tr>
                                                     <td>".$row['cod_produto']."</td>
                                                     <td>".$row['Nome']."</td>
-                                                    <td>".$row['precoUNI']."</td>
-                                                    <td>".$row['Embalagem']."</td>
+                                                    <td>".$row['PrecoUNI']."</td>
                                                     <td>".$row['PesoGramas']."</td>
+                                                    <td>".$row['UN']."</td>
                                                     <td>".$row['NCM']."</td>
                                                     <td>
-                                                        <form action=\"deleteproduto.php\" method=\"POST\" class=\"deletebox\">
+                                                        <form action=\"function/deleteproduto.php\" method=\"POST\" class=\"deletebox\">
                                                             <!-- Criando um input do tipo hidden para armazenar o CNPJ da transportadora que queremos excluir-->
                                                             <input type=\"hidden\" name=\"cod_produto\" value=\"" . $row['cod_produto'] . "\">
                                                             <input type=\"submit\" name=\"Excluir\" value=\"Delete\" class=\"deleteInput\">

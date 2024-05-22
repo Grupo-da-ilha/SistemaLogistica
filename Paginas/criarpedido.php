@@ -85,12 +85,189 @@ if (empty($_SESSION['nome'])){
                         </div>
                         <div class="criar-pedidos-container">
                             <h4>CRIAR:</h4>
-                            <h5>N° DO PEDIDO:</h5>
-                            <input type="text" id="idpedido" class="idpedido" placeholder="N° do pedido:">
+                            <form action="criarpedido.php" method="POST">
+                                <br><br>
+                                Cod do pedido: 
+                                <input type="text" name="codPedido" style="display: block;">
+                                <br>
+                                <br>
+                                Selecione o fabricante que fornecerá os materiais
+                                <label class="label-input" for="">
+                                    <i class="far fa-envelope icon-modify"></i>
+                                    <select name="Fabricante" required style="display: block;">
+                                        <option>Selecione:</option>
+                                        <option>CIS</option>
+                                        <option>WEG</option>
+                                        <option>Tilibra</option>
+                                    </select>
+                                </label>
+                                <br>
+                                <br>
+                                Selecione a transportadora
+                                <label class="label-input" for="">
+                                    <i class="far fa-envelope icon-modify"></i>
+                                    <select name="Transportadora" required style="display: block;">
+                                        <option>Selecione:</option>
+                                        <option>Tac Transportes</option>
+                                        <option>Graédi Transportes</option>
+                                        <option>NSL Brasil</option>
+                                    </select>
+                                </label>
+                                <input type="submit" name="enviar_pedido" value="OK" style="display: block;"> 
+                                <br><br><br>
+                                Cod do Produto - coloque aqui os códigos dos produtos para adicioná-los ao pedido
+                                <input type="text" name="codProduto" style="display: block;"> 
+                                <input type="submit" name="enviar_produto" value="OK" style="display: block;"> 
+                            </form>
                             <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="CADASTRAR PRODUTOS"></a>
                             <div class="options-pedido">
                                 <div class="produtos-pedido">
-                                    <h5>PRODUTOS:</h5>
+                                    <h5>PRODUTOS:</h5>'?>
+                                    <?php
+                                            $hostname = "127.0.0.1";
+                                            $user = "root";
+                                            $password = "";
+                                            $database = "logistica";
+
+                                            $conexao = new mysqli($hostname, $user, $password, $database);
+
+                                            if ($conexao->connect_errno) {
+                                                echo "Failed to connect to MySQL: " . $conexao->connect_error;
+                                                exit();
+                                            }
+
+                                            if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
+                                                $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
+                                                $_SESSION['cod_pedido'] = $cod_pedido; 
+                                                date_default_timezone_set('America/Sao_Paulo'); 
+                                                $datahoje = date("Y-m-d H:i:s");
+
+                                                $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '$cod_pedido'";
+                                                $executar = $conexao->query($selectPedido);
+
+                                                if($executar->num_rows > 0){
+                                                    echo "O pedido já foi criado anteriormente";
+                                                    echo "<p>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</p>";
+                                                } else {
+                                                    $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
+
+                                                    $selectCNPJFabricante = "SELECT CNPJ FROM fabricantes WHERE Nome = '$nomeFabri'";
+                                                    $execute = $conexao -> query($selectCNPJFabricante);
+
+                                                    if($execute && $execute -> num_rows >0){
+                                                        $row = $execute -> fetch_assoc();
+                                                        $_SESSION['CNPJFabri'] = $row['CNPJ'];
+                                                        $nomeTransp = $conexao->real_escape_string($_POST['Transportadora']);
+
+                                                        $selectCNPJTransportadora = "SELECT CNPJ FROM transportadoras WHERE Nome = '$nomeTransp'";
+                                                        $execute = $conexao-> query($selectCNPJTransportadora);
+
+                                                        if($execute && $execute -> num_rows > 0){
+                                                            $row = $execute -> fetch_assoc();
+                                                            $_SESSION['CNPJTransp'] = $row['CNPJ'];
+                                                            $sql = "INSERT INTO pedido (cod_pedido, DataVenda, ValorTotal, CNPJEmitente, CNPJ_Destinatario, CNPJ_Transportadora, Situacao) VALUES ('$cod_pedido', '$datahoje', 0.0, '".$_SESSION['CNPJFabri']."', '03.774.819/0001-02', '".$_SESSION['CNPJTransp']."', 'Em Processamento')";
+                                                            $result = $conexao->query($sql);
+                                            
+                                                            if ($result) {
+                                                                echo "<p>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</p>";
+                                                            } else {
+                                                                echo "<p>Erro ao criar pedido: " . htmlspecialchars($conexao->error) . "</p>";
+                                                            }
+                                                        }
+
+                                                    }
+                                                }
+                                            }
+
+                                            if (isset($_POST['enviar_produto']) && !empty($_POST['codProduto'])) {
+                                                $cod_produto = $conexao->real_escape_string($_POST['codProduto']);
+                                                $sql = "SELECT Nome, PrecoUNI, UN, NCM, PesoGramas FROM produtos WHERE cod_produto = '$cod_produto'";
+                                                $result = $conexao->query($sql);
+
+                                                if ($result && $result->num_rows > 0) {
+                                                    $row = $result->fetch_assoc();
+                                                    $_SESSION['Nome'] = $row['Nome'];
+                                                    $_SESSION['PrecoUnitario'] = $row['PrecoUNI'];
+                                                    $_SESSION['Peso'] = $row['PesoGramas'];
+                                                    $_SESSION['UN'] = $row['UN'];
+                                                    $_SESSION['NCM'] = $row['NCM'];
+
+                                                    $sql2 = "INSERT INTO itenspedido (cod_produto, cod_pedido, Quantidade, ValorUnitario, ValorTotal) 
+                                                            VALUES ('$cod_produto', '{$_SESSION['cod_pedido']}', 0, '{$_SESSION['PrecoUnitario']}', 0.0)";
+                                                    $resultado = $conexao->query($sql2);
+
+                                                    if (!$resultado) {
+                                                        echo "<p>Erro ao adicionar produto ao pedido: " . htmlspecialchars($conexao->error) . "</p>";
+                                                    }
+                                                } else {
+                                                    echo "<p>Produto não encontrado.</p>";
+                                                }
+                                            }
+
+                                            $sql3 = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
+                                                    FROM produtos 
+                                                    LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
+                                                    WHERE itenspedido.cod_pedido = '{$_SESSION['cod_pedido']}' ORDER BY produtos.Nome ASC";
+                                            $resul = $conexao->query($sql3);
+
+                                            if ($resul && $resul->num_rows > 0) {
+                                                $valorTotalPedido = 0;
+                                                echo "<div class='main'>
+                                                        <div class='tablebox'>
+                                                            Confira os produtos já adicionados ao pedido:
+                                                            <table class='tabela'>
+                                                                <tr>
+                                                                    <th>Nome</th>
+                                                                    <th>UN</th>
+                                                                    <th>QTD</th>
+                                                                    <th>R$/unit</th>
+                                                                    <th>NCM</th>
+                                                                    <th>Valor total</th>
+                                                                    <th>Delete</th>
+                                                                </tr>";
+                                                while ($row = $resul->fetch_assoc()) {
+                                                    $valorTotalItem = $row['Quantidade'] * $row['PrecoUNI'];
+                                                    $valorTotalPedido += $valorTotalItem;
+                                                    $_SESSION['ValorTotalPedido'] = $valorTotalPedido;
+                                                    echo "<tr>
+                                                            <td>" . htmlspecialchars($row['Nome']) . "</td>
+                                                            <td>" . htmlspecialchars($row['UN']) . "</td>
+                                                            <td>
+                                                                <form action=\"function/processoItens.php\" method=\"POST\">
+                                                                    <input type=\"hidden\" name=\"codigoItemPedido\" value=\"" . $row['cod_itenPedido'] . "\" style=\"display: block;\">
+                                                                    <input type=\"text\" name=\"QTD\" value=\"" . $row['Quantidade'] . "\" style=\"width:30px; display: block;\">
+                                                                    <input type=\"submit\" name=\"AtualizarQTD\" value=\"Atualizar\" style=\"display: block;\">
+                                                                </form>
+                                                            </td>
+                                                            <td>" . htmlspecialchars($row['PrecoUNI']) . "</td>
+                                                            <td>" . htmlspecialchars($row['NCM']) . "</td>
+                                                            <td>".$valorTotalItem."</td>
+                                                            <td>
+                                                                <form action=\"function/processoItens.php\" method=\"POST\" class=\"deletebox\">
+                                                                    <input type=\"hidden\" name=\"codigoItemPedido\" value=\"" . $row['cod_itenPedido'] . "\" style=\"display: block;\">
+                                                                    <input type=\"submit\" name=\"Excluir\" value=\"Delete\" class=\"deleteInput\" style=\"display: block;\">
+                                                                </form>
+                                                            </td>
+                                                        </tr>";
+                                                }
+
+                                                echo "</table> 
+                                                <p style=\"margin-top:10px\">Valor Total: " . htmlspecialchars($valorTotalPedido)."</p>";
+                                                echo"
+                                                        <form action=\"function/processoItens.php\" method=\"POST\">
+                                                            <input type=\"hidden\" name=\"codigoPedido\" value=\"" .$_SESSION['cod_pedido']. "\" style=\"display: block;\">
+                                                            <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\">
+                                                        </form>
+                                                    </div>
+                                                    </div>";
+                                            } else {
+                                                echo "<p>Erro ao buscar produtos, nenhum produto foi adicionado ainda " . htmlspecialchars($conexao->error) . "</p>";
+                                            }
+
+                                            $conexao->close();
+                                        }
+                                        ?>
+<? echo'
                                 </div>
                             </div>
                         </div>
@@ -98,6 +275,6 @@ if (empty($_SESSION['nome'])){
                 </div>
             </div>
         </div>
-    </main>'; } ?>
+    </main>'; } ?>  
 </body>
 </html>
