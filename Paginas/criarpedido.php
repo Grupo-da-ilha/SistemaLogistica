@@ -80,47 +80,52 @@ if (empty($_SESSION['nome'])){
                                 <h5>NOTA FISCAL:</h5>
                                     <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
                                     <a href="meuspedidos.php" class="button-pedidos">Minhas DANFE</a>
-                                <input type="submit" id="enviar-criar-pedidos" value="ENVIAR">
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
                             <form action="criarpedido.php" method="POST" class="criarpedidos">
                                 <h4>CRIAR:</h4>
                             <div class="options-criarpedido">
-                                <input type="text" name="codPedido" style="display: block;" required>
+                                <h5>COD PEDIDO:</h5>
+                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido" required>
                             </div>
-                                Selecione o fabricante que fornecerá os materiais
-                                <label class="label-input" for="">
-                                    <i class="far fa-envelope icon-modify"></i>
-                                    <select name="Fabricante" required style="display: block;">
-                                        <option>Selecione:</option>
-                                        <option>CIS</option>
-                                        <option>WEG</option>
-                                        <option>Tilibra</option>
-                                    </select>
-                                </label>
-                                <br>
-                                <br>
-                                Selecione a transportadora
-                                <label class="label-input" for="">
-                                    <i class="far fa-envelope icon-modify"></i>
-                                    <select name="Transportadora" required style="display: block;">
-                                        <option>Selecione:</option>
-                                        <option>Tac Transportes</option>
-                                        <option>Graédi Transportes</option>
-                                        <option>NSL Brasil</option>
-                                    </select>
-                                </label>
-                                <input type="submit" name="enviar_pedido" value="OK" style="display: block;"> 
-                                <br><br><br>
-                                Cod do Produto - coloque aqui os códigos dos produtos para adicioná-los ao pedido
-                                <input type="text" name="codProduto" style="display: block;"> 
-                                <input type="submit" name="enviar_produto" value="OK" style="display: block;"> 
-                                <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="CADASTRAR PRODUTOS"></a>
+                            <div class="options-criarpedido">
+                                <h5>FORNECEDOR:</h5>
+                                    <label class="label-input" for="">
+                                        <i class="far fa-envelope icon-modify"></i>
+                                        <select name="Fabricante" required style="display: block;" class="input-options-criar-pedido-select">
+                                            <option class="options-label">Selecione:</option>
+                                            <option class="options-label">CIS</option>
+                                            <option class="options-label">WEG</option>
+                                            <option class="options-label">Tilibra</option>
+                                        </select>
+                                    </label>
+                                </div>
+                                <div class="options-criarpedido">
+                                    <h5>TRENSPORTADORA:</h5>
+                                        <label class="label-input" for="">
+                                            <i class="far fa-envelope icon-modify"></i>
+                                            <select name="Transportadora" required style="display: block;" class="input-options-criar-pedido-select">
+                                                <option>Selecione:</option>
+                                                <option>Tac Transportes</option>
+                                                <option>Graédi Transportes</option>
+                                                <option>NSL Brasil</option>
+                                            </select>
+                                        </label>
+                                </div>
+                                <div class="options-criarpedido-input">
+                                    <input type="submit" name="enviar_pedido" value="CONFIRMAR PEDIDO" style="display: block;" class="input-function-criar-pedido"> 
+                                </div>
+                                <div class="options-criarpedido">
+                                    <h5>COD PRODUTO:</h5>
+                                    <input type="text" name="codProduto" style="display: block;" class="input-options-criar-pedido"> 
+                                </div>
+                                <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido"> 
+                                <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="VER CADASTRAR PRODUTOS"></a>
                             </form>
                             <div class="options-pedido">
                                 <div class="produtos-pedido">
-                                    <h5>PRODUTOS:</h5>'?>
+                                    <h4>PRODUTOS:</h4>'?>
                                     <?php
                                             $hostname = "127.0.0.1";
                                             $user = "root";
@@ -144,8 +149,8 @@ if (empty($_SESSION['nome'])){
                                                 $executar = $conexao->query($selectPedido);
 
                                                 if($executar->num_rows > 0){
-                                                    echo "O pedido já foi criado anteriormente";
-                                                    echo "<p>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</p>";
+                                                    echo "<h6>O pedido já foi criado anteriormente</h6>";
+                                                    echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</h6>";
                                                 } else {
                                                     $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
 
@@ -167,9 +172,9 @@ if (empty($_SESSION['nome'])){
                                                             $result = $conexao->query($sql);
                                             
                                                             if ($result) {
-                                                                echo "<p>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</p>";
+                                                                echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</h6>";
                                                             } else {
-                                                                echo "<p>Erro ao criar pedido: " . htmlspecialchars($conexao->error) . "</p>";
+                                                                echo "<h6>Erro ao criar pedido: " . htmlspecialchars($conexao->error) . "</h6>";
                                                             }
                                                         }
 
@@ -195,10 +200,10 @@ if (empty($_SESSION['nome'])){
                                                     $resultado = $conexao->query($sql2);
 
                                                     if (!$resultado) {
-                                                        echo "<p>Erro ao adicionar produto ao pedido: " . htmlspecialchars($conexao->error) . "</p>";
+                                                        echo "<h6>Erro ao adicionar produto ao pedido: " . htmlspecialchars($conexao->error) . "</h6>";
                                                     }
                                                 } else {
-                                                    echo "<p>Produto não encontrado.</p>";
+                                                    echo "<h6>Produto não encontrado.</h6>";
                                                 }
                                             }
 
@@ -212,7 +217,7 @@ if (empty($_SESSION['nome'])){
                                                 $valorTotalPedido = 0;
                                                 echo "<div class='main'>
                                                         <div class='tablebox'>
-                                                            Confira os produtos já adicionados ao pedido:
+                                                            <h7>Confira os produtos já adicionados ao pedido:</h7>
                                                             <table class='tabela'>
                                                                 <tr>
                                                                     <th>Nome</th>
@@ -233,28 +238,30 @@ if (empty($_SESSION['nome'])){
                                                             <td>
                                                                 <form action=\"function/processoItens.php\" method=\"POST\">
                                                                     <input type=\"hidden\" name=\"codigoItemPedido\" value=\"" . $row['cod_itenPedido'] . "\" style=\"display: block;\">
-                                                                    <input type=\"text\" name=\"QTD\" value=\"" . $row['Quantidade'] . "\" style=\"width:30px; display: block;\">
-                                                                    <input type=\"submit\" name=\"AtualizarQTD\" value=\"Atualizar\" style=\"display: block;\">
+                                                                    <input type=\"text\" name=\"QTD\" value=\"" . $row['Quantidade'] . "\" style=\"display: block;\" class=\"input-informacao\">
+                                                                    <input type=\"submit\" name=\"AtualizarQTD\" value=\"ATUALIZAR\" style=\"display: block;\" class=\"input-informacao-atualizar\">
                                                                 </form>
                                                             </td>
                                                             <td>" . htmlspecialchars($row['PrecoUNI']) . "</td>
                                                             <td>" . htmlspecialchars($row['NCM']) . "</td>
-                                                            <td>".$valorTotalItem."</td>
+                                                            <td><h8>".$valorTotalItem."</8></td>
                                                             <td>
                                                                 <form action=\"function/processoItens.php\" method=\"POST\" class=\"deletebox\">
                                                                     <input type=\"hidden\" name=\"codigoItemPedido\" value=\"" . $row['cod_itenPedido'] . "\" style=\"display: block;\">
-                                                                    <input type=\"submit\" name=\"Excluir\" value=\"Delete\" class=\"deleteInput\" style=\"display: block;\">
+                                                                    <input type=\"submit\" name=\"Excluir\" value=\"Delete\"  style=\"display: block;\" class=\"input-informacao-delete\">
                                                                 </form>
                                                             </td>
                                                         </tr>";
                                                 }
 
                                                 echo "</table> 
-                                                <p style=\"margin-top:10px\">Valor Total: " . htmlspecialchars($valorTotalPedido)."</p>";
+                                                <h6 style=\"margin-top:10px\">Valor Total: " . htmlspecialchars($valorTotalPedido)."</h6>";
                                                 echo"
                                                         <form action=\"function/processoItens.php\" method=\"POST\">
-                                                            <input type=\"hidden\" name=\"codigoPedido\" value=\"" .$_SESSION['cod_pedido']. "\" style=\"display: block;\">
-                                                            <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\">
+                                                            <div class=\"input-finalizar-pedido\">
+                                                                <input type=\"hidden\" name=\"codigoPedido\" value=\"" .$_SESSION['cod_pedido']. "\" style=\"display: block;\">
+                                                                <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
+                                                            </div>
                                                         </form>
                                                     </div>
                                                     </div>";

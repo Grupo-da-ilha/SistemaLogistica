@@ -572,7 +572,7 @@ th, tr, td {
   align-items: center;
 }
 .input-finalizar-pedido-button {
-  margin-top: 10px;
+  margin-top: 3;
   cursor: pointer;
   width: 70%;
   height: 50px;
