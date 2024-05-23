@@ -12,21 +12,44 @@
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <style>
+
+        h3 {
+            margin-top: 2vh;
+            font-family: 'Poppins', sans-serif;
+            font-size: 23px;
+            text-shadow: 0 0 2px rgb(0, 119, 255);
+            cursor: default;
+        }
         /* Estilos para o formulário */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
+            z-index: 999; /* Certifique-se de que o overlay esteja sobre todos os outros elementos */
+            display: none; /* Ocultar inicialmente */
+        }
+
         #project_form {
             position: absolute;
             top: 50%;
             left: 50%;
             width: 300px;
-            height: 160px;
+            height: 300px;
             transform: translate(-50%, -50%);
             background-color: #ffffff;
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 7px rgb(0, 119, 255);
+            border-radius: 30px;
+            box-shadow: 0 0 15px rgb(0, 119, 255);
+            z-index: 1000; /* Certifique-se de que o formulário esteja acima do overlay */
+            display: none; /* Ocultar inicialmente */
         }
+
         /* Estilo personalizado para o input project_name */
         #project_name_form {
+            margin-top: 20px;
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -34,32 +57,55 @@
             border-radius: 5px;
             font-size: 16px;
             outline: none;
-            display: block;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         #project_name_form:focus {
             border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            box-shadow: 0 0 15px rgb(0, 119, 255);
         }
 
         /* Estilo para o botão Criar Projeto */
         #save_button {
-            margin-top: 10px;
-            margin-left: 25%;
-            background-color: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+            margin-top: 40px;
             cursor: pointer;
-            font-size: 16px;
+            width: 100%;
+            height: 50px;
+            border-radius: 20px;
+            font-size: 15px;
+            border: none;
+            outline: none;
+            background-color: rgb(0, 119, 255);
+            -moz-transition: all 0.3s;
+            -webkit-transition: all 0.3s;
             transition: all 0.3s;
+            box-shadow: 0 0 15px rgb(0, 119, 255);
         }
 
         #save_button:hover {
+            -moz-transform: scale(1.1);
+            -webkit-transform: scale(1.1);
             transform: scale(1.05);
             animation: animate 1s linear infinite;
-            background-color: #0056b3;
+            background-color: hsl(212, 95%, 60%);
+        }
+
+        /* Estilos para o botão de fechar */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color:rgb(0, 119, 255);
+            text-decoration: none;
         }
     </style>
 <body>
@@ -115,7 +161,11 @@ if (empty($_SESSION['nome'])){
                 </div>
                 <div class="options-senai-continue" onclick="getAndDisplayProjects()">
                 </div>
-                <form id="project_form" style="display: none;">
+                <!-- Overlay para o fundo escuro -->
+                <div id="overlay"></div>
+                <form id="project_form">
+                    <!-- Botão de fechar -->
+                    <span class="close" onclick="toggleForm()">&times;</span>
                     <h3>Nome:</h3>
                     <input type="text" id="project_name_form" placeholder="Nome do Projeto" required>
                     <button type="button" id="save_button" onclick="saveProject()">Criar Projeto</button>
@@ -127,8 +177,16 @@ if (empty($_SESSION['nome'])){
 
 <script>
 function toggleForm() {
+    var overlay = document.getElementById('overlay');
     var form = document.getElementById('project_form');
-    form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    
+    if (overlay.style.display === 'block') {
+        overlay.style.display = 'none';
+        form.style.display = 'none';
+    } else {
+        overlay.style.display = 'block';
+        form.style.display = 'block';
+    }
 }
 
 function saveProject() {
@@ -158,3 +216,4 @@ function getAndDisplayProjects() {
 </script>
 </body>
 </html>
+

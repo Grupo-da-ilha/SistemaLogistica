@@ -88,6 +88,22 @@ if (empty($_SESSION['nome'])){
                                 <div class="options-criarpedido">
                                     <h5>COD PEDIDO:</h5>
                                     <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido">
+                                <h4>CRIAR:</h4>
+                            <div class="options-criarpedido">
+                                <h5>COD PEDIDO:</h5>
+                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido">
+                            </div>
+                            <div class="options-criarpedido">
+                                <h5>FORNECEDOR:</h5>
+                                    <label class="label-input" for="">
+                                        <i class="far fa-envelope icon-modify"></i>
+                                        <select name="Fabricante" required style="display: block;" class="input-options-criar-pedido-select">
+                                            <option class="options-label">Selecione:</option>
+                                            <option class="options-label">CIS</option>
+                                            <option class="options-label">WEG</option>
+                                            <option class="options-label">Tilibra</option>
+                                        </select>
+                                    </label>
                                 </div>
                                 <div class="options-criarpedido">
                                     <h5>FORNECEDOR:</h5>
