@@ -89,7 +89,7 @@ if (empty($_SESSION['nome'])){
                                 <h4>CRIAR:</h4>
                             <div class="options-criarpedido">
                                 <h5>COD PEDIDO:</h5>
-                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido" required>
+                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido">
                             </div>
                             <div class="options-criarpedido">
                                 <h5>FORNECEDOR:</h5>
