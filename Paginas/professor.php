@@ -41,7 +41,7 @@
             transform: translate(-50%, -50%);
             background-color: #ffffff;
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 30px;
             box-shadow: 0 0 15px rgb(0, 119, 255);
             z-index: 1000; /* Certifique-se de que o formulário esteja acima do overlay */
             display: none; /* Ocultar inicialmente */
