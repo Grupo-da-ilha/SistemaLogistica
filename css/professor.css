@@ -13,7 +13,7 @@ body {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: auto;
   }
 
 h1 {
@@ -24,7 +24,6 @@ h1 {
 }
 
 h2 {
-    margin-left: 140vh;
     font-family: 'Poppins', sans-serif;
     font-size: 25px;
     text-shadow: 0 0 2px rgb(0, 119, 255);
@@ -43,14 +42,14 @@ h2 {
 .main-horizontal {
     z-index: 1;
     width: 100%;
-    height: 10vh;
+    height: auto;
     background-color: rgb(255, 255, 255);
     box-shadow: 0 0 15px rgb(0, 119, 255);
     border-radius: 0 0 10px 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .ul-main {
@@ -63,7 +62,14 @@ h2 {
     flex-direction: row;
     align-items: center;
 }
-
+.teste {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    align-items: center;
+}
 .div-button-main {
     cursor: pointer;
     background: #fff;
@@ -73,6 +79,7 @@ h2 {
 }
 
 .button-main {
+    margin-left: -70vh;
     position: relative;
     display: block;
     background: rgb(0, 119, 255);
@@ -126,7 +133,7 @@ input[type=checkbox]:checked~nav {
 
 nav {
     width: 20em;
-    height: 90vh;
+    height: auto;
     position: absolute;
     margin-top: 100vh;
     background-color: rgb(255, 255, 255);
@@ -148,7 +155,7 @@ nav {
 
 .li-vertical, .li-vertical-menu {
     width: 100%;
-    height: 4.75em;
+    height: 4.3em;
     margin-top: 5px;
     display: flex;
     justify-content: center;
@@ -234,18 +241,42 @@ nav {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: auto;
   }
   h1 {
-    font-size: 22px;
+    font-size: 19px;
     text-shadow: 0 0 2px rgb(0, 119, 255);
     text-wrap: nowrap;
 }
 
 h2 {
-    margin-left: 5vh;
-    font-size: 18px;
+    margin-left: 2vh;
+    font-size: 15px;
     text-wrap: nowrap;
+}
+.main-horizontal {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.button-main {
+    margin-left: 0;
+}
+.ul-main {
+    display: flex;
+    flex-direction: row;
+}
+
+.li-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.teste {
+    width: auto;
+    height: 100%;
 }
 nav {
     width: 20em;
@@ -264,7 +295,7 @@ nav {
 }
 
 .options-senai-new, .options-senai-continue, .options-senai-turma {
-    margin: 30px;
+    margin: 50px;
     width: 20vh;
     height: 20vh;
 }
@@ -277,7 +308,7 @@ nav {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100%;
+    height: auto;
   }
   h1 {
     font-size: 30px;
@@ -286,14 +317,32 @@ nav {
 }
 
 h2 {
-    margin-left: 35vh;
+    text-align: right;
     font-size: 25px;
     cursor: default;
     text-wrap: nowrap;
 }
+.main-horizontal {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.teste2 {
+    width: 50vh;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    align-items: center;
+}
+.button-main {
+    margin-left: 0;
+}
 nav {
     width: 20em;
-    height: 50%;
+    height: auto;
     margin-top: 60vh;
 }
 .li-vertical, .li-vertical-menu {
@@ -331,6 +380,11 @@ h2 {
     font-size: 25px;
     cursor: default;
     text-wrap: nowrap;
+}
+nav {
+    width: 20em;
+    height: auto;
+    margin-top: 90vh;
 }
 .container-prin {
     margin-top: -91vh;

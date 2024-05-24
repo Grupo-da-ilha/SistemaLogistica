@@ -9,7 +9,7 @@
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/professor.css"/>
-    <link rel="shortcut icon" type="imagex/png" href="#"/>
+    <link rel="shortcut icon" type="imagex/png" href="../css/cssimg/logo.png"/>
 </head>
 <style>
 
@@ -146,10 +146,13 @@ if (empty($_SESSION['nome'])){
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
                         </nav>
-                    </li>
-                    <li class="li-main">
-                        <h1>SENAI SCP</h1>
-                        <h2>'.$_SESSION['nome'].'</h2>
+                        <div class="teste">
+                            <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                            <h1>SENAI LOG</h1>
+                        </div>    
+                        <div class="teste2">
+                            <h2>'.$_SESSION['nome'].'</h2>
+                        </div>
                     </li>
                 </ul>
             </div>
