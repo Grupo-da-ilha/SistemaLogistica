@@ -124,7 +124,7 @@ if (empty($_SESSION['nome'])){
                                             <th>Nome</th>
                                             <th>Preço UNI</th>
                                             <th>Peso Gramas</th>
-                                            <th>Peso Gramas</th>
+                                            <th>UN</th>
                                             <th>NCM</th>
                                         </tr>";
                                         while($row = $result-> fetch_array()){

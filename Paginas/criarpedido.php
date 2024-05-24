@@ -105,7 +105,7 @@ if (empty($_SESSION['nome'])){
                         </div>
                         <div class="criar-pedidos-container">
                             <form action="criarpedido.php" method="POST" class="criarpedidos">
-                                <h4>CRIAR:</h4>
+                                    <h4>CRIAR:</h4>
                             <div class="options-criarpedido">
                                 <h5>COD PEDIDO:</h5>
                                 <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido">
@@ -122,28 +122,28 @@ if (empty($_SESSION['nome'])){
                                         </select>
                                     </label>
                                 </div>
-                                <div class="options-criarpedido">
-                                    <h5>TRENSPORTADORA:</h5>
-                                        <label class="label-input" for="">
-                                            <i class="far fa-envelope icon-modify"></i>
-                                            <select name="Transportadora" required style="display: block;" class="input-options-criar-pedido-select">
-                                                <option>Selecione:</option>
-                                                <option>Tac Transportes</option>
-                                                <option>Graédi Transportes</option>
-                                                <option>NSL Brasil</option>
-                                            </select>
-                                        </label>
-                                </div>
-                                <div class="options-criarpedido-input">
-                                    <input type="submit" name="enviar_pedido" value="CONFIRMAR PEDIDO" style="display: block;" class="input-function-criar-pedido"> 
-                                </div>
-                                <div class="options-criarpedido">
-                                    <h5>COD PRODUTO:</h5>
-                                    <input type="text" name="codProduto" style="display: block;" class="input-options-criar-pedido"> 
-                                </div>
-                                <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido"> 
-                                <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="VER CADASTRAR PRODUTOS"></a>
-                            </form>
+                                    <div class="options-criarpedido">
+                                        <h5>TRENSPORTADORA:</h5>
+                                            <label class="label-input" for="">
+                                                <i class="far fa-envelope icon-modify"></i>
+                                                <select name="Transportadora" required style="display: block;" class="input-options-criar-pedido-select">
+                                                    <option>Selecione:</option>
+                                                    <option>Tac Transportes</option>
+                                                    <option>Graédi Transportes</option>
+                                                    <option>NSL Brasil</option>
+                                                </select>
+                                            </label>
+                                    </div>
+                                    <div class="options-criarpedido-input">
+                                        <input type="submit" name="enviar_pedido" value="CONFIRMAR PEDIDO" style="display: block;" class="input-function-criar-pedido"> 
+                                    </div>
+                                    <div class="options-criarpedido">
+                                        <h5>COD PRODUTO:</h5>
+                                        <input type="text" name="codProduto" style="display: block;" class="input-options-criar-pedido"> 
+                                    </div>
+                                    <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido"> 
+                                    <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="VER CADASTRAR PRODUTOS"></a>
+                                </form>
                             <div class="options-pedido">
                                 <div class="produtos-pedido">
                                     <h4>PRODUTOS:</h4>'?>
@@ -266,6 +266,7 @@ if (empty($_SESSION['nome'])){
                                                             <td>
                                                                 <form action=\"function/processoItens.php\" method=\"POST\">
                                                                     <input type=\"hidden\" name=\"codigoItemPedido\" value=\"" . $row['cod_itenPedido'] . "\" style=\"display: block;\">
+                                                                    <input type=\"hidden\" name=\"valorUnitario\" value=\"". $row['PrecoUNI'] ."\" style=\"display: block;\">
                                                                     <input type=\"text\" name=\"QTD\" value=\"" . $row['Quantidade'] . "\" style=\"display: block;\" class=\"input-informacao\">
                                                                     <input type=\"submit\" name=\"AtualizarQTD\" value=\"ATUALIZAR\" style=\"display: block;\" class=\"input-informacao-atualizar\">
                                                                 </form>
@@ -303,6 +304,7 @@ if (empty($_SESSION['nome'])){
                                     }
                                     
 echo'
+
                                 </div>
                             </div>
                         </div>

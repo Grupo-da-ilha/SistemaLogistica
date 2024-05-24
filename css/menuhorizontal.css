@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+    background-image: url("cssimg/fundopag.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+  }
+
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    text-shadow: 0 0 2px rgb(0, 119, 255);
+    cursor: default;
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    text-shadow: 0 0 2px rgb(0, 119, 255);
+    cursor: default;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.main-horizontal {
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 15px rgb(0, 119, 255);
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.ul-main {
+    display: flex;
+    flex-direction: row;
+}
+
+.li-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.teste {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    align-items: center;
+}
+.div-button-main {
+    cursor: pointer;
+    background: #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+
+.button-main {
+    margin-left: -70vh;
+    position: relative;
+    display: block;
+    background: rgb(0, 119, 255);
+    width: 30px;
+    height: 2px;
+    top: 29px;
+    left: 15px;
+    transition: 0.5s ease-in-out;
+}
+
+.button-main:before,
+.button-main:after {
+    background: #000;
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transition: 0.5s ease-in-out;
+}
+
+.button-main:before {
+    top: -10px;
+}
+
+.button-main:after {
+    bottom: -10px;
+}
+
+input {
+    display: none;
+}
+
+input:checked ~ label .button-main {
+    transform: rotate(45deg);
+}
+
+input:checked ~ label .button-main:before {
+    transform: rotate(90deg);
+    top: 0;
+}
+
+input:checked ~ label .button-main:after {
+    transform: rotate(90deg);
+    bottom: 0;
+}
+
+input[type=checkbox]:checked~nav {
+    transform: translate(350px);
+}
+
+nav {
+    width: 20em;
+    height: auto;
+    position: absolute;
+    margin-top: 100vh;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 15px rgb(0, 119, 255);
+    border-radius: 0 15px 15px 0;
+    left: -350px;
+    transition: all 1.0s;
+}
+
+.ul-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+}
+
+.li-vertical {
+    border-bottom: 1px solid rgb(0, 119, 255);
+}
+
+.li-vertical, .li-vertical-menu {
+    width: 100%;
+    height: 4.3em;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.a-vertical-menu {
+    cursor: default;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(0, 0, 0);
+}
+
+.a-vertical {
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(0, 0, 0);
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.a-vertical:hover {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.05);
+    animation: animate 1s linear infinite;
+    color: rgb(0, 119, 255);
+}
+@media only screen and (max-width: 600px) {
+    body {
+      background-image: url("cssimg/fundopag.jpg");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: auto;
+    }
+    h1 {
+      font-size: 19px;
+      text-shadow: 0 0 2px rgb(0, 119, 255);
+      text-wrap: nowrap;
+  }
+  
+  h2 {
+      margin-left: 2vh;
+      font-size: 15px;
+      text-wrap: nowrap;
+  }
+  .main-horizontal {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+  }
+  .button-main {
+      margin-left: 0;
+  }
+  .ul-main {
+      display: flex;
+      flex-direction: row;
+  }
+  
+  .li-main {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+  }
+  .teste {
+      width: auto;
+      height: 100%;
+  }
+  nav {
+      width: 20em;
+      height: 85%;
+      margin-top: 90vh;
+  }
+  .container-prin {
+      margin-top: -91vh;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .options-senai-new, .options-senai-continue, .options-senai-turma {
+      margin: 50px;
+      width: 20vh;
+      height: 20vh;
+  }
+  
+  }
+  
+  @media only screen and (min-width: 601px) and (max-width: 1024px) {
+    body {
+      background-image: url("cssimg/fundopag.jpg");
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: auto;
+    }
+    h1 {
+      font-size: 30px;
+      cursor: default;
+      text-wrap: nowrap;
+  }
+  
+  h2 {
+      text-align: right;
+      font-size: 25px;
+      cursor: default;
+      text-wrap: nowrap;
+  }
+  .main-horizontal {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+  }
+  .teste2 {
+      width: 50vh;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: baseline;
+      align-items: center;
+  }
+  .button-main {
+      margin-left: 0;
+  }
+  nav {
+      width: 20em;
+      height: auto;
+      margin-top: 60vh;
+  }
+  .li-vertical, .li-vertical-menu {
+    height: 5em;
+    margin-top: 5px;
+  }
+  .container-prin {
+      margin-top: -91vh;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .options-senai-new, .options-senai-continue, .options-senai-turma {
+      margin: 32px;
+      width: 300px;
+      height: 300px;
+  }
+  
+  }
+  
+  @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+    h1 {
+      font-size: 30px;
+      cursor: default;
+      text-wrap: nowrap;
+  }
+  
+  h2 {
+      margin-left: 300%;
+      font-size: 25px;
+      cursor: default;
+      text-wrap: nowrap;
+  }
+  nav {
+      width: 20em;
+      height: auto;
+      margin-top: 90vh;
+  }
+  .container-prin {
+      margin-top: -91vh;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .options-senai-new, .options-senai-continue, .options-senai-turma {
+      margin-top: 20vh;
+      width: 300px;
+      height: 300px;
+  }
+  
+  }
+  
+  
+  @media only screen and (min-width: 1441px) {
+      /* Add your responsive styles for large screens (e.g., larger monitors) here */
+  }
+  

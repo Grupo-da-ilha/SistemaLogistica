@@ -107,11 +107,11 @@ if (empty($_SESSION['nome'])){
                                 $row = $execute -> fetch_assoc();
                                 $cod_pedido = $row['cod_pedido'];
                                 $DataVenda = $row['DataVenda'];
-                                $DataVenda = $row['ValorTotal'];
-                                $DataVenda = $row['CNPJEmitente'];
-                                $DataVenda = $row['CNPJ_Destinatario'];
-                                $DataVenda = $row['CNPJ_Transportadora'];
-                                $DataVenda = $row['Situacao'];
+                                $ValorTotal = $row['ValorTotal'];
+                                $CNPJEmitente = $row['CNPJEmitente'];
+                                $CNPJDestinatario = $row['CNPJ_Destinatario'];
+                                $CNPJTransportadora = $row['CNPJ_Transportadora'];
+                                $Situacao = $row['Situacao'];
                                 echo "
                                     <div class=\"tablebox\">
                                         Confira os pedidos já criados:
@@ -149,8 +149,6 @@ if (empty($_SESSION['nome'])){
                          echo"
                             </table>
                     </div>";
-                         ?>
-                         <?php
                          $hostname = "127.0.0.1";
                          $user = "root";
                          $password = "";
@@ -163,55 +161,44 @@ if (empty($_SESSION['nome'])){
                              exit();
                          } else{
                             if(isset($_POST['cod_pedido'])){
-                                $sql = "SELECT produtos.cod_produto, produtos.PrecoUNI, produtos.Nome, produtos.PesoGramas, produtos.NCM, produtos.UN, itenspedido.Quantidade FROM `produtos` 
+                                $sql = "SELECT produtos.cod_produto, produtos.PrecoUNI, produtos.Nome, produtos.PesoGramas, produtos.NCM, produtos.UN, itenspedido.Quantidade, itenspedido.ValorTotal 
+                                FROM produtos
                                 LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto
                                 WHERE itenspedido.cod_pedido = $cod_pedido ORDER BY produtos.Nome ASC";
     
                                 $execute = $conexao -> query($sql);
                                 if($execute && $execute -> num_rows > 0){
                                     echo "
-                                    <div class=\"tablebox\">
-                                        Confira os pedidos já criados:
-                                        <table class=\"tabela\">
-                                            <tr>
-                                                <th>Codigo do produto</th>
-                                                <th>DataVenda</th>
-                                                <th>Valor Total</th>
-                                                <th>CNPJ Emintente</th>
-                                                <th>CNPJ Destinatario</th>
-                                                <th>CNPJ Transportadora</th>
-                                                <th>Situação</th>
-                                                <th>Ações</th>
-                                            </tr>";
+                                    <div class='main'>
+                                        <div class='tablebox'>
+                                            <h7>Confira os produtos já adicionados ao pedido:</h7>
+                                            <table class='tabela'>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>UN</th>
+                                                    <th>QTD</th>
+                                                    <th>R$/unit</th>
+                                                    <th>NCM</th>
+                                                    <th>Valor total</th>
+                                                </tr>";
                                             while($row = $execute-> fetch_array()){
                                                 echo "
-                                                    <tr>
-                                                        <td>".$row['cod_pedido']."</td>
-                                                        <td>".$row['DataVenda']."</td>
-                                                        <td>".$row['ValorTotal']."</td>
-                                                        <td>".$row['CNPJEmitente']."</td>
-                                                        <td>".$row['CNPJ_Destinatario']."</td>
-                                                        <td>".$row['CNPJ_Transportadora']."</td>
-                                                        <td>".$row['Situacao']."</td>
-                                                        <td>
-                                                            <form action=\"meuspedidos.php\" method=\"POST\">
-                                                                <input type=\"hidden\" name=\"cod_pedido\" value=\"" . $cod_pedido . "\" >
-                                                                <input type=\"submit\" name=\"VerProdutos\" value=\"Ver Produtos\" style=\"display:block;\">
-                                                            </form>
-                                                        </td>
-                                                    </tr>";
+                                                <tr>
+                                                    <td>" . htmlspecialchars($row['Nome']) . "</td>
+                                                    <td>" . htmlspecialchars($row['UN']) . "</td>
+                                                    <td>" . htmlspecialchars($row['Quantidade']) . "</td>
+                                                    <td>" . htmlspecialchars($row['PrecoUNI']) . "</td>
+                                                    <td>" . htmlspecialchars($row['NCM']) . "</td>
+                                                    <td>" . htmlspecialchars($row['ValorTotal']) . "</td>
+                                                </tr>";
                                             }
-                                    }
-                         } 
+                            }   
+                        }
                          echo"
                             </table>
                     </div>";
                                 }
-
                             }
-                         }
-
-}                        
 echo '
                         </div>
                     </div>
