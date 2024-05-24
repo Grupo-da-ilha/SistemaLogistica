@@ -98,20 +98,11 @@ if (empty($_SESSION['nome'])){
                              exit();
                          } else{
                  
-                            $sql="SELECT pedido.cod_pedido, pedido.DataVenda, pedido.ValorTotal, pedido.CNPJEmitente, pedido.CNPJ_Destinatario, pedido.CNPJ_Transportadora, pedido.Situacao FROM `pedido` 
-                            LEFT JOIN itenspedido ON pedido.cod_pedido = itenspedido.cod_pedido 
-                            ORDER BY `cod_pedido` ASC";
+                            $sql="SELECT pedido.cod_pedido, pedido.DataVenda, pedido.ValorTotal, pedido.CNPJEmitente, pedido.CNPJ_Destinatario, pedido.CNPJ_Transportadora, pedido.Situacao 
+                            FROM `pedido`";
                             
                             $execute = $conexao -> query($sql);
                             if($execute && $execute -> num_rows > 0){
-                                $row = $execute -> fetch_assoc();
-                                $cod_pedido = $row['cod_pedido'];
-                                $DataVenda = $row['DataVenda'];
-                                $ValorTotal = $row['ValorTotal'];
-                                $CNPJEmitente = $row['CNPJEmitente'];
-                                $CNPJDestinatario = $row['CNPJ_Destinatario'];
-                                $CNPJTransportadora = $row['CNPJ_Transportadora'];
-                                $Situacao = $row['Situacao'];
                                 echo "
                                     <div class=\"tablebox\">
                                         Confira os pedidos já criados:
@@ -126,7 +117,7 @@ if (empty($_SESSION['nome'])){
                                                 <th>Situação</th>
                                                 <th>Ações</th>
                                             </tr>";
-                                            while($row = $execute-> fetch_array()){
+                                            while($row = $execute-> fetch_assoc()){
                                                 echo "
                                                     <tr>
                                                         <td>".$row['cod_pedido']."</td>
@@ -138,7 +129,7 @@ if (empty($_SESSION['nome'])){
                                                         <td>".$row['Situacao']."</td>
                                                         <td>
                                                             <form action=\"meuspedidos.php\" method=\"POST\">
-                                                                <input type=\"hidden\" name=\"cod_pedido\" value=\"" . $cod_pedido . "\" >
+                                                                <input type=\"hidden\" name=\"cod_pedido\" value=\"" . $row['cod_pedido'] . "\" >
                                                                 <input type=\"submit\" name=\"VerProdutos\" value=\"Ver Produtos\" style=\"display:block;\">
                                                             </form>
                                                         </td>
@@ -149,29 +140,20 @@ if (empty($_SESSION['nome'])){
                          echo"
                             </table>
                     </div>";
-                         $hostname = "127.0.0.1";
-                         $user = "root";
-                         $password = "";
-                         $database = "logistica";
-                     
-                         $conexao = new mysqli($hostname,$user,$password,$database);
-                     
-                         if ($conexao -> connect_errno) {
-                             echo "Failed to connect to MySQL: " . $conexao -> connect_error;
-                             exit();
-                         } else{
-                            if(isset($_POST['cod_pedido'])){
-                                $sql = "SELECT produtos.cod_produto, produtos.PrecoUNI, produtos.Nome, produtos.PesoGramas, produtos.NCM, produtos.UN, itenspedido.Quantidade, itenspedido.ValorTotal 
+
+                            if(isset($_POST['VerProdutos']) && !empty($_POST['cod_pedido'])){   
+                                $cod_pedido = $conexao -> real_escape_string($_POST['cod_pedido']);
+                                $sql2 = "SELECT produtos.cod_produto, produtos.PrecoUNI, produtos.Nome, produtos.PesoGramas, produtos.NCM, produtos.UN, itenspedido.Quantidade, itenspedido.ValorTotal 
                                 FROM produtos
                                 LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto
                                 WHERE itenspedido.cod_pedido = $cod_pedido ORDER BY produtos.Nome ASC";
     
-                                $execute = $conexao -> query($sql);
+                                $execute = $conexao -> query($sql2);
                                 if($execute && $execute -> num_rows > 0){
                                     echo "
                                     <div class='main'>
                                         <div class='tablebox'>
-                                            <h7>Confira os produtos já adicionados ao pedido:</h7>
+                                            <h7>Confira os produtos já adicionados ao pedido ".$cod_pedido.":</h7>
                                             <table class='tabela'>
                                                 <tr>
                                                     <th>Nome</th>
@@ -181,7 +163,7 @@ if (empty($_SESSION['nome'])){
                                                     <th>NCM</th>
                                                     <th>Valor total</th>
                                                 </tr>";
-                                            while($row = $execute-> fetch_array()){
+                                            while($row = $execute-> fetch_assoc()){
                                                 echo "
                                                 <tr>
                                                     <td>" . htmlspecialchars($row['Nome']) . "</td>
@@ -198,7 +180,6 @@ if (empty($_SESSION['nome'])){
                             </table>
                     </div>";
                                 }
-                            }
 echo '
                         </div>
                     </div>

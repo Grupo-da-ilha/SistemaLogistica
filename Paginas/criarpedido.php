@@ -16,9 +16,6 @@
 // Iniciar uma sessão
 session_start();
 
-if (isset($_POST['enviar_pedido'])) {
-    $_SESSION['cod_pedido'] = "";
-}
 
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
@@ -35,10 +32,6 @@ if (empty($_SESSION['nome'])){
         echo "Failed to connect to MySQL: " . $conexao->connect_error;
         exit();
     }else{
-        if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
-            $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
-            $_SESSION['cod_pedido'] = $cod_pedido; 
-        }
 
     }
     echo ' <header>
@@ -108,7 +101,7 @@ if (empty($_SESSION['nome'])){
                                     <h4>CRIAR:</h4>
                             <div class="options-criarpedido">
                                 <h5>COD PEDIDO:</h5>
-                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido">
+                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido" value='.$_SESSION['cod_pedido'].'>
                             </div>
                             <div class="options-criarpedido">
                                 <h5>FORNECEDOR:</h5>
@@ -159,7 +152,6 @@ if (empty($_SESSION['nome'])){
                                                 echo "Failed to connect to MySQL: " . $conexao->connect_error;
                                                 exit();
                                             }else{
-
                                             if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
                                                 //Criando variáveis
                                                 $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
@@ -173,6 +165,8 @@ if (empty($_SESSION['nome'])){
                                                 if($executar->num_rows > 0){
                                                     echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</h6>";
 
+                                                    $sql = "UPDATE pedido SET Situacao = 'Em processamento' WHERE cod_pedido = '".$_SESSION['cod_pedido']."'";
+                                                    $execute = $conexao-> query($sql);
                                                 } else {
                                                     $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
                                                     $selectCNPJFabricante = "SELECT CNPJ FROM fabricantes WHERE Nome = '$nomeFabri'";
@@ -189,7 +183,8 @@ if (empty($_SESSION['nome'])){
                                                         if($execute && $execute -> num_rows > 0){
                                                             $row = $execute -> fetch_assoc();
                                                             $_SESSION['CNPJTransp'] = $row['CNPJ'];
-                                                            $sql = "INSERT INTO pedido (cod_pedido, DataVenda, ValorTotal, CNPJEmitente, CNPJ_Destinatario, CNPJ_Transportadora, Situacao) VALUES ('$cod_pedido', '$datahoje', 0.0, '".$_SESSION['CNPJFabri']."', '03.774.819/0001-02', '".$_SESSION['CNPJTransp']."', 'Em Processamento')";
+                                                            $sql = "INSERT INTO pedido (cod_pedido, DataVenda, ValorTotal, CNPJEmitente, CNPJ_Destinatario, CNPJ_Transportadora, Situacao, InformacaoAdicional) 
+                                                            VALUES ('$cod_pedido', '$datahoje', 0.0, '".$_SESSION['CNPJFabri']."', '03.774.819/0001-02', '".$_SESSION['CNPJTransp']."', 'Em Processamento', '')";
                                                             $result = $conexao->query($sql);
                                             
                                                             if ($result) {
@@ -260,6 +255,9 @@ if (empty($_SESSION['nome'])){
                                                     $valorTotalItem = $row['Quantidade'] * $row['PrecoUNI'];
                                                     $valorTotalPedido += $valorTotalItem;
                                                     $_SESSION['ValorTotalPedido'] = $valorTotalPedido;
+
+                                                    $sql = "UPDATE `pedido` SET ValorTotal = '" . $valorTotalPedido . "' WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
+                                                    $resultado = $conexao->query($sql);
                                                     echo "<tr>
                                                             <td>" . htmlspecialchars($row['Nome']) . "</td>
                                                             <td>" . htmlspecialchars($row['UN']) . "</td>
@@ -289,6 +287,7 @@ if (empty($_SESSION['nome'])){
                                                         <form action=\"function/processoItens.php\" method=\"POST\">
                                                             <div class=\"input-finalizar-pedido\">
                                                                 <input type=\"hidden\" name=\"codigoPedido\" value=\"" .$_SESSION['cod_pedido']. "\" style=\"display: block;\">
+                                                                <textarea id=\"texto\" name=\"texto\" rows=\"4\" cols=\"50\" placeholder=\"Informações adicionais para sua DANFE\"></textarea><br>
                                                                 <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
                                                             </div>
                                                         </form>
