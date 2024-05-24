@@ -16,10 +16,31 @@
 // Iniciar uma sessão
 session_start();
 
+if (isset($_POST['enviar_pedido'])) {
+    $_SESSION['cod_pedido'] = "";
+}
+
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
 } else {
+    $hostname = "127.0.0.1";
+    $user = "root";
+    $password = "";
+    $database = "logistica";
+
+    $conexao = new mysqli($hostname, $user, $password, $database);
+
+    if ($conexao->connect_errno) {
+        echo "Failed to connect to MySQL: " . $conexao->connect_error;
+        exit();
+    }else{
+        if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
+            $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
+            $_SESSION['cod_pedido'] = $cod_pedido; 
+        }
+
+    }
     echo ' <header>
         <div class="container">
             <div class="main-horizontal">
@@ -87,7 +108,7 @@ if (empty($_SESSION['nome'])){
                                 <h4>CRIAR:</h4>
                             <div class="options-criarpedido">
                                 <h5>COD PEDIDO:</h5>
-                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido" required>
+                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido">
                             </div>
                             <div class="options-criarpedido">
                                 <h5>FORNECEDOR:</h5>
@@ -140,20 +161,20 @@ if (empty($_SESSION['nome'])){
                                             }else{
 
                                             if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
+                                                //Criando variáveis
                                                 $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
                                                 $_SESSION['cod_pedido'] = $cod_pedido; 
-                                                date_default_timezone_set('America/Sao_Paulo'); 
                                                 $datahoje = date("Y-m-d H:i:s");
+                                                date_default_timezone_set('America/Sao_Paulo'); 
 
                                                 $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '$cod_pedido'";
                                                 $executar = $conexao->query($selectPedido);
 
                                                 if($executar->num_rows > 0){
-                                                    echo "<h6>O pedido já foi criado anteriormente</h6>";
                                                     echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</h6>";
+
                                                 } else {
                                                     $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
-
                                                     $selectCNPJFabricante = "SELECT CNPJ FROM fabricantes WHERE Nome = '$nomeFabri'";
                                                     $execute = $conexao -> query($selectCNPJFabricante);
 
@@ -176,10 +197,15 @@ if (empty($_SESSION['nome'])){
                                                             } else {
                                                                 echo "<h6>Erro ao criar pedido: " . htmlspecialchars($conexao->error) . "</h6>";
                                                             }
+                                                        }else{
+                                                            echo "<h6>Por favor selecione a Transportadora</h6>";
                                                         }
 
+                                                    }else{
+                                                        echo "<h6>Por favor selecione o Fornecedor</h6>";
                                                     }
                                                 }
+                                            } else{
                                             }
 
                                             if (isset($_POST['enviar_produto']) && !empty($_POST['codProduto'])) {
@@ -203,6 +229,7 @@ if (empty($_SESSION['nome'])){
                                                         echo "<h6>Erro ao adicionar produto ao pedido: " . htmlspecialchars($conexao->error) . "</h6>";
                                                     }
                                                 } else {
+                                                    echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($_SESSION['cod_pedido']) . "</h6>";
                                                     echo "<h6>Produto não encontrado.</h6>";
                                                 }
                                             }
@@ -215,6 +242,7 @@ if (empty($_SESSION['nome'])){
 
                                             if ($resul && $resul->num_rows > 0) {
                                                 $valorTotalPedido = 0;
+                                                echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($_SESSION['cod_pedido']) . "</h6>";
                                                 echo "<div class='main'>
                                                         <div class='tablebox'>
                                                             <h7>Confira os produtos já adicionados ao pedido:</h7>
@@ -266,6 +294,7 @@ if (empty($_SESSION['nome'])){
                                                     </div>
                                                     </div>";
                                             } else {
+                                                echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($_SESSION['cod_pedido']) . "</h6>";
                                                 echo "<p>Erro ao buscar produtos, nenhum produto foi adicionado ainda " . htmlspecialchars($conexao->error) . "</p>";
                                             }
 
