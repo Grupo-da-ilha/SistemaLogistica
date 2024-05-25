@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/pedido.css"/>
+    <link rel="stylesheet" href="../css/danfe.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
 <body>
@@ -91,11 +91,61 @@ if (empty($_SESSION['nome'])){
                                     <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
                                     <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
                                 <h5>NOTA FISCAL:</h5>
-                                    <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
-                                    <a href="meuspedidos.php" class="button-pedidos">Minhas DANFE</a>
+                                    <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
                             </div>
                         </div>
-                        <div class="criar-pedidos-container">';
+                        <div class="criar-pedidos-container">
+                            <h4> VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h5>
+                            <br>
+
+                        ';
+                        $hostname = "127.0.0.1";
+                        $user = "root";
+                        $password = "";
+                        $database = "logistica";
+
+                        $conexao = new mysqli($hostname, $user, $password, $database);
+
+                        if ($conexao->connect_errno) {
+                            echo "Failed to connect to MySQL: " . $conexao->connect_error;
+                            exit();
+                        } else {
+                            $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
+                            nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.cod_pedido
+                            FROM `nota_fiscal` ORDER BY nota_fiscal.cod_pedido ASC";
+
+                            $execute = $conexao -> query($sql);
+
+                            if($execute -> num_rows > 0){
+                                echo '
+                                    <div class="nota_fiscal">';
+                                        while ($row = $execute -> fetch_assoc()){
+                                            echo '
+                                                <h5> DANFE correspondente ao pedido com codigo: ' . htmlspecialchars($row['cod_pedido']) . '</h6>';
+                                            echo '
+                                                <h9> Codigo da DANFE: ' . htmlspecialchars($row['cod_nota']) . '</h9>';
+                                            echo '<br>';
+                                            echo '
+                                                <h9> Chave de acesso da DANFE: ' . htmlspecialchars($row['chave_acesso']) . '</h9>';
+                                            echo '<br>';
+                                            echo '
+                                                <h9> Data de Emissão: ' . htmlspecialchars($row['DataExpedicao']) . '</h9>';
+                                            echo '<br>';
+                                            echo '
+                                                <h9> CNPJ do Emitente: ' . htmlspecialchars($row['CNPJ_Emitente']) . '</h9>'; 
+                                            echo '<br>';
+                                            echo '
+                                                <h9> CNPJ da Transportadora: ' . htmlspecialchars($row['CNPJ_Transportadora']) . '</h9>';  
+                                            echo '<br>';
+                                            echo '
+                                                <h9> CNPJ do Destinatario: ' . htmlspecialchars($row['CNPJ_Destinatario']) . '</h9>';    
+                                            echo '<br>';
+                                            echo '
+                                                <h9> Informações Adicionais: ' . htmlspecialchars($row['InformacoesAdicionais']) . '</h9>';          
+                                        }
+                            }
+
+                        }
 echo' 
                         </div>
                     </div>

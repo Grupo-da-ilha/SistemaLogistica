@@ -21,19 +21,6 @@ if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
 } else {
-    $hostname = "127.0.0.1";
-    $user = "root";
-    $password = "";
-    $database = "logistica";
-
-    $conexao = new mysqli($hostname, $user, $password, $database);
-
-    if ($conexao->connect_errno) {
-        echo "Failed to connect to MySQL: " . $conexao->connect_error;
-        exit();
-    }else{
-
-    }
     echo ' <header>
         <div class="container">
             <div class="main-horizontal">
@@ -92,8 +79,7 @@ if (empty($_SESSION['nome'])){
                                     <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
                                     <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
                                 <h5>NOTA FISCAL:</h5>
-                                    <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
-                                    <a href="meuspedidos.php" class="button-pedidos">Minhas DANFE</a>
+                                    <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
@@ -101,7 +87,7 @@ if (empty($_SESSION['nome'])){
                                     <h4>CRIAR:</h4>
                             <div class="options-criarpedido">
                                 <h5>COD PEDIDO:</h5>
-                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido" value='.$_SESSION['cod_pedido'].'>
+                                <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido"/>
                             </div>
                             <div class="options-criarpedido">
                                 <h5>FORNECEDOR:</h5>
@@ -165,7 +151,7 @@ if (empty($_SESSION['nome'])){
                                                 if($executar->num_rows > 0){
                                                     echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($cod_pedido) . "</h6>";
 
-                                                    $sql = "UPDATE pedido SET Situacao = 'Em processamento' WHERE cod_pedido = '".$_SESSION['cod_pedido']."'";
+                                                    $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = '' WHERE cod_pedido = '".$_SESSION['cod_pedido']."'";
                                                     $execute = $conexao-> query($sql);
                                                 } else {
                                                     $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);

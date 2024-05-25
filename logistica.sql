@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25/05/2024 às 00:27
+-- Tempo de geração: 25/05/2024 às 19:41
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -137,7 +137,10 @@ CREATE TABLE `itenspedido` (
 
 INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `ValorUnitario`, `ValorTotal`) VALUES
 (102, 1, 1, 2, 5.5, 11),
-(103, 2, 1, 1, 1.2, 1.2);
+(103, 2, 1, 1, 1.2, 1.2),
+(104, 1, 10, 5, 5.5, 27.5),
+(105, 2, 10, 10, 1.2, 12),
+(106, 5, 10, 4, 29.99, 119.96);
 
 -- --------------------------------------------------------
 
@@ -146,6 +149,7 @@ INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quant
 --
 
 CREATE TABLE `nota_fiscal` (
+  `cod_nota` int(11) NOT NULL,
   `chave_acesso` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `DataExpedicao` datetime NOT NULL,
   `InformacoesAdicionais` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -159,8 +163,9 @@ CREATE TABLE `nota_fiscal` (
 -- Despejando dados para a tabela `nota_fiscal`
 --
 
-INSERT INTO `nota_fiscal` (`chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `cod_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-('87944123004087564261476436429885448813782899', '2024-05-21 20:18:49', 'Cuidado com os lápis, pois são frágeis', 1, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43');
+INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `cod_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
+(43450, '48767437775590281760064149532611276491065870', '2024-05-21 20:18:49', 'Cuidado com os marca textos', 10, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43'),
+(83381, '71318935030531127611642827486792994874117037', '2024-05-21 20:18:49', 'Cuidado com as tesouras de ponta', 1, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43');
 
 -- --------------------------------------------------------
 
@@ -184,7 +189,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`) VALUES
-(1, '2024-05-21 20:18:49', 12.2, '44.990.901/0001-43', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com os lápis, pois são frágeis');
+(1, '2024-05-21 20:18:49', 12.2, '44.990.901/0001-43', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com as tesouras de ponta'),
+(10, '2024-05-25 19:34:11', 159.46, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com os marca textos');
 
 -- --------------------------------------------------------
 
@@ -228,10 +234,8 @@ CREATE TABLE `projetos` (
 --
 
 INSERT INTO `projetos` (`idprojeto`, `nome`, `Id`) VALUES
-(78, 'SENAI', 123),
-(85, 'SENAI', 123),
-(86, '', 123),
-(87, 'SENAI 4', 123);
+(88, 'SENAI 5', 123),
+(89, '', 123);
 
 -- --------------------------------------------------------
 
@@ -327,7 +331,7 @@ ALTER TABLE `itenspedido`
 -- Índices de tabela `nota_fiscal`
 --
 ALTER TABLE `nota_fiscal`
-  ADD PRIMARY KEY (`chave_acesso`),
+  ADD PRIMARY KEY (`cod_nota`),
   ADD KEY `cod_pedido` (`cod_pedido`),
   ADD KEY `CNPJ_Destinatario` (`CNPJ_Destinatario`),
   ADD KEY `CNPJ_Transportadora` (`CNPJ_Transportadora`),
@@ -381,7 +385,7 @@ ALTER TABLE `cadastro`
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
-  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
@@ -393,7 +397,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- Restrições para tabelas despejadas

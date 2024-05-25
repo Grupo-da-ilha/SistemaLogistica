@@ -48,29 +48,70 @@ if ($conexao->connect_errno) {
             $sql = "UPDATE `pedido` SET InformacaoAdicional = '".$texto."' WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
             $resultado = $conexao->query($sql);
         }
-            if($resultado){
-            $sql="SELECT pedido.cod_pedido, pedido.DataVenda, pedido.ValorTotal, pedido.CNPJEmitente, pedido.CNPJ_Destinatario, pedido.CNPJ_Transportadora, pedido.Situacao, pedido.InformacaoAdicional 
-            FROM `pedido`";
-            $execute = $conexao -> query($sql);
-
-            if($execute -> num_rows > 0){
-                $row = $execute -> fetch_assoc();
-                $total_numeros = 44;
-                $sequencia = array();
-    
-                for($i = 0; $i < $total_numeros; $i++ ){
-                    $numero_aleatorio = rand(0 , 9);
-                    $sequencia[] = $numero_aleatorio;  
-                }
-
-
-                $sql = "INSERT INTO nota_fiscal (chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, cod_pedido) 
-                VALUES ('".implode("", $sequencia)."', '".$row['DataVenda']."', '".$row['CNPJ_Destinatario']."', '".$row['CNPJ_Transportadora']."', '".$row['CNPJEmitente']."', '".$row['InformacaoAdicional']."','".$row['cod_pedido']."') ";
-
-                $execute = $conexao -> query($sql);
+        if ($resultado) {
+            $sql = "SELECT pedido.cod_pedido, pedido.DataVenda, pedido.ValorTotal, pedido.CNPJEmitente, pedido.CNPJ_Destinatario, pedido.CNPJ_Transportadora, pedido.Situacao, pedido.InformacaoAdicional 
+                    FROM `pedido`";
+            $execute = $conexao->query($sql);
         
+            if ($execute->num_rows > 0) {
+                $row = $execute->fetch_assoc();
+        
+                $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
+                        nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario
+                        FROM `nota_fiscal` WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
+                $resultado = $conexao->query($sql);
+        
+                if ($resultado->num_rows > 0) {
+                    $sql = "DELETE FROM nota_fiscal WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
+                    $execute = $conexao->query($sql);
+        
+                    if ($execute) {
+                        $total_numeros = 44;
+                        $sequencia = array();
+        
+                        for ($i = 0; $i < $total_numeros; $i++) {
+                            $numero_aleatorio = rand(0, 9);
+                            $sequencia[] = $numero_aleatorio;
+                        }
+        
+                        $total_numero = 5 ;
+                        $cod_nota = array();
+        
+                        for ($i = 0; $i < $total_numero; $i++) {
+                            $numero_aleatorio = rand(0, 9);
+                            $cod_nota[] = $numero_aleatorio;
+                        }
+        
+                        $sql = "INSERT INTO nota_fiscal (cod_nota, chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, cod_pedido) 
+                                VALUES ('" . implode($cod_nota) . "', '" . implode($sequencia) . "', '" . $row['DataVenda'] . "', '" . $row['CNPJ_Destinatario'] . "', '" . $row['CNPJ_Transportadora'] . "', '" . $row['CNPJEmitente'] . "', '" .$texto. "', '" . $_SESSION['cod_pedido'] . "')";
+        
+                        $execute = $conexao->query($sql);
+                    }
+                } else {
+                    $total_numeros = 44;
+                    $sequencia = array();
+        
+                    for ($i = 0; $i < $total_numeros; $i++) {
+                        $numero_aleatorio = rand(0, 9);
+                        $sequencia[] = $numero_aleatorio;
+                    }
+        
+                    $total_numero = 5;
+                    $cod_nota = array();
+        
+                    for ($i = 0; $i < $total_numero; $i++) {
+                        $numero_aleatorio = rand(0, 9);
+                        $cod_nota[] = $numero_aleatorio;
+                    }
+        
+                    $sql = "INSERT INTO nota_fiscal (cod_nota, chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, cod_pedido) 
+                            VALUES ('" . implode($cod_nota) . "', '" . implode($sequencia) . "', '" . $row['DataVenda'] . "', '" . $row['CNPJ_Destinatario'] . "', '" . $row['CNPJ_Transportadora'] . "', '" . $row['CNPJEmitente'] . "', '" . $texto. "', '" . $_SESSION['cod_pedido'] . "')";
+        
+                    $execute = $conexao->query($sql);
+                }
             }
         }
+        
         
         $conexao->close();
         header('Location: ../danfe.php', true, 301);
