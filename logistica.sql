@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25/05/2024 às 19:41
+-- Tempo de geração: 27/05/2024 às 03:26
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -55,6 +55,10 @@ CREATE TABLE `clientes` (
   `CNPJ` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `Nome` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `CEP` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `rua` varchar(255) NOT NULL,
+  `bairro` varchar(255) NOT NULL,
+  `cidade` varchar(255) NOT NULL,
+  `estado` varchar(255) NOT NULL,
   `Telefone` varchar(22) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -62,8 +66,8 @@ CREATE TABLE `clientes` (
 -- Despejando dados para a tabela `clientes`
 --
 
-INSERT INTO `clientes` (`CNPJ`, `Nome`, `CEP`, `Telefone`) VALUES
-('03.774.819/0001-02', 'SENAI ITAJAÍ', '88305-55', '(47) 3341-2900');
+INSERT INTO `clientes` (`CNPJ`, `Nome`, `CEP`, `rua`, `bairro`, `cidade`, `estado`, `Telefone`) VALUES
+('03.774.819/0001-02', 'SENAI ITAJAÍ', '88305-55', 'Blumenau', 'São João', 'Itajaí', 'SC', '(47) 3341-2900');
 
 -- --------------------------------------------------------
 
@@ -90,6 +94,10 @@ CREATE TABLE `fabricantes` (
   `CNPJ` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `Nome` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `CEP` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `rua` varchar(255) NOT NULL,
+  `bairro` varchar(255) NOT NULL,
+  `cidade` varchar(255) NOT NULL,
+  `estado` varchar(255) NOT NULL,
   `Telefone` varchar(22) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
@@ -97,10 +105,10 @@ CREATE TABLE `fabricantes` (
 -- Despejando dados para a tabela `fabricantes`
 --
 
-INSERT INTO `fabricantes` (`CNPJ`, `Nome`, `CEP`, `Telefone`) VALUES
-('03.389.993/0001-23', 'CIS', '88.304-101', '(47) 3247-9763'),
-('07.175.725/0001-60', 'WEG', '88.311-720', '(47) 3276-7311'),
-('44.990.901/0001-43', 'Tilibra', '17013-900', '(14) 3235-4003');
+INSERT INTO `fabricantes` (`CNPJ`, `Nome`, `CEP`, `rua`, `bairro`, `cidade`, `estado`, `Telefone`) VALUES
+('03.389.993/0001-23', 'CIS', '88.304-101', 'Heitor Liberato', 'São João', 'Itajaí', 'SC', '(47) 3247-9763'),
+('07.175.725/0001-60', 'WEG', '88.311-720', 'Rosa Orsi Dalçoquio', 'Cordeiros', 'Itajaí', 'SC', '(47) 3276-7311'),
+('44.990.901/0001-43', 'Tilibra', '17013-900', 'Aymorés', 'Vila Antártica', 'Bauru', 'SP', '(14) 3235-4003');
 
 -- --------------------------------------------------------
 
@@ -164,8 +172,8 @@ CREATE TABLE `nota_fiscal` (
 --
 
 INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `cod_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(43450, '48767437775590281760064149532611276491065870', '2024-05-21 20:18:49', 'Cuidado com os marca textos', 10, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43'),
-(83381, '71318935030531127611642827486792994874117037', '2024-05-21 20:18:49', 'Cuidado com as tesouras de ponta', 1, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43');
+(15604, '92945946790770688188913482545245528729993387', '2024-05-21 20:18:49', 'Cuidado com os marca-textos', 10, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43'),
+(16224, '86549926145566795810001445799806792108984831', '2024-05-21 20:18:49', '', 1, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43');
 
 -- --------------------------------------------------------
 
@@ -189,8 +197,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`) VALUES
-(1, '2024-05-21 20:18:49', 12.2, '44.990.901/0001-43', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com as tesouras de ponta'),
-(10, '2024-05-25 19:34:11', 159.46, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com os marca textos');
+(1, '2024-05-21 20:18:49', 12.2, '44.990.901/0001-43', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', ''),
+(10, '2024-05-25 19:34:11', 159.46, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com os marca-textos');
 
 -- --------------------------------------------------------
 
@@ -235,7 +243,9 @@ CREATE TABLE `projetos` (
 
 INSERT INTO `projetos` (`idprojeto`, `nome`, `Id`) VALUES
 (88, 'SENAI 5', 123),
-(89, '', 123);
+(89, '', 123),
+(90, 'SENAI 2', 123),
+(91, 'SENAI', 123);
 
 -- --------------------------------------------------------
 
@@ -260,9 +270,9 @@ CREATE TABLE `transportadoras` (
 --
 
 INSERT INTO `transportadoras` (`CNPJ`, `QuantidadeFrota`, `Nome`, `CEP`, `Telefone`, `bairro`, `rua`, `cidade`, `estado`) VALUES
-('07.639.029/0001-67', 15, 'Tac Transportes', '88301-49', '(47) 2104-4600', 'Fazenda', 'Rua J?lio Coutinho', 'Itaja?', 'SC'),
-('13.161.095/0001-77', 30, 'NSL Brasil', '88303-20', '(47) 3045-4141', 'Vila Oper?ria', 'Rua Carlos Seara', 'Itaja?', 'SC'),
-('42.555.657/0001-65', 20, 'Graédi Transportes', '88303-36', '(47) 3011-3400', 'S?o Judas', 'Rua Rosendo Claudino de Freitas', 'Itaja?', 'SC');
+('07.639.029/0001-67', 15, 'Tac Transportes', '88301-49', '(47) 2104-4600', 'Fazenda', 'Rua Júlio Coutinho', 'Itajaí', 'SC'),
+('13.161.095/0001-77', 30, 'NSL Brasil', '88303-20', '(47) 3045-4141', 'Vila Operária', 'Rua Carlos Seara', 'Itajaí', 'SC'),
+('42.555.657/0001-65', 20, 'Graédi Transportes', '88303-36', '(47) 3011-3400', 'S?o Judas', 'Rua Rosendo Claudino de Freitas', 'Itajaí', 'SC');
 
 -- --------------------------------------------------------
 
@@ -397,7 +407,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- Restrições para tabelas despejadas

@@ -97,7 +97,8 @@ if (empty($_SESSION['nome'])){
                              exit();
                          } else{
                  
-                            $sql="SELECT pedido.cod_pedido, pedido.DataVenda, pedido.ValorTotal, pedido.CNPJEmitente, pedido.CNPJ_Destinatario, pedido.CNPJ_Transportadora, pedido.Situacao 
+                            $sql="SELECT pedido.cod_pedido, pedido.DataVenda, pedido.ValorTotal, pedido.CNPJEmitente, 
+                            pedido.CNPJ_Destinatario, pedido.CNPJ_Transportadora, pedido.Situacao, pedido.InformacaoAdicional
                             FROM `pedido`";
                             
                             $execute = $conexao -> query($sql);
@@ -114,6 +115,7 @@ if (empty($_SESSION['nome'])){
                                                 <th>CNPJ Destinatario</th>
                                                 <th>CNPJ Transportadora</th>
                                                 <th>Situação</th>
+                                                <th>Informações Adicionais</th>
                                                 <th>Ações</th>
                                             </tr>";
                                             while($row = $execute-> fetch_assoc()){
@@ -126,6 +128,7 @@ if (empty($_SESSION['nome'])){
                                                         <td>".$row['CNPJ_Destinatario']."</td>
                                                         <td>".$row['CNPJ_Transportadora']."</td>
                                                         <td>".$row['Situacao']."</td>
+                                                        <td>".$row['InformacaoAdicional']."</td>
                                                         <td>
                                                             <form action=\"meuspedidos.php\" method=\"POST\">
                                                                 <input type=\"hidden\" name=\"cod_pedido\" value=\"" . $row['cod_pedido'] . "\" >

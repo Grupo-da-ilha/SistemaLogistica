@@ -13,10 +13,9 @@
 </head>
 <body>
 <?php
-// Iniciar uma sessão
 session_start();
 
-if (empty($_SESSION['nome'])){
+if (empty($_SESSION['nome'])) {
     header('Location: sair.php');
     exit();
 } else {
@@ -30,23 +29,22 @@ if (empty($_SESSION['nome'])){
     if ($conexao->connect_errno) {
         echo "Failed to connect to MySQL: " . $conexao->connect_error;
         exit();
-    }else{
-
     }
-    echo ' <header>
+
+    echo '<header>
         <div class="container">
             <div class="main-horizontal">
                 <ul class="ul-main">
                     <li class="li-main">
                         <input id="main-button" type="checkbox" />
-                            <label for="main-button">
-                                <div class="div-button-main">
-                                    <span class="button-main"></span>
-                                </div>
+                        <label for="main-button">
+                            <div class="div-button-main">
+                                <span class="button-main"></span>
+                            </div>
                         </label>
                         <nav>
                             <ul class="ul-button">
-                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                                <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
@@ -58,7 +56,7 @@ if (empty($_SESSION['nome'])){
                     </li>
                     <li class="li-main">
                         <h1>SENAI SCP</h1>
-                        <h2>'.$_SESSION['nome'].'</h2>
+                        <h2>' . $_SESSION['nome'] . '</h2>
                     </li>
                 </ul>
             </div>
@@ -80,80 +78,257 @@ if (empty($_SESSION['nome'])){
             </div>
             <div class="criar-pedido-container">
                 <div class="titulo-pedido">
-                    <h3>CRIAÇÃO DO PEDIDO</h3>    
+                    <h3>CRIAÇÃO DO PEDIDO</h3>
                 </div>
                 <div class="info-total">
                     <div class="criar-pedido">
                         <div class="submenus-pedidos">
-                            <h4> INFORMAÇÕES </h4>
+                            <h4>INFORMAÇÕES</h4>
                             <div class="info-pedido">
                                 <h5>PEDIDOS:</h5>
-                                    <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
-                                    <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
+                                <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
+                                <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
                                 <h5>NOTA FISCAL:</h5>
-                                    <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
+                                <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
-                            <h4> VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h5>
-                            <br>
+                            <h4>VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h4>
+                            <form action="danfe.php" method="POST" style="display: flex;">
+                                <input type="text" name="cod_pedido" placeholder="Cod do pedido" style="display: block; margin-right: 10px">
+                                <input type="submit" name="enviar_cod" value="OK" style="display: block; width: auto;">
+                            </form>
+                            <br>';
+    if(!isset($_POST['enviar_cod']) && empty($_POST['cod_pedido'])){
+    $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
+            nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.cod_pedido
+            FROM nota_fiscal WHERE nota_fiscal.cod_pedido = '".$_SESSION['cod_pedido']."' ORDER BY nota_fiscal.cod_pedido ASC";
 
-                        ';
-                        $hostname = "127.0.0.1";
-                        $user = "root";
-                        $password = "";
-                        $database = "logistica";
+    $execute = $conexao->query($sql);
 
-                        $conexao = new mysqli($hostname, $user, $password, $database);
+    if ($execute && $execute->num_rows > 0) {
+        $row = $execute->fetch_assoc();
+        $CNPJ_fabricante = $row['CNPJ_Emitente'];
+        $CNPJ_Transportadora = $row['CNPJ_Transportadora'];
+        $CNPJ_destinatario = $row['CNPJ_Destinatario'];
+        $cod_nota = $row['cod_nota'];
+        $chave_acesso = $row['chave_acesso'];
+        $Data_expedicao = $row['DataExpedicao'];
+        $InformacoesAdicionais = $row['InformacoesAdicionais'];
 
-                        if ($conexao->connect_errno) {
-                            echo "Failed to connect to MySQL: " . $conexao->connect_error;
-                            exit();
-                        } else {
-                            $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
-                            nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.cod_pedido
-                            FROM `nota_fiscal` ORDER BY nota_fiscal.cod_pedido ASC";
+        $sqlTransp = "SELECT * FROM transportadoras WHERE CNPJ = '".$CNPJ_Transportadora."'";
+        $executeTransp = $conexao->query($sqlTransp);
 
-                            $execute = $conexao -> query($sql);
+        if ($executeTransp && $executeTransp->num_rows > 0) {
+            $rowTransp = $executeTransp->fetch_assoc();
+            $nomeTransp = $rowTransp['Nome'];
+            $FrotaTransp = $rowTransp['QuantidadeFrota'];
+            $CEPTransp = $rowTransp['CEP'];
+            $TelefeoneTransp = $rowTransp['Telefone'];
+            $BairroTransp = $rowTransp['bairro'];
+            $RuaTransp = $rowTransp['rua'];
+            $CidadeTransp = $rowTransp['cidade'];
+            $EstadoTransp = $rowTransp['estado'];
 
-                            if($execute -> num_rows > 0){
-                                echo '
-                                    <div class="nota_fiscal">';
-                                        while ($row = $execute -> fetch_assoc()){
-                                            echo '
-                                                <h5> DANFE correspondente ao pedido com codigo: ' . htmlspecialchars($row['cod_pedido']) . '</h6>';
-                                            echo '
-                                                <h9> Codigo da DANFE: ' . htmlspecialchars($row['cod_nota']) . '</h9>';
-                                            echo '<br>';
-                                            echo '
-                                                <h9> Chave de acesso da DANFE: ' . htmlspecialchars($row['chave_acesso']) . '</h9>';
-                                            echo '<br>';
-                                            echo '
-                                                <h9> Data de Emissão: ' . htmlspecialchars($row['DataExpedicao']) . '</h9>';
-                                            echo '<br>';
-                                            echo '
-                                                <h9> CNPJ do Emitente: ' . htmlspecialchars($row['CNPJ_Emitente']) . '</h9>'; 
-                                            echo '<br>';
-                                            echo '
-                                                <h9> CNPJ da Transportadora: ' . htmlspecialchars($row['CNPJ_Transportadora']) . '</h9>';  
-                                            echo '<br>';
-                                            echo '
-                                                <h9> CNPJ do Destinatario: ' . htmlspecialchars($row['CNPJ_Destinatario']) . '</h9>';    
-                                            echo '<br>';
-                                            echo '
-                                                <h9> Informações Adicionais: ' . htmlspecialchars($row['InformacoesAdicionais']) . '</h9>';          
-                                        }
-                            }
+            $sqlFabri = "SELECT * FROM fabricantes WHERE CNPJ = '".$CNPJ_fabricante."'";
+            $executeFabri = $conexao->query($sqlFabri);
 
-                        }
-echo' 
+            if ($executeFabri && $executeFabri->num_rows > 0) {
+                $rowFabri = $executeFabri->fetch_assoc();
+                $nomeFabri = $rowFabri['Nome'];
+                $CEPFabri = $rowFabri['CEP'];
+                $TelefeoneFabri = $rowFabri['Telefone'];
+                $BairroFabri = $rowFabri['bairro'];
+                $RuaFabri = $rowFabri['rua'];
+                $CidadeFabri = $rowFabri['cidade'];
+                $EstadoFabri = $rowFabri['estado'];
+
+                $sqlDest = "SELECT * FROM clientes WHERE CNPJ = '".$CNPJ_destinatario."'";
+                $executeDest = $conexao->query($sqlDest);
+
+                if ($executeDest && $executeDest->num_rows > 0) {
+                    $rowDest = $executeDest->fetch_assoc();
+                    $nomeDest = $rowDest['Nome'];
+                    $CEPDest = $rowDest['CEP'];
+                    $TelefeoneDest = $rowDest['Telefone'];
+                    $BairroDest = $rowDest['bairro'];
+                    $RuaDest = $rowDest['rua'];
+                    $CidadeDest = $rowDest['cidade'];
+                    $EstadoDest = $rowDest['estado'];
+
+                    echo '<div class="nota_fiscal" style="display:flex;">';
+                    echo '<div class="nota_transp">';
+                    echo '<h5>DANFE correspondente ao pedido com código: ' . htmlspecialchars($_SESSION['cod_pedido']) . '</h5>';
+                    echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
+                    echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
+                    echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
+                    echo '<h7>Informações da Transportadora: ' . htmlspecialchars($nomeTransp) . '</h7>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_Transportadora) . '</p>';
+                    echo '<p>Quantidade de Frota: ' . htmlspecialchars($FrotaTransp) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneTransp) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPTransp) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroTransp) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaTransp) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeTransp) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoTransp) . '</p>';
+                    echo '<hr>';
+                    echo '</div>';
+                    echo '<div class="nota_fabriDest">';
+                    echo '<h7>Informações do Emitente: ' . htmlspecialchars($nomeFabri) . '</h7>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_fabricante) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneFabri) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPFabri) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroFabri) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaFabri) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeFabri) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoFabri) . '</p>';
+                    echo '<hr>';
+                    echo '<h7>Informações do Destinatário: ' . htmlspecialchars($nomeDest) . '</h7>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_destinatario) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneDest) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPDest) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroDest) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaDest) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeDest) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoDest) . '</p>';
+                    echo '<hr>';
+                    echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
+                    echo '</div>';
+                    echo '</div>';
+                } else {
+                    echo "<br><br>Destinatário não encontrado";
+                }
+            } else {
+                echo "<br><br>Fabricante não encontrado";
+            }
+        } else {
+            echo "<br><br>Transportadora não encontrada";
+        }
+    } else {
+        echo "<br><br>Pedido não encontrado";
+    }
+}
+
+if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
+    $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
+    
+    $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
+            nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.cod_pedido
+            FROM nota_fiscal WHERE nota_fiscal.cod_pedido = '".$cod_pedido."' ORDER BY nota_fiscal.cod_pedido ASC";
+
+    $execute = $conexao->query($sql);
+
+    if ($execute && $execute->num_rows > 0) {
+        $row = $execute->fetch_assoc();
+        $CNPJ_fabricante = $row['CNPJ_Emitente'];
+        $CNPJ_Transportadora = $row['CNPJ_Transportadora'];
+        $CNPJ_destinatario = $row['CNPJ_Destinatario'];
+        $cod_nota = $row['cod_nota'];
+        $chave_acesso = $row['chave_acesso'];
+        $Data_expedicao = $row['DataExpedicao'];
+        $InformacoesAdicionais = $row['InformacoesAdicionais'];
+
+        $sqlTransp = "SELECT * FROM transportadoras WHERE CNPJ = '".$CNPJ_Transportadora."'";
+        $executeTransp = $conexao->query($sqlTransp);
+
+        if ($executeTransp && $executeTransp->num_rows > 0) {
+            $rowTransp = $executeTransp->fetch_assoc();
+            $nomeTransp = $rowTransp['Nome'];
+            $FrotaTransp = $rowTransp['QuantidadeFrota'];
+            $CEPTransp = $rowTransp['CEP'];
+            $TelefeoneTransp = $rowTransp['Telefone'];
+            $BairroTransp = $rowTransp['bairro'];
+            $RuaTransp = $rowTransp['rua'];
+            $CidadeTransp = $rowTransp['cidade'];
+            $EstadoTransp = $rowTransp['estado'];
+
+            $sqlFabri = "SELECT * FROM fabricantes WHERE CNPJ = '".$CNPJ_fabricante."'";
+            $executeFabri = $conexao->query($sqlFabri);
+
+            if ($executeFabri && $executeFabri->num_rows > 0) {
+                $rowFabri = $executeFabri->fetch_assoc();
+                $nomeFabri = $rowFabri['Nome'];
+                $CEPFabri = $rowFabri['CEP'];
+                $TelefeoneFabri = $rowFabri['Telefone'];
+                $BairroFabri = $rowFabri['bairro'];
+                $RuaFabri = $rowFabri['rua'];
+                $CidadeFabri = $rowFabri['cidade'];
+                $EstadoFabri = $rowFabri['estado'];
+
+                $sqlDest = "SELECT * FROM clientes WHERE CNPJ = '".$CNPJ_destinatario."'";
+                $executeDest = $conexao->query($sqlDest);
+
+                if ($executeDest && $executeDest->num_rows > 0) {
+                    $rowDest = $executeDest->fetch_assoc();
+                    $nomeDest = $rowDest['Nome'];
+                    $CEPDest = $rowDest['CEP'];
+                    $TelefeoneDest = $rowDest['Telefone'];
+                    $BairroDest = $rowDest['bairro'];
+                    $RuaDest = $rowDest['rua'];
+                    $CidadeDest = $rowDest['cidade'];
+                    $EstadoDest = $rowDest['estado'];
+
+                    echo '<div class="nota_fiscal" style="display:flex;">';
+                    echo '<div class="nota_transp">';
+                    echo '<h5>DANFE correspondente ao pedido com código: ' . htmlspecialchars($cod_pedido) . '</h5>';
+                    echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
+                    echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
+                    echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
+                    echo '<h7>Informações da Transportadora: ' . htmlspecialchars($nomeTransp) . '</h7>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_Transportadora) . '</p>';
+                    echo '<p>Quantidade de Frota: ' . htmlspecialchars($FrotaTransp) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneTransp) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPTransp) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroTransp) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaTransp) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeTransp) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoTransp) . '</p>';
+                    echo '<hr>';
+                    echo '</div>';
+                    echo '<div class="nota_fabriDest">';
+                    echo '<h7>Informações do Emitente: ' . htmlspecialchars($nomeFabri) . '</h7>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_fabricante) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneFabri) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPFabri) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroFabri) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaFabri) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeFabri) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoFabri) . '</p>';
+                    echo '<hr>';
+                    echo '<h7>Informações do Destinatário: ' . htmlspecialchars($nomeDest) . '</h7>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_destinatario) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneDest) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPDest) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroDest) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaDest) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeDest) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoDest) . '</p>';
+                    echo '<hr>';
+                    echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
+                    echo '</div>';
+                    echo '</div>';
+                } else {
+                    echo "<br><br>Destinatário não encontrado";
+                }
+            } else {
+                echo "<br><br>Fabricante não encontrado";
+            }
+        } else {
+            echo "<br><br>Transportadora não encontrada";
+        }
+    } else {
+        echo "<br><br>Pedido não encontrado";
+    }
+}
+
+    echo ' 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </main>'; 
+    </main>';
 }
-    ?>
+?>
 </body>
 </html>
