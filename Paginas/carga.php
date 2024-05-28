@@ -76,13 +76,13 @@ if (empty($_SESSION['nome'])){
                             <div class="info-recebimento">
                                 <form action="carga.php" method="POST">
                                     <h5>NOTA FISCAL:</h5>
-                                    <input type="text" id="idnotafiscal" class="idnotafiscal" name="nota_fiscal" placeholder="N° Nota fiscal:" required>
+                                    <input type="text" id="idnotafiscal" class="idnotafiscal" name="nota_fiscal" placeholder="N° Nota fiscal:" >
                                     <h5>PEDIDO DE COMPRA:</h5>
-                                    <input type="text" id="pedidodecompra" class="pedidodecompra" name="cod_pedido" placeholder="Pedido de compra:" required>
+                                    <input type="text" id="pedidodecompra" class="pedidodecompra" name="cod_pedido" placeholder="Pedido de compra:" >
                                     <input type="submit" id="enviar-recebimento-pedido" name="enviar-pedido" value="ENVIAR" style="display:block; margin-top: 5px;" onsubmit="ShowDoca();">
-                                    <h5 style="display: none;">DOCA:</h5>
-                                    <input type="text" id="doca" class="doca" placeholder="Doca:" style="display: none;">
-                                    <input type="submit" id="enviar-recebimento-carga" value="ENVIAR" style="display: none;">
+                                    <h5 style="display: none">DOCA:</h5>
+                                    <input type="text" id="doca" class="doca" placeholder="Doca:" style="display: none" name="doca">
+                                    <input type="submit" id="enviar-recebimento-carga" value="ENVIAR" style="display: none" name="enviar_doca">
                                 </form>
                             </div>
                         </div>';
@@ -98,20 +98,30 @@ if (empty($_SESSION['nome'])){
                                 exit();
                             } else {
                                 if(isset($_POST['enviar-pedido']) && !empty($_POST['cod_pedido']) && !empty($_POST['nota_fiscal'])){
-                                    $cod_nota = $_POST['nota_fiscal'];
-                                    $cod_pedido = $_POST['cod_pedido'];
+                                    $_SESSION['cod_nota'] = $_POST['nota_fiscal'];
+                                    $_SESSION['cod_pedido'] = $_POST['cod_pedido'];
 
-                                    $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$cod_nota."'";
+                                    if(isset($_POST['enviar_doca']) && !empty($_POST['doca'])){
+                                        $doca = $_POST['doca'];
+    
+                                        $sql = "INSERT INTO docas (cod_doca, Nome, cod_pedido)
+                                                VALUES ('".$doca."', '".$_SESSION['cod_pedido']."')";
+                                        $execute = $conexao -> query($sql);                                   
+                                    }else{  
+                                        echo 'Erro ao inserir pedido nas docas';
+                                    }
+
+                                    $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$_SESSION['cod_nota']."'";
                                     $execute = $conexao -> query($sql);
 
                                     if($execute && $execute -> num_rows > 0){
                                         $row = $execute -> fetch_assoc();
-                                        $sql = "SELECT * FROM pedido WHERE cod_pedido = '".$cod_pedido."'";
+                                        $sql = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."'";
                                         $execute = $conexao -> query($sql);
 
                                         if($execute && $execute -> num_rows > 0){
                                             $row = $execute -> fetch_assoc();
-                                            $sql = "SELECT * FROM itenspedido WHERE cod_pedido = '".$cod_pedido."'";
+                                            $sql = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."'";
                                             $execute = $conexao -> query($sql);
 
                                             if($execute && $execute -> num_rows > 0){
@@ -124,7 +134,7 @@ if (empty($_SESSION['nome'])){
                                                 $sql = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
                                                 FROM produtos 
                                                 LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
-                                                WHERE itenspedido.cod_pedido = '".$cod_pedido."' ORDER BY produtos.Nome ASC";
+                                                WHERE itenspedido.cod_pedido = '".$_SESSION['cod_pedido']."' ORDER BY produtos.Nome ASC";
                                                 $execute = $conexao -> query($sql);
 
                                                 if($execute && $execute -> num_rows > 0){
@@ -162,7 +172,7 @@ if (empty($_SESSION['nome'])){
                                         echo'Código da nota fiscal e pedido não digitados';
                                     }
 
-                                    if(isset($_POST['enviar-pedido']) && empty($_POST['cod_pedido']) && empty($_POST['nota_fiscal'])){
+                                    if(!isset($_POST['enviar-pedido']) && empty($_POST['cod_pedido']) && empty($_POST['nota_fiscal'])){
                                         echo '<div class="produtos">
                                             <h4>PRODUTOS:</h4>
                                             <input type="text" id="idprodutos" class="idprodutos" value="Produto:">
