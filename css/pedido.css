@@ -633,6 +633,7 @@ th, tr, td {
   border-radius: 20px;
   text-align: center;
   outline-color: #3691fa;
+  box-shadow: 0 0 12px #3691fa;
 }
 @media only screen and (max-width: 600px) {
   body {
