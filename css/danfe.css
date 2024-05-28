@@ -394,6 +394,18 @@ nav {
   box-shadow: 0 0 15px rgb(0, 119, 255);
   overflow-y: scroll;
 }
+.input-cod-danfe {
+  width: 300px;
+  height: 40px;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0 0 12px #3691fa;
+}
+.input-enviar-cod-danfe {
+  width: 50px;
+  height: 40px;
+  background-color: #3691fa;
+}
 .nota_fiscal {
   display: flex;
   flex-direction: column;

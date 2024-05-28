@@ -99,7 +99,7 @@ if (empty($_SESSION['nome'])) {
                             <h4>VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h4>
                             <form action="danfe.php" method="POST" style="display: flex;" class="cod-pedido-danfe">
                                 <input class="input-cod-danfe" type="text" name="cod_pedido" placeholder="Cod do pedido" style="display: block;">
-                                <input type="submit" name="enviar_cod" value="OK" style="display: block; width: auto;">
+                                <input class="input-enviar-cod-danfe" type="submit" name="enviar_cod" value="OK" style="display: block; width: auto;">
                             </form>
                             <br>';
     if(!isset($_POST['enviar_cod']) && empty($_POST['cod_pedido'])){
