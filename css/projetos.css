@@ -9,10 +9,13 @@
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  background: #ffffff;
-}
+    background-image: url("cssimg/fundopag.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+  }
+
 h1 {
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
@@ -20,11 +23,11 @@ h1 {
     cursor: default;
 }
 h2 {
-    margin-left: 140vh ;
-    font-family: 'Poppins', sans-serif;
-    font-size: 25px;
-    text-shadow: 0 0 2px rgb(0, 119, 255);
-    cursor: default;
+  flex-wrap: nowrap;
+  font-family: 'Poppins', sans-serif;
+  font-size: 25px;
+  text-shadow: 0 0 2px rgb(0, 119, 255);
+  cursor: default;
 }
 h3 {
     font-family: 'Poppins', sans-serif;
@@ -41,34 +44,44 @@ h4 {
     cursor: default;
 }
 .container {
-  margin-top: -10px;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-items: center;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
 }
+
 .main-horizontal {
-    z-index: 1;
-    width: 100%;
-    height: 10vh;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 0 15px rgb(0, 119, 255);
-    border-radius: 0 0 10px 10px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 0 15px rgb(0, 119, 255);
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
+
 .ul-main {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
+
 .li-main {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.teste {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: baseline;
+  align-items: center;
 }
 .div-button-main {
   cursor: pointer;
@@ -79,6 +92,7 @@ h4 {
 }
 
 .button-main {
+  margin-left: -70vh;
   position: relative;
   display: block;
   background: rgb(0, 119, 255);
@@ -125,12 +139,14 @@ input:checked ~ label .button-main:after {
   transform: rotate(90deg);
   bottom: 0;
 }
+
 input[type=checkbox]:checked~nav {
-    transform: translate(350px);
+  transform: translate(350px);
 }
+
 nav {
   width: 20em;
-  height: 90dvh;
+  height: auto;
   position: absolute;
   margin-top: 100vh;
   background-color: rgb(255, 255, 255);
@@ -139,38 +155,44 @@ nav {
   left: -350px;
   transition: all 1.0s;
 }
+
 .ul-button {
   display: flex;
   flex-direction: column;
-  justify-content:baseline;
+  justify-content: baseline;
 }
+
 .li-vertical {
   border-bottom: 1px solid rgb(0, 119, 255);
 }
-.li-vertical, .li-vertical-menu{
+
+.li-vertical, .li-vertical-menu {
   width: 100%;
-  height: 4.75em;
+  height: 4.3em;
   margin-top: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .a-vertical-menu {
   cursor: default;
   text-decoration: none;
   font-size: 30px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: rgb(0, 0, 0);
 }
+
 .a-vertical {
   text-decoration: none;
   font-size: 20px;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: rgb(0, 0, 0);
   -moz-transition: all 0.3s;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+
 .a-vertical:hover {
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
@@ -178,20 +200,18 @@ nav {
   animation: animate 1s linear infinite;
   color: rgb(0, 119, 255);
 }
+
 .container-prin {
-    margin-top: -91vh;
-    width: 100%;
-    height: 91vh;
-    background-image: url("cssimg/fundopag.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+  margin-top: -91vh;
+  width: 100%;
+  height: 91vh;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
+
 .projetos-criados {
     width: 95%;
     height: 95%;
