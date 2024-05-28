@@ -383,7 +383,7 @@ nav {
 }
 .criar-danfes-container {
   margin-top: -1vh;
-  width: 100%;
+  width: 90%;
   height: 74vh;
   background-color: #ffffff;
   display: flex;
@@ -394,24 +394,56 @@ nav {
   box-shadow: 0 0 15px rgb(0, 119, 255);
   overflow-y: scroll;
 }
+.criar-danfes-container::-webkit-scrollbar {
+  width: 12px;  
+  border-radius: 0 30px 30px 0;     
+}
+
+.criar-danfes-container::-webkit-scrollbar-track {
+  background: #eeeeee00; 
+  border-radius: 30px;     
+}
+
+.criar-danfes-container::-webkit-scrollbar-thumb {
+  background-color: rgb(0, 119, 255);    
+  border-radius: 30px;       
+  border: 3px solid rgb(255, 255, 255);  
+}
 .input-cod-danfe {
+  text-align: center;
   width: 300px;
   height: 40px;
   border-radius: 30px;
   border: none;
   box-shadow: 0 0 12px #3691fa;
+  outline: #0077ff;
 }
 .input-enviar-cod-danfe {
-  width: 50px;
-  height: 40px;
-  background-color: #3691fa;
+  margin-left: 5px;
+  cursor: pointer;
+  width: 40px;
+  font-size: 15px;
+  border-radius: 15px;
+  border: 0;
+  background-color: #0077ff;
+  box-shadow: 0 0 12px #0077ff;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.input-enviar-cod-danfe:hover {
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.05);
+  animation: animate 1s linear infinite;
+  background-color: #4ea0ff;
 }
 .nota_fiscal {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 152vh;
+  width: 150vh;
   height: auto;
 }
 .nota_transp, .nota_fabriDest {
