@@ -31,20 +31,20 @@ if (empty($_SESSION['nome'])) {
         exit();
     }
 
-    echo '<header>
+    echo ' <header>
         <div class="container">
             <div class="main-horizontal">
                 <ul class="ul-main">
                     <li class="li-main">
                         <input id="main-button" type="checkbox" />
-                        <label for="main-button">
-                            <div class="div-button-main">
-                                <span class="button-main"></span>
-                            </div>
+                            <label for="main-button">
+                                <div class="div-button-main">
+                                    <span class="button-main"></span>
+                                </div>
                         </label>
                         <nav>
                             <ul class="ul-button">
-                                <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
@@ -53,10 +53,13 @@ if (empty($_SESSION['nome'])) {
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
                         </nav>
-                    </li>
-                    <li class="li-main">
-                        <h1>SENAI SCP</h1>
-                        <h2>' . $_SESSION['nome'] . '</h2>
+                        <div class="teste">
+                            <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                            <h1>SENAI LOG</h1>
+                        </div>    
+                        <div class="teste2">
+                            <h2>'.$_SESSION['nome'].'</h2>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -76,15 +79,15 @@ if (empty($_SESSION['nome'])) {
                     <a href="#" class="functions-menu">CONTROLE</a>
                 </li>
             </div>
-            <div class="criar-pedido-container">
+            <div class="criar-danfe-container">
                 <div class="titulo-pedido">
                     <h3>CRIAÇÃO DO PEDIDO</h3>
                 </div>
                 <div class="info-total">
-                    <div class="criar-pedido">
-                        <div class="submenus-pedidos">
+                    <div class="criar-danfe">
+                        <div class="submenus-danfe">
                             <h4>INFORMAÇÕES</h4>
-                            <div class="info-pedido">
+                            <div class="info-danfe">
                                 <h5>PEDIDOS:</h5>
                                 <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
                                 <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
@@ -92,10 +95,10 @@ if (empty($_SESSION['nome'])) {
                                 <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
                             </div>
                         </div>
-                        <div class="criar-pedidos-container">
+                        <div class="criar-danfes-container">
                             <h4>VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h4>
-                            <form action="danfe.php" method="POST" style="display: flex;">
-                                <input type="text" name="cod_pedido" placeholder="Cod do pedido" style="display: block; margin-right: 10px">
+                            <form action="danfe.php" method="POST" style="display: flex;" class="cod-pedido-danfe">
+                                <input class="input-cod-danfe" type="text" name="cod_pedido" placeholder="Cod do pedido" style="display: block;">
                                 <input type="submit" name="enviar_cod" value="OK" style="display: block; width: auto;">
                             </form>
                             <br>';
