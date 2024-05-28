@@ -42,10 +42,13 @@ if (empty($_SESSION['nome'])){
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
                         </nav>
-                    </li>
-                    <li class="li-main">
-                        <h1>SENAI SCP</h1>
-                        <h2>'.$_SESSION['nome'].'</h2>
+                        <div class="teste">
+                            <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                            <h1>SENAI LOG</h1>
+                        </div>    
+                        <div class="teste2">
+                            <h2>'.$_SESSION['nome'].'</h2>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -105,7 +108,7 @@ if (empty($_SESSION['nome'])){
                             if($execute && $execute -> num_rows > 0){
                                 echo "
                                     <div class=\"tablebox\">
-                                        Confira os pedidos já criados:
+                                    <h7>Confira os pedidos já criados:</h7>
                                         <table class=\"tabela\">
                                             <tr>
                                                 <th>CODIGO DO PEDIDO</th>
@@ -132,7 +135,7 @@ if (empty($_SESSION['nome'])){
                                                         <td>
                                                             <form action=\"meuspedidos.php\" method=\"POST\">
                                                                 <input type=\"hidden\" name=\"cod_pedido\" value=\"" . $row['cod_pedido'] . "\" >
-                                                                <input type=\"submit\" name=\"VerProdutos\" value=\"Ver Produtos\" style=\"display:block;\">
+                                                                <input type=\"submit\" name=\"VerProdutos\" value=\"Ver Produtos\" style=\"display:block;\" class=\"vermais\">
                                                             </form>
                                                         </td>
                                                     </tr>";

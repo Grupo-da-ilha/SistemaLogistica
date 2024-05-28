@@ -607,12 +607,12 @@ nav {
   margin-top: 6vh;
   height: 6vh;
 }
-.criar-pedido-container {
+.criar-danfe-container {
   margin-top: 40px;
   width: 95%;
   height: auto;
 }
-.criar-pedidos-container {
+.criar-danfes-container {
   width: 100%;
 }
 .info-total {
@@ -623,7 +623,7 @@ width: 100%;
 width: 30%;
 height: 100%;
 }
-.criarpedidos {
+.criardanfes{
     margin: 30px;
     width:60vh;
     height: 80%;
@@ -668,5 +668,35 @@ th, tr, td {
 }
 
 @media only screen and (min-width: 1441px) {
-    /* Add your responsive styles for large screens (e.g., larger monitors) here */
+  .criar-danfe-container {
+    margin-top: 40px;
+    width: 95%;
+    height: auto;
+  }
+  .info-total {
+  justify-content: left;
+  width: 100%;
+  }
+  .submenus-pedidos {
+  width: 30%;
+  height: 100%;
+  }
+
+  .criar-danfes-container {
+    margin-left: 150px;
+    width: 69%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 0 0 #eeeeee00;
+    
+    
+  }
+  .nota_fiscal {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+  }
 }
