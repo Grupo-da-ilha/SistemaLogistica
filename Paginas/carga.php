@@ -74,13 +74,16 @@ if (empty($_SESSION['nome'])){
                         <div class="notafiscal">
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-recebimento">
-                                <h5>NOTA FISCAL:</h5>
-                                <input type="text" id="idnotafiscal" class="idnotafiscal" value="N° Nota fiscal:" required>
-                                <h5>PEDIDO DE COMPRA:</h5>
-                                <input type="text" id="pedidodecompra" class="pedidodecompra" value="Pedido de compra:" required>
-                                <h5>DOCA:</h5>
-                                <input type="text" id="doca" class="doca" placeholder="Doca:" required>
-                                <input type="submit" id="enviar-recebimento-carga" value="ENVIAR">
+                                <form action="carga.php" method="POST">
+                                    <h5>NOTA FISCAL:</h5>
+                                    <input type="text" id="idnotafiscal" class="idnotafiscal" value="N° Nota fiscal:" required>
+                                    <h5>PEDIDO DE COMPRA:</h5>
+                                    <input type="text" id="pedidodecompra" class="pedidodecompra" value="Pedido de compra:" required>
+                                    <input type="submit" id="buscar_pedido" value="ENVIAR" style="display: block">
+                                    <h5>DOCA:</h5>
+                                    <input type="text" id="doca" class="doca" placeholder="Doca:" required>
+                                    <input type="submit" id="enviar_doca" value="ENVIAR">
+                                </form>
                             </div>
                         </div>
                         <div class="produtos">

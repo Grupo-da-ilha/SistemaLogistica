@@ -627,6 +627,13 @@ th, tr, td {
   transform: scale(1.05);
   animation: animate 1s linear infinite;
 }
+#texto {
+  width: 80%;
+  border: 1px solid rgb(0, 119, 255);
+  border-radius: 20px;
+  text-align: center;
+  outline-color: #3691fa;
+}
 @media only screen and (max-width: 600px) {
   body {
     background-image: url("cssimg/fundopag.jpg");
@@ -745,7 +752,6 @@ nav {
     align-items: center;
 }
 
-
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
@@ -828,7 +834,6 @@ height: 100%;
   height: auto;
 }
 }
-
 
 @media only screen and (min-width: 1441px) {
     /* Add your responsive styles for large screens (e.g., larger monitors) here */
