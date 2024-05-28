@@ -105,7 +105,7 @@
                         </label>
                         <nav>
                             <ul class="ul-button">
-                                <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
@@ -114,10 +114,13 @@
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
                         </nav>
-                    </li>
-                    <li class="li-main">
-                        <h1>SENAI SCP</h1>
-                        <h2>'.$_SESSION['nome'].'</h2>
+                        <div class="teste">
+                            <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                            <h1>SENAI LOG</h1>
+                        </div>    
+                        <div class="teste2">
+                            <h2>'.$_SESSION['nome'].'</h2>
+                        </div>
                     </li>
                 </ul>
             </div>

@@ -43,10 +43,13 @@ if (empty($_SESSION['nome'])){
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
                         </nav>
-                    </li>
-                    <li class="li-main">
-                        <h1>SENAI SCP</h1>
-                        <h2>'.$_SESSION['nome'].'</h2>
+                        <div class="teste">
+                            <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                            <h1>SENAI LOG</h1>
+                        </div>    
+                        <div class="teste2">
+                            <h2>'.$_SESSION['nome'].'</h2>
+                        </div>
                     </li>
                 </ul>
             </div>
