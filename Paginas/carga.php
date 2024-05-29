@@ -14,6 +14,7 @@
 </head>
 <body>
 <?php
+
 // Iniciar uma sessão
 session_start();
 
@@ -75,16 +76,15 @@ if (empty($_SESSION['nome'])){
                         <div class="notafiscal">
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-recebimento">
-                                <form action="carga.php" method="POST" id="form-nota-pedido">
+                                <form action="" method="POST" id="form-nota-pedido">
                                     <h5>NOTA FISCAL:</h5>
                                     <input type="text" id="idnotafiscal" class="idnotafiscal" name="nota_fiscal" placeholder="N° Nota fiscal:" >
                                     <h5>PEDIDO DE COMPRA:</h5>
                                     <input type="text" id="pedidodecompra" class="pedidodecompra" name="cod_pedido" placeholder="Pedido de compra:">
-                                    <input type="submit" id="enviar-recebimento-pedido" name="enviar-pedido" value="ENVIAR" style="display:block; margin-top: 5px;">
+                                    <input type="submit" id="pedido-nota" name="enviar-pedido" value="ENVIAR" style="display:block; margin-top: 5px;">
                                 </form>
                                 <form method="POST" id="form-doca">
                                     <h5>DOCA:</h5>
-
                                     <input type="text" id="doca" class="doca" placeholder="Doca:" name="doca">
                                     <input type="submit"'; /*id="enviar-recebimento-carga"*/echo' value="OK" style="display: block" name="enviar_doca">
                                 </form>
@@ -168,25 +168,6 @@ echo '            </div>
 ?>
 </body>
 <script>
-    /*$(document).ready(function() {
-        $('#form-nota-pedido').submit(function(e) {
-            e.preventDefault();
-            var formData = $(this).serialize(); 
-            $.ajax({
-                type: 'POST',
-                url: 'function/verificarpedido.php',
-                data: formData,
-                success: function(response) {
-                    // Redirecionar de volta para carga.php
-                    window.location.href = 'carga.php';
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                    alert('Erro ao enviar dados do formulário.');
-                }
-            });
-        });*/
-
 
     $('#form-doca').submit(function(e) {
     e.preventDefault(); 
