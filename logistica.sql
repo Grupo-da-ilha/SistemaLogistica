@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 27/05/2024 às 03:26
+-- Tempo de geração: 29/05/2024 às 03:48
 -- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.0.30
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -68,6 +68,26 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`CNPJ`, `Nome`, `CEP`, `rua`, `bairro`, `cidade`, `estado`, `Telefone`) VALUES
 ('03.774.819/0001-02', 'SENAI ITAJAÍ', '88305-55', 'Blumenau', 'São João', 'Itajaí', 'SC', '(47) 3341-2900');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `docas`
+--
+
+CREATE TABLE `docas` (
+  `cod_doca` int(11) NOT NULL,
+  `posicao` varchar(5) NOT NULL,
+  `cod_pedido` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Despejando dados para a tabela `docas`
+--
+
+INSERT INTO `docas` (`cod_doca`, `posicao`, `cod_pedido`) VALUES
+(5, 'A1', 10),
+(13, 'A2', 1);
 
 -- --------------------------------------------------------
 
@@ -312,6 +332,13 @@ ALTER TABLE `clientes`
   ADD PRIMARY KEY (`CNPJ`);
 
 --
+-- Índices de tabela `docas`
+--
+ALTER TABLE `docas`
+  ADD PRIMARY KEY (`cod_doca`),
+  ADD KEY `cod_pedido` (`cod_pedido`);
+
+--
 -- Índices de tabela `estoque`
 --
 ALTER TABLE `estoque`
@@ -392,6 +419,12 @@ ALTER TABLE `cadastro`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
 
 --
+-- AUTO_INCREMENT de tabela `docas`
+--
+ALTER TABLE `docas`
+  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
@@ -418,6 +451,12 @@ ALTER TABLE `projetos`
 --
 ALTER TABLE `cadastro`
   ADD CONSTRAINT `cadastro_ibfk_1` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
+
+--
+-- Restrições para tabelas `docas`
+--
+ALTER TABLE `docas`
+  ADD CONSTRAINT `docas_ibfk_1` FOREIGN KEY (`cod_pedido`) REFERENCES `pedido` (`cod_pedido`);
 
 --
 -- Restrições para tabelas `itenspedido`
