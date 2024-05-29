@@ -10,10 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/professor.css"/>
-    <link rel="shortcut icon" type="imagex/png" href="../css/cssimg/logo.png"/>
-</head>
-<style>
-
+    <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
+    <style>
         h3 {
             margin-top: 2vh;
             font-family: 'Poppins', sans-serif;
@@ -21,18 +19,16 @@
             text-shadow: 0 0 2px rgb(0, 119, 255);
             cursor: default;
         }
-        /* Estilos para o formulário */
         #overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semi-transparente */
-            z-index: 999; /* Certifique-se de que o overlay esteja sobre todos os outros elementos */
-            display: none; /* Ocultar inicialmente */
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
         }
-
         #project_form {
             position: absolute;
             top: 50%;
@@ -44,11 +40,9 @@
             padding: 20px;
             border-radius: 30px;
             box-shadow: 0 0 15px rgb(0, 119, 255);
-            z-index: 1000; /* Certifique-se de que o formulário esteja acima do overlay */
-            display: none; /* Ocultar inicialmente */
+            z-index: 1000;
+            display: none;
         }
-
-        /* Estilo personalizado para o input project_name */
         #project_name_form {
             margin-top: 20px;
             width: 100%;
@@ -63,13 +57,28 @@
             justify-content: center;
             align-items: center;
         }
-
         #project_name_form:focus {
             border-color: #007bff;
             box-shadow: 0 0 15px rgb(0, 119, 255);
         }
-
-        /* Estilo para o botão Criar Projeto */
+        #project_class_form {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #project_class_form:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 15px rgb(0, 119, 255);
+        }
         #save_button {
             margin-top: 40px;
             cursor: pointer;
@@ -80,21 +89,14 @@
             border: none;
             outline: none;
             background-color: rgb(0, 119, 255);
-            -moz-transition: all 0.3s;
-            -webkit-transition: all 0.3s;
             transition: all 0.3s;
             box-shadow: 0 0 15px rgb(0, 119, 255);
         }
-
         #save_button:hover {
-            -moz-transform: scale(1.1);
-            -webkit-transform: scale(1.1);
             transform: scale(1.05);
             animation: animate 1s linear infinite;
             background-color: hsl(212, 95%, 60%);
         }
-
-        /* Estilos para o botão de fechar */
         .close {
             color: #aaa;
             float: right;
@@ -102,30 +104,25 @@
             font-weight: bold;
             cursor: pointer;
         }
-
         .close:hover,
         .close:focus {
-            color:rgb(0, 119, 255);
+            color: rgb(0, 119, 255);
             text-decoration: none;
         }
     </style>
+</head>
 <body>
 <?php
-// Iniciar uma sessão
 session_start();
 
-if (empty($_SESSION['nome'])){
+if (empty($_SESSION['nome'])) {
     header('Location: sair.php');
     exit();
 } else {
-    // Função para obter os projetos do usuário com base no ID do cadastro
     function getProjetosDoUsuario($cadastro_id) {
-        // Conectar ao banco de dados e realizar a consulta dos projetos
-        // Substitua esta parte com a lógica de consulta real ao banco de dados
-        return array(); // Aqui, retornamos um array vazio como exemplo
+        return array();
     }
-    
-    echo ' <header>
+    echo '<header>
         <div class="container">
             <div class="main-horizontal">
                 <ul class="ul-main">
@@ -139,7 +136,7 @@ if (empty($_SESSION['nome'])){
                         </label>
                         <nav>
                             <ul class="ul-button">
-                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                                <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
@@ -160,31 +157,26 @@ if (empty($_SESSION['nome'])){
         </div>
     </header>
     <main>
-            <div class="container-prin">
-                <div class="options-senai-new" onclick="toggleForm()">
-                </div>
-                <div class="options-senai-continue" onclick="getAndDisplayProjects()">
-                </div>
-                <!-- Overlay para o fundo escuro -->
-                <div id="overlay"></div>
-                <form id="project_form">
-                    <!-- Botão de fechar -->
-                    <span class="close" onclick="toggleForm()">&times;</span>
-                    <h3>Nome:</h3>
-                    <input type="text" id="project_name_form" placeholder="Nome do Projeto" required>
-                    <input type="text" id="project_name_form" placeholder="Código Turma" required>
-                    <button type="button" id="save_button" onclick="saveProject()">Criar Projeto</button>
-                </form>
-                <a href="turmas.php"><div class="options-senai-turma">
-            </div></a>
+        <div class="container-prin">
+            <div class="options-senai-new" onclick="toggleForm()"></div>
+            <div class="options-senai-continue" onclick="getAndDisplayProjects()"></div>
+            <div id="overlay"></div>
+            <form id="project_form">
+                <span class="close" onclick="toggleForm()">&times;</span>
+                <h3>Nome:</h3>
+                <input type="text" id="project_name_form" name="project_name" placeholder="Nome do Projeto" required>
+                <input type="text" id="project_class_form" name="project_class" placeholder="Código Turma" style="display:block;" required>
+                <button type="button" id="save_button" onclick="saveProject()">Criar Projeto</button>
+            </form>
+            <a href="turmas.php"><div class="options-senai-turma"></div></a>
         </div>
-    </main>'; } ?>
-
+    </main>';
+}
+?>
 <script>
 function toggleForm() {
     var overlay = document.getElementById('overlay');
     var form = document.getElementById('project_form');
-    
     if (overlay.style.display === 'block') {
         overlay.style.display = 'none';
         form.style.display = 'none';
@@ -196,22 +188,18 @@ function toggleForm() {
 
 function saveProject() {
     var projectName = document.getElementById('project_name_form').value;
-    var personId = '<?php echo $_SESSION['id']; ?>'; // Pegando o ID do usuário da sessão
-
-    // Enviar os dados para o PHP usando AJAX
+    var projectClass = document.getElementById('project_class_form').value;
+    var personId = '<?php echo $_SESSION['id']; ?>';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "function/save_project.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            // Manipular a resposta do servidor, se necessário
             alert(xhr.responseText);
-            // Redirecionar após salvar o projeto com sucesso
             window.location.href = "projetoprofessor.php";
-            
         }
     };
-    xhr.send("person_id=" + personId + "&project_name=" + projectName);
+    xhr.send("person_id=" + personId + "&project_name=" + encodeURIComponent(projectName) + "&project_class=" + encodeURIComponent(projectClass));
 }
 
 function getAndDisplayProjects() {
@@ -221,4 +209,3 @@ function getAndDisplayProjects() {
 </script>
 </body>
 </html>
-

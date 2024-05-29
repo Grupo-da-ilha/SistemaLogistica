@@ -16,7 +16,9 @@
 <?php
 // Iniciar uma sessão
 session_start();
-
+if (isset($_POST['project_id'])) {
+    $_SESSION['Idprojeto'] = $_POST['project_id'];
+}
 
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
@@ -58,7 +60,13 @@ if (empty($_SESSION['nome'])){
                     </nav>
                         <div class="juntos">
                             <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
-                            <h1>SENAI LOG</h1>
+                            <h1>SENAI LOG</h1>';
+                            if (isset($_SESSION['Idprojeto'])) {
+                                echo '<p>Projeto selecionado: ' . $_SESSION['Idprojeto'] . '</p>';
+                            } else {
+                                echo '<p>Nenhum projeto selecionado.</p>';
+                            }
+                            echo '
                         </div>
                         <h2>'.$_SESSION['nome'].'</h2>
                     </div>
@@ -153,58 +161,59 @@ if (empty($_SESSION['nome'])){
                                                 echo "Failed to connect to MySQL: " . $conexao->connect_error;
                                                 exit();
                                             }else{
-                                                if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
-                                                    //Criando variáveis
-                                                    $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
-                                                    $_SESSION['cod_pedido'] = $cod_pedido; 
-                                                    date_default_timezone_set('America/Sao_Paulo'); 
-                                                    $datahoje = date("Y-m-d H:i:s");
-
-                                                    $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '$cod_pedido' AND cod_projeto ='".$_SESSION['Idprojeto']."'";
-                                                    $executar = $conexao->query($selectPedido);
-
-                                                    if($executar->num_rows > 0){
-                                                        $row = $executar -> fetch_assoc();
-                                                        $codigo_pedido = $row['cod_pedido'];
-                                                        echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($codigo_pedido) . "</h6>";
-
-                                                        $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = '' WHERE cod_pedido = '".$_SESSION['cod_pedido']."'";
-                                                        $execute = $conexao-> query($sql);
-                                                    } else {
-                                                        $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
-                                                        $selectCNPJFabricante = "SELECT CNPJ FROM fabricantes WHERE Nome = '$nomeFabri'";
-                                                        $execute = $conexao -> query($selectCNPJFabricante);
-
-                                                        if($execute && $execute -> num_rows >0){
-                                                            $row = $execute -> fetch_assoc();
-                                                            $_SESSION['CNPJFabri'] = $row['CNPJ'];
-                                                            $nomeTransp = $conexao->real_escape_string($_POST['Transportadora']);
-
-                                                            $selectCNPJTransportadora = "SELECT CNPJ FROM transportadoras WHERE Nome = '$nomeTransp'";
-                                                            $execute = $conexao-> query($selectCNPJTransportadora);
-
-                                                            if($execute && $execute -> num_rows > 0){
-                                                                $row = $execute -> fetch_assoc();
-                                                                $_SESSION['CNPJTransp'] = $row['CNPJ'];
-                                                                $sql = "INSERT INTO pedido (cod_pedido, DataVenda, ValorTotal, CNPJEmitente, CNPJ_Destinatario, CNPJ_Transportadora, Situacao, InformacaoAdicional, cod_projeto) 
-                                                                VALUES ('$cod_pedido', '$datahoje', 0.0, '".$_SESSION['CNPJFabri']."', '03.774.819/0001-02', '".$_SESSION['CNPJTransp']."', 'Em Processamento','', '".$_SESSION['idprojeto']."')";
-                                                                $result = $conexao->query($sql);
+                                                try {
+                                                    if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
+                                                        $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
+                                                        $_SESSION['cod_pedido'] = $cod_pedido;
+                                                        date_default_timezone_set('America/Sao_Paulo');
+                                                        $datahoje = date("Y-m-d H:i:s");
                                                 
-                                                                if ($result) {
-                                                                    echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($codigo_pedido) . "</h6>";
+                                                        $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '$cod_pedido' AND codprojeto ='{$_SESSION['Idprojeto']}'";
+                                                        $executar = $conexao->query($selectPedido);
+                                                
+                                                        if ($executar->num_rows > 0) {
+                                                            $row = $executar->fetch_assoc();
+                                                            $codigo_pedido = $row['cod_pedido'];
+                                                            echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($codigo_pedido) . "</h6>";
+                                                
+                                                            $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = '' WHERE cod_pedido = '{$_SESSION['cod_pedido']}' AND codprojeto = '{$_SESSION['Idprojeto']}'";
+                                                            $execute = $conexao->query($sql);
+                                                        } else {
+                                                            $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
+                                                            $selectCNPJFabricante = "SELECT CNPJ FROM fabricantes WHERE Nome = '$nomeFabri'";
+                                                            $execute = $conexao->query($selectCNPJFabricante);
+                                                
+                                                            if ($execute && $execute->num_rows > 0) {
+                                                                $row = $execute->fetch_assoc();
+                                                                $_SESSION['CNPJFabri'] = $row['CNPJ'];
+                                                                $nomeTransp = $conexao->real_escape_string($_POST['Transportadora']);
+                                                
+                                                                $selectCNPJTransportadora = "SELECT CNPJ FROM transportadoras WHERE Nome = '$nomeTransp'";
+                                                                $execute = $conexao->query($selectCNPJTransportadora);
+                                                
+                                                                if ($execute && $execute->num_rows > 0) {
+                                                                    $row = $execute->fetch_assoc();
+                                                                    $_SESSION['CNPJTransp'] = $row['CNPJ'];
+                                                                    $sql = "INSERT INTO pedido (cod_pedido, DataVenda, ValorTotal, CNPJEmitente, CNPJ_Destinatario, CNPJ_Transportadora, Situacao, InformacaoAdicional, codprojeto) 
+                                                                            VALUES ('$cod_pedido', '$datahoje', 0.0, '{$_SESSION['CNPJFabri']}', '03.774.819/0001-02', '{$_SESSION['CNPJTransp']}', 'Em Processamento', '', '{$_SESSION['Idprojeto']}')";
+                                                                    $conexao->query($sql);
+                                                                    echo "<h6>Pedido criado com sucesso com o código: " . htmlspecialchars($cod_pedido) . "</h6>";
                                                                 } else {
-                                                                    echo "<h6>Erro ao criar pedido: " . htmlspecialchars($conexao->error) . "</h6>";
+                                                                    echo "<h6>Por favor, selecione a Transportadora</h6>";
                                                                 }
-                                                            }else{
-                                                                echo "<h6>Por favor selecione a Transportadora</h6>";
+                                                            } else {
+                                                                echo "<h6>Por favor, selecione o Fornecedor</h6>";
                                                             }
-
-                                                        }else{
-                                                            echo "<h6>Por favor selecione o Fornecedor</h6>";
                                                         }
+                                                    } else {
                                                     }
-                                                } else{
-                                                    
+                                                } catch (mysqli_sql_exception $e) {
+                                                    if ($e->getCode() == 1062) {
+                                                        echo "<h6>O código do pedido já existe. Por favor, use um código diferente.</h6>";
+                                                    } else {
+                                                        // Outros erros
+                                                        echo "<h6>Erro: " . htmlspecialchars($e->getMessage()) . "</h6>";
+                                                    }
                                                 }
 
                                             if (isset($_POST['enviar_produto']) && !empty($_POST['codProduto'])) {
@@ -220,8 +229,8 @@ if (empty($_SESSION['nome'])){
                                                     $_SESSION['UN'] = $row['UN'];
                                                     $_SESSION['NCM'] = $row['NCM'];
 
-                                                    $sql2 = "INSERT INTO itenspedido (cod_produto, cod_pedido, Quantidade, ValorUnitario, ValorTotal) 
-                                                            VALUES ('$cod_produto', '{$_SESSION['cod_pedido']}', 0, '{$_SESSION['PrecoUnitario']}', 0.0)";
+                                                    $sql2 = "INSERT INTO itenspedido (cod_produto, cod_pedido, Quantidade, ValorUnitario, ValorTotal, codprojeto) 
+                                                            VALUES ('$cod_produto', '{$_SESSION['cod_pedido']}', 0, '{$_SESSION['PrecoUnitario']}', 0.0, '".$_SESSION['Idprojeto']."')";
                                                     $resultado = $conexao->query($sql2);
 
                                                     if (!$resultado) {

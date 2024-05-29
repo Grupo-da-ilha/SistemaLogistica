@@ -17,6 +17,9 @@
 
 // Iniciar uma sessão
 session_start();
+if (isset($_POST['project_id'])) {
+    $_SESSION['Idprojeto'] = $_POST['project_id'];
+}
 
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
@@ -113,7 +116,7 @@ if (empty($_SESSION['nome'])){
                                 $execute = $conexao->query($sql);
 
                                 if($execute->num_rows > 0){
-                                    $sql = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
+                                    $sql = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."' AND codprojeto = '".$_SESSION['Idprojeto']."'";
                                     $execute = $conexao->query($sql);
 
                                     if($execute->num_rows > 0){
@@ -152,7 +155,7 @@ if (empty($_SESSION['nome'])){
                                         echo 'Código do pedido incorreto';
                                     }
                                 } else {
-                                    echo 'Código da nota fiscal e do pedido não correspondem';
+                                    echo 'Código da nota fiscal e do pedido não correspondem, verifique os o codigo do pedido e da nota_fiscal para o seu projeto atual';
                                 }  
                             }
 

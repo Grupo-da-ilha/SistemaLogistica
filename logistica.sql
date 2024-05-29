@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 29/05/2024 às 03:48
+-- Tempo de geração: 30/05/2024 às 00:28
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -36,14 +36,14 @@ CREATE TABLE `cadastro` (
   `data_entrada` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `tipousuario` varchar(255) NOT NULL,
   `codTurma` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `cadastro`
 --
 
 INSERT INTO `cadastro` (`Id`, `email`, `senha`, `nome`, `ativo`, `data_entrada`, `tipousuario`, `codTurma`) VALUES
-(123, 'kauan007@gmail.com', 'eijks', 'Kauan', 's', '2024-05-21 22:27:57', 'Professor', 'S3naiAdmin');
+(124, 'kauan007@gmail.com', 'eijks', 'Kauan', 's', '2024-05-29 21:01:11', 'Professor', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -52,15 +52,15 @@ INSERT INTO `cadastro` (`Id`, `email`, `senha`, `nome`, `ativo`, `data_entrada`,
 --
 
 CREATE TABLE `clientes` (
-  `CNPJ` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Nome` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `CEP` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `CNPJ` varchar(65) NOT NULL,
+  `Nome` varchar(255) NOT NULL,
+  `CEP` varchar(8) NOT NULL,
   `rua` varchar(255) NOT NULL,
   `bairro` varchar(255) NOT NULL,
   `cidade` varchar(255) NOT NULL,
   `estado` varchar(255) NOT NULL,
-  `Telefone` varchar(22) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `Telefone` varchar(22) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `clientes`
@@ -78,16 +78,16 @@ INSERT INTO `clientes` (`CNPJ`, `Nome`, `CEP`, `rua`, `bairro`, `cidade`, `estad
 CREATE TABLE `docas` (
   `cod_doca` int(11) NOT NULL,
   `posicao` varchar(5) NOT NULL,
-  `cod_pedido` int(11) NOT NULL
+  `cod_pedido` int(11) NOT NULL,
+  `codprojeto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `docas`
 --
 
-INSERT INTO `docas` (`cod_doca`, `posicao`, `cod_pedido`) VALUES
-(5, 'A1', 10),
-(13, 'A2', 1);
+INSERT INTO `docas` (`cod_doca`, `posicao`, `cod_pedido`, `codprojeto`) VALUES
+(15, 'A1', 11, 6);
 
 -- --------------------------------------------------------
 
@@ -111,15 +111,15 @@ CREATE TABLE `estoque` (
 --
 
 CREATE TABLE `fabricantes` (
-  `CNPJ` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Nome` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `CEP` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `CNPJ` varchar(65) NOT NULL,
+  `Nome` varchar(255) NOT NULL,
+  `CEP` varchar(255) NOT NULL,
   `rua` varchar(255) NOT NULL,
   `bairro` varchar(255) NOT NULL,
   `cidade` varchar(255) NOT NULL,
   `estado` varchar(255) NOT NULL,
-  `Telefone` varchar(22) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `Telefone` varchar(22) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `fabricantes`
@@ -142,7 +142,7 @@ CREATE TABLE `fornecedores` (
   `materiaPrima` varchar(255) NOT NULL,
   `CEP` varchar(8) NOT NULL,
   `Telefone` varchar(22) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -156,19 +156,19 @@ CREATE TABLE `itenspedido` (
   `cod_pedido` int(11) NOT NULL,
   `Quantidade` int(11) NOT NULL,
   `ValorUnitario` double NOT NULL,
-  `ValorTotal` double NOT NULL
+  `ValorTotal` double NOT NULL,
+  `codprojeto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `itenspedido`
 --
 
-INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `ValorUnitario`, `ValorTotal`) VALUES
-(102, 1, 1, 2, 5.5, 11),
-(103, 2, 1, 1, 1.2, 1.2),
-(104, 1, 10, 5, 5.5, 27.5),
-(105, 2, 10, 10, 1.2, 12),
-(106, 5, 10, 4, 29.99, 119.96);
+INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `ValorUnitario`, `ValorTotal`, `codprojeto`) VALUES
+(115, 1, 11, 2, 5.5, 11, 6),
+(118, 1, 11, 2, 5.5, 11, 6),
+(124, 1, 101, 3, 5.5, 16.5, 6),
+(125, 2, 101, 4, 1.2, 4.8, 6);
 
 -- --------------------------------------------------------
 
@@ -178,22 +178,24 @@ INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quant
 
 CREATE TABLE `nota_fiscal` (
   `cod_nota` int(11) NOT NULL,
-  `chave_acesso` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `chave_acesso` varchar(65) NOT NULL,
   `DataExpedicao` datetime NOT NULL,
-  `InformacoesAdicionais` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `InformacoesAdicionais` varchar(255) NOT NULL,
   `cod_pedido` int(11) NOT NULL,
-  `CNPJ_Destinatario` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `CNPJ_Transportadora` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `CNPJ_Emitente` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `CNPJ_Destinatario` varchar(65) NOT NULL,
+  `CNPJ_Transportadora` varchar(65) NOT NULL,
+  `CNPJ_Emitente` varchar(65) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `nota_fiscal`
 --
 
 INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `cod_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(15604, '92945946790770688188913482545245528729993387', '2024-05-21 20:18:49', 'Cuidado com os marca-textos', 10, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43'),
-(16224, '86549926145566795810001445799806792108984831', '2024-05-21 20:18:49', '', 1, '03.774.819/0001-02', '07.639.029/0001-67', '44.990.901/0001-43');
+(64160, '45230964322640802688964837758814440118585252', '2024-05-29 18:27:04', 'Por favor, mandem os marca textos bem embalados', 10, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23'),
+(76682, '65463132620896480702677583085793945099981956', '2024-05-29 18:27:04', 'Cuidado com tesouras, porque algumas estão com ponta', 101, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23'),
+(84817, '18670429376789829333058572513610113722260039', '2024-05-29 18:27:04', '', 11, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23'),
+(86618, '82928527275820886726222899070796661198666112', '2024-05-29 18:27:04', 'Cuidado com as tesouras', 1, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23');
 
 -- --------------------------------------------------------
 
@@ -205,20 +207,24 @@ CREATE TABLE `pedido` (
   `cod_pedido` int(11) NOT NULL,
   `DataVenda` datetime NOT NULL,
   `ValorTotal` double NOT NULL,
-  `CNPJEmitente` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `CNPJ_Destinatario` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `CNPJ_Transportadora` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Situacao` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `InformacaoAdicional` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `CNPJEmitente` varchar(65) NOT NULL,
+  `CNPJ_Destinatario` varchar(64) NOT NULL,
+  `CNPJ_Transportadora` varchar(65) NOT NULL,
+  `Situacao` varchar(255) NOT NULL,
+  `InformacaoAdicional` varchar(255) NOT NULL,
+  `codprojeto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `pedido`
 --
 
-INSERT INTO `pedido` (`cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`) VALUES
-(1, '2024-05-21 20:18:49', 12.2, '44.990.901/0001-43', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', ''),
-(10, '2024-05-25 19:34:11', 159.46, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com os marca-textos');
+INSERT INTO `pedido` (`cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codprojeto`) VALUES
+(1, '2024-05-29 18:27:04', 51.8, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com as tesouras', 5),
+(10, '2024-05-29 18:28:41', 316.4, '44.990.901/0001-43', '03.774.819/0001-02', '13.161.095/0001-77', 'Em transporte', 'Por favor, mandem os marca textos bem embalados', 5),
+(11, '2024-05-29 18:45:49', 22, '44.990.901/0001-43', '03.774.819/0001-02', '42.555.657/0001-65', 'Em transporte', '', 6),
+(23, '2024-05-29 18:29:48', 0, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em Processamento', '', 5),
+(101, '2024-05-29 19:16:51', 21.3, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em transporte', 'Cuidado com tesouras, porque algumas estão com ponta', 6);
 
 -- --------------------------------------------------------
 
@@ -229,11 +235,11 @@ INSERT INTO `pedido` (`cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `
 CREATE TABLE `produtos` (
   `cod_produto` int(11) NOT NULL,
   `PrecoUNI` double NOT NULL,
-  `Nome` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Nome` varchar(255) NOT NULL,
   `PesoGramas` double DEFAULT NULL,
-  `NCM` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `NCM` varchar(8) DEFAULT NULL,
   `UN` varchar(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `produtos`
@@ -253,19 +259,17 @@ INSERT INTO `produtos` (`cod_produto`, `PrecoUNI`, `Nome`, `PesoGramas`, `NCM`, 
 
 CREATE TABLE `projetos` (
   `idprojeto` int(11) NOT NULL,
-  `nome` varchar(12) NOT NULL,
-  `Id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `nome` varchar(255) NOT NULL,
+  `codTurma` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `projetos`
 --
 
-INSERT INTO `projetos` (`idprojeto`, `nome`, `Id`) VALUES
-(88, 'SENAI 5', 123),
-(89, '', 123),
-(90, 'SENAI 2', 123),
-(91, 'SENAI', 123);
+INSERT INTO `projetos` (`idprojeto`, `nome`, `codTurma`) VALUES
+(5, 'Senai', 'S3naiAdmin'),
+(6, 'Projeto 1', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -274,16 +278,16 @@ INSERT INTO `projetos` (`idprojeto`, `nome`, `Id`) VALUES
 --
 
 CREATE TABLE `transportadoras` (
-  `CNPJ` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `CNPJ` varchar(65) NOT NULL,
   `QuantidadeFrota` int(11) NOT NULL,
-  `Nome` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `CEP` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Telefone` varchar(22) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `bairro` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `rua` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `cidade` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `estado` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `Nome` varchar(255) DEFAULT NULL,
+  `CEP` varchar(8) NOT NULL,
+  `Telefone` varchar(22) NOT NULL,
+  `bairro` varchar(255) NOT NULL,
+  `rua` varchar(255) NOT NULL,
+  `cidade` varchar(255) NOT NULL,
+  `estado` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `transportadoras`
@@ -301,18 +305,18 @@ INSERT INTO `transportadoras` (`CNPJ`, `QuantidadeFrota`, `Nome`, `CEP`, `Telefo
 --
 
 CREATE TABLE `turmas` (
-  `codTurma` varchar(258) NOT NULL,
+  `codTurma` varchar(255) NOT NULL,
   `nomeTurma` varchar(50) NOT NULL,
   `total_alunos` int(11) DEFAULT 0,
   `data_turma` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `turmas`
 --
 
 INSERT INTO `turmas` (`codTurma`, `nomeTurma`, `total_alunos`, `data_turma`) VALUES
-('S3naiAdmin', 'SENAI', 0, '2024-05-15 03:00:00');
+('S3naiAdmin', 'SenaiADM', 0, '2024-05-29 20:59:55');
 
 --
 -- Índices para tabelas despejadas
@@ -336,7 +340,8 @@ ALTER TABLE `clientes`
 --
 ALTER TABLE `docas`
   ADD PRIMARY KEY (`cod_doca`),
-  ADD KEY `cod_pedido` (`cod_pedido`);
+  ADD KEY `cod_pedido` (`cod_pedido`),
+  ADD KEY `codprojeto` (`codprojeto`);
 
 --
 -- Índices de tabela `estoque`
@@ -362,7 +367,8 @@ ALTER TABLE `fornecedores`
 ALTER TABLE `itenspedido`
   ADD PRIMARY KEY (`cod_itenPedido`),
   ADD KEY `cod_pedido` (`cod_pedido`),
-  ADD KEY `cod_produto` (`cod_produto`);
+  ADD KEY `cod_produto` (`cod_produto`),
+  ADD KEY `codprojeto` (`codprojeto`);
 
 --
 -- Índices de tabela `nota_fiscal`
@@ -381,7 +387,8 @@ ALTER TABLE `pedido`
   ADD PRIMARY KEY (`cod_pedido`),
   ADD KEY `CPF` (`CNPJ_Destinatario`),
   ADD KEY `CNPJEmitente` (`CNPJEmitente`),
-  ADD KEY `CNPJ` (`CNPJ_Transportadora`);
+  ADD KEY `CNPJ` (`CNPJ_Transportadora`),
+  ADD KEY `codprojeto` (`codprojeto`);
 
 --
 -- Índices de tabela `produtos`
@@ -394,7 +401,7 @@ ALTER TABLE `produtos`
 --
 ALTER TABLE `projetos`
   ADD PRIMARY KEY (`idprojeto`),
-  ADD KEY `idaluno` (`Id`);
+  ADD KEY `codTurma` (`codTurma`);
 
 --
 -- Índices de tabela `transportadoras`
@@ -416,19 +423,19 @@ ALTER TABLE `turmas`
 -- AUTO_INCREMENT de tabela `cadastro`
 --
 ALTER TABLE `cadastro`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de tabela `docas`
 --
 ALTER TABLE `docas`
-  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
-  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
@@ -440,7 +447,7 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para tabelas despejadas
@@ -456,39 +463,28 @@ ALTER TABLE `cadastro`
 -- Restrições para tabelas `docas`
 --
 ALTER TABLE `docas`
-  ADD CONSTRAINT `docas_ibfk_1` FOREIGN KEY (`cod_pedido`) REFERENCES `pedido` (`cod_pedido`);
+  ADD CONSTRAINT `docas_ibfk_1` FOREIGN KEY (`cod_pedido`) REFERENCES `pedido` (`cod_pedido`),
+  ADD CONSTRAINT `docas_ibfk_2` FOREIGN KEY (`codprojeto`) REFERENCES `projetos` (`idprojeto`);
 
 --
 -- Restrições para tabelas `itenspedido`
 --
 ALTER TABLE `itenspedido`
   ADD CONSTRAINT `itenspedido_ibfk_1` FOREIGN KEY (`cod_pedido`) REFERENCES `pedido` (`cod_pedido`),
-  ADD CONSTRAINT `itenspedido_ibfk_2` FOREIGN KEY (`cod_produto`) REFERENCES `produtos` (`cod_produto`);
-
---
--- Restrições para tabelas `nota_fiscal`
---
-ALTER TABLE `nota_fiscal`
-  ADD CONSTRAINT `nota_fiscal_ibfk_1` FOREIGN KEY (`cod_pedido`) REFERENCES `pedido` (`cod_pedido`),
-  ADD CONSTRAINT `nota_fiscal_ibfk_2` FOREIGN KEY (`CNPJ_Destinatario`) REFERENCES `clientes` (`CNPJ`),
-  ADD CONSTRAINT `nota_fiscal_ibfk_3` FOREIGN KEY (`CNPJ_Transportadora`) REFERENCES `transportadoras` (`CNPJ`),
-  ADD CONSTRAINT `nota_fiscal_ibfk_4` FOREIGN KEY (`CNPJ_Emitente`) REFERENCES `fabricantes` (`CNPJ`);
+  ADD CONSTRAINT `itenspedido_ibfk_2` FOREIGN KEY (`cod_produto`) REFERENCES `produtos` (`cod_produto`),
+  ADD CONSTRAINT `itenspedido_ibfk_3` FOREIGN KEY (`codprojeto`) REFERENCES `projetos` (`idprojeto`);
 
 --
 -- Restrições para tabelas `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`CNPJ_Destinatario`) REFERENCES `clientes` (`CNPJ`),
-  ADD CONSTRAINT `pedido_ibfk_2` FOREIGN KEY (`CNPJEmitente`) REFERENCES `fabricantes` (`CNPJ`),
-  ADD CONSTRAINT `pedido_ibfk_3` FOREIGN KEY (`CNPJEmitente`) REFERENCES `fabricantes` (`CNPJ`),
-  ADD CONSTRAINT `pedido_ibfk_4` FOREIGN KEY (`CNPJEmitente`) REFERENCES `fabricantes` (`CNPJ`),
-  ADD CONSTRAINT `pedido_ibfk_5` FOREIGN KEY (`CNPJ_Transportadora`) REFERENCES `transportadoras` (`CNPJ`);
+  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`codprojeto`) REFERENCES `projetos` (`idprojeto`);
 
 --
 -- Restrições para tabelas `projetos`
 --
 ALTER TABLE `projetos`
-  ADD CONSTRAINT `projetos_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `cadastro` (`Id`);
+  ADD CONSTRAINT `projetos_ibfk_1` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

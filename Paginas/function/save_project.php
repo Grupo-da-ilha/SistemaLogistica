@@ -1,5 +1,4 @@
 <?php
-// Iniciar a sessão
 session_start();
 
 $hostname = "127.0.0.1";
@@ -7,43 +6,40 @@ $user = "root";
 $password = "";
 $database = "logistica";
 
-// Criar a conexão
 $conexao = new mysqli($hostname, $user, $password, $database);
 
-// Verificar a conexão
 if ($conexao->connect_error) {
     die("Conexão falhou: " . $conexao->connect_error);
 }
 
-// Verificar se os dados foram recebidos corretamente
-if (isset($_POST['person_id']) && isset($_POST['project_name'])) {
+if (isset($_POST['person_id']) && isset($_POST['project_name']) && isset($_POST['project_class'])) {
     $personId = $_POST['person_id'];
     $projectName = $_POST['project_name'];
+    $projectClass = $_POST['project_class'];
 
-    // Prevenir injeção de SQL
+    // Verificando o recebimento dos dados
+    error_log("Dados recebidos: person_id=$personId, project_name=$projectName, project_class=$projectClass");
+
     $personId = $conexao->real_escape_string($personId);
     $projectName = $conexao->real_escape_string($projectName);
+    $projectClass = $conexao->real_escape_string($projectClass);
 
-    // Verificar se o ID do aluno existe na tabela "cadastro"
-    $checkQuery = "SELECT * FROM cadastro WHERE id = '$personId'";
+    $checkQuery = "SELECT * FROM turmas WHERE codTurma = '$projectClass'";
     $checkResult = $conexao->query($checkQuery);
 
     if ($checkResult->num_rows > 0) {
-        // Inserir os dados no banco de dados
-        $sql = "INSERT INTO projetos (Id, nome) VALUES ('$personId', '$projectName')";
-
+        $sql = "INSERT INTO projetos (codTurma, nome) VALUES ('$projectClass', '$projectName')";
         if ($conexao->query($sql) === TRUE) {
             echo "Projeto salvo com sucesso!";
         } else {
             echo "Erro ao salvar o projeto: " . $conexao->error;
         }
     } else {
-        echo "Erro: ID de aluno inválido!";
+        echo "Erro: Código da turma inválido!";
     }
 } else {
     echo "Erro: Dados incompletos!";
 }
 
-// Fechar a conexão
 $conexao->close();
 ?>

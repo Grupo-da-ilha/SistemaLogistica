@@ -12,7 +12,8 @@ if ($conexao->connect_errno) {
     exit();
 }else{
     $doca = $conexao -> real_escape_string($_POST['doca']);
-    $sql = "SELECT * FROM docas WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
+
+    $sql = "SELECT * FROM docas WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."' AND codprojeto = '".$_SESSION['Idprojeto']."'";
     $execute = $conexao ->query($sql);
 
     if($execute -> num_rows > 0){
@@ -20,8 +21,8 @@ if ($conexao->connect_errno) {
         exit();
     }else{
         
-    $sql = "INSERT INTO docas (posicao, cod_pedido)
-    VALUES ('".$doca."', '".$_SESSION['codigo_pedido_doca']."')";
+    $sql = "INSERT INTO docas (posicao, cod_pedido, codprojeto)
+    VALUES ('".$doca."', '".$_SESSION['codigo_pedido_doca']."', '".$_SESSION['Idprojeto']."')";
     $execute = $conexao -> query($sql);
 
     if($execute){

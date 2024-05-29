@@ -88,7 +88,9 @@
 <?php
     // Iniciar uma sessão
     session_start();
-
+    if (isset($_POST['project_id'])) {
+        $_SESSION['Idprojeto'] = $_POST['project_id'];
+    }
     if (empty($_SESSION['nome'])){
         header('Location: sair.php');
         exit();
@@ -118,7 +120,13 @@
                         </nav>
                             <div class="juntos">
                                 <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
-                                <h1>SENAI LOG</h1>
+                                <h1>SENAI LOG</h1>';
+                                if (isset($_SESSION['Idprojeto'])) {
+                                    echo '<p>Projeto selecionado: ' . $_SESSION['Idprojeto'] . '</p>';
+                                } else {
+                                    echo '<p>Nenhum projeto selecionado.</p>';
+                                }
+                                echo '
                             </div>
                             <h2>'.$_SESSION['nome'].'</h2>
                         </div>
@@ -142,6 +150,11 @@
             </div>
         </div>
     </main>';
+    if (isset($_SESSION['Idprojeto'])) {
+        echo '<p>Projeto selecionado: ' . $_SESSION['Idprojeto'] . '</p>';
+    } else {
+        echo '<p>Nenhum projeto selecionado.</p>';
+    }
 }
 ?>
 <!-- Modal -->

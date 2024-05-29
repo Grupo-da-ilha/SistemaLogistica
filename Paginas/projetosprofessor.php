@@ -80,7 +80,7 @@ if (empty($_SESSION['nome'])){
         include_once $caminho_inclusao;
 
         // Recuperar o ID do usuário da sessão
-        $cadastro_id = $_SESSION['id'];
+        $CodTurma = $_SESSION['codTurma'];
 
         // Realizar a consulta ao banco de dados para obter os projetos do usuário
         $conexao = new mysqli("127.0.0.1", "root", "", "logistica");
@@ -91,30 +91,29 @@ if (empty($_SESSION['nome'])){
         }
 
         // Consulta SQL para obter os projetos do usuário
-        $sql_projetos = "SELECT * FROM projetos WHERE Id = $cadastro_id";
+        $sql_projetos = "SELECT * FROM projetos WHERE codTurma = '".$CodTurma."'";
         $result_projetos = $conexao->query($sql_projetos);
 
         // Verificar se há resultados de projetos
         if ($result_projetos->num_rows > 0) {
             echo '<div class="projetos-do-usuario">';
             while ($row = $result_projetos->fetch_assoc()) {
-                $_SESSION['Idprojeto'] = $row['idprojeto'];
-                echo '<a href="projetoprofessor.php" style="text-decoration: none; cursor:pointer;">';
-                echo '<div class="card-projetos">';
-                echo '</a>';
-                echo '
-                        <div class="apagar-projeto">
-                            <button type="button" class="button-apagar-projeto" data-projeto-id="' . $row['idprojeto'] . '">X</button>
-                        </div>';
-                echo '<a href="projetoprofessor.php" style="text-decoration: none">';
+                echo '<div class="card-projetos" onclick="selectProject(' . $row['idprojeto'] . ')">';
+                echo '<div class="apagar-projeto">';
+                echo '<button type="button" class="button-apagar-projeto" data-projeto-id="' . $row['idprojeto'] . '">X</button>';
+                echo '</div>';
                 echo '<h4>' . $row['nome'] . '</h4>';
                 echo '</div>';
-                echo '</a>';
             }
             echo '</div>';
         } else {
             echo '<p>Nenhum projeto encontrado para este usuário.</p>';
         }
+        
+        // Formulário oculto para redirecionamento
+        echo '<form id="projectForm" action="projetoprofessor.php" method="POST" style="display: none;">
+                <input type="hidden" name="project_id" id="project_id">
+              </form>';
 
         // Fechar a conexão
         $conexao->close();
@@ -129,6 +128,10 @@ if (empty($_SESSION['nome'])){
 </main>
 
 <script>
+function selectProject(projectId) {
+    document.getElementById('project_id').value = projectId;
+    document.getElementById('projectForm').submit();
+}
 document.addEventListener('DOMContentLoaded', function() {
     var buttons = document.querySelectorAll('.button-apagar-projeto');
     buttons.forEach(function(button) {

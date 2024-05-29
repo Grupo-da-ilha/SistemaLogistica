@@ -16,7 +16,9 @@
 <?php
 // Iniciar uma sessão
 session_start();
-
+if (isset($_POST['project_id'])) {
+    $_SESSION['Idprojeto'] = $_POST['project_id'];
+}
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
@@ -103,7 +105,7 @@ if (empty($_SESSION['nome'])){
                  
                             $sql="SELECT pedido.cod_pedido, pedido.DataVenda, pedido.ValorTotal, pedido.CNPJEmitente, 
                             pedido.CNPJ_Destinatario, pedido.CNPJ_Transportadora, pedido.Situacao, pedido.InformacaoAdicional
-                            FROM `pedido`";
+                            FROM `pedido` WHERE codprojeto = '{$_SESSION['Idprojeto']}'";
                             
                             $execute = $conexao -> query($sql);
                             if($execute && $execute -> num_rows > 0){
