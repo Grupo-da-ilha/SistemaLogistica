@@ -171,6 +171,7 @@ if (empty($_SESSION['nome'])){
                     <span class="close" onclick="toggleForm()">&times;</span>
                     <h3>Nome:</h3>
                     <input type="text" id="project_name_form" placeholder="Nome do Projeto" required>
+                    <input type="text" id="project_cod_form" placeholder="Código Turma" required>
                     <button type="button" id="save_button" onclick="saveProject()">Criar Projeto</button>
                 </form>
                 <a href="turmas.php"><div class="options-senai-turma">
