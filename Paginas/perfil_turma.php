@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/infoturma.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
 </head>
@@ -35,38 +36,40 @@
 
         if($resultado->num_rows > 0) {
             // Turma encontrada, exibe os alunos
-            echo '
-                <header>
-                    <div class="container">
-                        <div class="main-horizontal">
-                            <ul class="ul-main">
-                                <li class="li-main">
-                                    <input id="main-button" type="checkbox" />
-                                        <label for="main-button">
-                                            <div class="div-button-main">
-                                                <span class="button-main"></span>
-                                            </div>
-                                    </label>
-                                    <nav>
-                                        <ul class="ul-button">
-                                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
-                                            <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
-                                        </ul>
-                                    </nav>
-                                </li>
-                                <li class="li-main">
-                                    <h1>SENAI SCP</h1>
-                                    <h2>'.$_SESSION['nome'].'</h2>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </header>
+            echo '<header>
+            <div class="container">
+                <div class="main-horizontal">
+                    <ul class="ul-main">
+                        <li class="li-main">
+                            <div class="teste">
+                            <input id="main-button" type="checkbox" />
+                                <label for="main-button">
+                                    <div class="div-button-main">
+                                        <span class="button-main"></span>
+                                    </div>
+                            </label>
+                            <nav>
+                                <ul class="ul-button">
+                                <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
+                                </ul>
+                            </nav>
+                                <div class="juntos">
+                                    <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                                    <h1>SENAI LOG</h1>
+                                </div>
+                                <h2>'.$_SESSION['nome'].'</h2>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
                 <main>
                     <div class="container-prin">
                         <div class="alunos-turma">
