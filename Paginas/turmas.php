@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/turmas.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
     <script>
@@ -52,6 +53,7 @@
             <div class="main-horizontal">
                 <ul class="ul-main">
                     <li class="li-main">
+                        <div class="teste">
                         <input id="main-button" type="checkbox" />
                             <label for="main-button">
                                 <div class="div-button-main">
@@ -69,11 +71,10 @@
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
                         </nav>
-                        <div class="teste">
-                            <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
-                            <h1>SENAI LOG</h1>
-                        </div>    
-                        <div class="teste2">
+                            <div class="juntos">
+                                <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                                <h1>SENAI LOG</h1>
+                            </div>
                             <h2>'.$_SESSION['nome'].'</h2>
                         </div>
                     </li>
