@@ -59,7 +59,19 @@ if (empty($_SESSION['nome'])){
 <main>
     <div class="container-prin">
 <?php
-    // Construir o caminho do arquivo de inclusão de forma relativa
+    $hostname = "127.0.0.1";
+    $user = "root";
+    $password = "";
+    $database = "logistica";
+
+    $conexao = new mysqli($hostname, $user, $password, $database);
+
+    if ($conexao->connect_errno) {
+        echo "Failed to connect to MySQL: " . $conexao->connect_error;
+        exit();
+    }else{
+
+
     $caminho_inclusao = __DIR__ . '/function/projcriados.php';
 
     // Verificar se o arquivo existe antes de incluí-lo
@@ -88,13 +100,18 @@ if (empty($_SESSION['nome'])){
             echo '</div>';
             echo '<div class="projetos-do-usuario">';
             while ($row = $result_projetos->fetch_assoc()) {
+                $_SESSION['Idprojeto'] = $row['idprojeto'];
+                echo '<a href="projetoprofessor.php" style="text-decoration: none; cursor:pointer;">';
                 echo '<div class="card-projetos">';
+                echo '</a>';
                 echo '
-                    <div class="apagar-projeto">
-                        <button type="button" class="button-apagar-projeto" data-projeto-id="' . $row['idprojeto'] . '">X</button>
-                    </div>';
+                        <div class="apagar-projeto">
+                            <button type="button" class="button-apagar-projeto" data-projeto-id="' . $row['idprojeto'] . '">X</button>
+                        </div>';
+                echo '<a href="projetoprofessor.php" style="text-decoration: none">';
                 echo '<h4>' . $row['nome'] . '</h4>';
                 echo '</div>';
+                echo '</a>';
             }
             echo '</div>';
         } else {
@@ -107,6 +124,8 @@ if (empty($_SESSION['nome'])){
         echo "não deu";
     }
 }
+}
+
 ?>
     </div>
 </main>

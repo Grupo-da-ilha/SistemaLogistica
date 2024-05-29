@@ -32,7 +32,7 @@
                     }
                 }
             };
-            xhr.send("codTurma=" + codTurma);
+            xhr.send("codTurma=" + encodeURIComponent(codTurma));
         }
     }
     </script>

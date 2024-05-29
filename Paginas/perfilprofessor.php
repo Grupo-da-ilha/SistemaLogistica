@@ -75,6 +75,10 @@
                                 <h3>DADOS:</h2>
                             </div>
                             <div class="info-dados">
+                                <h3>ID:</h3>
+                                <h4>'.$_SESSION['id'].'</h4>
+                            </div>
+                            <div class="info-dados">
                                 <h3>Email:</h3>
                                 <h4>'.$_SESSION['email'].'</h4>
                             </div>

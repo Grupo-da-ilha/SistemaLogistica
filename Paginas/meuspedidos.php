@@ -140,6 +140,8 @@ if (empty($_SESSION['nome'])){
                                                         </td>
                                                     </tr>";
                                             }
+                                    } else{
+                                        echo 'Nenhum pedido criado';
                                     }
                          } 
                          echo"
