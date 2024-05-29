@@ -141,8 +141,7 @@ if (empty($_SESSION['nome'])){
                                                         <input type="checkbox" id="avariado-produto" class="avariado-produto" name="avariado">
                                                         Faltando?
                                                         <input type="checkbox" id="avariado-produto" class="avariado-produto" name="Faltando">
-                                                        <input type="submit" name="UpdateItem" value="OK">
-                                                        <input type="submit" name="Confirmar-pedido" value="OK">
+                                                        <input type="submit" name="Confirmar-pedido" value="OK" style="display: block;">
                                                       </form>';
                                             }
                                             echo '</div>';
@@ -170,6 +169,30 @@ echo '            </div>
 <script>
 
     $('#form-doca').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    $.ajax({
+        type: 'POST',
+        url: 'function/inserirdoca.php',
+        data: formData,
+        success: function(response) {
+
+            var jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                alert('Doca inserida com sucesso!');
+
+            } else {
+                alert(jsonResponse.message); 
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
+
+$('#form-doca').submit(function(e) {
     e.preventDefault(); 
     var formData = $(this).serialize(); 
     $.ajax({
