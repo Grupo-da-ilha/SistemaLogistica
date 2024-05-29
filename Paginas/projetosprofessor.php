@@ -96,9 +96,6 @@ if (empty($_SESSION['nome'])){
 
         // Verificar se há resultados de projetos
         if ($result_projetos->num_rows > 0) {
-            echo '<div class="titulo-projetos">';
-            echo '<h3>Projetos de  ' . $_SESSION['nome'] . '</h3>';
-            echo '</div>';
             echo '<div class="projetos-do-usuario">';
             while ($row = $result_projetos->fetch_assoc()) {
                 $_SESSION['Idprojeto'] = $row['idprojeto'];
