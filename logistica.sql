@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30/05/2024 às 00:28
+-- Tempo de geração: 30/05/2024 às 22:58
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -87,7 +87,7 @@ CREATE TABLE `docas` (
 --
 
 INSERT INTO `docas` (`cod_doca`, `posicao`, `cod_pedido`, `codprojeto`) VALUES
-(15, 'A1', 11, 6);
+(16, 'A1', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -157,6 +157,9 @@ CREATE TABLE `itenspedido` (
   `Quantidade` int(11) NOT NULL,
   `ValorUnitario` double NOT NULL,
   `ValorTotal` double NOT NULL,
+  `Avariado` tinyint(1) NOT NULL,
+  `Faltando` tinyint(1) NOT NULL,
+  `VistoriaConcluida` tinyint(1) NOT NULL,
   `codprojeto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -164,11 +167,11 @@ CREATE TABLE `itenspedido` (
 -- Despejando dados para a tabela `itenspedido`
 --
 
-INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `ValorUnitario`, `ValorTotal`, `codprojeto`) VALUES
-(115, 1, 11, 2, 5.5, 11, 6),
-(118, 1, 11, 2, 5.5, 11, 6),
-(124, 1, 101, 3, 5.5, 16.5, 6),
-(125, 2, 101, 4, 1.2, 4.8, 6);
+INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codprojeto`) VALUES
+(115, 1, 11, 2, 5.5, 11, 0, 0, 0, 6),
+(118, 1, 11, 2, 5.5, 11, 0, 0, 0, 6),
+(127, 1, 1, 5, 5.5, 27.5, 1, 1, 1, 5),
+(128, 2, 1, 3, 1.2, 3.6, 1, 1, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -192,10 +195,8 @@ CREATE TABLE `nota_fiscal` (
 --
 
 INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `cod_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(64160, '45230964322640802688964837758814440118585252', '2024-05-29 18:27:04', 'Por favor, mandem os marca textos bem embalados', 10, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23'),
-(76682, '65463132620896480702677583085793945099981956', '2024-05-29 18:27:04', 'Cuidado com tesouras, porque algumas estão com ponta', 101, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23'),
-(84817, '18670429376789829333058572513610113722260039', '2024-05-29 18:27:04', '', 11, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23'),
-(86618, '82928527275820886726222899070796661198666112', '2024-05-29 18:27:04', 'Cuidado com as tesouras', 1, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23');
+(64029, '35364095924551024804542641476196790032831620', '2024-05-29 18:27:04', 'Pedido deve ser entregue com antecedência', 1, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23'),
+(84817, '18670429376789829333058572513610113722260039', '2024-05-29 18:27:04', '', 11, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23');
 
 -- --------------------------------------------------------
 
@@ -220,11 +221,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codprojeto`) VALUES
-(1, '2024-05-29 18:27:04', 51.8, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Cuidado com as tesouras', 5),
-(10, '2024-05-29 18:28:41', 316.4, '44.990.901/0001-43', '03.774.819/0001-02', '13.161.095/0001-77', 'Em transporte', 'Por favor, mandem os marca textos bem embalados', 5),
-(11, '2024-05-29 18:45:49', 22, '44.990.901/0001-43', '03.774.819/0001-02', '42.555.657/0001-65', 'Em transporte', '', 6),
-(23, '2024-05-29 18:29:48', 0, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em Processamento', '', 5),
-(101, '2024-05-29 19:16:51', 21.3, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em transporte', 'Cuidado com tesouras, porque algumas estão com ponta', 6);
+(1, '2024-05-29 18:27:04', 31.1, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Pedido deve ser entregue com antecedência', 5),
+(11, '2024-05-29 18:45:49', 22, '44.990.901/0001-43', '03.774.819/0001-02', '42.555.657/0001-65', 'Em transporte', '', 6);
 
 -- --------------------------------------------------------
 
@@ -429,13 +427,13 @@ ALTER TABLE `cadastro`
 -- AUTO_INCREMENT de tabela `docas`
 --
 ALTER TABLE `docas`
-  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
-  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
