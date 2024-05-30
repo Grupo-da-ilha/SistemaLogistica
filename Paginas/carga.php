@@ -157,27 +157,37 @@ if (empty($_SESSION['nome'])){
                                             echo'<tr>';
                                             echo '<td>' . htmlspecialchars($row['Nome']). '</td>';
                                             echo '<td>UN: ' . htmlspecialchars($row['UN']). '</td>';
-                                            echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '</td>';
+                                            echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '
+                                            <form style="display: none;" class="form_quantidade">
+                                                <input type="text" name="Quantidade falta">
+                                                <input type="submit" name="UpdateQt" value="Salvar" margin-left: 10px;">
+                                            </form>
+                                            </td>';
                                             echo '<td>Preço Unitário: ' . htmlspecialchars($row['PrecoUNI']). '</td>';
                                             echo '<td>Valor Total: ' . htmlspecialchars($row['ValorTotal']). '</td>';
                                             echo '<td>
-                                            <form style="display: flex" id="form-conferencia">
+                                            <form style="display: flex" class="form-conferencia">
                                                 Avariado?
-                                                <input type="checkbox" class="avariado-produto" name="avariado">
+                                                <input type="checkbox" class="avariado-produto" name="avariado" value="1">
                                                 Faltando?
-                                                <input type="checkbox" class="avariado-produto" name="faltando">
+                                                <input type="checkbox" class="avariado-produto" name="faltando" value="1">
                                                 <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                <input type="submit" name="Confirmar-vistoria" value="OK" style="display: block; margin-left: 10px;">
+                                                <input type="submit" name="Confirmar_vistoria" value="Registrar" style="display: block; margin-left: 10px;">
                                             </form>
                                             </td>';
                                             echo '<td>
-                                            <form action="function/processorecebimento.php" method="POST" style="display: flex">
-                                                <input type="submit" name="Confirmar-pedido" value="Confirmar vistoria" style="display: block;">
+                                            <form class="form-vistoria-completa">
+                                                <input type="hidden" name="coditem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
+                                                <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída">
                                             </form>
                                         </td>';
                                         }
                                         echo'</tr>';
                                         echo '</table>';
+                                        echo '
+                                        <form action="function/Finalizarvistoria.php" method="POST" style="margin-top: 40px">
+                                            <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento">
+                                        </form>';
                                         echo '</div>';
                                     } else {
                                         echo 'Esse pedido não possui itens';
@@ -198,7 +208,6 @@ echo '            </div>
 ?>
 </body>
 <script>
-
 $('#form-doca').submit(function(e) {
     e.preventDefault(); 
     var formData = $(this).serialize(); 
@@ -221,9 +230,10 @@ $('#form-doca').submit(function(e) {
     });
 });
 
-$('#form-conferencia').submit(function(e) {
+$('.form-conferencia').submit(function(e) {
     e.preventDefault(); 
     var formData = $(this).serialize(); 
+    console.log(formData);
     $.ajax({
         type: 'POST',
         url: 'function/processorecebimento.php',
@@ -242,5 +252,28 @@ $('#form-conferencia').submit(function(e) {
         }
     });
 });
+
+$('.form-vistoria-completa').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    $.ajax({
+        type: 'POST',
+        url: 'function/vistoriaconcluida.php',
+        data: formData,
+        success: function(response) {
+            var jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                alert(jsonResponse.message);
+            } else {
+                alert(jsonResponse.message); 
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
+
 </script>
 </html>
