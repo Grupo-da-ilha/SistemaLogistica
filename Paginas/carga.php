@@ -14,8 +14,6 @@
 </head>
 <body>
 <?php
-
-// Iniciar uma sessão
 session_start();
 if (isset($_POST['project_id'])) {
     $_SESSION['Idprojeto'] = $_POST['project_id'];
@@ -24,7 +22,24 @@ if (isset($_POST['project_id'])) {
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
-} else {  
+} else {
+    $hostname = "127.0.0.1";
+    $user = "root";
+    $password = "";
+    $database = "logistica";
+
+    $conexao = new mysqli($hostname, $user, $password, $database);
+
+    if ($conexao->connect_errno) {
+        echo "Failed to connect to MySQL: " . $conexao->connect_error;
+        exit();
+    } else {
+        if (isset($_POST['enviar-pedido']) && !empty($_POST['cod_pedido'])) {
+            $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
+            $_SESSION['cod_pedido'] = $cod_pedido;
+        }
+    }
+
     echo '<header>
         <div class="container">
             <div class="main-horizontal">
@@ -49,7 +64,15 @@ if (empty($_SESSION['nome'])){
                         </nav>
                     </li>
                     <li class="li-main">
-                        <h1>SENAI SCP</h1>
+                        <h1>SENAI SCP</h1>';
+                        if (isset($_SESSION['Idprojeto'])) {
+                            echo '<p>Projeto selecionado: ' . htmlspecialchars($_SESSION['Idprojeto']) . '</p>';
+                            echo '<p>Código pedido selecionado: ' . htmlspecialchars($_SESSION['cod_pedido']) . '</p>';
+                        } else {
+                            echo '<p>Nenhum projeto selecionado.</p>';
+
+                        }
+                        echo '
                         <h2>'.htmlspecialchars($_SESSION['nome']).'</h2>
                     </li>
                 </ul>
@@ -76,7 +99,7 @@ if (empty($_SESSION['nome'])){
                 </div>
                 <div class="info-total">
                     <div class="vistoria-carga">
-                        <div class="notafiscal">
+                        <div class="notafiscal" >
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-recebimento">
                                 <form action="" method="POST" id="form-nota-pedido">
@@ -89,111 +112,92 @@ if (empty($_SESSION['nome'])){
                                 <form method="POST" id="form-doca">
                                     <h5>DOCA:</h5>
                                     <input type="text" id="doca" class="doca" placeholder="Doca:" name="doca">
-                                    <input type="submit"'; /*id="enviar-recebimento-carga"*/echo' value="OK" style="display: block" name="enviar_doca">
+                                    <input type="submit" value="OK" style="display: block" name="enviar_doca">
                                 </form>
                             </div>
                         </div>';
-                                      
-                        $hostname = "127.0.0.1";
-                        $user = "root";
-                        $password = "";
-                        $database = "logistica";
+                        if(isset($_POST['enviar-pedido']) && !empty($_POST['nota_fiscal']) && !empty($_POST['cod_pedido'])){
+                            $_SESSION['nota_fiscal_doca'] = $_POST['nota_fiscal'];
+                            $_SESSION['codigo_pedido_doca'] = $_POST['cod_pedido'];
 
-                        $conexao = new mysqli($hostname, $user, $password, $database);
+                            $nota_fiscal = $conexao->real_escape_string($_POST['nota_fiscal']);
+                            $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
 
-                        if ($conexao->connect_errno) {
-                            echo "Failed to connect to MySQL: " . $conexao->connect_error;
-                            exit();
-                        }else{
-                            if(isset($_POST['enviar-pedido']) && !empty($_POST['nota_fiscal']) && !empty($_POST['cod_pedido'])){
-                                $_SESSION['nota_fiscal_doca'] = $_POST['nota_fiscal'];
-                                $_SESSION['codigo_pedido_doca'] = $_POST['cod_pedido'];
+                            $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$_SESSION['nota_fiscal_doca']."' AND cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
+                            $execute = $conexao->query($sql);
 
-                                $nota_fiscal = $conexao->real_escape_string($_POST['nota_fiscal']);
-                                $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
-
-                                $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$_SESSION['nota_fiscal_doca']."' AND cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
+                            if($execute->num_rows > 0){
+                                $sql = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."' AND codprojeto = '".$_SESSION['Idprojeto']."'";
                                 $execute = $conexao->query($sql);
 
                                 if($execute->num_rows > 0){
-                                    $sql = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."' AND codprojeto = '".$_SESSION['Idprojeto']."'";
+                                    $sql = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
                                     $execute = $conexao->query($sql);
 
-                                    if($execute->num_rows > 0){
-                                        $sql = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
-                                        $execute = $conexao->query($sql);
-
-                                        if($execute->num_rows > 0){ 
-                                            $sql = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
-                                            FROM produtos 
-                                            LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
-                                            WHERE itenspedido.cod_pedido = '".$_SESSION['codigo_pedido_doca']."' ORDER BY produtos.Nome ASC";
-                                            $resultado = $conexao->query($sql);  
-                                            
-                                            echo '<div class="produtos" style="overflow-y: auto;">
-                                                    <h4>PRODUTOS:</h4>';
-                                            while ($row = $resultado->fetch_assoc()){
-                                                echo '<h6>Produto: ' . htmlspecialchars($row['Nome']). '</h6>';
-                                                echo '<h6>Quantidade: ' . htmlspecialchars($row['Quantidade']). '</h6>';
-                                                echo '<h6>Preço Unitário: ' . htmlspecialchars($row['PrecoUNI']). '</h6>';
-                                                echo '<h6>Valor Total: ' . htmlspecialchars($row['ValorTotal']). '</h6>';
-                                                echo '<h6>UN: ' . htmlspecialchars($row['UN']). '</h6>';
-                                                echo '<form action="function/processorecebimento.php" method="POST">
-                                                        <input type="hidden" name="codigoItemPedido" value="' . htmlspecialchars($row['cod_itenPedido']). '">
-                                                        Avariado?
-                                                        <input type="checkbox" id="avariado-produto" class="avariado-produto" name="avariado">
-                                                        Faltando?
-                                                        <input type="checkbox" id="avariado-produto" class="avariado-produto" name="Faltando">
-                                                        <input type="submit" name="Confirmar-pedido" value="OK" style="display: block;">
-                                                      </form>';
-                                            }
-                                            echo '</div>';
-                                        } else {
-                                            echo 'Esse pedido não possui itens';
+                                    if($execute->num_rows > 0){ 
+                                        $sql = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
+                                        FROM produtos 
+                                        LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
+                                        WHERE itenspedido.cod_pedido = '".$_SESSION['codigo_pedido_doca']."' ORDER BY produtos.Nome ASC";
+                                        $resultado = $conexao->query($sql);  
+                                        
+                                        echo '<div class="produtos" style="overflow-y: auto;">';
+                                        echo '<table class="tabela">
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>UN</th>
+                                                    <th>QTD</th>
+                                                    <th>R$/unit</th>
+                                                    <th>Valor total</th>
+                                                    <th>Ações</th>
+                                                    <th>Finalização</th>
+                                                </tr>';
+                                                
+                                        while ($row = $resultado->fetch_assoc()){
+                                            echo'<tr>';
+                                            echo '<td>' . htmlspecialchars($row['Nome']). '</td>';
+                                            echo '<td>UN: ' . htmlspecialchars($row['UN']). '</td>';
+                                            echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '</td>';
+                                            echo '<td>Preço Unitário: ' . htmlspecialchars($row['PrecoUNI']). '</td>';
+                                            echo '<td>Valor Total: ' . htmlspecialchars($row['ValorTotal']). '</td>';
+                                            echo '<td>
+                                            <form style="display: flex" id="form-conferencia">
+                                                Avariado?
+                                                <input type="checkbox" class="avariado-produto" name="avariado">
+                                                Faltando?
+                                                <input type="checkbox" class="avariado-produto" name="faltando">
+                                                <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
+                                                <input type="submit" name="Confirmar-vistoria" value="OK" style="display: block; margin-left: 10px;">
+                                            </form>
+                                            </td>';
+                                            echo '<td>
+                                            <form action="function/processorecebimento.php" method="POST" style="display: flex">
+                                                <input type="submit" name="Confirmar-pedido" value="Confirmar vistoria" style="display: block;">
+                                            </form>
+                                        </td>';
                                         }
+                                        echo'</tr>';
+                                        echo '</table>';
+                                        echo '</div>';
                                     } else {
-                                        echo 'Código do pedido incorreto';
+                                        echo 'Esse pedido não possui itens';
                                     }
                                 } else {
-                                    echo 'Código da nota fiscal e do pedido não correspondem, verifique os o codigo do pedido e da nota_fiscal para o seu projeto atual';
-                                }  
-                            }
-
-                            
+                                    echo 'Código do pedido incorreto, verifique se ele foi criado e finalizado no projeto atual';
+                                }
+                            } else {
+                                echo 'Código da nota fiscal e do pedido não correspondem, verifique os o codigo do pedido e da nota_fiscal para o seu projeto atual';
+                            }  
                         }
-}
 echo '            </div>
                 </div>
             </div>
         </div>
     </main>';
+                    }
 ?>
 </body>
 <script>
-
-    $('#form-doca').submit(function(e) {
-    e.preventDefault(); 
-    var formData = $(this).serialize(); 
-    $.ajax({
-        type: 'POST',
-        url: 'function/inserirdoca.php',
-        data: formData,
-        success: function(response) {
-
-            var jsonResponse = JSON.parse(response);
-            if (jsonResponse.success) {
-                alert('Doca inserida com sucesso!');
-
-            } else {
-                alert(jsonResponse.message); 
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-            alert('Erro ao enviar dados do formulário.');
-        }
-    });
-});
 
 $('#form-doca').submit(function(e) {
     e.preventDefault(); 
@@ -203,11 +207,9 @@ $('#form-doca').submit(function(e) {
         url: 'function/inserirdoca.php',
         data: formData,
         success: function(response) {
-
             var jsonResponse = JSON.parse(response);
             if (jsonResponse.success) {
                 alert('Doca inserida com sucesso!');
-
             } else {
                 alert(jsonResponse.message); 
             }
@@ -219,5 +221,26 @@ $('#form-doca').submit(function(e) {
     });
 });
 
+$('#form-conferencia').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    $.ajax({
+        type: 'POST',
+        url: 'function/processorecebimento.php',
+        data: formData,
+        success: function(response) {
+            var jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                alert(jsonResponse.message); 
+            } else {
+                alert(jsonResponse.message); 
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
 </script>
 </html>

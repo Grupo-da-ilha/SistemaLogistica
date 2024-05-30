@@ -34,6 +34,10 @@ if (empty($_SESSION['nome'])){
         echo "Failed to connect to MySQL: " . $conexao->connect_error;
         exit();
     }else{
+        if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
+            $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
+            $_SESSION['cod_pedido'] = $cod_pedido;
+        }
 
     echo ' <header>
     <div class="container">
@@ -176,7 +180,7 @@ if (empty($_SESSION['nome'])){
                                                             $codigo_pedido = $row['cod_pedido'];
                                                             echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($codigo_pedido) . "</h6>";
                                                 
-                                                            $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = '' WHERE cod_pedido = '{$_SESSION['cod_pedido']}' AND codprojeto = '{$_SESSION['Idprojeto']}'";
+                                                            $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = ''WHERE cod_pedido = '{$_SESSION['cod_pedido']}' AND codprojeto = '{$_SESSION['Idprojeto']}'";
                                                             $execute = $conexao->query($sql);
                                                         } else {
                                                             $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
@@ -206,6 +210,8 @@ if (empty($_SESSION['nome'])){
                                                             }
                                                         }
                                                     } else {
+                                                        echo 'Pedido não criado'; 
+                                                        echo '<br>'; 
                                                     }
                                                 } catch (mysqli_sql_exception $e) {
                                                     if ($e->getCode() == 1062) {
@@ -217,6 +223,7 @@ if (empty($_SESSION['nome'])){
                                                 }
 
                                             if (isset($_POST['enviar_produto']) && !empty($_POST['codProduto'])) {
+                                                
                                                 $cod_produto = $conexao->real_escape_string($_POST['codProduto']);
                                                 $sql = "SELECT Nome, PrecoUNI, UN, NCM, PesoGramas FROM produtos WHERE cod_produto = '$cod_produto'";
                                                 $result = $conexao->query($sql);
@@ -240,7 +247,10 @@ if (empty($_SESSION['nome'])){
                                                     echo "<h6>Produto não encontrado.</h6>";
                                                 }
                                             }
+                                            $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codprojeto ='{$_SESSION['Idprojeto']}'";
+                                            $executar = $conexao->query($selectPedido);
 
+                                            if ($executar && $executar->num_rows > 0) {
                                             $sql3 = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
                                                     FROM produtos 
                                                     LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
@@ -282,7 +292,7 @@ if (empty($_SESSION['nome'])){
                                                             </td>
                                                             <td>" . htmlspecialchars($row['PrecoUNI']) . "</td>
                                                             <td>" . htmlspecialchars($row['NCM']) . "</td>
-                                                            <td><h8>".$valorTotalItem."</8></td>
+                                                            <td><h8>".$valorTotalItem."</h8></td>
                                                             <td>
                                                                 <form action=\"function/processoItens.php\" method=\"POST\" class=\"deletebox\">
                                                                     <input type=\"hidden\" name=\"codigoItemPedido\" value=\"" . $row['cod_itenPedido'] . "\" style=\"display: block;\">
@@ -309,10 +319,13 @@ if (empty($_SESSION['nome'])){
                                             }
 
                                             $conexao->close();
-                                        }
+                                    } else{
+                                        echo 'Pedido não criado nesse projeto';
                                     }
                                 }
                                     
+                            }
+                        }
 echo'
 
                                 </div>

@@ -36,6 +36,8 @@ if ($conexao->connect_errno) {
         header('Location: ../criarpedido.php', true, 301);
         exit();     
         
+    } else{
+        echo 'Quantidade não digitada'; 
     }
 
     if (isset($_POST['UpdateValor']) && !empty($_SESSION['cod_pedido'])) {
