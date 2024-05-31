@@ -18,7 +18,6 @@ session_start();
 if (isset($_POST['project_id'])) {
     $_SESSION['Idprojeto'] = $_POST['project_id'];
 }
-
 if (empty($_SESSION['nome'])) {
     header('Location: sair.php');
     exit();
@@ -36,11 +35,19 @@ if (empty($_SESSION['nome'])) {
     }
     if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
         $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
-        $_SESSION['cod_pedido'] = $cod_pedido;
+        $_SESSION['cod_pedido'] = $cod_pedido; 
+        $sql = "SELECT id_pedido FROM pedido WHERE cod_pedido = '$cod_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
+        $execute = $conexao -> query($sql);
+
+        if($execute -> num_rows > 0){
+            $row = $execute -> fetch_assoc();
+            $_SESSION['idpedido'] = $row['id_pedido'];
+        }
     }
-    if (!isset($_POST['enviar_cod']) && empty($_POST['cod_pedido'])) {
-        echo 'Nenhum código de pedido digitado'; 
-    }
+
+    /*if(!isset($_POST['enviar_cod']) && empty($_POST['cod_pedido'])){
+
+    }*/
     echo ' <header>
     <div class="container">
         <div class="main-horizontal">
@@ -119,14 +126,14 @@ if (empty($_SESSION['nome'])) {
                             </form>
                             <br>';
     
-    $sql = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codprojeto = '".$_SESSION['Idprojeto']."' ";
+    $sql = "SELECT * FROM pedido  WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
     $execute = $conexao->query($sql);
 
     if ($execute && $execute->num_rows > 0){
         if(!isset($_POST['enviar_cod']) && empty($_POST['cod_pedido'])){
         $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
-                nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.cod_pedido
-                FROM nota_fiscal WHERE nota_fiscal.cod_pedido = '".$_SESSION['cod_pedido']."' ORDER BY nota_fiscal.cod_pedido ASC";
+                nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.id_pedido
+                FROM nota_fiscal WHERE nota_fiscal.id_pedido = '".$_SESSION['idpedido']."' ORDER BY nota_fiscal.id_pedido ASC";
 
         $execute = $conexao->query($sql);
 
@@ -238,8 +245,8 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
     $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
     
     $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
-            nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.cod_pedido
-            FROM nota_fiscal WHERE nota_fiscal.cod_pedido = '".$cod_pedido."' ORDER BY nota_fiscal.cod_pedido ASC";
+            nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.id_pedido
+            FROM nota_fiscal WHERE nota_fiscal.id_pedido = '".$_SESSION['idpedido']."' ORDER BY nota_fiscal.id_pedido ASC";
 
     $execute = $conexao->query($sql);
 
@@ -346,7 +353,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
     }
 }
     }else{
-        echo 'Código do pedido não corresponde, por favor verifique os seus pedidos criados nesse projeto';
+        echo 'Código do pedido não corresponde, por favor verifique os seus pedidos criados';
     }
 }
 

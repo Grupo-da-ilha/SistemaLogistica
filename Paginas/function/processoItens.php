@@ -41,13 +41,13 @@ if ($conexao->connect_errno) {
     }
 
     if (isset($_POST['UpdateValor']) && !empty($_SESSION['cod_pedido'])) {
-        $sql = "UPDATE `pedido` SET Situacao = 'Em transporte' WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
+        $sql = "UPDATE `pedido` SET Situacao = 'Em transporte' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
         $resultado = $conexao->query($sql);
 
 
         if($resultado && !empty($_POST['texto'])){
             $texto = $_POST['texto'];
-            $sql = "UPDATE `pedido` SET InformacaoAdicional = '".$texto."' WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
+            $sql = "UPDATE `pedido` SET InformacaoAdicional = '".$texto."' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
             $resultado = $conexao->query($sql);
         }
         if ($resultado) {
@@ -60,11 +60,11 @@ if ($conexao->connect_errno) {
         
                 $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
                         nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario
-                        FROM `nota_fiscal` WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
+                        FROM `nota_fiscal` WHERE id_pedido = '{$_SESSION['idpedido']}'";
                 $resultado = $conexao->query($sql);
         
                 if ($resultado->num_rows > 0) {
-                    $sql = "DELETE FROM nota_fiscal WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
+                    $sql = "DELETE FROM nota_fiscal WHERE id_pedido = '" . $_SESSION['idpedido'] . "'";
                     $execute = $conexao->query($sql);
         
                     if ($execute) {
@@ -84,8 +84,8 @@ if ($conexao->connect_errno) {
                             $cod_nota[] = $numero_aleatorio;
                         }
         
-                        $sql = "INSERT INTO nota_fiscal (cod_nota, chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, cod_pedido) 
-                                VALUES ('" . implode($cod_nota) . "', '" . implode($sequencia) . "', '" . $row['DataVenda'] . "', '" . $row['CNPJ_Destinatario'] . "', '" . $row['CNPJ_Transportadora'] . "', '" . $row['CNPJEmitente'] . "', '" .$texto. "', '" . $_SESSION['cod_pedido'] . "')";
+                        $sql = "INSERT INTO nota_fiscal (cod_nota, chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, id_pedido) 
+                                VALUES ('" . implode($cod_nota) . "', '" . implode($sequencia) . "', '" . $row['DataVenda'] . "', '" . $row['CNPJ_Destinatario'] . "', '" . $row['CNPJ_Transportadora'] . "', '" . $row['CNPJEmitente'] . "', '" .$texto. "', '" . $_SESSION['idpedido'] . "')";
         
                         $execute = $conexao->query($sql);
                     }
@@ -106,8 +106,8 @@ if ($conexao->connect_errno) {
                         $cod_nota[] = $numero_aleatorio;
                     }
         
-                    $sql = "INSERT INTO nota_fiscal (cod_nota, chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, cod_pedido) 
-                            VALUES ('" . implode($cod_nota) . "', '" . implode($sequencia) . "', '" . $row['DataVenda'] . "', '" . $row['CNPJ_Destinatario'] . "', '" . $row['CNPJ_Transportadora'] . "', '" . $row['CNPJEmitente'] . "', '" . $texto. "', '" . $_SESSION['cod_pedido'] . "')";
+                    $sql = "INSERT INTO nota_fiscal (cod_nota, chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, id_pedido) 
+                            VALUES ('" . implode($cod_nota) . "', '" . implode($sequencia) . "', '" . $row['DataVenda'] . "', '" . $row['CNPJ_Destinatario'] . "', '" . $row['CNPJ_Transportadora'] . "', '" . $row['CNPJEmitente'] . "', '" . $texto. "', '" . $_SESSION['idpedido'] . "')";
         
                     $execute = $conexao->query($sql);
                 }

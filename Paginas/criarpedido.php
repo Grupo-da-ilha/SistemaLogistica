@@ -16,10 +16,6 @@
 <?php
 // Iniciar uma sessão
 session_start();
-if (isset($_POST['project_id'])) {
-    $_SESSION['Idprojeto'] = $_POST['project_id'];
-}
-
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
@@ -37,6 +33,16 @@ if (empty($_SESSION['nome'])){
         if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
             $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
             $_SESSION['cod_pedido'] = $cod_pedido;
+        }
+        if (isset($_POST['project_id'])) {
+            $_SESSION['Idprojeto'] = $_POST['project_id'];
+            $sql="SELECT codTurma FROM projetos WHERE idprojeto = '".$_POST['project_id']."'";
+            $execute = $conexao -> query($sql);
+
+            if($execute -> num_rows > 0){
+                $row = $execute -> fetch_assoc();
+                $_SESSION['codTurma'] = $row['codTurma'];
+            }
         }
 
     echo ' <header>
@@ -164,23 +170,25 @@ if (empty($_SESSION['nome'])){
                                             if ($conexao->connect_errno) {
                                                 echo "Failed to connect to MySQL: " . $conexao->connect_error;
                                                 exit();
-                                            }else{
-                                                try {
+                                            }else{    
                                                     if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
                                                         $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
                                                         $_SESSION['cod_pedido'] = $cod_pedido;
                                                         date_default_timezone_set('America/Sao_Paulo');
                                                         $datahoje = date("Y-m-d H:i:s");
                                                 
-                                                        $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '$cod_pedido' AND codprojeto ='{$_SESSION['Idprojeto']}'";
+                                                        $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '$cod_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
                                                         $executar = $conexao->query($selectPedido);
                                                 
                                                         if ($executar->num_rows > 0) {
                                                             $row = $executar->fetch_assoc();
                                                             $codigo_pedido = $row['cod_pedido'];
+                                                            $idpedido = $row['id_pedido'];
+                                                            $_SESSION['idpedido'] = $idpedido;
                                                             echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($codigo_pedido) . "</h6>";
                                                 
-                                                            $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = ''WHERE cod_pedido = '{$_SESSION['cod_pedido']}' AND codprojeto = '{$_SESSION['Idprojeto']}'";
+                                                            $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = '' WHERE cod_pedido = '{$_SESSION['cod_pedido']}' AND codTurma = '{$_SESSION['codTurma']}' 
+                                                            AND id_pedido = '{$_SESSION['idpedido']}'";
                                                             $execute = $conexao->query($sql);
                                                         } else {
                                                             $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
@@ -198,8 +206,8 @@ if (empty($_SESSION['nome'])){
                                                                 if ($execute && $execute->num_rows > 0) {
                                                                     $row = $execute->fetch_assoc();
                                                                     $_SESSION['CNPJTransp'] = $row['CNPJ'];
-                                                                    $sql = "INSERT INTO pedido (cod_pedido, DataVenda, ValorTotal, CNPJEmitente, CNPJ_Destinatario, CNPJ_Transportadora, Situacao, InformacaoAdicional, codprojeto) 
-                                                                            VALUES ('$cod_pedido', '$datahoje', 0.0, '{$_SESSION['CNPJFabri']}', '03.774.819/0001-02', '{$_SESSION['CNPJTransp']}', 'Em Processamento', '', '{$_SESSION['Idprojeto']}')";
+                                                                    $sql = "INSERT INTO pedido (cod_pedido, DataVenda, ValorTotal, CNPJEmitente, CNPJ_Destinatario, CNPJ_Transportadora, Situacao, InformacaoAdicional, codTurma) 
+                                                                            VALUES ('$cod_pedido', '$datahoje', 0.0, '{$_SESSION['CNPJFabri']}', '03.774.819/0001-02', '{$_SESSION['CNPJTransp']}', 'Em Processamento', '', '{$_SESSION['codTurma']}')";
                                                                     $conexao->query($sql);
                                                                     echo "<h6>Pedido criado com sucesso com o código: " . htmlspecialchars($cod_pedido) . "</h6>";
                                                                 } else {
@@ -209,18 +217,10 @@ if (empty($_SESSION['nome'])){
                                                                 echo "<h6>Por favor, selecione o Fornecedor</h6>";
                                                             }
                                                         }
-                                                    } else {
-                                                        echo 'Pedido não criado'; 
-                                                        echo '<br>'; 
+                                                    } elseif(!isset($_POST['enviar_pedido']) && empty($_POST['codPedido'])) {
+                                                    }else{
+                                                        echo 'Por favor preencha os campos ao lado'; 
                                                     }
-                                                } catch (mysqli_sql_exception $e) {
-                                                    if ($e->getCode() == 1062) {
-                                                        echo "<h6>O código do pedido já existe. Por favor, use um código diferente.</h6>";
-                                                    } else {
-                                                        // Outros erros
-                                                        echo "<h6>Erro: " . htmlspecialchars($e->getMessage()) . "</h6>";
-                                                    }
-                                                }
 
                                             if (isset($_POST['enviar_produto']) && !empty($_POST['codProduto'])) {
                                                 
@@ -236,8 +236,8 @@ if (empty($_SESSION['nome'])){
                                                     $_SESSION['UN'] = $row['UN'];
                                                     $_SESSION['NCM'] = $row['NCM'];
 
-                                                    $sql2 = "INSERT INTO itenspedido (cod_produto, cod_pedido, Quantidade, ValorUnitario, ValorTotal, codprojeto) 
-                                                            VALUES ('$cod_produto', '{$_SESSION['cod_pedido']}', 0, '{$_SESSION['PrecoUnitario']}', 0.0, '".$_SESSION['Idprojeto']."')";
+                                                    $sql2 = "INSERT INTO itenspedido (cod_produto, cod_pedido, Quantidade, ValorUnitario, ValorTotal, codTurma) 
+                                                            VALUES ('$cod_produto', '{$_SESSION['idpedido']}', 0, '{$_SESSION['PrecoUnitario']}', 0.0, '".$_SESSION['codTurma']."')";
                                                     $resultado = $conexao->query($sql2);
 
                                                     if (!$resultado) {
@@ -247,14 +247,21 @@ if (empty($_SESSION['nome'])){
                                                     echo "<h6>Produto não encontrado.</h6>";
                                                 }
                                             }
-                                            $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codprojeto ='{$_SESSION['Idprojeto']}'";
+                                            $selectidPedido = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
+                                            $executar = $conexao->query($selectidPedido);
+                                            
+                                            if ($executar->num_rows > 0) {
+                                                $row = $executar->fetch_assoc();
+                                                $_SESSION['idpedido'] = $row['id_pedido'];
+                                            }
+                                            $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
                                             $executar = $conexao->query($selectPedido);
 
                                             if ($executar && $executar->num_rows > 0) {
                                             $sql3 = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
                                                     FROM produtos 
                                                     LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
-                                                    WHERE itenspedido.cod_pedido = '{$_SESSION['cod_pedido']}' ORDER BY produtos.Nome ASC";
+                                                    WHERE itenspedido.cod_pedido = '{$_SESSION['idpedido']}' ORDER BY produtos.Nome ASC";
                                             $resul = $conexao->query($sql3);
 
                                             if ($resul && $resul->num_rows > 0) {
@@ -277,7 +284,7 @@ if (empty($_SESSION['nome'])){
                                                     $valorTotalPedido += $valorTotalItem;
                                                     $_SESSION['ValorTotalPedido'] = $valorTotalPedido;
 
-                                                    $sql = "UPDATE `pedido` SET ValorTotal = '" . $valorTotalPedido . "' WHERE cod_pedido = '" . $_SESSION['cod_pedido'] . "'";
+                                                    $sql = "UPDATE `pedido` SET ValorTotal = '" . $valorTotalPedido . "' WHERE id_pedido = '" . $_SESSION['idpedido'] . "'";
                                                     $resultado = $conexao->query($sql);
                                                     echo "<tr>
                                                             <td>" . htmlspecialchars($row['Nome']) . "</td>
@@ -320,7 +327,7 @@ if (empty($_SESSION['nome'])){
 
                                             $conexao->close();
                                     } else{
-                                        echo 'Pedido não criado nesse projeto';
+                                        echo 'Pedido ainda não criado nessa turma';
                                     }
                                 }
                                     

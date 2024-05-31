@@ -123,82 +123,90 @@ if (empty($_SESSION['nome'])){
                             $nota_fiscal = $conexao->real_escape_string($_POST['nota_fiscal']);
                             $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
 
-                            $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$_SESSION['nota_fiscal_doca']."' AND cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
-                            $execute = $conexao->query($sql);
+                            $sql = "SELECT id_pedido FROM pedido WHERE cod_pedido = '$cod_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
+                            $execute = $conexao -> query($sql);
 
-                            if($execute->num_rows > 0){
-                                $sql = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."' AND codprojeto = '".$_SESSION['Idprojeto']."'";
+                            if($execute -> num_rows > 0){
+                                $row = $execute -> fetch_assoc();
+                                $id_pedido = $row['id_pedido'];
+                                $_SESSION['Idpedido'] = $id_pedido;
+                                $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$_SESSION['nota_fiscal_doca']."' AND id_pedido = '".$_SESSION['Idpedido']."'";
                                 $execute = $conexao->query($sql);
 
                                 if($execute->num_rows > 0){
-                                    $sql = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
+                                    $sql = "SELECT * FROM pedido WHERE id_pedido = '".$_SESSION['Idpedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
                                     $execute = $conexao->query($sql);
 
-                                    if($execute->num_rows > 0){ 
-                                        $sql = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
-                                        FROM produtos 
-                                        LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
-                                        WHERE itenspedido.cod_pedido = '".$_SESSION['codigo_pedido_doca']."' ORDER BY produtos.Nome ASC";
-                                        $resultado = $conexao->query($sql);  
-                                        
-                                        echo '<div class="produtos" style="overflow-y: auto;">';
-                                        echo '<table class="tabela">
-                                                <tr>
-                                                    <th>Nome</th>
-                                                    <th>UN</th>
-                                                    <th>QTD</th>
-                                                    <th>R$/unit</th>
-                                                    <th>Valor total</th>
-                                                    <th>Ações</th>
-                                                    <th>Finalização</th>
-                                                </tr>';
-                                                
-                                        while ($row = $resultado->fetch_assoc()){
-                                            echo'<tr>';
-                                            echo '<td>' . htmlspecialchars($row['Nome']). '</td>';
-                                            echo '<td>UN: ' . htmlspecialchars($row['UN']). '</td>';
-                                            echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '
-                                            <form style="display: none;" class="form_quantidade">
-                                                <input type="text" name="Quantidade falta">
-                                                <input type="submit" name="UpdateQt" value="Salvar" margin-left: 10px;">
-                                            </form>
+                                    if($execute->num_rows > 0){
+                                        $sql = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['Idpedido']."'";
+                                        $execute = $conexao->query($sql);
+
+                                        if($execute->num_rows > 0){ 
+                                            $sql = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
+                                            FROM produtos 
+                                            LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
+                                            WHERE itenspedido.cod_pedido = '".$_SESSION['Idpedido']."' ORDER BY produtos.Nome ASC";
+                                            $resultado = $conexao->query($sql);  
+                                            
+                                            echo '<div class="produtos" style="overflow-y: auto;">';
+                                            echo '<table class="tabela">
+                                                    <tr>
+                                                        <th>Nome</th>
+                                                        <th>UN</th>
+                                                        <th>QTD</th>
+                                                        <th>R$/unit</th>
+                                                        <th>Valor total</th>
+                                                        <th>Ações</th>
+                                                        <th>Finalização</th>
+                                                    </tr>';
+                                                    
+                                            while ($row = $resultado->fetch_assoc()){
+                                                echo'<tr>';
+                                                echo '<td>' . htmlspecialchars($row['Nome']). '</td>';
+                                                echo '<td>UN: ' . htmlspecialchars($row['UN']). '</td>';
+                                                echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '
+                                                <form style="display: none;" class="form_quantidade">
+                                                    <input type="text" name="Quantidade falta">
+                                                    <input type="submit" name="UpdateQt" value="Salvar" margin-left: 10px;">
+                                                </form>
+                                                </td>';
+                                                echo '<td>Preço Unitário: ' . htmlspecialchars($row['PrecoUNI']). '</td>';
+                                                echo '<td>Valor Total: ' . htmlspecialchars($row['ValorTotal']). '</td>';
+                                                echo '<td>
+                                                <form style="display: flex" class="form-conferencia">
+                                                    Avariado?
+                                                    <input type="checkbox" class="avariado-produto" name="avariado" value="1">
+                                                    Faltando?
+                                                    <input type="checkbox" class="avariado-produto" name="faltando" value="1">
+                                                    <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
+                                                    <input type="submit" name="Confirmar_vistoria" value="Registrar" style="display: block; margin-left: 10px;">
+                                                </form>
+                                                </td>';
+                                                echo '<td>
+                                                <form class="form-vistoria-completa">
+                                                    <input type="hidden" name="coditem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
+                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída">
+                                                </form>
                                             </td>';
-                                            echo '<td>Preço Unitário: ' . htmlspecialchars($row['PrecoUNI']). '</td>';
-                                            echo '<td>Valor Total: ' . htmlspecialchars($row['ValorTotal']). '</td>';
-                                            echo '<td>
-                                            <form style="display: flex" class="form-conferencia">
-                                                Avariado?
-                                                <input type="checkbox" class="avariado-produto" name="avariado" value="1">
-                                                Faltando?
-                                                <input type="checkbox" class="avariado-produto" name="faltando" value="1">
-                                                <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                <input type="submit" name="Confirmar_vistoria" value="Registrar" style="display: block; margin-left: 10px;">
-                                            </form>
-                                            </td>';
-                                            echo '<td>
-                                            <form class="form-vistoria-completa">
-                                                <input type="hidden" name="coditem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída">
-                                            </form>
-                                        </td>';
+                                            }
+                                            echo'</tr>';
+                                            echo '</table>';
+                                            echo '
+                                            <form style="margin-top: 40px" id="form-conferencia-completa">
+                                                <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento">
+                                            </form>';
+                                            echo '</div>';
+                                        } else {
+                                            echo 'Esse pedido não possui itens';
                                         }
-                                        echo'</tr>';
-                                        echo '</table>';
-                                        echo '
-                                        <form action="function/Finalizarvistoria.php" method="POST" style="margin-top: 40px">
-                                            <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento">
-                                        </form>';
-                                        echo '</div>';
                                     } else {
-                                        echo 'Esse pedido não possui itens';
+                                        echo 'Código do pedido incorreto, verifique se ele foi criado e finalizado no projeto atual';
                                     }
                                 } else {
-                                    echo 'Código do pedido incorreto, verifique se ele foi criado e finalizado no projeto atual';
-                                }
-                            } else {
-                                echo 'Código da nota fiscal e do pedido não correspondem, verifique os o codigo do pedido e da nota_fiscal para o seu projeto atual';
-                            }  
+                                    echo 'Código da nota fiscal e do pedido não correspondem, verifique os o codigo do pedido e da nota_fiscal para o seu projeto atual';
+                                }  
                         }
+                    }
 echo '            </div>
                 </div>
             </div>
@@ -264,6 +272,28 @@ $('.form-vistoria-completa').submit(function(e) {
             var jsonResponse = JSON.parse(response);
             if (jsonResponse.success) {
                 alert(jsonResponse.message);
+            } else {
+                alert(jsonResponse.message); 
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
+
+$('#form-conferencia-completa').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    $.ajax({
+        type: 'POST',
+        url: 'function/Finalizarvistoria.php',
+        data: formData,
+        success: function(response) {
+            var jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                window.location.href = "movimentacao.php";
             } else {
                 alert(jsonResponse.message); 
             }

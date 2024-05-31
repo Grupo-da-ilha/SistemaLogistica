@@ -11,26 +11,25 @@ if ($conexao->connect_errno) {
     echo "Failed to connect to MySQL: " . $conexao->connect_error;
     exit();
 } else {
-    $sql = "SELECT * FROM pedido WHERE codprojeto = '".$_SESSION['Idprojeto']."' ";
+    $sql = "SELECT * FROM pedido WHERE codTurma = '{$_SESSION['codTurma']}' ";
     $execute = $conexao->query($sql);
     $codigosPedidos = array();
     if($execute->num_rows > 0){
         while($row = $execute->fetch_assoc()){
-            $codigosPedidos[] = $row['cod_pedido'];
+            $idsPedidos[] = $row['id_pedido'];
         }
 
-            if(in_array($_SESSION['codigo_pedido_doca'], $codigosPedidos)){
+            if(in_array($_SESSION['Idpedido'], $idsPedidos)){
                 $doca = $conexao->real_escape_string($_POST['doca']);
-                $sql = "SELECT * FROM docas WHERE cod_pedido = '".$_SESSION['codigo_pedido_doca']."' AND codprojeto = '".$_SESSION['Idprojeto']."'";
+                $sql = "SELECT * FROM docas WHERE id_pedido = '". $_SESSION['Idpedido']."' AND codTurma = '{$_SESSION['codTurma']}'";
                 $execute = $conexao->query($sql);
 
                 if($execute->num_rows > 0){
                     echo json_encode(array('success' => false, 'message' => 'Esse pedido já está em uma doca'));
                     exit();
                 } else {
-                    $codProjeto = $_SESSION['Idprojeto'];
-                    $sql = "INSERT INTO docas (posicao, cod_pedido, codprojeto)
-                    VALUES ('".$doca."', '".$_SESSION['codigo_pedido_doca']."', '$codProjeto')";
+                    $sql = "INSERT INTO docas (posicao, id_pedido, codTurma)
+                    VALUES ('".$doca."', '".$_SESSION['Idpedido']."', '".$_SESSION['codTurma']."')";
                     $execute = $conexao->query($sql);
 
                     if($execute){

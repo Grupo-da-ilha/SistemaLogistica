@@ -23,7 +23,7 @@ if ($conexao->connect_errno) {
                 echo json_encode(array('success' => true, 'message' => 'O item já foi registrado como avariado'));
             } else{
             
-            $sql = "UPDATE itenspedido SET Avariado = '$avariado' WHERE cod_itenPedido = '$cod_itenPedido' AND cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
+            $sql = "UPDATE itenspedido SET Avariado = '$avariado' WHERE cod_itenPedido = '$cod_itenPedido' AND cod_pedido = '".$_SESSION['Idpedido']."'";
             $execute = $conexao -> query($sql);
 
             if($execute){
@@ -43,7 +43,7 @@ if ($conexao->connect_errno) {
             if($execute -> num_rows > 0){
                 echo json_encode(array('success' => true, 'message' => 'O item já foi registrado como faltando'));
             } else{
-            $sql = "UPDATE itenspedido SET Faltando = '$faltando' WHERE cod_itenPedido = '$cod_itenPedido' AND cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
+            $sql = "UPDATE itenspedido SET Faltando = '$faltando' WHERE cod_itenPedido = '$cod_itenPedido' AND cod_pedido = '".$_SESSION['Idpedido']."'";
             $execute = $conexao -> query($sql);
 
             if($execute){
@@ -63,7 +63,7 @@ if ($conexao->connect_errno) {
             if($execute -> num_rows > 0){
                 echo json_encode(array('success' => true, 'message' => 'O item já foi registrado como avariado e faltando'));
             } else{
-            $sql = "UPDATE itenspedido SET Faltando = '$faltando', Avariado = '$avariado' WHERE cod_itenPedido = '$cod_itenPedido' AND cod_pedido = '".$_SESSION['codigo_pedido_doca']."'";
+            $sql = "UPDATE itenspedido SET Faltando = '$faltando', Avariado = '$avariado' WHERE cod_itenPedido = '$cod_itenPedido' AND cod_pedido = '".$_SESSION['Idpedido']."'";
             $execute = $conexao -> query($sql);
 
             if($execute){
