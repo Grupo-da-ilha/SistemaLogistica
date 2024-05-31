@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 30/05/2024 às 22:58
+-- Tempo de geração: 31/05/2024 às 19:33
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -20,30 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `logistica`
 --
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `cadastro`
---
-
-CREATE TABLE `cadastro` (
-  `Id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `senha` varchar(64) NOT NULL,
-  `nome` varchar(255) NOT NULL,
-  `ativo` varchar(1) NOT NULL,
-  `data_entrada` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `tipousuario` varchar(255) NOT NULL,
-  `codTurma` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Despejando dados para a tabela `cadastro`
---
-
-INSERT INTO `cadastro` (`Id`, `email`, `senha`, `nome`, `ativo`, `data_entrada`, `tipousuario`, `codTurma`) VALUES
-(124, 'kauan007@gmail.com', 'eijks', 'Kauan', 's', '2024-05-29 21:01:11', 'Professor', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -78,16 +54,9 @@ INSERT INTO `clientes` (`CNPJ`, `Nome`, `CEP`, `rua`, `bairro`, `cidade`, `estad
 CREATE TABLE `docas` (
   `cod_doca` int(11) NOT NULL,
   `posicao` varchar(5) NOT NULL,
-  `cod_pedido` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
   `codprojeto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Despejando dados para a tabela `docas`
---
-
-INSERT INTO `docas` (`cod_doca`, `posicao`, `cod_pedido`, `codprojeto`) VALUES
-(16, 'A1', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -100,8 +69,7 @@ CREATE TABLE `estoque` (
   `Prateleiras` int(11) NOT NULL,
   `Setor` varchar(255) NOT NULL,
   `Andar` int(11) NOT NULL,
-  `Apartamento` int(11) NOT NULL,
-  `idFabricantes` int(11) DEFAULT NULL
+  `Apartamento` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -147,35 +115,6 @@ CREATE TABLE `fornecedores` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `itenspedido`
---
-
-CREATE TABLE `itenspedido` (
-  `cod_itenPedido` int(11) NOT NULL,
-  `cod_produto` int(11) NOT NULL,
-  `cod_pedido` int(11) NOT NULL,
-  `Quantidade` int(11) NOT NULL,
-  `ValorUnitario` double NOT NULL,
-  `ValorTotal` double NOT NULL,
-  `Avariado` tinyint(1) NOT NULL,
-  `Faltando` tinyint(1) NOT NULL,
-  `VistoriaConcluida` tinyint(1) NOT NULL,
-  `codprojeto` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Despejando dados para a tabela `itenspedido`
---
-
-INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codprojeto`) VALUES
-(115, 1, 11, 2, 5.5, 11, 0, 0, 0, 6),
-(118, 1, 11, 2, 5.5, 11, 0, 0, 0, 6),
-(127, 1, 1, 5, 5.5, 27.5, 1, 1, 1, 5),
-(128, 2, 1, 3, 1.2, 3.6, 1, 1, 1, 5);
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `nota_fiscal`
 --
 
@@ -184,19 +123,11 @@ CREATE TABLE `nota_fiscal` (
   `chave_acesso` varchar(65) NOT NULL,
   `DataExpedicao` datetime NOT NULL,
   `InformacoesAdicionais` varchar(255) NOT NULL,
-  `cod_pedido` int(11) NOT NULL,
+  `id_pedido` int(11) NOT NULL,
   `CNPJ_Destinatario` varchar(65) NOT NULL,
   `CNPJ_Transportadora` varchar(65) NOT NULL,
   `CNPJ_Emitente` varchar(65) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Despejando dados para a tabela `nota_fiscal`
---
-
-INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `cod_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(64029, '35364095924551024804542641476196790032831620', '2024-05-29 18:27:04', 'Pedido deve ser entregue com antecedência', 1, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23'),
-(84817, '18670429376789829333058572513610113722260039', '2024-05-29 18:27:04', '', 11, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23');
 
 -- --------------------------------------------------------
 
@@ -205,6 +136,7 @@ INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `Informa
 --
 
 CREATE TABLE `pedido` (
+  `id_pedido` int(11) NOT NULL,
   `cod_pedido` int(11) NOT NULL,
   `DataVenda` datetime NOT NULL,
   `ValorTotal` double NOT NULL,
@@ -213,16 +145,8 @@ CREATE TABLE `pedido` (
   `CNPJ_Transportadora` varchar(65) NOT NULL,
   `Situacao` varchar(255) NOT NULL,
   `InformacaoAdicional` varchar(255) NOT NULL,
-  `codprojeto` int(11) NOT NULL
+  `idprojeto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Despejando dados para a tabela `pedido`
---
-
-INSERT INTO `pedido` (`cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codprojeto`) VALUES
-(1, '2024-05-29 18:27:04', 31.1, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em transporte', 'Pedido deve ser entregue com antecedência', 5),
-(11, '2024-05-29 18:45:49', 22, '44.990.901/0001-43', '03.774.819/0001-02', '42.555.657/0001-65', 'Em transporte', '', 6);
 
 -- --------------------------------------------------------
 
@@ -260,14 +184,6 @@ CREATE TABLE `projetos` (
   `nome` varchar(255) NOT NULL,
   `codTurma` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Despejando dados para a tabela `projetos`
---
-
-INSERT INTO `projetos` (`idprojeto`, `nome`, `codTurma`) VALUES
-(5, 'Senai', 'S3naiAdmin'),
-(6, 'Projeto 1', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -314,18 +230,36 @@ CREATE TABLE `turmas` (
 --
 
 INSERT INTO `turmas` (`codTurma`, `nomeTurma`, `total_alunos`, `data_turma`) VALUES
+('3 DS', 'terceiro', 0, '2024-05-31 16:46:52'),
 ('S3naiAdmin', 'SenaiADM', 0, '2024-05-29 20:59:55');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `Id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `senha` varchar(64) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `ativo` varchar(1) NOT NULL,
+  `data_entrada` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `tipousuario` varchar(255) NOT NULL,
+  `codTurma` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Despejando dados para a tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`Id`, `email`, `senha`, `nome`, `ativo`, `data_entrada`, `tipousuario`, `codTurma`) VALUES
+(124, 'kauan007@gmail.com', 'kauan_007', 'Kauan', 's', '2024-05-31 16:46:45', 'Professor', 'S3naiAdmin');
 
 --
 -- Índices para tabelas despejadas
 --
-
---
--- Índices de tabela `cadastro`
---
-ALTER TABLE `cadastro`
-  ADD PRIMARY KEY (`Id`),
-  ADD KEY `codTurma` (`codTurma`);
 
 --
 -- Índices de tabela `clientes`
@@ -338,8 +272,8 @@ ALTER TABLE `clientes`
 --
 ALTER TABLE `docas`
   ADD PRIMARY KEY (`cod_doca`),
-  ADD KEY `cod_pedido` (`cod_pedido`),
-  ADD KEY `codprojeto` (`codprojeto`);
+  ADD KEY `FK_idpedido` (`id_pedido`),
+  ADD KEY `FK_cod_projeto` (`codprojeto`);
 
 --
 -- Índices de tabela `estoque`
@@ -360,33 +294,24 @@ ALTER TABLE `fornecedores`
   ADD PRIMARY KEY (`CNPJ`);
 
 --
--- Índices de tabela `itenspedido`
---
-ALTER TABLE `itenspedido`
-  ADD PRIMARY KEY (`cod_itenPedido`),
-  ADD KEY `cod_pedido` (`cod_pedido`),
-  ADD KEY `cod_produto` (`cod_produto`),
-  ADD KEY `codprojeto` (`codprojeto`);
-
---
 -- Índices de tabela `nota_fiscal`
 --
 ALTER TABLE `nota_fiscal`
   ADD PRIMARY KEY (`cod_nota`),
-  ADD KEY `cod_pedido` (`cod_pedido`),
-  ADD KEY `CNPJ_Destinatario` (`CNPJ_Destinatario`),
-  ADD KEY `CNPJ_Transportadora` (`CNPJ_Transportadora`),
-  ADD KEY `CNPJ_Emitente` (`CNPJ_Emitente`);
+  ADD KEY `FK_id_pedido` (`id_pedido`),
+  ADD KEY `FK_CNPJDestinatario` (`CNPJ_Destinatario`),
+  ADD KEY `FK_CNPJTransportadora` (`CNPJ_Transportadora`),
+  ADD KEY `FK_CNPJ_Emitente` (`CNPJ_Emitente`);
 
 --
 -- Índices de tabela `pedido`
 --
 ALTER TABLE `pedido`
-  ADD PRIMARY KEY (`cod_pedido`),
-  ADD KEY `CPF` (`CNPJ_Destinatario`),
-  ADD KEY `CNPJEmitente` (`CNPJEmitente`),
-  ADD KEY `CNPJ` (`CNPJ_Transportadora`),
-  ADD KEY `codprojeto` (`codprojeto`);
+  ADD PRIMARY KEY (`id_pedido`),
+  ADD KEY `FK_CNPJEmitente` (`CNPJEmitente`),
+  ADD KEY `FK_CNPJ_Destinatario` (`CNPJ_Destinatario`),
+  ADD KEY `FK_CNPJ_Transportadora` (`CNPJ_Transportadora`),
+  ADD KEY `FK_codigoprojeto` (`idprojeto`);
 
 --
 -- Índices de tabela `produtos`
@@ -399,7 +324,7 @@ ALTER TABLE `produtos`
 --
 ALTER TABLE `projetos`
   ADD PRIMARY KEY (`idprojeto`),
-  ADD KEY `codTurma` (`codTurma`);
+  ADD KEY `FK_codigoTurma` (`codTurma`);
 
 --
 -- Índices de tabela `transportadoras`
@@ -414,26 +339,15 @@ ALTER TABLE `turmas`
   ADD PRIMARY KEY (`codTurma`);
 
 --
+-- Índices de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`Id`),
+  ADD KEY `FK_codTurma` (`codTurma`);
+
+--
 -- AUTO_INCREMENT para tabelas despejadas
 --
-
---
--- AUTO_INCREMENT de tabela `cadastro`
---
-ALTER TABLE `cadastro`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
-
---
--- AUTO_INCREMENT de tabela `docas`
---
-ALTER TABLE `docas`
-  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
-
---
--- AUTO_INCREMENT de tabela `itenspedido`
---
-ALTER TABLE `itenspedido`
-  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
@@ -442,47 +356,45 @@ ALTER TABLE `produtos`
   MODIFY `cod_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT de tabela `projetos`
---
-ALTER TABLE `projetos`
-  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- Restrições para tabelas despejadas
 --
-
---
--- Restrições para tabelas `cadastro`
---
-ALTER TABLE `cadastro`
-  ADD CONSTRAINT `cadastro_ibfk_1` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
 
 --
 -- Restrições para tabelas `docas`
 --
 ALTER TABLE `docas`
-  ADD CONSTRAINT `docas_ibfk_1` FOREIGN KEY (`cod_pedido`) REFERENCES `pedido` (`cod_pedido`),
-  ADD CONSTRAINT `docas_ibfk_2` FOREIGN KEY (`codprojeto`) REFERENCES `projetos` (`idprojeto`);
+  ADD CONSTRAINT `FK_cod_projeto` FOREIGN KEY (`codprojeto`) REFERENCES `projetos` (`idprojeto`),
+  ADD CONSTRAINT `FK_idpedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
 
 --
--- Restrições para tabelas `itenspedido`
+-- Restrições para tabelas `nota_fiscal`
 --
-ALTER TABLE `itenspedido`
-  ADD CONSTRAINT `itenspedido_ibfk_1` FOREIGN KEY (`cod_pedido`) REFERENCES `pedido` (`cod_pedido`),
-  ADD CONSTRAINT `itenspedido_ibfk_2` FOREIGN KEY (`cod_produto`) REFERENCES `produtos` (`cod_produto`),
-  ADD CONSTRAINT `itenspedido_ibfk_3` FOREIGN KEY (`codprojeto`) REFERENCES `projetos` (`idprojeto`);
+ALTER TABLE `nota_fiscal`
+  ADD CONSTRAINT `FK_CNPJDestinatario` FOREIGN KEY (`CNPJ_Destinatario`) REFERENCES `clientes` (`CNPJ`),
+  ADD CONSTRAINT `FK_CNPJTransportadora` FOREIGN KEY (`CNPJ_Transportadora`) REFERENCES `transportadoras` (`CNPJ`),
+  ADD CONSTRAINT `FK_CNPJ_Emitente` FOREIGN KEY (`CNPJ_Emitente`) REFERENCES `fabricantes` (`CNPJ`),
+  ADD CONSTRAINT `FK_id_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
 
 --
 -- Restrições para tabelas `pedido`
 --
 ALTER TABLE `pedido`
-  ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`codprojeto`) REFERENCES `projetos` (`idprojeto`);
+  ADD CONSTRAINT `FK_CNPJEmitente` FOREIGN KEY (`CNPJEmitente`) REFERENCES `fabricantes` (`CNPJ`),
+  ADD CONSTRAINT `FK_CNPJ_Destinatario` FOREIGN KEY (`CNPJ_Destinatario`) REFERENCES `clientes` (`CNPJ`),
+  ADD CONSTRAINT `FK_CNPJ_Transportadora` FOREIGN KEY (`CNPJ_Transportadora`) REFERENCES `transportadoras` (`CNPJ`),
+  ADD CONSTRAINT `FK_codigoprojeto` FOREIGN KEY (`idprojeto`) REFERENCES `projetos` (`idprojeto`);
 
 --
 -- Restrições para tabelas `projetos`
 --
 ALTER TABLE `projetos`
-  ADD CONSTRAINT `projetos_ibfk_1` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
+  ADD CONSTRAINT `FK_codigoTurma` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
+
+--
+-- Restrições para tabelas `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `FK_codTurma` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

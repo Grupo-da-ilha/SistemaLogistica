@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Aqui você deve implementar a lógica para atualizar a senha no banco de dados
                 
                 // Query SQL para atualizar a senha do aluno específico
-                $sqlUpdate = "UPDATE cadastro SET senha = '$novaSenha' WHERE id = '$idAluno'";
+                $sqlUpdate = "UPDATE usuarios SET senha = '$novaSenha' WHERE id = '$idAluno'";
                 
                 // Executa a query
                 if ($conexao->query($sqlUpdate) === TRUE) {

@@ -24,7 +24,7 @@
                     date_default_timezone_set('America/Sao_Paulo');
                     $data_entrada = date("Y-m-d H:i:s");
 
-                    $sql = "INSERT INTO `logistica`.`cadastro`
+                    $sql = "INSERT INTO `logistica`.`usuarios`
                                 (`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`)
                             VALUES
                                 ('".$nome."', '".$email."', '".$senha."', '".$data_entrada."', 's', '".$tipousuario."','".$turmausuario."');";

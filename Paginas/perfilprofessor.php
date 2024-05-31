@@ -23,7 +23,7 @@
 		
 	$conexao = new mysqli($hostname,$user,$password,$database);
 
-	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`  FROM `cadastro`";
+	$sql="SELECT `id`, `nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`  FROM `usuarios`";
     
 	$resultado = $conexao->query($sql);
 

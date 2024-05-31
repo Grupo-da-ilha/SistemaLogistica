@@ -18,12 +18,13 @@ if (empty($_SESSION['nome'])) {
         if ($conn->connect_error) {
             echo "Não foi possível conectar ao banco de dados: " . $conn->connect_error;
             exit();
-        }
+        }else{
+
         $stmt = "DELETE FROM projetos WHERE id = '".$_SESSION['id']."'";
         $executar = $conn -> query($stmt);
 
         if ($executar) {
-            $stmt = $conn->prepare("DELETE FROM cadastro WHERE codTurma = ?");
+            $stmt = $conn->prepare("DELETE FROM usuarios WHERE codTurma = ?");
             $stmt->bind_param("s", $codTurma);
 
             if ($stmt->execute()) {
@@ -41,10 +42,36 @@ if (empty($_SESSION['nome'])) {
 
         $stmt->close();
         $conn->close();
+    } elseif(!$executar) {
+            $stmt = $conn->prepare("DELETE FROM usuarios WHERE codTurma = ?");
+            $stmt->bind_param("s", $codTurma);
+
+            if ($stmt->execute()) {
+                $stmt = $conn->prepare("DELETE FROM turmas WHERE codTurma = ?");
+                $stmt->bind_param("s", $codTurma);
+        
+                if ($stmt->execute()) {
+                    echo "Turma excluída com sucesso";
+                } else {
+                    echo "Erro ao excluir turma: " . $stmt->error;
+                }
+            } else {
+                echo "Erro ao excluir cadastro: " . $stmt->error;
+            }
+    } else{
+        $stmt = $conn->prepare("DELETE FROM turmas WHERE codTurma = ?");
+        $stmt->bind_param("s", $codTurma);
+
+        if ($stmt->execute()) {
+            echo "Turma excluída com sucesso";
+        } else {
+            echo "Erro ao excluir turma: " . $stmt->error;
+        }
     } else {
-        echo "Parâmetro codTurma não fornecido";
-        exit();
+        echo "Erro ao excluir cadastro: " . $stmt->error;
+    }
     }
 }
 }
+
 ?>

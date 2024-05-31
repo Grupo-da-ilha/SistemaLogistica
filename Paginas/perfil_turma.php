@@ -28,9 +28,9 @@
         $codTurma = $_GET['codTurma'];
 
         // Consulta SQL para selecionar os alunos da turma específica
-        $sql="SELECT cadastro.id, cadastro.nome, cadastro.email, cadastro.senha 
-              FROM cadastro 
-              WHERE cadastro.codTurma = '$codTurma'";
+        $sql="SELECT usuarios.id, usuarios.nome, usuarios.email, usuarios.senha 
+              FROM usuarios
+              WHERE usuarios.codTurma = '$codTurma'";
 
         $resultado = $conexao->query($sql);
 

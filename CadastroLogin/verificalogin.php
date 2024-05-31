@@ -22,7 +22,7 @@ if ($conexao->connect_errno) {
     $senha = $conexao->real_escape_string($_POST['senhaUsuario']);
 
     // Query para buscar usuário
-    $sql = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha`, `codTurma` FROM `cadastro` 
+    $sql = "SELECT `id`, `nome`, `email`, `tipousuario`, `data_entrada`, `ativo`, `senha`, `codTurma` FROM `usuarios` 
             WHERE `email` = '" . $email . "' 
             AND `senha` = '" . $senha . "' 
             AND ativo = 's';";

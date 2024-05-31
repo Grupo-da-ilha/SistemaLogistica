@@ -120,9 +120,9 @@
                 }
 
                 // Prepare and execute the query (assuming table name is 'turmas')
-                $sql = "SELECT turmas.nomeTurma, turmas.codTurma, turmas.data_turma, COUNT(cadastro.id) AS total_alunos 
+                $sql = "SELECT turmas.nomeTurma, turmas.codTurma, turmas.data_turma, COUNT(usuarios.id) AS total_alunos 
                         FROM turmas 
-                        LEFT JOIN cadastro ON turmas.codTurma = cadastro.codTurma 
+                        LEFT JOIN usuarios ON turmas.codTurma = usuarios.codTurma 
                         GROUP BY turmas.codTurma";
 
                 $result = $conn->query($sql);
