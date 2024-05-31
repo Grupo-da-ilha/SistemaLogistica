@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 31/05/2024 às 19:33
+-- Tempo de geração: 01/06/2024 às 01:33
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -55,8 +55,16 @@ CREATE TABLE `docas` (
   `cod_doca` int(11) NOT NULL,
   `posicao` varchar(5) NOT NULL,
   `id_pedido` int(11) NOT NULL,
-  `codprojeto` int(11) NOT NULL
+  `codTurma` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Despejando dados para a tabela `docas`
+--
+
+INSERT INTO `docas` (`cod_doca`, `posicao`, `id_pedido`, `codTurma`) VALUES
+(1, 'A1', 2, 'S3naiAdmin'),
+(2, 'B3', 3, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -129,6 +137,14 @@ CREATE TABLE `nota_fiscal` (
   `CNPJ_Emitente` varchar(65) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Despejando dados para a tabela `nota_fiscal`
+--
+
+INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
+(27129, '35226989759240500117147949891014940238353323', '2024-05-31 17:31:38', 'Caderno com folha com opção para destacar', 3, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60'),
+(70481, '53845360263685447474268857083596929758150801', '2024-05-31 17:31:38', 'Lápis com borracha', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
+
 -- --------------------------------------------------------
 
 --
@@ -145,8 +161,16 @@ CREATE TABLE `pedido` (
   `CNPJ_Transportadora` varchar(65) NOT NULL,
   `Situacao` varchar(255) NOT NULL,
   `InformacaoAdicional` varchar(255) NOT NULL,
-  `idprojeto` int(11) NOT NULL
+  `codTurma` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Despejando dados para a tabela `pedido`
+--
+
+INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
+(2, 1, '2024-05-31 17:31:38', 13.4, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Nas docas', 'Lápis com borracha', 'S3naiAdmin'),
+(3, 23, '2024-05-31 17:57:11', 31.1, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', 'Caderno com folha com opção para destacar', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -184,6 +208,14 @@ CREATE TABLE `projetos` (
   `nome` varchar(255) NOT NULL,
   `codTurma` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Despejando dados para a tabela `projetos`
+--
+
+INSERT INTO `projetos` (`idprojeto`, `nome`, `codTurma`) VALUES
+(2, 'Senai', 'S3naiAdmin'),
+(3, 'Projeto 1', 'terceirao');
 
 -- --------------------------------------------------------
 
@@ -230,8 +262,8 @@ CREATE TABLE `turmas` (
 --
 
 INSERT INTO `turmas` (`codTurma`, `nomeTurma`, `total_alunos`, `data_turma`) VALUES
-('3 DS', 'terceiro', 0, '2024-05-31 16:46:52'),
-('S3naiAdmin', 'SenaiADM', 0, '2024-05-29 20:59:55');
+('S3naiAdmin', 'SenaiADM', 0, '2024-05-29 20:59:55'),
+('terceirao', '2 DS', 0, '2024-05-31 23:12:26');
 
 -- --------------------------------------------------------
 
@@ -255,7 +287,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Id`, `email`, `senha`, `nome`, `ativo`, `data_entrada`, `tipousuario`, `codTurma`) VALUES
-(124, 'kauan007@gmail.com', 'kauan_007', 'Kauan', 's', '2024-05-31 16:46:45', 'Professor', 'S3naiAdmin');
+(124, 'kauan007@gmail.com', 'eijks', 'Kauan', 's', '2024-05-31 19:42:49', 'Professor', 'S3naiAdmin');
 
 --
 -- Índices para tabelas despejadas
@@ -273,7 +305,7 @@ ALTER TABLE `clientes`
 ALTER TABLE `docas`
   ADD PRIMARY KEY (`cod_doca`),
   ADD KEY `FK_idpedido` (`id_pedido`),
-  ADD KEY `FK_cod_projeto` (`codprojeto`);
+  ADD KEY `FK_codigo_Turma` (`codTurma`);
 
 --
 -- Índices de tabela `estoque`
@@ -311,7 +343,7 @@ ALTER TABLE `pedido`
   ADD KEY `FK_CNPJEmitente` (`CNPJEmitente`),
   ADD KEY `FK_CNPJ_Destinatario` (`CNPJ_Destinatario`),
   ADD KEY `FK_CNPJ_Transportadora` (`CNPJ_Transportadora`),
-  ADD KEY `FK_codigoprojeto` (`idprojeto`);
+  ADD KEY `FK_cod_Turma` (`codTurma`);
 
 --
 -- Índices de tabela `produtos`
@@ -350,10 +382,28 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de tabela `docas`
+--
+ALTER TABLE `docas`
+  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `pedido`
+--
+ALTER TABLE `pedido`
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
   MODIFY `cod_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de tabela `projetos`
+--
+ALTER TABLE `projetos`
+  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restrições para tabelas despejadas
@@ -363,7 +413,7 @@ ALTER TABLE `produtos`
 -- Restrições para tabelas `docas`
 --
 ALTER TABLE `docas`
-  ADD CONSTRAINT `FK_cod_projeto` FOREIGN KEY (`codprojeto`) REFERENCES `projetos` (`idprojeto`),
+  ADD CONSTRAINT `FK_codigo_Turma` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`),
   ADD CONSTRAINT `FK_idpedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
 
 --
@@ -382,7 +432,7 @@ ALTER TABLE `pedido`
   ADD CONSTRAINT `FK_CNPJEmitente` FOREIGN KEY (`CNPJEmitente`) REFERENCES `fabricantes` (`CNPJ`),
   ADD CONSTRAINT `FK_CNPJ_Destinatario` FOREIGN KEY (`CNPJ_Destinatario`) REFERENCES `clientes` (`CNPJ`),
   ADD CONSTRAINT `FK_CNPJ_Transportadora` FOREIGN KEY (`CNPJ_Transportadora`) REFERENCES `transportadoras` (`CNPJ`),
-  ADD CONSTRAINT `FK_codigoprojeto` FOREIGN KEY (`idprojeto`) REFERENCES `projetos` (`idprojeto`);
+  ADD CONSTRAINT `FK_cod_Turma` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
 
 --
 -- Restrições para tabelas `projetos`
