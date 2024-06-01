@@ -96,7 +96,7 @@ if (empty($_SESSION['nome'])){
                     <a href="#" class="functions-menu">PICKING</a>
                     <a href="#" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="#" class="functions-menu">RELATÓRIOS</a>
-                    <a href="#" class="functions-menu">CONTROLE</a>
+                    <a href="recebimentodoca.php" class="functions-menu">CONTROLE</a>
                 </li>
             </div>
             <div class="criar-pedido-container">

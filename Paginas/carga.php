@@ -293,7 +293,7 @@ $('#form-conferencia-completa').submit(function(e) {
         success: function(response) {
             var jsonResponse = JSON.parse(response);
             if (jsonResponse.success) {
-                window.location.href = "movimentacao.php";
+                window.location.href = "recebimentodoca.php";
             } else {
                 alert(jsonResponse.message); 
             }

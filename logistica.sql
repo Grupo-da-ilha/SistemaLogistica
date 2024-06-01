@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01/06/2024 às 01:33
+-- Tempo de geração: 01/06/2024 às 20:10
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -123,6 +123,33 @@ CREATE TABLE `fornecedores` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `itenspedido`
+--
+
+CREATE TABLE `itenspedido` (
+  `cod_itenPedido` int(11) NOT NULL,
+  `cod_produto` int(11) NOT NULL,
+  `cod_pedido` int(11) NOT NULL,
+  `Quantidade` int(11) NOT NULL,
+  `ValorUnitario` double NOT NULL,
+  `ValorTotal` double NOT NULL,
+  `Avariado` tinyint(1) NOT NULL,
+  `Faltando` tinyint(1) NOT NULL,
+  `VistoriaConcluida` tinyint(1) NOT NULL,
+  `codTurma` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Despejando dados para a tabela `itenspedido`
+--
+
+INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codTurma`) VALUES
+(1, 1, 2, 2, 5.5, 11, 1, 0, 1, 'S3naiAdmin'),
+(2, 2, 2, 3, 1.2, 3.6, 0, 1, 1, 'S3naiAdmin');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `nota_fiscal`
 --
 
@@ -143,7 +170,7 @@ CREATE TABLE `nota_fiscal` (
 
 INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
 (27129, '35226989759240500117147949891014940238353323', '2024-05-31 17:31:38', 'Caderno com folha com opção para destacar', 3, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60'),
-(70481, '53845360263685447474268857083596929758150801', '2024-05-31 17:31:38', 'Lápis com borracha', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
+(91471, '12084513585914120015533975063784509158530481', '2024-05-31 17:31:38', 'TESOURAS COM PONTA', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
 
 -- --------------------------------------------------------
 
@@ -169,7 +196,7 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
-(2, 1, '2024-05-31 17:31:38', 13.4, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Nas docas', 'Lápis com borracha', 'S3naiAdmin'),
+(2, 1, '2024-05-31 17:31:38', 14.6, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Nas docas', 'TESOURAS COM PONTA', 'S3naiAdmin'),
 (3, 23, '2024-05-31 17:57:11', 31.1, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', 'Caderno com folha com opção para destacar', 'S3naiAdmin');
 
 -- --------------------------------------------------------
@@ -326,6 +353,15 @@ ALTER TABLE `fornecedores`
   ADD PRIMARY KEY (`CNPJ`);
 
 --
+-- Índices de tabela `itenspedido`
+--
+ALTER TABLE `itenspedido`
+  ADD PRIMARY KEY (`cod_itenPedido`),
+  ADD KEY `FK_cod_produto` (`cod_produto`),
+  ADD KEY `FK_cod_pedido` (`cod_pedido`),
+  ADD KEY `FK_cod_turma_item` (`codTurma`);
+
+--
 -- Índices de tabela `nota_fiscal`
 --
 ALTER TABLE `nota_fiscal`
@@ -388,6 +424,12 @@ ALTER TABLE `docas`
   MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de tabela `itenspedido`
+--
+ALTER TABLE `itenspedido`
+  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
@@ -415,6 +457,14 @@ ALTER TABLE `projetos`
 ALTER TABLE `docas`
   ADD CONSTRAINT `FK_codigo_Turma` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`),
   ADD CONSTRAINT `FK_idpedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
+
+--
+-- Restrições para tabelas `itenspedido`
+--
+ALTER TABLE `itenspedido`
+  ADD CONSTRAINT `FK_cod_pedido` FOREIGN KEY (`cod_pedido`) REFERENCES `pedido` (`id_pedido`),
+  ADD CONSTRAINT `FK_cod_produto` FOREIGN KEY (`cod_produto`) REFERENCES `produtos` (`cod_produto`),
+  ADD CONSTRAINT `FK_cod_turma_item` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
 
 --
 -- Restrições para tabelas `nota_fiscal`
