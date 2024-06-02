@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/controle.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <?php
@@ -137,6 +138,7 @@ if (empty($_SESSION['nome'])) {
                             $cod_produto = $row['cod_produto'];
                             $Quantidade = $row['Quantidade'];
                             $QuantidadeDoca = $row['Quantidade_doca'];
+                            $codItemPedido = $row['cod_itenPedido'];
 
                             $sqlProdutos= "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
                             $executar = $conexao->query($sqlProdutos);
@@ -148,7 +150,7 @@ if (empty($_SESSION['nome'])) {
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td>' . htmlspecialchars($Quantidade) . '</td>
                                             <td></td>
-                                            <form id="form-enviar-produtos">
+                                            <form class="form-enviar-produtos" method="post">
                                                 <td>
                                                     <input type="text" name="QTDEstoque" placeholder="QTD" style="display:block; width: 40px;">
                                                 </td>
@@ -157,6 +159,8 @@ if (empty($_SESSION['nome'])) {
                                                 </td>
                                                 <td>
                                                     <input type="hidden" name="QTTDoca" value="' . htmlspecialchars($QuantidadeDoca) . '">
+                                                    <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
+                                                    <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">
                                                     <input type="submit" name="EnviarEstoque" value="Enviar" style="display:block; width: auto;">
                                                 </td>
                                             </form>
@@ -193,7 +197,7 @@ if (empty($_SESSION['nome'])) {
 }
 ?>
 <script>
-    $('#form-enviar-produtos').submit(function(e) {
+$('.form-enviar-produtos').submit(function(e) {
     e.preventDefault(); 
     var formData = $(this).serialize(); 
     $.ajax({
@@ -203,7 +207,7 @@ if (empty($_SESSION['nome'])) {
         success: function(response) {
             var jsonResponse = JSON.parse(response);
             if (jsonResponse.success) {
-                alert('Doca inserida com sucesso!');
+                alert(jsonResponse.message);
             } else {
                 alert(jsonResponse.message); 
             }
