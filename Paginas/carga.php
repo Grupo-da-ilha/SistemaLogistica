@@ -64,16 +64,7 @@ if (empty($_SESSION['nome'])){
                         </nav>
                     </li>
                     <li class="li-main">
-                        <h1>SENAI SCP</h1>';
-                        if (isset($_SESSION['Idprojeto'])) {
-                            echo '<p>Projeto selecionado: ' . htmlspecialchars($_SESSION['Idprojeto']) . '</p>';
-                            echo '<p>Código pedido selecionado: ' . htmlspecialchars($_SESSION['cod_pedido']) . '</p>';
-                        } else {
-                            echo '<p>Nenhum projeto selecionado.</p>';
-
-                        }
-                        echo '
-                        <h2>'.htmlspecialchars($_SESSION['nome']).'</h2>
+                        <h1>SENAI SCP</h1>
                     </li>
                 </ul>
             </div>
@@ -123,14 +114,14 @@ if (empty($_SESSION['nome'])){
                             $nota_fiscal = $conexao->real_escape_string($_POST['nota_fiscal']);
                             $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
 
-                            $sql = "SELECT id_pedido FROM pedido WHERE cod_pedido = '$cod_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
+                            $sql = "SELECT id_pedido FROM pedido WHERE cod_pedido = '$cod_pedido' AND codTurma ='{$_SESSION['codTurma']}' AND Situacao = 'Em transporte'";
                             $execute = $conexao -> query($sql);
 
                             if($execute -> num_rows > 0){
                                 $row = $execute -> fetch_assoc();
                                 $id_pedido = $row['id_pedido'];
                                 $_SESSION['Idpedido'] = $id_pedido;
-                                $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$_SESSION['nota_fiscal_doca']."' AND id_pedido = '".$_SESSION['Idpedido']."'";
+                                $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$nota_fiscal."' AND id_pedido = '".$id_pedido."'";
                                 $execute = $conexao->query($sql);
 
                                 if($execute->num_rows > 0){
@@ -197,7 +188,14 @@ if (empty($_SESSION['nome'])){
                                             </form>';
                                             echo '</div>';
                                         } else {
-                                            echo 'Esse pedido não possui itens';
+                                            $sql = "UPDATE pedido SET Situacao = 'Em processamento' WHERE cod_pedido = '$cod_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
+                                            $execute = $conexao -> query($sql);
+
+                                            if($execute){
+                                                $sql = "UPDATE itenspedido SET VistoriaConcluida = '0', Faltando = '0', Avariado = '0' WHERE cod_pedido = '$id_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
+                                                $execute = $conexao -> query($sql);
+                                            }
+                                            echo 'Esse pedido não possui itens, por favor adicione itens';
                                         }
                                     } else {
                                         echo 'Código do pedido incorreto, verifique se ele foi criado e finalizado no projeto atual';
@@ -205,6 +203,14 @@ if (empty($_SESSION['nome'])){
                                 } else {
                                     echo 'Código da nota fiscal e do pedido não correspondem, verifique os o codigo do pedido e da nota_fiscal para o seu projeto atual';
                                 }  
+                        } else{
+                            $sql = "UPDATE pedido SET Situacao = 'Em processamento' WHERE cod_pedido = '$cod_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
+                            $execute = $conexao -> query($sql);
+                            if($execute){
+                                $sql = "UPDATE itenspedido SET VistoriaConcluida = '0', Faltando = '0', Avariado = '0' WHERE cod_pedido = '$id_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
+                                $execute = $conexao -> query($sql);
+                            }
+                            echo 'O seu pedido não foi finalizado, ainda está em processamento ou ja passou pela conferência e vistoria';
                         }
                     }
 echo '            </div>

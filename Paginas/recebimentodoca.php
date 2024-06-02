@@ -105,9 +105,9 @@ if (empty($_SESSION['nome'])){
 
     $codTurma = $conexao->real_escape_string($_SESSION['codTurma']);
     $sql = "SELECT * FROM pedido WHERE codTurma ='$codTurma' AND Situacao = 'Nas docas'";
-    $execute = $conexao->query($sql);
+    $executar = $conexao->query($sql);
 
-    if($execute && $execute->num_rows > 0){
+    if($executar && $executar->num_rows > 0){
         echo "<div class='main'>
                 <div class='tablebox'>
                     <h7>Confira os produtos que estão parados nas docas</h7>
@@ -115,16 +115,16 @@ if (empty($_SESSION['nome'])){
                         <tr>
                             <th>Código do pedido</th>
                             <th>Doca</th>
-                            <th>Avariado</th>
-                            <th>Faltando</th>
+                            <th>Algum item avariado?</th>
+                            <th>Algum item faltando?</th>
                             <th>Ações</th>
                         </tr>";
 
-        while($row = $execute->fetch_assoc()){
+        while($row = $executar->fetch_assoc()){
             $idpedidos = $conexao->real_escape_string($row['id_pedido']);
             $cod_pedido = $conexao->real_escape_string($row['cod_pedido']);
             
-            $sql = "SELECT Avariado, Faltando FROM itenspedido WHERE codTurma ='$codTurma' AND cod_pedido = '$idpedidos'";
+            $sql = "SELECT * FROM itenspedido WHERE codTurma ='$codTurma' AND cod_pedido = '$idpedidos'";
             $execute = $conexao->query($sql);
 
             if($execute && $execute->num_rows > 0){
@@ -158,8 +158,9 @@ if (empty($_SESSION['nome'])){
                             <td>' . $Avariado . '</td>
                             <td>' . $Faltando . '</td>
                             <td>    
-                                <form action="controledoca.php" method="POST" class="deletebox">
+                                <form action="controledoca.php" method="POST">
                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedidos) . '">
+                                    <input type="hidden" name="posicao_doca" value="' . htmlspecialchars($rowDoca['posicao']) . '">
                                     <input type="submit" name="DesignarProdutos" value="Abrir" style="display: block;">';
                                     echo 'idpedido:'. $idpedidos .'';
                                     echo '

@@ -190,6 +190,10 @@ if (empty($_SESSION['nome'])){
                                                             $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = '' WHERE cod_pedido = '{$_SESSION['cod_pedido']}' AND codTurma = '{$_SESSION['codTurma']}' 
                                                             AND id_pedido = '{$_SESSION['idpedido']}'";
                                                             $execute = $conexao->query($sql);
+                                                            if($execute){
+                                                                $sql = "UPDATE itenspedido SET VistoriaConcluida = '0', Faltando = '0', Avariado = '0' WHERE cod_pedido = '$idpedido' AND codTurma ='{$_SESSION['codTurma']}'";
+                                                                $execute = $conexao -> query($sql);
+                                                            }
                                                         } else {
                                                             $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
                                                             $selectCNPJFabricante = "SELECT CNPJ FROM fabricantes WHERE Nome = '$nomeFabri'";
