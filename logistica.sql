@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01/06/2024 às 20:10
+-- Tempo de geração: 02/06/2024 às 19:56
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -63,8 +63,8 @@ CREATE TABLE `docas` (
 --
 
 INSERT INTO `docas` (`cod_doca`, `posicao`, `id_pedido`, `codTurma`) VALUES
-(1, 'A1', 2, 'S3naiAdmin'),
-(2, 'B3', 3, 'S3naiAdmin');
+(1, '1', 2, 'S3naiAdmin'),
+(2, '3', 3, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -74,11 +74,35 @@ INSERT INTO `docas` (`cod_doca`, `posicao`, `id_pedido`, `codTurma`) VALUES
 
 CREATE TABLE `estoque` (
   `cod_estoque` int(11) NOT NULL,
-  `Prateleiras` int(11) NOT NULL,
-  `Setor` varchar(255) NOT NULL,
-  `Andar` int(11) NOT NULL,
-  `Apartamento` int(11) NOT NULL
+  `Andar` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Apartamento` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Despejando dados para a tabela `estoque`
+--
+
+INSERT INTO `estoque` (`cod_estoque`, `Andar`, `Apartamento`) VALUES
+(1, 'A', '1'),
+(2, 'A', '2'),
+(3, 'A', '3'),
+(4, 'A', '4'),
+(5, 'A', '5'),
+(6, 'B', '1'),
+(7, 'B', '2'),
+(8, 'B', '3'),
+(9, 'B', '4'),
+(10, 'B', '5'),
+(11, 'C', '1'),
+(12, 'C', '2'),
+(13, 'C', '3'),
+(14, 'C', '4'),
+(15, 'C', '5'),
+(16, 'D', '1'),
+(17, 'D', '2'),
+(18, 'D', '3'),
+(19, 'D', '4'),
+(20, 'D', '5');
 
 -- --------------------------------------------------------
 
@@ -131,6 +155,9 @@ CREATE TABLE `itenspedido` (
   `cod_produto` int(11) NOT NULL,
   `cod_pedido` int(11) NOT NULL,
   `Quantidade` int(11) NOT NULL,
+  `Quantidade_doca` int(11) NOT NULL,
+  `Quantidade_estoque` int(11) NOT NULL,
+  `PosicaoPrevia` varchar(5) NOT NULL,
   `ValorUnitario` double NOT NULL,
   `ValorTotal` double NOT NULL,
   `Avariado` tinyint(1) NOT NULL,
@@ -143,9 +170,11 @@ CREATE TABLE `itenspedido` (
 -- Despejando dados para a tabela `itenspedido`
 --
 
-INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codTurma`) VALUES
-(1, 1, 2, 2, 5.5, 11, 1, 0, 1, 'S3naiAdmin'),
-(2, 2, 2, 3, 1.2, 3.6, 0, 1, 1, 'S3naiAdmin');
+INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `Quantidade_doca`, `Quantidade_estoque`, `PosicaoPrevia`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codTurma`) VALUES
+(1, 1, 2, 2, 1, 1, 'A1', 5.5, 11, 0, 1, 1, 'S3naiAdmin'),
+(2, 2, 2, 3, 0, 3, 'B3', 1.2, 3.6, 1, 0, 1, 'S3naiAdmin'),
+(4, 4, 3, 3, 3, 0, 'AA', 7.3, 21.9, 1, 0, 1, 'S3naiAdmin'),
+(5, 5, 3, 2, 2, 0, 'AA', 29.99, 59.98, 1, 0, 1, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -169,8 +198,8 @@ CREATE TABLE `nota_fiscal` (
 --
 
 INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(27129, '35226989759240500117147949891014940238353323', '2024-05-31 17:31:38', 'Caderno com folha com opção para destacar', 3, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60'),
-(91471, '12084513585914120015533975063784509158530481', '2024-05-31 17:31:38', 'TESOURAS COM PONTA', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
+(53732, '45322005557186824891300211341784926188275865', '2024-05-31 17:31:38', 'MARCA TEXTOS VERDE NEON', 3, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60'),
+(86679, '00080831661334808902745293029033638238842947', '2024-05-31 17:31:38', 'CUIDADO TESOURAS COM PONTA', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
 
 -- --------------------------------------------------------
 
@@ -196,8 +225,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
-(2, 1, '2024-05-31 17:31:38', 14.6, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Nas docas', 'TESOURAS COM PONTA', 'S3naiAdmin'),
-(3, 23, '2024-05-31 17:57:11', 31.1, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', 'Caderno com folha com opção para destacar', 'S3naiAdmin');
+(2, 1, '2024-05-31 17:31:38', 14.6, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Nas docas', 'CUIDADO TESOURAS COM PONTA', 'S3naiAdmin'),
+(3, 23, '2024-05-31 17:57:11', 81.88, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', 'MARCA TEXTOS VERDE NEON', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -424,10 +453,16 @@ ALTER TABLE `docas`
   MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de tabela `estoque`
+--
+ALTER TABLE `estoque`
+  MODIFY `cod_estoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
-  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
