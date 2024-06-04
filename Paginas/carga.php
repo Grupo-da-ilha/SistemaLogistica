@@ -41,7 +41,7 @@ if (empty($_SESSION['nome'])){
         }
     }
 
-    echo '<<header>
+    echo '<header>
     <div class="container">
         <div class="main-horizontal">
             <ul class="ul-main">
@@ -108,7 +108,7 @@ if (empty($_SESSION['nome'])){
                                 <form method="POST" id="form-doca">
                                     <h5>DOCA:</h5>
                                     <input type="text" id="doca" class="doca" placeholder="Doca:" name="doca">
-                                    <input type="submit" value="OK" style="display: block" name="enviar_doca">
+                                    <input type="submit" value="OK" style="display: block" name="enviar_doca" id="pedido-nota">
                                 </form>
                             </div>
                         </div>';
@@ -184,13 +184,13 @@ if (empty($_SESSION['nome'])){
                                                     Faltando?
                                                     <input type="checkbox" class="avariado-produto" name="faltando" value="1">
                                                     <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                    <input type="submit" name="Confirmar_vistoria" value="Registrar" style="display: block; margin-left: 10px;">
+                                                    <input type="submit" name="Confirmar_vistoria" value="Registrar" style="display: block; margin-left: 10px;" id="Registrar">
                                                 </form>
                                                 </td>';
                                                 echo '<td>
                                                 <form class="form-vistoria-completa">
                                                     <input type="hidden" name="coditem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída">
+                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída" id="Vistoria-Concluída">
                                                 </form>
                                             </td>';
                                             }
@@ -198,7 +198,7 @@ if (empty($_SESSION['nome'])){
                                             echo '</table>';
                                             echo '
                                             <form style="margin-top: 40px" id="form-conferencia-completa">
-                                                <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento">
+                                                <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento"  id="Finalizar">
                                             </form>';
                                             echo '</div>';
                                         } else {
