@@ -101,7 +101,6 @@ if (empty($_SESSION['nome'])) {
         echo "Failed to connect to MySQL: " . htmlspecialchars($conexao->connect_error);
         exit();
     } else {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (isset($_POST['id_pedido']) && isset($_POST['posicao_doca'])) {
                 $idpedido = $conexao->real_escape_string($_POST['id_pedido']);
                 $doca = $conexao->real_escape_string($_POST['posicao_doca']);
@@ -128,6 +127,7 @@ if (empty($_SESSION['nome'])) {
                                         <td>Produtos</td>
                                         <td>UN</td>
                                         <td>Quantidade</td>
+                                        <td>Quantidade na doca</td>
                                         <td style="width:250px"></td>
                                         <td>QTD para Estoque</td>
                                         <td>Posição no Estoque</td>
@@ -149,6 +149,7 @@ if (empty($_SESSION['nome'])) {
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td>' . htmlspecialchars($Quantidade) . '</td>
+                                            <td>' . htmlspecialchars($QuantidadeDoca) . '</td>
                                             <td></td>
                                             <form class="form-enviar-produtos" method="post">
                                                 <td>
@@ -181,10 +182,7 @@ if (empty($_SESSION['nome'])) {
             } else {
                 echo '<p>Dados insuficientes, por favor clique para abrir o pedido que está nas docas</p>';
             }
-        } else {
-            echo '<p>Método de requisição inválido.</p>';
         }
-    }
 
     $conexao->close();
     echo '

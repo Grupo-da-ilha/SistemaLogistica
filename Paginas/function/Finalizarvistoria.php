@@ -15,7 +15,7 @@ if ($conexao->connect_errno) {
     $execute = $conexao -> query($sql);
 
     if($execute -> num_rows > 0){
-        $row = $execute -> fetch_assoc();   
+        $row = $execute -> fetch_assoc();
         $VistoriaConluida = $row['VistoriaConcluida'];
 
         if($VistoriaConluida == 0){

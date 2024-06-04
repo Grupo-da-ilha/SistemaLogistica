@@ -57,11 +57,15 @@ if ($conexao->connect_errno) {
             }
 
         } else{
-            echo json_encode(array('success' => false, 'message' => 'Dados insuficientes'));
+            echo json_encode(array('success' => false, 'message' => 'Erro aos procesar dados'));
             exit();
         }
 
+<<<<<<< Updated upstream
         
+=======
+
+>>>>>>> Stashed changes
     }else{
             echo json_encode(array('success' => false, 'message' => 'Dados insuficientes'));
             exit();
