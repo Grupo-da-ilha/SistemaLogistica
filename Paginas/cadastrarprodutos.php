@@ -9,7 +9,7 @@
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/cadastroproduto.css"/>
-    <link rel="shortcut icon" type="imagex/png" href="#"/>
+    <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
 <body>
 <?php

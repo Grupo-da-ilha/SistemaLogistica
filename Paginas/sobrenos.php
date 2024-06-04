@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/sobrenos.css"/>
     <link rel="stylesheet" href="css/unpkg.com_swiper@8.1.6_swiper-bundle.min.css">
-    <link rel="shortcut icon" type="imagex/png" href="#"/>
+    <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
 <body>
 <?php
