@@ -171,13 +171,13 @@ if (empty($_SESSION['nome'])){
                                                     Faltando?
                                                     <input type="checkbox" class="avariado-produto" name="faltando" value="1">
                                                     <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                    <input type="submit" name="Confirmar_vistoria" value="Registrar" style="display: block; margin-left: 10px;">
+                                                    <input type="submit" name="Confirmar_vistoria" id="Registrar" value="Registrar" style="display: block; margin-left: 10px;">
                                                 </form>
                                                 </td>';
                                                 echo '<td>
                                                 <form class="form-vistoria-completa">
                                                     <input type="hidden" name="coditem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída">
+                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída" id="Vistoria-Concluída">
                                                 </form>
                                             </td>';
                                             }
@@ -185,7 +185,7 @@ if (empty($_SESSION['nome'])){
                                             echo '</table>';
                                             echo '
                                             <form style="margin-top: 40px" id="form-conferencia-completa">
-                                                <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento">
+                                                <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento" id="Finalizar">
                                             </form>';
                                             echo '</div>';
                                         } else {
