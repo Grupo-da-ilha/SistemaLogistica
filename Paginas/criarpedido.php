@@ -70,13 +70,7 @@ if (empty($_SESSION['nome'])){
                     </nav>
                         <div class="juntos">
                             <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
-                            <h1>SENAI LOG</h1>';
-                            if (isset($_SESSION['Idprojeto'])) {
-                                echo '<p>Projeto selecionado: ' . $_SESSION['Idprojeto'] . '</p>';
-                            } else {
-                                echo '<p>Nenhum projeto selecionado.</p>';
-                            }
-                            echo '
+                            <h1>SENAI LOG</h1>
                         </div>
                         <h2>'.$_SESSION['nome'].'</h2>
                     </div>

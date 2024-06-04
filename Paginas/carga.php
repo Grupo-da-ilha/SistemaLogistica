@@ -95,20 +95,20 @@ if (empty($_SESSION['nome'])){
                 </div>
                 <div class="info-total">
                     <div class="vistoria-carga">
-                        <div class="notafiscal" >
+                        <div class="vistoria" >
                             <h4> INFORMAÇÕES </h4>
-                            <div class="info-recebimento">
+                            <div class="info-vistoria">
                                 <form action="" method="POST" id="form-nota-pedido">
                                     <h5>NOTA FISCAL:</h5>
                                     <input type="text" id="idnotafiscal" class="idnotafiscal" name="nota_fiscal" placeholder="N° Nota fiscal:" >
                                     <h5>PEDIDO DE COMPRA:</h5>
                                     <input type="text" id="pedidodecompra" class="pedidodecompra" name="cod_pedido" placeholder="Pedido de compra:">
-                                    <input type="submit" id="pedido-nota" name="enviar-pedido" value="ENVIAR" style="display:block; margin-top: 5px;">
+                                    <input type="submit" id="pedido-nota" name="enviar-pedido" value="ENVIAR" style="display:block;">
                                 </form>
                                 <form method="POST" id="form-doca">
                                     <h5>DOCA:</h5>
                                     <input type="text" id="doca" class="doca" placeholder="Doca:" name="doca">
-                                    <input type="submit" value="OK" style="display: block" name="enviar_doca">
+                                    <input type="submit" value="OK" style="display: block" name="enviar_doca" id="enviar_doca">
                                 </form>
                             </div>
                         </div>';
@@ -161,10 +161,6 @@ if (empty($_SESSION['nome'])){
                                                 echo '<td>' . htmlspecialchars($row['Nome']). '</td>';
                                                 echo '<td>UN: ' . htmlspecialchars($row['UN']). '</td>';
                                                 echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '
-                                                <form style="display: none;" class="form_quantidade">
-                                                    <input type="text" name="Quantidade falta">
-                                                    <input type="submit" name="UpdateQt" value="Salvar" margin-left: 10px;">
-                                                </form>
                                                 </td>';
                                                 echo '<td>Preço Unitário: ' . htmlspecialchars($row['PrecoUNI']). '</td>';
                                                 echo '<td>Valor Total: ' . htmlspecialchars($row['ValorTotal']). '</td>';
