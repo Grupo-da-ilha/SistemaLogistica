@@ -48,11 +48,7 @@ if ($conexao->connect_errno) {
                 $execute = $conexao -> query($sql);
 
                 if($execute){
-                    echo json_encode(array('success' => true, 'message' => 'Item enviado para a movimentação'));
-                    exit();
                 } else{
-                    echo json_encode(array('success' => false, 'message' => 'Dados insuficientes 4'));
-                    exit();
                 }
             }
 
@@ -61,11 +57,29 @@ if ($conexao->connect_errno) {
             exit();
         }
 
-<<<<<<< Updated upstream
-        
-=======
+        $SelectEstoque = "SELECT cod_estoque FROM estoque WHERE Andar ='$andar' AND Apartamento = '$apartamento'";
+        $execute = $conexao -> query($SelectEstoque);
 
->>>>>>> Stashed changes
+        if($execute && $execute -> num_rows > 0){
+            $row = $execute -> fetch_assoc();
+            $cod_estoque = $row['cod_estoque'];
+
+            $InsetItemEstoque = "INSERT INTO itensestoque (Quantidade, Situacao, cod_estoque, cod_itenpedido, codTurma)
+            VALUES ('$quantidadeEstoque', 'Em movimentação', '$cod_estoque', '$cod_itempedido', '{$_SESSION['codTurma']}')
+            ";
+            $execute = $conexao -> query($InsetItemEstoque);
+
+            if($execute){
+                echo json_encode(array('success' => true, 'message' => 'Item enviado para a movimentação'));
+                exit();
+            } else{
+                echo json_encode(array('success' => false, 'message' => 'Erro ao enviar pedido para a movimentação'));
+                exit();
+            }
+        } else{
+            echo json_encode(array('success' => false, 'message' => 'A posição selecionada não existe no estoque'));
+            exit();
+        }
     }else{
             echo json_encode(array('success' => false, 'message' => 'Dados insuficientes'));
             exit();
