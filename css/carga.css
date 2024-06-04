@@ -90,13 +90,19 @@ h6 {
   z-index: 0;
     width: 191.5vh;
     min-height: 74vh;
-    background-color: #eeeeee;;
+    background-color: #eeeeee;
     border-radius: 30px;
     display: flex;
     flex-direction: row;
     justify-content:first baseline;
     align-items: center;
     text-align: center;
+}
+.notafiscal {
+  height: 74vh;
+  border-radius: 0 30px 30px 0;
+  box-shadow: 0 0 15px rgb(0, 119, 255);
+  background-color: #eeeeee;
 }
 .vistoria {
   z-index: 3;
