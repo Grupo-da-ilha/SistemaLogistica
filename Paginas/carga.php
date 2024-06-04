@@ -190,7 +190,7 @@ if (empty($_SESSION['nome'])){
                                                 echo '<td>
                                                 <form class="form-vistoria-completa">
                                                     <input type="hidden" name="coditem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída" id="Vistoria-Concluída">
+                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída"  id="Vistoria-Concluída" class="Vistoria-Concluída">
                                                 </form>
                                             </td>';
                                             }
@@ -332,6 +332,15 @@ $('#form-conferencia-completa').submit(function(e) {
         }
     });
 });
+</script>
+<script>
+const buttons = document.querySelectorAll('.Vistoria-Concluída'); // Select buttons with class 'Vistoria-Concluída'
 
+for (const button of buttons) {
+  button.addEventListener('click', function() {
+    this.style.backgroundColor = 'lightgreen'; // Change to your desired light green color
+    this.dataset.clicked = 'true'; // Store the clicked state in a data attribute
+  });
+}
 </script>
 </html>
