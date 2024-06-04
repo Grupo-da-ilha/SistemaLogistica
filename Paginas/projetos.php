@@ -45,7 +45,7 @@ if (empty($_SESSION['nome'])){
                     </nav>
                 </li>
                 <li class="li-main">
-                    <h1>MOVSYS</h1>
+                    <h1>MOVESYS</h1>
                     <h2><?php echo $_SESSION['nome']; ?></h2>
                 </li>
             </ul>

@@ -102,7 +102,7 @@ if (empty($_SESSION['nome'])){
                     </nav>
                 </li>
                 <li class="li-main">
-                    <h1>SENAI SCP</h1>
+                    <h1>MOVESYS</h1>
                     <h2>'.$_SESSION['nome'].'</h2>
                 </li>
             </ul>
