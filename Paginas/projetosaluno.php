@@ -37,13 +37,13 @@ if (empty($_SESSION['nome'])){
                     <nav>
                         <ul class="ul-button">
                         <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
-                        </ul>
+                        <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
+                        <li class="li-vertical"><a class="a-vertical" href="perfilaluno.php">PERFIL</a></li>
+                        <li class="li-vertical"><a class="a-vertical" href="ajudaaluno.php">AJUDA</a></li>
+                        <li class="li-vertical"><a class="a-vertical" href="sobrenosaluno.php">SOBRE NÓS</a></li>
+                        <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
+                        <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
+                    </ul>
                     </nav>
                         <div class="juntos">
                             <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
@@ -83,7 +83,7 @@ if (empty($_SESSION['nome'])){
             echo '<p>Nenhum projeto encontrado para esta turma.</p>';
         }
 
-        echo '<form id="projectForm" action="projetoprofessor.php" method="POST" style="display: none;">
+        echo '<form id="projectForm" action="projetoaluno.php" method="POST" style="display: none;">
                 <input type="hidden" name="project_id" id="project_id">
               </form>';
     } else {

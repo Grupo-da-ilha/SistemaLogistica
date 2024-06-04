@@ -1,4 +1,4 @@
-/*<?php
+<?php
 session_start();
 
 if (empty($_SESSION['nome'])) {
@@ -20,7 +20,7 @@ if (empty($_SESSION['nome'])) {
             exit();
         }else{
 
-        $stmt = "DELETE FROM projetos WHERE idprojeto = '".$_SESSION['id']."'";
+        $stmt = "DELETE FROM projetos WHERE codTurma = '$codTurma'";
         $executar = $conn -> query($stmt);
 
         if ($executar == true) {
@@ -68,57 +68,5 @@ if (empty($_SESSION['nome'])) {
     }
 }
 }
-}
-?>
-
-<?php
-session_start();
-
-if (empty($_SESSION['nome'])) {
-    header('Location: ../sair.php');
-    exit();
-}
-
-if (isset($_POST['codTurma'])) {
-    $codTurma = $_POST['codTurma'];
-
-    $hostname = "127.0.0.1";
-    $user = "root";
-    $password = "";
-    $database = "logistica";
-
-    $conn = new mysqli($hostname, $user, $password, $database);
-
-    if ($conn->connect_error) {
-        echo "Não foi possível conectar ao banco de dados: " . $conn->connect_error;
-        exit();
-    }
-
-    // Prepara e executa a exclusão segura
-    $stmt = $conn->prepare("DELETE FROM projetos WHERE id = ?");
-    $stmt->bind_param("i", $_SESSION['id']); // Supondo que id seja um inteiro
-
-    if ($stmt->execute()) {
-        $stmt = $conn->prepare("DELETE FROM usuarios WHERE codTurma = ?");
-        $stmt->bind_param("s", $codTurma);
-
-        if ($stmt->execute()) {
-            $stmt = $conn->prepare("DELETE FROM turmas WHERE codTurma = ?");
-            $stmt->bind_param("s", $codTurma);
-
-            if ($stmt->execute()) {
-                echo "Turma excluída com sucesso";
-            } else {
-                echo "Erro ao excluir turma: " . $stmt->error;
-            }
-        } else {
-            echo "Erro ao excluir cadastro: " . $stmt->error;
-        }
-    } else {
-        echo "Erro ao excluir projetos: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $conn->close();
 }
 ?>

@@ -19,7 +19,7 @@
             text-shadow: 0 0 2px rgb(0, 119, 255);
             cursor: default;
         }
-        #overlay {
+        #overlay, #overlay_continue {
             position: fixed;
             top: 0;
             left: 0;
@@ -29,12 +29,12 @@
             z-index: 999;
             display: none;
         }
-        #project_form {
+        #project_form, #project_form_continue {
             position: absolute;
             top: 50%;
             left: 50%;
             width: 300px;
-            height: 300px;
+            height: 350px;
             transform: translate(-50%, -50%);
             background-color: #ffffff;
             padding: 20px;
@@ -43,7 +43,7 @@
             z-index: 1000;
             display: none;
         }
-        #project_name_form {
+        #project_name_form, #project_class_form, #project_sala_form {
             margin-top: 20px;
             width: 100%;
             padding: 10px;
@@ -57,29 +57,11 @@
             justify-content: center;
             align-items: center;
         }
-        #project_name_form:focus {
+        #project_name_form:focus, #project_class_form:focus, #project_sala_form:focus {
             border-color: #007bff;
             box-shadow: 0 0 15px rgb(0, 119, 255);
         }
-        #project_class_form {
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            outline: none;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        #project_class_form:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 15px rgb(0, 119, 255);
-        }
-        #save_button {
+        #save_button, #continue_button {
             margin-top: 40px;
             cursor: pointer;
             width: 100%;
@@ -92,7 +74,7 @@
             transition: all 0.3s;
             box-shadow: 0 0 15px rgb(0, 119, 255);
         }
-        #save_button:hover {
+        #save_button:hover, #continue_button:hover {
             transform: scale(1.05);
             animation: animate 1s linear infinite;
             background-color: hsl(212, 95%, 60%);
@@ -149,7 +131,7 @@ if (empty($_SESSION['nome'])) {
                                 <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
                                 <h1>MOVESYS</h1>
                             </div>
-                            <h2>'.$_SESSION['nome'].'</h2>
+                            <h2>'.htmlspecialchars($_SESSION['nome']).'</h2>
                         </div>
                     </li>
                 </ul>
@@ -159,7 +141,14 @@ if (empty($_SESSION['nome'])) {
     <main>
         <div class="container-prin">
             <div class="options-senai-new" onclick="toggleForm()"></div>
-            <div class="options-senai-continue" onclick="getAndDisplayProjects()"></div>
+            <div class="options-senai-continue" onclick="toggleContinueForm()"></div>
+            <div id="overlay_continue"></div>
+            <form id="project_form_continue">
+                <span class="close" onclick="toggleContinueForm()">&times;</span>
+                <h3>De qual turma você quer acessar os projetos:</h3>
+                <input type="text" id="project_sala_form" name="project_class" placeholder="Código Turma" style="display:block;" required>
+                <button type="button" id="continue_button" onclick="getAndDisplayProjects()">Ver Projetos</button>
+            </form>
             <div id="overlay"></div>
             <form id="project_form">
                 <span class="close" onclick="toggleForm()">&times;</span>
@@ -189,7 +178,7 @@ function toggleForm() {
 function saveProject() {
     var projectName = document.getElementById('project_name_form').value;
     var projectClass = document.getElementById('project_class_form').value;
-    var personId = '<?php echo $_SESSION['id']; ?>';
+    var personId = '<?php echo htmlspecialchars($_SESSION['id']); ?>';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "function/save_project.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -203,8 +192,24 @@ function saveProject() {
 }
 
 function getAndDisplayProjects() {
-    var cadastroId = '<?php echo $_SESSION['id']; ?>';
-    window.location.href = "projetosprofessor.php?cadastro_id=" + cadastroId;
+            var projectClass = document.getElementById('project_sala_form').value;
+            if (projectClass) {
+                window.location.href = "projetosprofessor.php?project_sala=" + encodeURIComponent(projectClass);
+            } else {
+                alert("Por favor, insira o código da turma.");
+            }
+        }
+
+function toggleContinueForm() {
+    var overlayContinue = document.getElementById('overlay_continue');
+    var formContinue = document.getElementById('project_form_continue');
+    if (overlayContinue.style.display === 'block') {
+        overlayContinue.style.display = 'none';
+        formContinue.style.display = 'none';
+    } else {
+        overlayContinue.style.display = 'block';
+        formContinue.style.display = 'block';
+    }
 }
 </script>
 </body>
