@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 02/06/2024 às 19:56
+-- Tempo de geração: 04/06/2024 às 16:56
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -75,34 +75,35 @@ INSERT INTO `docas` (`cod_doca`, `posicao`, `id_pedido`, `codTurma`) VALUES
 CREATE TABLE `estoque` (
   `cod_estoque` int(11) NOT NULL,
   `Andar` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Apartamento` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+  `Apartamento` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Quantidade_setor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Despejando dados para a tabela `estoque`
 --
 
-INSERT INTO `estoque` (`cod_estoque`, `Andar`, `Apartamento`) VALUES
-(1, 'A', '1'),
-(2, 'A', '2'),
-(3, 'A', '3'),
-(4, 'A', '4'),
-(5, 'A', '5'),
-(6, 'B', '1'),
-(7, 'B', '2'),
-(8, 'B', '3'),
-(9, 'B', '4'),
-(10, 'B', '5'),
-(11, 'C', '1'),
-(12, 'C', '2'),
-(13, 'C', '3'),
-(14, 'C', '4'),
-(15, 'C', '5'),
-(16, 'D', '1'),
-(17, 'D', '2'),
-(18, 'D', '3'),
-(19, 'D', '4'),
-(20, 'D', '5');
+INSERT INTO `estoque` (`cod_estoque`, `Andar`, `Apartamento`, `Quantidade_setor`) VALUES
+(1, 'A', '1', 0),
+(2, 'A', '2', 0),
+(3, 'A', '3', 0),
+(4, 'A', '4', 0),
+(5, 'A', '5', 0),
+(6, 'B', '1', 0),
+(7, 'B', '2', 0),
+(8, 'B', '3', 0),
+(9, 'B', '4', 0),
+(10, 'B', '5', 0),
+(11, 'C', '1', 0),
+(12, 'C', '2', 0),
+(13, 'C', '3', 0),
+(14, 'C', '4', 0),
+(15, 'C', '5', 0),
+(16, 'D', '1', 0),
+(17, 'D', '2', 0),
+(18, 'D', '3', 0),
+(19, 'D', '4', 0),
+(20, 'D', '5', 0);
 
 -- --------------------------------------------------------
 
@@ -147,6 +148,29 @@ CREATE TABLE `fornecedores` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `itensestoque`
+--
+
+CREATE TABLE `itensestoque` (
+  `cod_itenEstoque` int(11) NOT NULL,
+  `Quantidade` int(11) NOT NULL,
+  `Situacao` varchar(255) NOT NULL,
+  `cod_estoque` int(11) NOT NULL,
+  `cod_itenpedido` int(11) NOT NULL,
+  `codTurma` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Despejando dados para a tabela `itensestoque`
+--
+
+INSERT INTO `itensestoque` (`cod_itenEstoque`, `Quantidade`, `Situacao`, `cod_estoque`, `cod_itenpedido`, `codTurma`) VALUES
+(1, 2, 'Em movimentação', 1, 4, 'S3naiAdmin'),
+(2, 1, 'Em movimentação', 3, 4, 'S3naiAdmin');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `itenspedido`
 --
 
@@ -156,7 +180,6 @@ CREATE TABLE `itenspedido` (
   `cod_pedido` int(11) NOT NULL,
   `Quantidade` int(11) NOT NULL,
   `Quantidade_doca` int(11) NOT NULL,
-  `Quantidade_estoque` int(11) NOT NULL,
   `PosicaoPrevia` varchar(5) NOT NULL,
   `ValorUnitario` double NOT NULL,
   `ValorTotal` double NOT NULL,
@@ -170,11 +193,11 @@ CREATE TABLE `itenspedido` (
 -- Despejando dados para a tabela `itenspedido`
 --
 
-INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `Quantidade_doca`, `Quantidade_estoque`, `PosicaoPrevia`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codTurma`) VALUES
-(1, 1, 2, 2, 1, 1, 'A1', 5.5, 11, 0, 1, 1, 'S3naiAdmin'),
-(2, 2, 2, 3, 0, 3, 'B3', 1.2, 3.6, 1, 0, 1, 'S3naiAdmin'),
-(4, 4, 3, 3, 3, 0, 'AA', 7.3, 21.9, 1, 0, 1, 'S3naiAdmin'),
-(5, 5, 3, 2, 2, 0, 'AA', 29.99, 59.98, 1, 0, 1, 'S3naiAdmin');
+INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `Quantidade_doca`, `PosicaoPrevia`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codTurma`) VALUES
+(1, 1, 2, 2, 2, 'A1', 5.5, 11, 0, 0, 0, 'S3naiAdmin'),
+(2, 2, 2, 3, 3, 'B3', 1.2, 3.6, 0, 0, 0, 'S3naiAdmin'),
+(4, 4, 3, 3, 0, 'AA', 7.3, 21.9, 1, 0, 1, 'S3naiAdmin'),
+(5, 5, 3, 2, 0, 'AA', 29.99, 59.98, 1, 0, 1, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -198,8 +221,8 @@ CREATE TABLE `nota_fiscal` (
 --
 
 INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(53732, '45322005557186824891300211341784926188275865', '2024-05-31 17:31:38', 'MARCA TEXTOS VERDE NEON', 3, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60'),
-(86679, '00080831661334808902745293029033638238842947', '2024-05-31 17:31:38', 'CUIDADO TESOURAS COM PONTA', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
+(24470, '93047097452570923117333745074140735331959896', '2024-05-31 17:31:38', '', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60'),
+(52774, '74599275989642058141761706647629943877009386', '2024-05-31 17:31:38', 'MARCA TEXTOS VERDERS NEON', 3, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
 
 -- --------------------------------------------------------
 
@@ -225,8 +248,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
-(2, 1, '2024-05-31 17:31:38', 14.6, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Nas docas', 'CUIDADO TESOURAS COM PONTA', 'S3naiAdmin'),
-(3, 23, '2024-05-31 17:57:11', 81.88, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', 'MARCA TEXTOS VERDE NEON', 'S3naiAdmin');
+(2, 1, '2024-05-31 17:31:38', 14.6, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em processamento', '', 'S3naiAdmin'),
+(3, 23, '2024-05-31 17:57:11', 81.88, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', 'MARCA TEXTOS VERDERS NEON', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -382,6 +405,15 @@ ALTER TABLE `fornecedores`
   ADD PRIMARY KEY (`CNPJ`);
 
 --
+-- Índices de tabela `itensestoque`
+--
+ALTER TABLE `itensestoque`
+  ADD PRIMARY KEY (`cod_itenEstoque`),
+  ADD KEY `FK_codestoque` (`cod_estoque`),
+  ADD KEY `FK_codItemPedido` (`cod_itenpedido`),
+  ADD KEY `FK_id_turma` (`codTurma`);
+
+--
 -- Índices de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
@@ -459,6 +491,12 @@ ALTER TABLE `estoque`
   MODIFY `cod_estoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
+-- AUTO_INCREMENT de tabela `itensestoque`
+--
+ALTER TABLE `itensestoque`
+  MODIFY `cod_itenEstoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
@@ -492,6 +530,14 @@ ALTER TABLE `projetos`
 ALTER TABLE `docas`
   ADD CONSTRAINT `FK_codigo_Turma` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`),
   ADD CONSTRAINT `FK_idpedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
+
+--
+-- Restrições para tabelas `itensestoque`
+--
+ALTER TABLE `itensestoque`
+  ADD CONSTRAINT `FK_codItemPedido` FOREIGN KEY (`cod_itenpedido`) REFERENCES `itenspedido` (`cod_itenPedido`),
+  ADD CONSTRAINT `FK_codestoque` FOREIGN KEY (`cod_estoque`) REFERENCES `estoque` (`cod_estoque`),
+  ADD CONSTRAINT `FK_id_turma` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
 
 --
 -- Restrições para tabelas `itenspedido`
