@@ -58,6 +58,9 @@ h7 {
   text-shadow: 0 0 2px rgb(255, 255, 255);
   cursor: default;
 }
+.submenu {
+  margin-top: 0vh;
+}
 .criar-pedido-container {
     z-index: 0;
     width: 95%;
