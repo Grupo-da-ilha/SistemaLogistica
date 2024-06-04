@@ -128,7 +128,6 @@ if (empty($_SESSION['nome'])) {
                                         <td>UN</td>
                                         <td>Quantidade</td>
                                         <td>Quantidade na doca</td>
-                                        <td style="width:250px"></td>
                                         <td>QTD para Estoque</td>
                                         <td>Posição no Estoque</td>
                                         <td>Ações</td>
@@ -144,25 +143,32 @@ if (empty($_SESSION['nome'])) {
                             $executar = $conexao->query($sqlProdutos);
 
                             if ($executar && $executar->num_rows > 0) {
+                                $SelectItensEstoque = "SELECT * FROM itensestoque WHERE cod_itenpedido = '$codItemPedido'";
+                                $resultado = $conexao -> query($SelectItensEstoque);
+
+                                if($resultado && $resultado -> num_rows > 0){
+                                    while($rowItenEstoque = $resultado -> fetch_assoc()){
+                                        
+                                    }
+                                }
                                 while ($rowProdutos = $executar->fetch_assoc()) {
                                     echo '<tr>
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td>' . htmlspecialchars($Quantidade) . '</td>
                                             <td>' . htmlspecialchars($QuantidadeDoca) . '</td>
-                                            <td></td>
                                             <form class="form-enviar-produtos" method="post">
                                                 <td>
-                                                    <input type="text" name="QTDEstoque" placeholder="QTD" style="display:block; width: 40px;">
+                                                    <input type="text" id="QTDEstoque" name="QTDEstoque" placeholder="Quantidade Estoque" style="display:block;">
                                                 </td>
                                                 <td>
-                                                    <input type="text" name="PosicaoEstoque" placeholder="Posição" style="display:block; width: 60px;">
+                                                    <input type="text" id="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
                                                 </td>
                                                 <td>
                                                     <input type="hidden" name="QTTDoca" value="' . htmlspecialchars($QuantidadeDoca) . '">
                                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
                                                     <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">
-                                                    <input type="submit" name="EnviarEstoque" value="Enviar" style="display:block; width: auto;">
+                                                    <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
                                                 </td>
                                             </form>
                                           </tr>';
