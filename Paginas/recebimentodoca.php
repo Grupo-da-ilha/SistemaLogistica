@@ -72,7 +72,7 @@ if (empty($_SESSION['nome'])){
             </div>
             <div class="criar-pedido-container">
                 <div class="titulo-pedido">
-                    <h3>CRIAÇÃO DO PEDIDO</h3>    
+                    <h3>RECEBIMENTO DAS DOCAS</h3>    
                 </div>
                 <div class="info-total">
                     <div class="criar-pedido">
@@ -161,7 +161,7 @@ if (empty($_SESSION['nome'])){
                                 <form action="controledoca.php" method="POST">
                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedidos) . '">
                                     <input type="hidden" name="posicao_doca" value="' . htmlspecialchars($rowDoca['posicao']) . '">
-                                    <input type="submit" name="DesignarProdutos" value="Abrir" style="display: block;">
+                                    <input type="submit" name="DesignarProdutos" value="Abrir" style="display: block;" id="abrir">
                                 </form>
                             </td>
                         </tr>';

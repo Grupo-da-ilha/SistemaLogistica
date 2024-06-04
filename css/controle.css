@@ -421,6 +421,54 @@ th, tr, td {
   outline-color: #3691fa;
   box-shadow: 0 0 12px #3691fa;
 }
+#abrir {
+  cursor: pointer;
+  height: 40px;
+  width: 100%;
+  text-align: center;
+  background-color: #eeeeee00;
+  border: none;
+  color: rgb(0, 119, 255);
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#abrir:hover {
+  color:rgb(91, 164, 248);
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.05);
+  animation: animate 1s linear infinite;
+}
+#QTDEstoque, #PosicaoEstoque {
+  outline: none;
+  width: 100%;
+  border: none;
+  border-radius: 20px;
+  height: 40px;
+  background-color: #ffffff;
+  text-align: center;
+  box-shadow: 0 0 12px #3691fa;
+}
+#EnviarEstoque {
+  cursor: pointer;
+  height: 40px;
+  width: 100%;
+  text-align: center;
+  background-color: #ffffff;
+  border: none;
+  color: rgb(0, 119, 255);
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#EnviarEstoque:hover {
+  color:rgb(91, 164, 248);
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.05);
+  animation: animate 1s linear infinite;
+}
 @media only screen and (max-width: 600px) {
   body {
     background-image: url("cssimg/fundopag.jpg");
