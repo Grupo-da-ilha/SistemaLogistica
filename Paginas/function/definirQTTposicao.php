@@ -21,20 +21,19 @@ if ($conexao->connect_errno) {
             $andar = substr($posicaoEstoque, 0, 1);
             $apartamento = substr($posicaoEstoque, 1);
 
-            $sql="SELECT * FROM itenspedido WHERE cod_itenPedido = ' $cod_itempedido' AND cod_pedido = '$id_pedido'";
+            $sql="SELECT * FROM itenspedido WHERE cod_itenPedido = ' $cod_itempedido' AND cod_pedido = '$id_pedido' AND codTurma = '{$_SESSION['codTurma']}'";
             $execute = $conexao -> query($sql);
 
             if($execute && $execute -> num_rows > 0){
                 $row = $execute -> fetch_assoc();
                 $QuantidadeItem = $row['Quantidade'];
                 $Quantidade_na_doca = $row['Quantidade_doca'];
-                $Quantidade_estoque = $row['Quantidade_estoque'];
 
                 if($quantidadeEstoque > $QuantidadeItem){
                     echo json_encode(array('success' => false, 'message' => 'Você selecionou mais itens do que o pedido possui para irem ao estoque'));
                     exit();
                 } elseif($Quantidade_na_doca == 0){
-                    echo json_encode(array('success' => false, 'message' => 'Todos esses itens já foram para a movimentação'));
+                    echo json_encode(array('success' => false, 'message' => 'Todos esses itens já foram para a movimentação ou estão estocados'));
                     exit();
                 }elseif($quantidadeEstoque > $Quantidade_na_doca){
                     echo json_encode(array('success' => false, 'message' => 'Você selecionou mais itens para irem ao estoque do que estão parados na doca, verifique se os itens já não foram estocados'));
@@ -43,9 +42,8 @@ if ($conexao->connect_errno) {
   
 
                 $NewQTTDoca = $Quantidade_na_doca - $quantidadeEstoque;
-                $NewQTTEstoque = $Quantidade_estoque + $quantidadeEstoque; 
 
-                $sql = "UPDATE itenspedido SET Quantidade_estoque = '$NewQTTEstoque', Quantidade_doca = '$NewQTTDoca', PosicaoPrevia = '$posicaoEstoque' WHERE cod_pedido = '$id_pedido' 
+                $sql = "UPDATE itenspedido SET Quantidade_doca = '$NewQTTDoca' WHERE cod_pedido = '$id_pedido' 
                 AND cod_itenPedido = '$cod_itempedido' AND codTurma = '{$_SESSION['codTurma']}'";
                 $execute = $conexao -> query($sql);
 
@@ -56,16 +54,18 @@ if ($conexao->connect_errno) {
                     echo json_encode(array('success' => false, 'message' => 'Dados insuficientes 4'));
                     exit();
                 }
-
-            
-
             }
 
         } else{
-            echo json_encode(array('success' => false, 'message' => 'Dados insuficientes'));
+            echo json_encode(array('success' => false, 'message' => 'Erro aos procesar dados'));
             exit();
         }
 
+<<<<<<< Updated upstream
+        
+=======
+
+>>>>>>> Stashed changes
     }else{
             echo json_encode(array('success' => false, 'message' => 'Dados insuficientes'));
             exit();

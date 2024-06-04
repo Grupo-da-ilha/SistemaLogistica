@@ -161,7 +161,9 @@ if (empty($_SESSION['nome'])){
                                 <form action="controledoca.php" method="POST">
                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedidos) . '">
                                     <input type="hidden" name="posicao_doca" value="' . htmlspecialchars($rowDoca['posicao']) . '">
-                                    <input type="submit" name="DesignarProdutos" value="Abrir" style="display: block;">
+                                    <input type="submit" name="DesignarProdutos" value="Abrir" style="display: block;">';
+                                    echo 'idpedido:'. $idpedidos .'';
+                                    echo '
                                 </form>
                             </td>
                         </tr>';
