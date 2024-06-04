@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/carga.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -41,35 +42,39 @@ if (empty($_SESSION['nome'])){
     }
 
     echo '<header>
-        <div class="container">
-            <div class="main-horizontal">
-                <ul class="ul-main">
-                    <li class="li-main">
-                        <input id="main-button" type="checkbox" />
-                            <label for="main-button">
-                                <div class="div-button-main">
-                                    <span class="button-main"></span>
-                                </div>
-                        </label>
-                        <nav>
-                            <ul class="ul-button">
-                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
-                            </ul>
-                        </nav>
-                    </li>
-                    <li class="li-main">
-                        <h1>SENAI SCP</h1>
-                    </li>
-                </ul>
-            </div>
+    <div class="container">
+        <div class="main-horizontal">
+            <ul class="ul-main">
+                <li class="li-main">
+                    <div class="teste">
+                    <input id="main-button" type="checkbox" />
+                        <label for="main-button">
+                            <div class="div-button-main">
+                                <span class="button-main"></span>
+                            </div>
+                    </label>
+                    <nav>
+                        <ul class="ul-button">
+                        <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
+                        </ul>
+                    </nav>
+                        <div class="juntos">
+                            <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                            <h1>MOVSYS</h1>
+                        </div>
+                        <h2>'.$_SESSION['nome'].'</h2>
+                    </div>
+                </li>
+            </ul>
         </div>
-    </header>
+    </div>
+</header>
     <main>
         <div class="container-prin">
             <div class="submenu">
@@ -103,7 +108,7 @@ if (empty($_SESSION['nome'])){
                                 <form method="POST" id="form-doca">
                                     <h5>DOCA:</h5>
                                     <input type="text" id="doca" class="doca" placeholder="Doca:" name="doca">
-                                    <input type="submit" value="OK" style="display: block" name="enviar_doca">
+                                    <input type="submit" value="OK" style="display: block" name="enviar_doca" id="pedido-nota">
                                 </form>
                             </div>
                         </div>';
@@ -179,13 +184,13 @@ if (empty($_SESSION['nome'])){
                                                     Faltando?
                                                     <input type="checkbox" class="avariado-produto" name="faltando" value="1">
                                                     <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                    <input type="submit" name="Confirmar_vistoria" value="Registrar" style="display: block; margin-left: 10px;">
+                                                    <input type="submit" name="Confirmar_vistoria" value="Registrar" style="display: block; margin-left: 10px;" id="Registrar">
                                                 </form>
                                                 </td>';
                                                 echo '<td>
                                                 <form class="form-vistoria-completa">
                                                     <input type="hidden" name="coditem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
-                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída">
+                                                    <input type="submit" name="Vistoria" style="display: block;" value="Vistoria Concluída" id="Vistoria-Concluída">
                                                 </form>
                                             </td>';
                                             }
@@ -193,7 +198,7 @@ if (empty($_SESSION['nome'])){
                                             echo '</table>';
                                             echo '
                                             <form style="margin-top: 40px" id="form-conferencia-completa">
-                                                <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento">
+                                                <input type="submit" name="Vistoria_recebimento" style="display: block;" value="Finalizar Vistoria e recebimento"  id="Finalizar">
                                             </form>';
                                             echo '</div>';
                                         } else {

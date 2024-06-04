@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/projeto.css"/>
-    <link rel="shortcut icon" type="imagex/png" href="#"/>
+    <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
     <style>
         /* Estilo para o modal */
 
@@ -120,7 +120,7 @@
                         </nav>
                             <div class="juntos">
                                 <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
-                                <h1>SENAI LOG</h1>
+                                <h1>MOVSYS</h1>
                             </div>
                             <h2>'.$_SESSION['nome'].'</h2>
                         </div>

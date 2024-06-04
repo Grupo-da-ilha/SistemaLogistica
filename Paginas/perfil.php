@@ -9,7 +9,7 @@
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/perfil.css"/>
-    <link rel="shortcut icon" type="imagex/png" href="#"/>
+    <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
 <body>
 <?php
@@ -55,7 +55,7 @@
                                     </nav>
                                 </li>
                                 <li class="li-main">
-                                    <h1>SENAI SCP</h1>
+                                    <h1>MOVSYS</h1>
                                     <h2>'.$_SESSION['nome'].'</h2>
                                 </li>
                             </ul>
