@@ -70,7 +70,7 @@ if (empty($_SESSION['nome'])){
                             </nav>
                             <div class="juntos">
                                 <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
-                                <h1>SENAI LOG</h1>
+                                <h1>MOVSYS</h1>
                             </div>
                             <h2><?php echo $_SESSION['nome']; ?></h2>
                         </div>
