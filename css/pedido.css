@@ -403,10 +403,10 @@ th, tr, td {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
 }
 .input-finalizar-pedido-button {
   margin-top: 3;
+  margin-bottom: 15px;
   cursor: pointer;
   width: 70%;
   height: 50px;
