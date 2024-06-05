@@ -107,9 +107,56 @@
                 </main>';
         } else {
             // Não foram encontrados alunos para esta turma
-            echo "Nenhum aluno encontrado para esta turma.";
+            echo '<header>
+            <div class="container">
+                <div class="main-horizontal">
+                    <ul class="ul-main">
+                        <li class="li-main">
+                            <div class="teste">
+                            <input id="main-button" type="checkbox" />
+                                <label for="main-button">
+                                    <div class="div-button-main">
+                                        <span class="button-main"></span>
+                                    </div>
+                            </label>
+                            <nav>
+                                <ul class="ul-button">
+                                <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="ajudaprofessor.php">AJUDA</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
+                                    <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
+                                </ul>
+                            </nav>
+                                <div class="juntos">
+                                    <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
+                                    <h1>MOVESYS</h1>
+                                </div>
+                                <h2>'.$_SESSION['nome'].'</h2>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+                <main>
+                    <div class="container-prin">
+                        <div class="alunos-turma">
+                            <div class="titulo-turmas">
+                                <h5>ALUNOS:</h5>
+                            </div>
+                            <h6>Nenhum Aluno Encontrado para esta turma</h6>';
+
+            }
+
+            echo '
+                        </div>
+                    </div>
+                </main>';
         }
-    } else {
+else {
         // Código da turma não definido
         echo "Código da turma não especificado.";
     }

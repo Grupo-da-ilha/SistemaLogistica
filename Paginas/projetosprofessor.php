@@ -80,7 +80,7 @@ if (empty($_SESSION['nome'])){
             }
             echo '</div>';
         } else {
-            echo '<p>Nenhum projeto encontrado para esta turma.</p>';
+            echo '<h5>Nenhum projeto encontrado para esta turma.</h5>';
         }
 
         echo '<form id="projectForm" action="projetoprofessor.php" method="POST" style="display: none;">
