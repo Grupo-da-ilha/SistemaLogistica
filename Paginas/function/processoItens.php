@@ -11,6 +11,17 @@ if ($conexao->connect_errno) {
     echo "Failed to connect to MySQL: " . $conexao->connect_error;
     exit();
 } else {
+    if (isset($_SESSION['Idprojeto'])) {
+        $sql = "SELECT codTurma FROM projetos WHERE idprojeto = '".$_SESSION['Idprojeto']."'";
+        $execute = $conexao->query($sql);
+    
+        if ($execute->num_rows > 0) {
+            $row = $execute->fetch_assoc();
+            $_SESSION['codTurma'] = $row['codTurma'];
+        }
+    } else {
+        echo ''.$_SESSION['Idprojeto']. '';
+    }
     if (isset($_POST['Excluir']) && !empty($_POST['codigoItemPedido'])) {
         $cod_item = $_POST['codigoItemPedido'];
         $sql = "DELETE FROM `itenspedido` WHERE cod_itenPedido = '$cod_item'";
@@ -41,8 +52,9 @@ if ($conexao->connect_errno) {
     }
     date_default_timezone_set('America/Sao_Paulo');
     $datahoje = date("Y-m-d H:i:s");
+
     if (isset($_POST['UpdateValor']) && !empty($_SESSION['cod_pedido'])) {
-        $sql = "UPDATE `pedido` SET Situacao = 'Em transporte' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
+        $sql = "UPDATE `pedido` SET Situacao = 'Em transporte', DataVenda = '$datahoje' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
         $resultado = $conexao->query($sql);
 
 

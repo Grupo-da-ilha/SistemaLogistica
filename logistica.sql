@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 05/06/2024 às 03:27
+-- Tempo de geração: 06/06/2024 às 01:42
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -57,14 +57,6 @@ CREATE TABLE `docas` (
   `id_pedido` int(11) NOT NULL,
   `codTurma` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Despejando dados para a tabela `docas`
---
-
-INSERT INTO `docas` (`cod_doca`, `posicao`, `id_pedido`, `codTurma`) VALUES
-(1, '1', 2, 'S3naiAdmin'),
-(2, '3', 3, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -158,7 +150,6 @@ CREATE TABLE `itenspedido` (
   `cod_pedido` int(11) NOT NULL,
   `Quantidade` int(11) NOT NULL,
   `Quantidade_doca` int(11) NOT NULL,
-  `PosicaoPrevia` varchar(5) NOT NULL,
   `ValorUnitario` double NOT NULL,
   `ValorTotal` double NOT NULL,
   `Avariado` tinyint(1) NOT NULL,
@@ -171,11 +162,11 @@ CREATE TABLE `itenspedido` (
 -- Despejando dados para a tabela `itenspedido`
 --
 
-INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `Quantidade_doca`, `PosicaoPrevia`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codTurma`) VALUES
-(1, 1, 2, 2, 2, 'A1', 5.5, 11, 0, 0, 0, 'S3naiAdmin'),
-(2, 2, 2, 3, 3, 'B3', 1.2, 3.6, 0, 0, 0, 'S3naiAdmin'),
-(4, 4, 3, 3, 3, 'AA', 7.3, 21.9, 0, 0, 0, 'S3naiAdmin'),
-(5, 5, 3, 2, 2, 'AA', 29.99, 59.98, 0, 0, 0, 'S3naiAdmin');
+INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `Quantidade_doca`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codTurma`) VALUES
+(4, 4, 3, 3, 3, 7.3, 21.9, 1, 0, 1, 'S3naiAdmin'),
+(5, 5, 3, 2, 2, 29.99, 59.98, 0, 1, 1, 'S3naiAdmin'),
+(14, 8, 2, 4, 4, 2.99, 11.96, 1, 0, 1, 'S3naiAdmin'),
+(21, 4, 2, 2, 2, 7.3, 14.6, 0, 0, 1, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -193,6 +184,14 @@ CREATE TABLE `nota_fiscal` (
   `CNPJ_Transportadora` varchar(65) NOT NULL,
   `CNPJ_Emitente` varchar(65) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Despejando dados para a tabela `nota_fiscal`
+--
+
+INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
+(10102, '68783809217985877382226814365056760872965139', '2024-06-05 20:25:59', '', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60'),
+(11017, '26365596556660022024977410739194557049833025', '2024-06-05 20:25:59', '', 3, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
 
 -- --------------------------------------------------------
 
@@ -218,8 +217,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
-(2, 1, '0000-00-00 00:00:00', 14.6, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em processamento', '', 'S3naiAdmin'),
-(3, 23, '0000-00-00 00:00:00', 81.88, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Em processamento', '', 'S3naiAdmin');
+(2, 1, '2024-06-05 20:25:59', 26.56, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Nas docas', '', 'S3naiAdmin'),
+(3, 23, '2024-06-05 20:35:40', 81.88, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', '', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -244,7 +243,8 @@ INSERT INTO `produtos` (`cod_produto`, `PrecoUNI`, `Nome`, `PesoGramas`, `NCM`, 
 (1, 5.5, 'Tesoura', 26, '82016000', 'UN'),
 (2, 1.2, 'Lápis', 20, '96091000', 'UN'),
 (4, 7.3, 'Caderno', 100, '48202000', 'UN'),
-(5, 29.99, 'Caneta Marca Texto', 20, '96082000', 'UN');
+(5, 29.99, 'Caneta Marca Texto', 20, '96082000', 'UN'),
+(8, 2.99, 'Borracha', 20, '40025908', 'UN');
 
 -- --------------------------------------------------------
 
@@ -263,7 +263,7 @@ CREATE TABLE `projetos` (
 --
 
 INSERT INTO `projetos` (`idprojeto`, `nome`, `codTurma`) VALUES
-(2, 'Senai', 'S3naiAdmin');
+(10, 'Projeto 1', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -444,7 +444,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `docas`
 --
 ALTER TABLE `docas`
-  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `estoque`
@@ -462,31 +462,31 @@ ALTER TABLE `itensestoque`
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
-  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `cod_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cod_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- Restrições para tabelas despejadas

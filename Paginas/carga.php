@@ -114,6 +114,8 @@ if (empty($_SESSION['nome'])){
                         </div>';
                         if(!isset($id_pedido)){
                             echo '';
+                        }else{
+                            echo '';
                         }
                         if(isset($_POST['enviar-pedido']) && !empty($_POST['nota_fiscal']) && !empty($_POST['cod_pedido'])){
                             $_SESSION['nota_fiscal_doca'] = $_POST['nota_fiscal'];
@@ -153,7 +155,10 @@ if (empty($_SESSION['nome'])){
                                     }
                                     }
                                 }
+                            } else{
+                                echo 'Preencha os campos ao lado';
                             }
+
                             if (!isset($id_pedido)) {
                                 $id_pedido = 0;
                                 echo ''; 
@@ -164,6 +169,7 @@ if (empty($_SESSION['nome'])){
                                 echo ''; 
                             } else {
                             }
+
                                 $sqlnota = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$nota_fiscal."' AND id_pedido = '".$id_pedido."'";
                                 $executar = $conexao->query($sqlnota);
 
@@ -244,7 +250,11 @@ if (empty($_SESSION['nome'])){
                                         echo 'Código do pedido incorreto, verifique se ele foi criado e finalizado no projeto atual';
                                     }
                                 } else {
+                                    if($nota_fiscal == 0){
+                                        echo '';
+                                    }else{
                                     echo 'Código da nota fiscal e do pedido não correspondem, verifique os o codigo do pedido e da nota_fiscal para o seu projeto atual';
+                                    }
                                 }  
                     }
 echo '            </div>

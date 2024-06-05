@@ -33,6 +33,18 @@ if (empty($_SESSION['nome'])) {
         echo "Failed to connect to MySQL: " . $conexao->connect_error;
         exit();
     }
+    if (isset($_SESSION['Idprojeto'])) {
+        $sql = "SELECT codTurma FROM projetos WHERE idprojeto = '".$_SESSION['Idprojeto']."'";
+        $execute = $conexao->query($sql);
+    
+        if ($execute->num_rows > 0) {
+            $row = $execute->fetch_assoc();
+            $_SESSION['codTurma'] = $row['codTurma'];
+        }
+    } else {
+        echo ''.$_SESSION['Idprojeto']. '';
+    }
+    
     if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
         $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
         $_SESSION['cod_pedido'] = $cod_pedido; 
@@ -45,9 +57,6 @@ if (empty($_SESSION['nome'])) {
         }
     }
 
-    /*if(!isset($_POST['enviar_cod']) && empty($_POST['cod_pedido'])){
-
-    }*/
     echo ' <header>
     <div class="container">
         <div class="main-horizontal">

@@ -143,7 +143,7 @@ if (empty($_SESSION['nome'])) {
             <div class="options-senai-continue" onclick="toggleContinueForm()"></div>
             <div id="overlay_continue"></div>
             <form id="project_form_continue">
-                <span class="close" onclick="toggleContinueForm()">&times;</span>
+                <span class="close">&times;</span>
                 <h3>De qual turma você quer acessar os projetos:</h3>
                 <input type="text" id="project_sala_form" name="project_class" placeholder="Código Turma" style="display:block;" required>
                 <button type="button" id="continue_button" onclick="getAndDisplayProjects()">Ver Projetos</button>
@@ -153,33 +153,7 @@ if (empty($_SESSION['nome'])) {
 }
 ?>
 <script>
-function toggleForm() {
-    var overlay = document.getElementById('overlay');
-    var form = document.getElementById('project_form');
-    if (overlay.style.display === 'block') {
-        overlay.style.display = 'none';
-        form.style.display = 'none';
-    } else {
-        overlay.style.display = 'block';
-        form.style.display = 'block';
-    }
-}
 
-function saveProject() {
-    var projectName = document.getElementById('project_name_form').value;
-    var projectClass = document.getElementById('project_class_form').value;
-    var personId = '<?php echo htmlspecialchars($_SESSION['id']); ?>';
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "function/save_project.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            alert(xhr.responseText);
-            window.location.href = "projetoprofessor.php";
-        }
-    };
-    xhr.send("person_id=" + personId + "&project_name=" + encodeURIComponent(projectName) + "&project_class=" + encodeURIComponent(projectClass));
-}
 
 function getAndDisplayProjects() {
             var projectClass = document.getElementById('project_sala_form').value;
@@ -190,17 +164,6 @@ function getAndDisplayProjects() {
             }
         }
 
-function toggleContinueForm() {
-    var overlayContinue = document.getElementById('overlay_continue');
-    var formContinue = document.getElementById('project_form_continue');
-    if (overlayContinue.style.display === 'block') {
-        overlayContinue.style.display = 'none';
-        formContinue.style.display = 'none';
-    } else {
-        overlayContinue.style.display = 'block';
-        formContinue.style.display = 'block';
-    }
-}
 </script>
 </body>
 </html>

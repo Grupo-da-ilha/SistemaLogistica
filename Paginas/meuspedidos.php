@@ -16,9 +16,6 @@
 <?php
 // Iniciar uma sessão
 session_start();
-if (isset($_POST['project_id'])) {
-    $_SESSION['Idprojeto'] = $_POST['project_id'];
-}
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
@@ -34,9 +31,22 @@ if (empty($_SESSION['nome'])){
         echo "Failed to connect to MySQL: " . $conexao->connect_error;
         exit();
     }
+    
+    if (isset($_SESSION['Idprojeto'])) {
+        $sql = "SELECT codTurma FROM projetos WHERE idprojeto = '".$_SESSION['Idprojeto']."'";
+        $execute = $conexao->query($sql);
+    
+        if ($execute->num_rows > 0) {
+            $row = $execute->fetch_assoc();
+            $cod_turma = $row['codTurma'];
+        }
+    } else {
+        echo ''.$_SESSION['Idprojeto']. '';
+    }
+
     if (isset($_POST['VerProdutos']) && !empty($_POST['cod_pedido'])) {
         $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
-        $selectPedido = "SELECT id_pedido FROM pedido WHERE cod_pedido = '".$cod_pedido."' AND codTurma ='{$_SESSION['codTurma']}'";
+        $selectPedido = "SELECT id_pedido FROM pedido WHERE cod_pedido = '$cod_pedido' AND codTurma = '$cod_turma'";
         $executar = $conexao->query($selectPedido);
 
         if ($executar->num_rows > 0) {
@@ -111,24 +121,14 @@ if (empty($_SESSION['nome'])){
                         </div>
                         <div>
 <?php
-    $hostname = "127.0.0.1";
-    $user = "root";
-    $password = "";
-    $database = "logistica";
-
-    $conexao = new mysqli($hostname, $user, $password, $database);
-
-    if ($conexao->connect_errno) {
-        echo "Failed to connect to MySQL: " . $conexao->connect_error;
-        exit();
-    } else {
-        $selectPedidos = "SELECT * FROM pedido WHERE codTurma ='{$_SESSION['codTurma']}'";
+    if (isset($cod_turma)) {
+        $selectPedidos = "SELECT * FROM pedido WHERE codTurma = '$cod_turma'";
         $executar = $conexao->query($selectPedidos);
 
         if ($executar->num_rows > 0) {
             $sql = "SELECT pedido.id_pedido, pedido.cod_pedido, pedido.DataVenda, pedido.ValorTotal, pedido.CNPJEmitente, 
             pedido.CNPJ_Destinatario, pedido.CNPJ_Transportadora, pedido.Situacao, pedido.InformacaoAdicional
-            FROM pedido WHERE codTurma ='{$_SESSION['codTurma']}'";
+            FROM pedido WHERE codTurma = '$cod_turma'";
 
             $execute = $conexao->query($sql);
             if ($execute && $execute->num_rows > 0) {
@@ -173,13 +173,13 @@ if (empty($_SESSION['nome'])){
             echo "</table></div>";
         }
 
-        if (isset($_POST['VerProdutos']) && !empty($_POST['id_pedido'])) {
+        if (        isset($_POST['VerProdutos']) && !empty($_POST['id_pedido'])) {
             $id_pedido = $conexao->real_escape_string($_POST['id_pedido']);
-            $selectPedido = "SELECT * FROM pedido WHERE id_pedido = '".$id_pedido."' AND codTurma ='{$_SESSION['codTurma']}'";
+            $selectPedido = "SELECT * FROM pedido WHERE id_pedido = '".$id_pedido."' AND codTurma ='$cod_turma'";
             $executar = $conexao->query($selectPedido);
 
             if ($executar->num_rows > 0) {
-                $row = $executar -> fetch_assoc();
+                $row = $executar->fetch_assoc();
                 $_SESSION['cod_pedido'] = $row['cod_pedido'];
                 $sql2 = "SELECT produtos.cod_produto, produtos.PrecoUNI, produtos.Nome, produtos.PesoGramas, produtos.NCM, produtos.UN, itenspedido.Quantidade, itenspedido.ValorTotal 
                 FROM produtos
@@ -212,6 +212,7 @@ if (empty($_SESSION['nome'])){
                             <td>" . htmlspecialchars($row['ValorTotal']) . "</td>
                         </tr>";
                     }
+                    echo "</table></div></div>"; // Fechar divs
                 }   
             }
         }
@@ -226,3 +227,4 @@ if (empty($_SESSION['nome'])){
     </main>
 </body>
 </html>
+

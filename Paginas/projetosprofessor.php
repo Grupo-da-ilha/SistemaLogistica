@@ -22,7 +22,7 @@ if (empty($_SESSION['nome'])){
     exit();
 } else {
 
-    echo ' <header>
+    echo '<header>
     <div class="container">
         <div class="main-horizontal">
             <ul class="ul-main">
@@ -55,8 +55,8 @@ if (empty($_SESSION['nome'])){
             </ul>
         </div>
     </div>
-</header>;'
-    ?>
+</header>';
+?>
 <main>
     <div class="container-prin">
     <?php
@@ -65,17 +65,16 @@ if (empty($_SESSION['nome'])){
     if (isset($_GET['project_sala'])) {
         $codTurma = $_GET['project_sala'];
 
-        // Obter os projetos do usuário com base no código da turma
         $projetos = getProjetosDoUsuario($codTurma);
 
         if (!empty($projetos)) {
             echo '<div class="projetos-do-usuario">';
             foreach ($projetos as $projeto) {
-                echo '<div class="card-projetos" onclick="selectProject(' . $projeto['idprojeto'] . ')">';
+                echo '<div class="card-projetos" onclick="selectProject(' . $projeto['idprojeto'] . ', \'' . $codTurma . '\')">';
                 echo '<div class="apagar-projeto">';
                 echo '<button type="button" class="button-apagar-projeto" data-projeto-id="' . $projeto['idprojeto'] . '">X</button>';
                 echo '</div>';
-                echo '<h4>' . $projeto['nome'] . '</h4>';
+                echo '<h4>' . htmlspecialchars($projeto['nome']) . '</h4>';
                 echo '</div>';
             }
             echo '</div>';
@@ -85,6 +84,7 @@ if (empty($_SESSION['nome'])){
 
         echo '<form id="projectForm" action="projetoprofessor.php" method="POST" style="display: none;">
                 <input type="hidden" name="project_id" id="project_id">
+                <input type="hidden" name="cod_turma" id="cod_turma" value="' . htmlspecialchars($codTurma) . '">
               </form>';
     } else {
         echo 'Erro: Código da turma não informado.';
@@ -95,36 +95,38 @@ if (empty($_SESSION['nome'])){
 </main>
 
 <script>
-        function selectProject(projectId) {
-            document.getElementById('project_id').value = projectId;
-            document.getElementById('projectForm').submit();
-        }
+function selectProject(projectId, codTurma) {
+    document.getElementById('project_id').value = projectId;
+    document.getElementById('cod_turma').value = codTurma;
+    document.getElementById('projectForm').submit();
+}
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var buttons = document.querySelectorAll('.button-apagar-projeto');
-            buttons.forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var projetoId = button.dataset.projetoId;
-                    if (confirm('Tem certeza de que deseja apagar este projeto?')) {
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', 'function/excluir_projeto.php', true);
-                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                        xhr.onreadystatechange = function() {
-                            if (xhr.readyState === XMLHttpRequest.DONE) {
-                                if (xhr.status === 200) {
-                                    console.log('Projeto excluído com sucesso');
-                                    window.location.reload();
-                                } else {
-                                    console.error('Erro ao excluir projeto');
-                                }
-                            }
-                        };
-                        xhr.send('projeto_id=' + projetoId);
+document.addEventListener('DOMContentLoaded', function() {
+    var buttons = document.querySelectorAll('.button-apagar-projeto');
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.stopPropagation(); // Evita a propagação do clique para o card do projeto
+            var projetoId = button.dataset.projetoId;
+            if (confirm('Tem certeza de que deseja apagar este projeto?')) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'function/excluir_projeto.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            console.log('Projeto excluído com sucesso');
+                            window.location.reload();
+                        } else {
+                            console.error('Erro ao excluir projeto');
+                        }
                     }
-                });
-            });
+                };
+                xhr.send('projeto_id=' + projetoId);
+            }
         });
-    </script>
+    });
+});
+</script>
 
 </body>
 </html>

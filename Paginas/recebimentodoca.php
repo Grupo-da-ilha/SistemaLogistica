@@ -21,6 +21,27 @@ if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
 } else {  
+    $hostname = "127.0.0.1";
+    $user = "root";
+    $password = "";
+    $database = "logistica";
+    $conexao = new mysqli($hostname, $user, $password, $database);
+
+    if ($conexao->connect_errno) {
+        echo "Failed to connect to MySQL: " . htmlspecialchars($conexao->connect_error);
+        exit();
+    }
+    if (isset($_SESSION['Idprojeto'])) {
+        $sql = "SELECT codTurma FROM projetos WHERE idprojeto = '".$_SESSION['Idprojeto']."'";
+        $execute = $conexao->query($sql);
+    
+        if ($execute->num_rows > 0) {
+            $row = $execute->fetch_assoc();
+            $codTurma = $row['codTurma'];
+        }
+    } else {
+        echo ''.$_SESSION['Idprojeto']. '';
+    }
     echo '
     <header>
         <div class="container">
@@ -91,19 +112,7 @@ if (empty($_SESSION['nome'])){
                                 <div class="produtos-pedido">
                                     <h4>PEDIDOS:</h4>';
 
-    // Conectar ao banco de dados
-    $hostname = "127.0.0.1";
-    $user = "root";
-    $password = "";
-    $database = "logistica";
-    $conexao = new mysqli($hostname, $user, $password, $database);
 
-    if ($conexao->connect_errno) {
-        echo "Failed to connect to MySQL: " . htmlspecialchars($conexao->connect_error);
-        exit();
-    }
-
-    $codTurma = $conexao->real_escape_string($_SESSION['codTurma']);
     $sql = "SELECT * FROM pedido WHERE codTurma ='$codTurma' AND Situacao = 'Nas docas'";
     $executar = $conexao->query($sql);
 
@@ -125,32 +134,31 @@ if (empty($_SESSION['nome'])){
             $cod_pedido = $conexao->real_escape_string($row['cod_pedido']);
             
             $sql = "SELECT * FROM itenspedido WHERE codTurma ='$codTurma' AND cod_pedido = '$idpedidos'";
-            $execute = $conexao->query($sql);
+            $executeItem = $conexao->query($sql);
 
-            if($execute && $execute->num_rows > 0){
-                while($row = $execute->fetch_assoc()){
-                $faltando = $conexao->real_escape_string($row['Faltando']);
-                $avariado = $conexao->real_escape_string($row['Avariado']);
+            if($executeItem && $executeItem->num_rows > 0){
+                while($row = $executeItem->fetch_assoc()){
+                    $faltando = $conexao->real_escape_string($row['Faltando']);
+                    $avariado = $conexao->real_escape_string($row['Avariado']);
 
-                if($avariado == 1 && $faltando == 0){
-                    $Avariado = 'SIM';
-                    $Faltando = 'Não';
-                } elseif($faltando == 1 && $avariado == 0){
-                    $Faltando = 'SIM';
-                    $Avariado = 'Não';
-                } elseif($avariado == 1 && $faltando == 1){
-                    $Avariado = 'SIM';
-                    $Faltando = 'SIM';
-                } else{
-                    $Avariado = 'Não';
-                    $Faltando = 'Não';
-                }
-            }
-        }
+                    if($avariado == 1 && $faltando == 0){
+                        $Avariado = 'SIM';
+                        $Faltando = 'Não';
+                    } elseif($faltando == 1 && $avariado == 0){
+                        $Faltando = 'SIM';
+                        $Avariado = 'Não';
+                    } elseif($avariado == 1 && $faltando == 1){
+                        $Avariado = 'SIM';
+                        $Faltando = 'SIM';
+                    } else{
+                        $Avariado = 'Não';
+                        $Faltando = 'Não';
+                    }
+                
 
             $sqlDoca = "SELECT * FROM docas WHERE codTurma ='$codTurma' AND id_pedido = '$idpedidos'";
             $executeDoca = $conexao->query($sqlDoca);
-
+                }
             if($executeDoca && $executeDoca->num_rows > 0){
                 while($rowDoca = $executeDoca->fetch_assoc()){
                     echo '<tr>
@@ -170,7 +178,9 @@ if (empty($_SESSION['nome'])){
             } else {
                 echo 'Nenhuma doca encontrada para o pedido ' . $cod_pedido . '';
             }
-        }
+        
+    }
+}
 
         echo '</table>
             </div>

@@ -128,7 +128,6 @@ if (empty($_SESSION['nome'])) {
                                         <td>Produtos</td>
                                         <td>UN</td>
                                         <td>Quantidade</td>
-                                        <td>Quantidade na doca</td>
                                         <td>QTD para Estoque</td>
                                         <td>Posição no Estoque</td>
                                         <td>Ações</td>
@@ -161,7 +160,6 @@ if (empty($_SESSION['nome'])) {
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td>' . htmlspecialchars($Quantidade) . '</td>
-                                            <td>' . htmlspecialchars($QuantidadeDoca) . '</td>
                                             <form class="form-enviar-produtos" method="post">
                                                 <td>
                                                     <input type="text" id="QTDEstoque" name="QTDEstoque" placeholder="Quantidade Estoque" style="display:block;">
@@ -170,7 +168,6 @@ if (empty($_SESSION['nome'])) {
                                                     <input type="text" id="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
                                                 </td>
                                                 <td>
-                                                    <input type="hidden" name="QTTDoca" value="' . htmlspecialchars($QuantidadeDoca) . '">
                                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
                                                     <input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeItemEstoque) . '">
                                                     <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">

@@ -83,9 +83,6 @@ if (empty($_SESSION['nome'])){
             echo '<p>Nenhum projeto encontrado para esta turma.</p>';
         }
 
-        echo '<form id="projectForm" action="projetoaluno.php" method="POST" style="display: none;">
-                <input type="hidden" name="project_id" id="project_id">
-              </form>';
     } else {
         echo 'Erro: Código da turma não informado.';
     }

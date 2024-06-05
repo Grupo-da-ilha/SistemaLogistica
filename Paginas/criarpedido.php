@@ -34,15 +34,16 @@ if (empty($_SESSION['nome'])){
             $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
             $_SESSION['cod_pedido'] = $cod_pedido;
         }
-        if (isset($_POST['project_id'])) {
-            $_SESSION['Idprojeto'] = $_POST['project_id'];
-            $sql="SELECT codTurma FROM projetos WHERE idprojeto = '".$_POST['project_id']."'";
-            $execute = $conexao -> query($sql);
-
-            if($execute -> num_rows > 0){
-                $row = $execute -> fetch_assoc();
+        if (isset($_SESSION['Idprojeto'])) {
+            $sql = "SELECT codTurma FROM projetos WHERE idprojeto = '".$_SESSION['Idprojeto']."'";
+            $execute = $conexao->query($sql);
+        
+            if ($execute->num_rows > 0) {
+                $row = $execute->fetch_assoc();
                 $_SESSION['codTurma'] = $row['codTurma'];
             }
+        } else {
+            echo ''.$_SESSION['Idprojeto']. '';
         }
 
     echo ' <header>
@@ -163,6 +164,18 @@ if (empty($_SESSION['nome'])){
                                                 echo "Failed to connect to MySQL: " . $conexao->connect_error;
                                                 exit();
                                             }else{    
+                                                if (!isset($_SESSION['cod_pedido']) || empty($_SESSION['cod_pedido'])) {
+                                                    $_SESSION['cod_pedido'] = "";
+                                                } else {
+                                                    echo '';
+                                                }
+                                            
+                                                if (empty($_SESSION['idpedido'])) {
+                                                    $_SESSION['idpedido'] = "";
+                                                } else {
+                                                    echo '';
+                                                }
+
                                                     if (isset($_POST['enviar_pedido']) && !empty($_POST['codPedido'])) {
                                                         $cod_pedido = $conexao->real_escape_string($_POST['codPedido']);
                                                         $_SESSION['cod_pedido'] = $cod_pedido;
@@ -196,6 +209,11 @@ if (empty($_SESSION['nome'])){
                                                                         if($execute){
                                                                             $sql = "DELETE FROM nota_fiscal WHERE id_pedido = '$idpedido'";
                                                                             $execute = $conexao -> query($sql);
+
+                                                                            if($execute){
+                                                                                $sql = "DELETE FROM docas WHERE id_pedido = '$idpedido'";
+                                                                                $execute = $conexao -> query($sql);
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -233,7 +251,7 @@ if (empty($_SESSION['nome'])){
                                                     }
 
                                             if (isset($_POST['enviar_produto']) && !empty($_POST['codProduto'])) {
-                                                
+
                                                 $cod_produto = $conexao->real_escape_string($_POST['codProduto']);
                                                 $sql = "SELECT Nome, PrecoUNI, UN, NCM, PesoGramas FROM produtos WHERE cod_produto = '$cod_produto'";
                                                 $result = $conexao->query($sql);
@@ -264,6 +282,7 @@ if (empty($_SESSION['nome'])){
                                                 $row = $executar->fetch_assoc();
                                                 $_SESSION['idpedido'] = $row['id_pedido'];
                                             }
+                                            
                                             $selectPedido = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
                                             $executar = $conexao->query($selectPedido);
 
