@@ -145,7 +145,10 @@ if (empty($_SESSION['nome'])){
                                     </div>
                                     <div class="options-criarpedido">
                                         <h5>COD PRODUTO:</h5>
-                                        <input type="text" name="codProduto" style="display: block;" class="input-options-criar-pedido"> 
+                                        <div style="display:flex; justify-content: space-between;">
+                                            <input type="text" name="codProduto" id="codProduto" style="display: block; width:200px;" class="input-options-criar-pedido"> 
+                                            <input type="text" name="NomeProduto" id="NomeProduto" style="display: block; width:200px;" class="input-options-criar-pedido"> 
+                                        </div>
                                     </div>
                                     <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido"> 
                                     <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="VER CADASTRAR PRODUTOS"></a>
@@ -181,12 +184,26 @@ if (empty($_SESSION['nome'])){
                                                             $_SESSION['idpedido'] = $idpedido;
                                                             echo "<h6>Alterando o pedido com o seguinte código: " . htmlspecialchars($codigo_pedido) . "</h6>";
                                                 
-                                                            $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = '' WHERE cod_pedido = '{$_SESSION['cod_pedido']}' AND codTurma = '{$_SESSION['codTurma']}' 
+                                                            $sql = "UPDATE pedido SET Situacao = 'Em processamento', InformacaoAdicional = '', DataVenda = NULL WHERE cod_pedido = '{$_SESSION['cod_pedido']}' AND codTurma = '{$_SESSION['codTurma']}' 
                                                             AND id_pedido = '{$_SESSION['idpedido']}'";
                                                             $execute = $conexao->query($sql);
                                                             if($execute){
-                                                                $sql = "UPDATE itenspedido SET VistoriaConcluida = '0', Faltando = '0', Avariado = '0' WHERE cod_pedido = '$idpedido' AND codTurma ='{$_SESSION['codTurma']}'";
-                                                                $execute = $conexao -> query($sql);
+                                                                $selectItensPedido = "SELECT * FROM itenspedido WHERE cod_pedido = '$idpedido'";
+                                                                $executar = $conexao -> query($selectItensPedido);
+
+                                                                if($executar -> num_rows > 0){
+                                                                    while($rowItem = $executar -> fetch_assoc()){
+                                                                        $Quantidade_doca = $rowItem['Quantidade'];
+                                                                        $coditempedido = $rowItem['cod_itenPedido'];
+                                                                        $sql = "UPDATE itenspedido SET VistoriaConcluida = '0', Faltando = '0', Avariado = '0', Quantidade_doca = '$Quantidade_doca' WHERE cod_pedido = '$idpedido' 
+                                                                        AND codTurma ='{$_SESSION['codTurma']}' AND cod_itenPedido = '$coditempedido'";
+                                                                        $execute = $conexao -> query($sql);
+                                                                        if($execute){
+                                                                            $sql = "DELETE FROM nota_fiscal WHERE id_pedido = '$idpedido'";
+                                                                            $execute = $conexao -> query($sql);
+                                                                        }
+                                                                    }
+                                                                }
                                                             }
                                                         } else {
                                                             $nomeFabri = $conexao->real_escape_string($_POST['Fabricante']);
@@ -340,8 +357,26 @@ echo'
                 </div>
             </div>
         </div>
-    </main>'; ?>
-</body>
+    </main>'; 
+                    ?>
 <script>
-</script>
+    document.getElementById('codProduto').addEventListener('input', function() {
+      var codProduto = this.value;
+
+      if (codProduto.length > 0) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'function/buscarProduto.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById('NomeProduto').value = xhr.responseText;
+          }
+        };
+        xhr.send('codProduto=' + encodeURIComponent(codProduto));
+      } else {
+        document.getElementById('NomeProduto').value = '';
+      }
+    });
+  </script>              
+</body>
 </html>

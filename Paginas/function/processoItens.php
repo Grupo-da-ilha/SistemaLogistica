@@ -39,7 +39,8 @@ if ($conexao->connect_errno) {
     } else{
         echo 'Quantidade não digitada'; 
     }
-
+    date_default_timezone_set('America/Sao_Paulo');
+    $datahoje = date("Y-m-d H:i:s");
     if (isset($_POST['UpdateValor']) && !empty($_SESSION['cod_pedido'])) {
         $sql = "UPDATE `pedido` SET Situacao = 'Em transporte' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
         $resultado = $conexao->query($sql);
@@ -47,7 +48,7 @@ if ($conexao->connect_errno) {
 
         if($resultado && !empty($_POST['texto'])){
             $texto = $_POST['texto'];
-            $sql = "UPDATE `pedido` SET InformacaoAdicional = '".$texto."' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
+            $sql = "UPDATE `pedido` SET InformacaoAdicional = '".$texto."', DataVenda = '$datahoje'  WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
             $resultado = $conexao->query($sql);
         }
         if ($resultado) {

@@ -128,7 +128,7 @@ if (empty($_SESSION['nome'])){
             $execute = $conexao->query($sql);
 
             if($execute && $execute->num_rows > 0){
-                $row = $execute->fetch_assoc();
+                while($row = $execute->fetch_assoc()){
                 $faltando = $conexao->real_escape_string($row['Faltando']);
                 $avariado = $conexao->real_escape_string($row['Avariado']);
 
@@ -146,6 +146,7 @@ if (empty($_SESSION['nome'])){
                     $Faltando = 'Não';
                 }
             }
+        }
 
             $sqlDoca = "SELECT * FROM docas WHERE codTurma ='$codTurma' AND id_pedido = '$idpedidos'";
             $executeDoca = $conexao->query($sqlDoca);

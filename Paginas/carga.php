@@ -119,11 +119,6 @@ if (empty($_SESSION['nome'])){
                             $_SESSION['nota_fiscal_doca'] = $_POST['nota_fiscal'];
                             $_SESSION['codigo_pedido_doca'] = $_POST['cod_pedido'];
 
-                            if (!isset($id_pedido)) {
-                                $id_pedido = 0;
-                                echo ''; 
-                            } else {
-                            }
 
                             $nota_fiscal = $conexao->real_escape_string($_POST['nota_fiscal']);
                             $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
@@ -135,12 +130,46 @@ if (empty($_SESSION['nome'])){
                                 $row = $execute -> fetch_assoc();
                                 $id_pedido = $row['id_pedido'];
                                 $_SESSION['Idpedido'] = $id_pedido;
-                                $sql = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$nota_fiscal."' AND id_pedido = '".$id_pedido."'";
-                                $execute = $conexao->query($sql);
+                            }else{
+                                $sqlSituacaoPedido = "SELECT Situacao, id_pedido FROM pedido WHERE  cod_pedido = '$cod_pedido' AND codTurma ='{$_SESSION['codTurma']}'";
+                                $executar = $conexao -> query($sqlSituacaoPedido);
 
-                                if($execute->num_rows > 0){
+                                if($executar && $executar -> num_rows > 0){
+                                    $row = $executar -> fetch_assoc();
+                                    $Situacao = $row['Situacao'];
+                                    $idPedido = $row['id_pedido'];
+
+                                    if($Situacao == 'Em processamento'){
+                                        echo 'O seu pedido não foi finalizado, ainda está em processamento';
+                                        echo '<br>';
+                                    } elseif($Situacao == 'Nas docas'){
+                                        echo 'O seu pedido ja passou pela conferência e vistoria';
+                                        echo '<br>';
+                                    } elseif( empty($idPedido)){
+                                        echo 'Esse pedido não existe';
+                                    }
+                                    else{
+                                        echo 'O seu pedido não foi finalizado, ainda está em processamento ou ja passou pela conferência e vistoria';
+                                    }
+                                    }
+                                }
+                            }
+                            if (!isset($id_pedido)) {
+                                $id_pedido = 0;
+                                echo ''; 
+                            } else {
+                            }
+                            if (!isset($nota_fiscal)) {
+                                $nota_fiscal = 0;
+                                echo ''; 
+                            } else {
+                            }
+                                $sqlnota = "SELECT * FROM nota_fiscal WHERE cod_nota = '".$nota_fiscal."' AND id_pedido = '".$id_pedido."'";
+                                $executar = $conexao->query($sqlnota);
+
+                                if($executar->num_rows > 0){
                                     $sql = "SELECT * FROM pedido WHERE id_pedido = '".$_SESSION['Idpedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
-                                    $execute = $conexao->query($sql);
+                                    $executar = $conexao->query($sql);
 
                                     if($execute->num_rows > 0){
                                         $sql = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['Idpedido']."'";
@@ -217,30 +246,12 @@ if (empty($_SESSION['nome'])){
                                 } else {
                                     echo 'Código da nota fiscal e do pedido não correspondem, verifique os o codigo do pedido e da nota_fiscal para o seu projeto atual';
                                 }  
-                        } else{
-                            $sqlSituacaoPedido = "SELECT Situacao FROM pedido WHERE  cod_pedido = '$cod_pedido'";
-                            $executar = $conexao -> query($sqlSituacaoPedido);
-
-                            if($executar && $executar -> num_rows > 0){
-                                $row = $executar -> fetch_assoc();
-                                $Situacao = $row['Situacao'];
-
-                                if($Situacao == 'Em processamento'){
-                                    echo 'O seu pedido não foi finalizado, ainda está em processamento';
-                                } elseif($Situacao == 'Nas docas'){
-                                    echo 'O seu pedido ja passou pela conferência e vistoria';
-                                } else{
-                                    echo 'O seu pedido não foi finalizado, ainda está em processamento ou ja passou pela conferência e vistoria';
-                                }
-                            }
-                        }
                     }
 echo '            </div>
                 </div>
             </div>
         </div>
     </main>';
-                    }
 ?>
 </body>
 <script>

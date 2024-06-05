@@ -104,6 +104,7 @@ if (empty($_SESSION['nome'])) {
             if (isset($_POST['id_pedido']) && isset($_POST['posicao_doca'])) {
                 $idpedido = $conexao->real_escape_string($_POST['id_pedido']);
                 $doca = $conexao->real_escape_string($_POST['posicao_doca']);
+                $QuantidadeItemEstoque = 0; 
 
                 $sql = "SELECT cod_pedido FROM pedido WHERE id_pedido = '$idpedido' AND Situacao = 'Nas docas'";
                 $execute = $conexao->query($sql);
@@ -142,6 +143,18 @@ if (empty($_SESSION['nome'])) {
                             $sqlProdutos= "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
                             $executar = $conexao->query($sqlProdutos);
 
+                            $SelectItensEstoque = "SELECT * FROM itensestoque WHERE cod_itenpedido = '$codItemPedido' AND Situacao = 'Em movimentação'";
+                            $resultado = $conexao -> query($SelectItensEstoque);
+
+                            if($resultado && $resultado -> num_rows > 0){
+                                while($rowItenEstoque = $resultado -> fetch_assoc()){
+                                    $QuantidadeEstoque = $rowItenEstoque['Quantidade'];
+                                    $QuantidadeItemEstoque += $QuantidadeEstoque;
+                                }
+                            } else{
+                                $QuantidadeEstoque = 0;
+                            }
+
                             if ($executar && $executar->num_rows > 0) {
                                 while ($rowProdutos = $executar->fetch_assoc()) {
                                     echo '<tr>
@@ -159,6 +172,7 @@ if (empty($_SESSION['nome'])) {
                                                 <td>
                                                     <input type="hidden" name="QTTDoca" value="' . htmlspecialchars($QuantidadeDoca) . '">
                                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
+                                                    <input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeItemEstoque) . '">
                                                     <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">
                                                     <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
                                                 </td>

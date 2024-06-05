@@ -11,10 +11,11 @@ if ($conexao->connect_errno) {
     echo "Failed to connect to MySQL: " . $conexao->connect_error;
     exit();
 } else {
-        if(isset($_POST['QTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_POST['QTTDoca']) && isset($_POST['id_pedido'])  && isset($_POST['cod_itempedido'])){
+        if(isset($_POST['QTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_POST['QTTDoca']) && isset($_POST['id_pedido'])  && isset($_POST['cod_itempedido'])  && isset($_POST['ItemEstoque'])){
             $quantidadeEstoque = $conexao -> real_escape_string($_POST['QTDEstoque']);
             $posicaoEstoque = $conexao -> real_escape_string($_POST['PosicaoEstoque']);
             $QttDoca = $conexao -> real_escape_string($_POST['QTTDoca']);
+            $QttItemEstoque = $conexao -> real_escape_string($_POST['QTTDoca']);
             $cod_itempedido = $conexao -> real_escape_string($_POST['cod_itempedido']);
             $id_pedido = $conexao -> real_escape_string($_POST['id_pedido']);
 
@@ -40,8 +41,11 @@ if ($conexao->connect_errno) {
                     exit();
                 } else{
   
-
-                $NewQTTDoca = $Quantidade_na_doca - $quantidadeEstoque;
+                if($QttItemEstoque != 0){
+                    $NewQTTDoca = $Quantidade_na_doca - $QttItemEstoque;
+                } else{
+                    $NewQTTDoca = $Quantidade_na_doca;
+                }
 
                 $sql = "UPDATE itenspedido SET Quantidade_doca = '$NewQTTDoca' WHERE cod_pedido = '$id_pedido' 
                 AND cod_itenPedido = '$cod_itempedido' AND codTurma = '{$_SESSION['codTurma']}'";
