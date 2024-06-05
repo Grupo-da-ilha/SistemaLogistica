@@ -115,6 +115,8 @@ if (empty($_SESSION['nome'])){
                             <div class="options-criarpedido">
                                 <h5>COD PEDIDO:</h5>
                                 <input type="text" name="codPedido" style="display: block;" class="input-options-criar-pedido">
+                            </div>
+                            <div class="options-criarpedido">
                                 <h5>FORNECEDOR:</h5>
                                     <label class="label-input" for="">
                                         <i class="far fa-envelope icon-modify"></i>
@@ -125,6 +127,8 @@ if (empty($_SESSION['nome'])){
                                             <option class="options-label">Tilibra</option>
                                         </select>
                                     </label>
+                                </div>
+                                    <div class="options-criarpedido">
                                         <h5>TRENSPORTADORA:</h5>
                                             <label class="label-input" for="">
                                                 <i class="far fa-envelope icon-modify"></i>
@@ -135,19 +139,20 @@ if (empty($_SESSION['nome'])){
                                                     <option>NSL Brasil</option>
                                                 </select>
                                             </label>
+                                    </div>
                                     <div class="options-criarpedido-input">
                                         <input type="submit" name="enviar_pedido" value="CONFIRMAR PEDIDO" style="display: block;" class="input-function-criar-pedido"> 
                                     </div>
-
+                                    <div class="options-criarpedido">
                                         <h5>COD PRODUTO:</h5>
                                         <div style="display:flex; justify-content: space-between;">
-                                            <input type="text" name="codProduto" id="codProduto" style="display: block;" class="input-options-consulta"> 
-                                            <input type="text" name="NomeProduto" id="NomeProduto" style="display: block;" class="input-options-consulta"> 
+                                            <input type="text" name="codProduto" id="codProduto" style="display: block; width:200px;" class="input-options-criar-pedido"> 
+                                            <input type="text" name="NomeProduto" id="NomeProduto" style="display: block; width:200px;" class="input-options-criar-pedido"> 
                                         </div>
+                                    </div>
                                     <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido"> 
                                     <a class="ahrefcadastrar" href="cadastrarprodutos.php"><input type="button" id="verprodutoscadastrados" class="verprodutoscadastrados" value="VER CADASTRAR PRODUTOS"></a>
                                 </form>
-                            </div>
                             <div class="options-pedido">
                                 <div class="produtos-pedido">
                                     <h4>PRODUTOS:</h4>';?>
