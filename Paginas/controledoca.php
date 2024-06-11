@@ -21,6 +21,27 @@ if (empty($_SESSION['nome'])) {
     header('Location: sair.php');
     exit();
 } else {  
+    $hostname = "127.0.0.1";
+    $user = "root";
+    $password = "";
+    $database = "logistica";
+    $conexao = new mysqli($hostname, $user, $password, $database);
+
+    if ($conexao->connect_errno) {
+        echo "Failed to connect to MySQL: " . htmlspecialchars($conexao->connect_error);
+        exit();
+    } else {
+    if (isset($_SESSION['Idprojeto'])) {
+        $sql = "SELECT codTurma FROM projetos WHERE idprojeto = '".$_SESSION['Idprojeto']."'";
+        $execute = $conexao->query($sql);
+    
+        if ($execute->num_rows > 0) {
+            $row = $execute->fetch_assoc();
+            $_SESSION['codTurma'] = $row['codTurma'];
+        }
+    } else {
+        echo ''.$_SESSION['Idprojeto']. '';
+    }
     echo '
     <header>
         <div class="container">
@@ -91,22 +112,12 @@ if (empty($_SESSION['nome'])) {
                                 <div class="produtos-pedido">
                                     <h4>PARA ONDE OS ITENS VÃO?</h4>';
 
-    $hostname = "127.0.0.1";
-    $user = "root";
-    $password = "";
-    $database = "logistica";
-    $conexao = new mysqli($hostname, $user, $password, $database);
-
-    if ($conexao->connect_errno) {
-        echo "Failed to connect to MySQL: " . htmlspecialchars($conexao->connect_error);
-        exit();
-    } else {
             if (isset($_POST['id_pedido']) && isset($_POST['posicao_doca'])) {
                 $idpedido = $conexao->real_escape_string($_POST['id_pedido']);
                 $doca = $conexao->real_escape_string($_POST['posicao_doca']);
                 $QuantidadeItemEstoque = 0; 
 
-                $sql = "SELECT cod_pedido FROM pedido WHERE id_pedido = '$idpedido' AND Situacao = 'Nas docas'";
+                $sql = "SELECT cod_pedido FROM pedido WHERE id_pedido = '$idpedido' AND Situacao = 'Nas docas' AND codTurma = '{$_SESSION['codTurma']}'";
                 $execute = $conexao->query($sql);
 
                 if ($execute && $execute->num_rows > 0) {
@@ -118,7 +129,7 @@ if (empty($_SESSION['nome'])) {
                             <h6> Doca: ' . htmlspecialchars($doca) . '</h6>
                         </div>';
 
-                    $sqlItenspedidos= "SELECT * FROM itenspedido WHERE cod_pedido = '$idpedido'";
+                    $sqlItenspedidos= "SELECT * FROM itenspedido WHERE cod_pedido = '$idpedido' AND codTurma = '{$_SESSION['codTurma']}' AND Quantidade_doca != 0";
                     $execute = $conexao->query($sqlItenspedidos);
 
                     if ($execute && $execute->num_rows > 0) {
@@ -160,7 +171,7 @@ if (empty($_SESSION['nome'])) {
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td>' . htmlspecialchars($Quantidade) . '</td>
-                                            <form class="form-enviar-produtos" method="post">
+                                            <form class="form-enviar-produtos">
                                                 <td>
                                                     <input type="text" id="QTDEstoque" name="QTDEstoque" placeholder="Quantidade Estoque" style="display:block;">
                                                 </td>
@@ -169,6 +180,7 @@ if (empty($_SESSION['nome'])) {
                                                 </td>
                                                 <td>
                                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
+                                                    <input type="hidden" name="QTTdoca" value="' . htmlspecialchars($QuantidadeDoca) . '">
                                                     <input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeItemEstoque) . '">
                                                     <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">
                                                     <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
@@ -219,10 +231,6 @@ $('.form-enviar-produtos').submit(function(e) {
                 alert(jsonResponse.message); 
             }
         },
-        error: function(xhr, status, error) {
-            console.error(error);
-            alert('Erro ao enviar dados do formulário.');
-        }
     });
 });
 </script>

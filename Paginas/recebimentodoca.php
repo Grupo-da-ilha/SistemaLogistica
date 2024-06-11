@@ -175,9 +175,7 @@ if (empty($_SESSION['nome'])){
                             </td>
                         </tr>';
                 }
-            } else {
-                echo 'Nenhuma doca encontrada para o pedido ' . $cod_pedido . '';
-            }
+            } 
         
     }
 }
