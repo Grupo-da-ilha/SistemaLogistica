@@ -145,6 +145,22 @@ tr,th, td {
     text-shadow: 0 0 2px rgb(0, 119, 255);
     text-wrap: nowrap;
 }
+.alunos-turma {
+  margin-top: 60px;
+  width: 97%;
+  height: 80%;
+  font-size: 20px;
+}
+.table-alunos {
+  width: 100%;
+}
+tr,th, td {
+  font-size: 12px;
+}
+
+.button-alterarsenha {
+font-size: 12px;
+}
 }
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {

@@ -113,6 +113,52 @@ h5{
     text-shadow: 0 0 2px rgb(0, 119, 255);
     text-wrap: nowrap;
 }
+.container-prin {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.perfil-container {
+  margin-top: 50px;
+  width: 100%;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0;
+}
+.fotoperfil {
+  width: 150px;
+  position: absolute;
+}
+.form-dados {
+  width: auto;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 0;
+}
+.info-dados {
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  width: 90%;
+  height: 16.6666666667%;
+  border-bottom: 1px solid rgb(0, 119, 255);
+}
+.info-dados-end {
+  display: flex;
+  justify-content: baseline;
+  align-items: center;
+  width: 90%;
+  height: 16.6666666667%;
+}
 }
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
