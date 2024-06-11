@@ -71,7 +71,7 @@
                             <img class="fotoperfil" src="../css/cssimg/perfil.png">
                             <div class="info-dados-perfil">
                             <h5>'.$_SESSION['nome'].'</h5>
-                        </div>
+                            </div>
                         </div>
                         <div class="form-dados">
                             <div class="title-dados">
