@@ -21,6 +21,16 @@ if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
 } else {  
+    $hostname = "127.0.0.1";
+    $user = "root";
+    $password = "";
+    $database = "logistica";
+    $conexao = new mysqli($hostname, $user, $password, $database);
+
+    if ($conexao->connect_errno) {
+        echo "Failed to connect to MySQL: " . htmlspecialchars($conexao->connect_error);
+        exit();
+    } else {
     echo ' <header>
     <div class="container">
         <div class="main-horizontal">
@@ -73,8 +83,80 @@ if (empty($_SESSION['nome'])){
                 <div class="titulo-recebimento">
                     <h3>MOVIMENTAÇÃO</h3>    
                 </div>
+                <h6> Operações em aberto </h6>';
+                $sql = "SELECT * FROM itensestoque WHERE Situacao = 'Em movimentação'";
+                $execute = $conexao -> query($sql);
+
+                if($execute && $execute -> num_rows > 0){
+                    echo '
+                        <div class="div-operacoes">
+                            <table class="tabela">
+                                <tr>
+                                    <td> Produtos </td>
+                                    <td> UN </td>
+                                    <td> QTD </td>
+                                    <td> Posição </td>
+                                    <td> Ações </td>
+                                </tr>
+                    ';
+                    while($row = $execute -> fetch_assoc()){
+                        //Quandar cod_estoque
+                        $cod_estoque = $row['cod_estoque'];
+
+                        //Pesquisar itens
+                        $selectItens = "SELECT * FROM itenspedido WHERE cod_itenPedido = '$cod_itenpedido'";
+                        $executar = $conexao -> query($selectItens);
+
+                        if($executar && $executar -> num_rows > 0){
+                            while($rowItens = $executar -> fetch_assoc()){
+                                $Quantidade_item = $rowItens['Quantidade'];
+                                $cod_produto = $rowItens['cod_produto'];
+
+                                //Pesquisar produtos
+                                $selectProdutos = "SELECT * FROM produtos WHERE cod_prodtuo = '$cod_produto'";
+                                $resultado = $conexao -> query($selectProdutos);
+                                
+                                if($resultado && $resultado -> num_rows > 0){
+                                    while($rowPorduto = $resultado -> fetch_assoc()){
+                                        $Nome = $rowPorduto['Nome'];
+                                        $UN = $rowPorduto['UN'];
+                                    }
+                                }
+                                }
+                        }
+
+                        //Pesquisar a posição do item
+                        $selectPosicao = "SELECT * FROM estoque WHERE cod_estoque = '$cod_estoque '";
+                        $executePosicao = $conexao -> query($selectPosicao);
+                        if($executePosicao && $executePosicao -> num_rows > 0){
+                            while($rowEstoque = $executePosicao -> fetch_assoc()){
+                                $andar = $rowEstoque['Andar'];
+                                $apartamento = $rowEstoque['Apartamento'];
+                            }
+                        }
+                        
+                        echo '<tr>
+                                <td>' . htmlspecialchars($Nome) . '</td>
+                                <td>' . htmlspecialchars($UN) . '</td>
+                                <td>' . htmlspecialchars($andar . $apartamento) . '</td>
+                                <form action="function/pegarItens.php" method="post">   
+                                    <td>
+                                        <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
+                                        <input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeItemEstoque) . '">
+                                        <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">
+                                        <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
+                                    </td>
+                                </form>
+                            </tr>';
+                    }
+                } else{
+                    echo 'Nenhuma operação em aberto';
+                }
+echo '
             </div>
         </div>
-    </main>'; } ?>
+    </main>';          
+    }
+    } ?>
 </body>
 </html>
