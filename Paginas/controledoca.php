@@ -157,10 +157,10 @@ if (empty($_SESSION['nome'])) {
                             $resultado = $conexao -> query($SelectItensEstoque);
 
                             if($resultado && $resultado -> num_rows > 0){
-                                while($rowItenEstoque = $resultado -> fetch_assoc()){
-                                    $QuantidadeEstoque = $rowItenEstoque['Quantidade'];
-                                    $QuantidadeItemEstoque += $QuantidadeEstoque;
-                                }
+                                $rowItenEstoque = $resultado -> fetch_assoc();
+                                $QuantidadeEstoque = $rowItenEstoque['Quantidade'];
+
+                                $QuantidadeItemEstoque = $QuantidadeEstoque - $QuantidadeEstoque;
                             } else{
                                 $QuantidadeEstoque = 0;
                             }

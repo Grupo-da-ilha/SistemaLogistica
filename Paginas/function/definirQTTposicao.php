@@ -18,6 +18,7 @@ if ($conexao->connect_errno) {
             $QuantidadeArmazenada = $conexao -> real_escape_string($_POST['ItemEstoque']);
             $cod_itempedido = $conexao -> real_escape_string($_POST['cod_itempedido']);
             $id_pedido = $conexao -> real_escape_string($_POST['id_pedido']);
+            $NewQTTDoca = 0;
 
             $andar = substr($posicaoEstoque, 0, 1);
             $apartamento = substr($posicaoEstoque, 1);
@@ -32,23 +33,29 @@ if ($conexao->connect_errno) {
                 if($quantidadeEstoque > $QuantidadeItem){
                     echo json_encode(array('success' => false, 'message' => 'Você selecionou mais itens do que o pedido possui para irem ao estoque'));
                     exit();
-                } elseif($quantidadeEstoque > $Quantidade_na_doca){
+                } elseif($quantidadeEstoque > $QttDoca){
                     echo json_encode(array('success' => false, 'message' => 'Você selecionou mais itens para irem ao estoque do que estão parados na doca, verifique se os itens já não foram estocados'));
                     exit();
                 } else{
   
                 if($QuantidadeArmazenada != 0){
                     $NewQTTDoca = $QttDoca - $QuantidadeArmazenada;
+                    $sql = "UPDATE itenspedido SET Quantidade_doca = '$NewQTTDoca' WHERE cod_pedido = '$id_pedido' 
+                    AND cod_itenPedido = '$cod_itempedido' AND codTurma = '{$_SESSION['codTurma']}'";
+                    $execute = $conexao -> query($sql);
+    
+                    if($execute){
+                    } else{
+                    }
                 } else{
                     $NewQTTDoca = $QttDoca;
-                }
-
-                $sql = "UPDATE itenspedido SET Quantidade_doca = '$NewQTTDoca' WHERE cod_pedido = '$id_pedido' 
-                AND cod_itenPedido = '$cod_itempedido' AND codTurma = '{$_SESSION['codTurma']}'";
-                $execute = $conexao -> query($sql);
-
-                if($execute){
-                } else{
+                    $sql = "UPDATE itenspedido SET Quantidade_doca = '$NewQTTDoca' WHERE cod_pedido = '$id_pedido' 
+                    AND cod_itenPedido = '$cod_itempedido' AND codTurma = '{$_SESSION['codTurma']}'";
+                    $execute = $conexao -> query($sql);
+    
+                    if($execute){
+                    } else{
+                    }
                 }
             }
 
@@ -58,10 +65,10 @@ if ($conexao->connect_errno) {
         }
 
         $SelectEstoque = "SELECT cod_estoque FROM estoque WHERE Andar ='$andar' AND Apartamento = '$apartamento'";
-        $execute = $conexao -> query($SelectEstoque);
+        $executar = $conexao -> query($SelectEstoque);
 
-        if($execute && $execute -> num_rows > 0){
-            $row = $execute -> fetch_assoc();
+        if($executar && $executar -> num_rows > 0){
+            $row = $executar -> fetch_assoc();
             $cod_estoque = $row['cod_estoque'];
 
             $InsetItemEstoque = "INSERT INTO itensestoque (Quantidade, Situacao, cod_estoque, cod_itenpedido, codTurma)
