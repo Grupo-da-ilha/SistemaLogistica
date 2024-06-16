@@ -11,6 +11,31 @@
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/movimentacao.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
+    <style>
+        .tabela {
+            padding: 5px;
+            width: 100%;
+            height: 300px;
+            background-color: rgb(0, 119, 255);
+            border: 1px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgb(0, 119, 255);
+        }
+        .tabela {
+            width: 100px;
+            height: auto;
+        }
+        th, tr, td {
+            padding: 5px;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 3px;
+            font-family: 'Poppins', sans-serif;
+            color: #000000;
+            font-size: 15px;
+        }
+    </style>
 </head>
 <body>
 <?php
@@ -83,12 +108,15 @@ if (empty($_SESSION['nome'])){
                 <div class="titulo-recebimento">
                     <h3>MOVIMENTAÇÃO</h3>    
                 </div>
-                <h6> Operações em aberto </h6>';
+                <h6> Operações em aberto </h6>
+                <h7> Selecione os produtos desejados para ir à operação </h7>
+                ';
                 $sql = "SELECT * FROM itensestoque WHERE Situacao = 'Em movimentação'";
                 $execute = $conexao -> query($sql);
 
                 if($execute && $execute -> num_rows > 0){
                     echo '
+                        <form action="operacaomovimentacao.php" method="post">
                         <div class="div-operacoes">
                             <table class="tabela">
                                 <tr>
@@ -102,6 +130,9 @@ if (empty($_SESSION['nome'])){
                     while($row = $execute -> fetch_assoc()){
                         //Quandar cod_estoque
                         $cod_estoque = $row['cod_estoque'];
+                        $cod_Itemestoque = $row['cod_itenEstoque'];
+                        $cod_itenpedido = $row['cod_itenpedido'];
+                        $QuantidadeItemEstoque = $row['Quantidade'];
 
                         //Pesquisar itens
                         $selectItens = "SELECT * FROM itenspedido WHERE cod_itenPedido = '$cod_itenpedido'";
@@ -111,9 +142,10 @@ if (empty($_SESSION['nome'])){
                             while($rowItens = $executar -> fetch_assoc()){
                                 $Quantidade_item = $rowItens['Quantidade'];
                                 $cod_produto = $rowItens['cod_produto'];
+                                $idpedido = $rowItens['cod_pedido'];
 
                                 //Pesquisar produtos
-                                $selectProdutos = "SELECT * FROM produtos WHERE cod_prodtuo = '$cod_produto'";
+                                $selectProdutos = "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
                                 $resultado = $conexao -> query($selectProdutos);
                                 
                                 if($resultado && $resultado -> num_rows > 0){
@@ -128,6 +160,7 @@ if (empty($_SESSION['nome'])){
                         //Pesquisar a posição do item
                         $selectPosicao = "SELECT * FROM estoque WHERE cod_estoque = '$cod_estoque '";
                         $executePosicao = $conexao -> query($selectPosicao);
+
                         if($executePosicao && $executePosicao -> num_rows > 0){
                             while($rowEstoque = $executePosicao -> fetch_assoc()){
                                 $andar = $rowEstoque['Andar'];
@@ -138,17 +171,22 @@ if (empty($_SESSION['nome'])){
                         echo '<tr>
                                 <td>' . htmlspecialchars($Nome) . '</td>
                                 <td>' . htmlspecialchars($UN) . '</td>
+                                <td>' . htmlspecialchars($QuantidadeItemEstoque) . '</td>
                                 <td>' . htmlspecialchars($andar . $apartamento) . '</td>
-                                <form action="function/pegarItens.php" method="post">   
-                                    <td>
-                                        <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
-                                        <input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeItemEstoque) . '">
-                                        <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">
-                                        <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
-                                    </td>
-                                </form>
+                                <td style="display: flex;">
+                                    <input type="checkbox" name="itemselecionado[]" id="itemselecionado'.$cod_Itemestoque.'" value="' . $cod_Itemestoque . '" style="display: block;"></label>
+                                    <label for=itemselecionado" style="margin-left: 10px;">Selecionar</label> 
+                                </td>
                             </tr>';
                     }
+                    //Forms para enviar os produtos selecionados para a tela de operação
+                    echo '
+                        </table>
+                        <br>
+                        <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Ir para operação" style="display:block;">
+                    </form>
+                    </div>
+                    ';
                 } else{
                     echo 'Nenhuma operação em aberto';
                 }
