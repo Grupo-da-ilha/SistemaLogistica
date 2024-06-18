@@ -253,6 +253,10 @@ nav {
       height: 85%;
       margin-top: 90vh;
   }
+  .functions-menu {
+    margin: 3px;
+    font-size: 7px;
+}
   
   }
   

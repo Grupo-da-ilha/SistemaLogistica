@@ -136,7 +136,7 @@ h3 {
       background-image: url("cssimg/fundopag.jpg");
       background-position: center;
       background-size: cover;
-      background-repeat: no-repeat;
+      background-repeat: repeat;
       height: auto;
     }
     h1 {

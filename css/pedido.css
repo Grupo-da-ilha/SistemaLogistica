@@ -448,8 +448,11 @@ th, tr, td {
     text-shadow: 0 0 2px rgb(0, 119, 255);
     text-wrap: nowrap;
 }
+h3 {
+  font-size: 24px;
+}
 .container-prin {
-    margin-top: -91vh;
+    margin-top: -89vh;
     width: 100%;
     height: 100%;
     display: flex;
@@ -458,8 +461,77 @@ th, tr, td {
     justify-content: center;
     align-items: center;
 }
+.info-total {
+  flex-direction: column;
+  justify-content: first baseline;
+  height: auto;
 }
-
+.criar-pedido {
+  display: flex;
+  flex-direction: column;
+}
+.submenus-pedidos {
+  width: 95vw;
+  height: auto;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: center;
+  border-radius: 0;
+}
+.criar-pedidos-container {
+  width: 95vw;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
+}
+.criarpedidos {
+  margin: 15px;
+  width: 95vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+  align-items: center;
+}
+#verprodutoscadastrados {
+  width: 90vw;
+  height: 40px;
+}
+.input-options-criar-pedido-select {
+  width: 90vw;
+  height: 40px;
+}
+.input-options-consulta {
+  width: 42vw;
+  height: 40px;
+}
+.produtos-pedido {
+  width: 95vw;
+  height: auto;
+}
+.tabela {
+  padding: 5px;
+  width: 80vw;
+  height: auto;
+  background-color: rgb(0, 119, 255);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgb(0, 119, 255);
+}
+th, tr, td {
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 3px;
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  font-size: 9.2px;
+}
+}
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   body {
     background-image: url("cssimg/fundopag.jpg");
@@ -483,7 +555,6 @@ th, tr, td {
     justify-content: center;
     align-items: center;
 }
-
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {

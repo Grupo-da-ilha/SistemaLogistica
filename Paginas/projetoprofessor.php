@@ -145,7 +145,6 @@
         </div>
     </main>';
     if (isset($_SESSION['Idprojeto'])) {
-        echo '<p>Projeto selecionado: ' . $_SESSION['Idprojeto'] . '</p>';
     } else {
         echo '<p>Nenhum projeto selecionado.</p>';
     }

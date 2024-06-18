@@ -156,7 +156,7 @@ if (empty($_SESSION['nome'])){
                                     }
                                 }
                             } else{
-                                echo 'Preencha os campos ao lado';
+                                echo '<p>Preencha os campos ao lado</p>';
                             }
 
                             if (!isset($id_pedido)) {
