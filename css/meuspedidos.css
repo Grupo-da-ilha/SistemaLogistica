@@ -216,7 +216,39 @@ th, td{
     text-shadow: 0 0 2px rgb(0, 119, 255);
     text-wrap: nowrap;
 }
-
+h3 {
+  font-size: 24px;
+}
+.container-prin {
+  margin-top: -89vh;
+}
+.info-total {
+  flex-direction: column;
+  justify-content: first baseline;
+  height: auto;
+}
+.criar-pedido-container {
+  width: 95vw;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
+}
+.criar-pedido {
+  display: flex;
+  flex-direction: column;
+}
+.submenus-pedidos {
+  width: 95vw;
+  height: auto;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: center;
+  border-radius: 0;
+}
 }
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
