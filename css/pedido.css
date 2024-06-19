@@ -469,6 +469,9 @@ h8{
   justify-content: first baseline;
   height: auto;
 }
+.titulo-pedido {
+  border-radius: 0;
+}
 .criar-pedido {
   display: flex;
   flex-direction: column;

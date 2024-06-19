@@ -119,7 +119,7 @@ if (empty($_SESSION['nome'])){
                                 <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
                             </div>
                         </div>
-                        <div>
+                        <div class="orientar-tabela">
 <?php
     if (isset($cod_turma)) {
         $selectPedidos = "SELECT * FROM pedido WHERE codTurma = '$cod_turma'";
