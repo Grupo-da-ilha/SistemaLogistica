@@ -94,13 +94,13 @@ if (empty($_SESSION['nome'])){
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="carga.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="carga.php" class="functions-menu">VISTORIA</a>
+                    <a href="recebimentodoca.php" class="functions-menu">CONTROLE</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="#" class="functions-menu">ESTOQUE</a>
                     <a href="#" class="functions-menu">PICKING</a>
                     <a href="#" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="#" class="functions-menu">RELATÓRIOS</a>
-                    <a href="#" class="functions-menu">CONTROLE</a>
                 </li>
             </div>
             <div class="criar-pedido-container">

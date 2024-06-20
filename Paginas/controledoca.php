@@ -83,12 +83,13 @@ if (empty($_SESSION['nome'])) {
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
                     <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
-                    <a href="carga.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="danfe.php" class="functions-menu">DANFE</a>
+                    <a href="carga.php" class="functions-menu">VISTORIA</a>
+                    <a href="recebimentodoca.php" class="functions-menu">CONTROLE</a>
                     <a href="#" class="functions-menu">ESTOQUE</a>
                     <a href="#" class="functions-menu">PICKING</a>
                     <a href="#" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="#" class="functions-menu">RELATÓRIOS</a>
-                    <a href="#" class="functions-menu">CONTROLE</a>
                 </li>
             </div>
             <div class="criar-pedido-container">
@@ -102,7 +103,6 @@ if (empty($_SESSION['nome'])) {
                             <div class="info-pedido">
                                 <h5>DOCAS:</h5>
                                     <a href="recebimentodoca.php" class="button-pedidos">Recebimento das docas</a>
-                                    <a href="controledoca.php" class="button-pedidos">Controle das docas</a>
                                 <h5>ESTOQUE:</h5>
                                     <a href="estoque.php" class="button-pedidos">Meu Estoque</a>
                             </div>
