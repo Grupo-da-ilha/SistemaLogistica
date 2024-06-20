@@ -140,30 +140,15 @@ if (empty($_SESSION['nome'])) {
     </header>
     <main>
         <div class="container-prin">
-            <div class="options-senai-continue" onclick="toggleContinueForm()"></div>
-            <div id="overlay_continue"></div>
-            <form id="project_form_continue">
-                <span class="close">&times;</span>
-                <h3>De qual turma você quer acessar os projetos:</h3>
-                <input type="text" id="project_sala_form" name="project_class" placeholder="Código Turma" style="display:block;" required>
-                <button type="button" id="continue_button" onclick="getAndDisplayProjects()">Ver Projetos</button>
-            </form>
+            <div class="options-senai-continue" onclick="selecionarProjetos()"></div>
         </div>
     </main>';
 }
 ?>
 <script>
-
-
-function getAndDisplayProjects() {
-            var projectClass = document.getElementById('project_sala_form').value;
-            if (projectClass) {
-                window.location.href = "projetosaluno.php?project_sala=" + encodeURIComponent(projectClass);
-            } else {
-                alert("Por favor, insira o código da turma.");
-            }
-        }
-
+    function selecionarProjetos(){
+        window.location.href = 'projetosaluno.php';
+    }
 </script>
 </body>
 </html>

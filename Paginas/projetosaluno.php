@@ -21,7 +21,17 @@ if (empty($_SESSION['nome'])){
     header('Location: ../sair.php');
     exit();
 } else {
+    $hostname = "127.0.0.1";
+    $user = "root";
+    $password = "";
+    $database = "logistica";
 
+    $conexao = new mysqli($hostname, $user, $password, $database);
+
+    if ($conexao->connect_errno) {
+        echo "Failed to connect to MySQL: " . $conexao->connect_error;
+        exit();
+    } else {
     echo ' <header>
     <div class="container">
         <div class="main-horizontal">
@@ -60,31 +70,27 @@ if (empty($_SESSION['nome'])){
 <main>
     <div class="container-prin">
     <?php
-    include_once 'function/projcriados.php';
+        $codTurma =  $_SESSION['codTurma'];
 
-    if (isset($_GET['project_sala'])) {
-        $codTurma = $_GET['project_sala'];
-
-        // Obter os projetos do usuário com base no código da turma
-        $projetos = getProjetosDoUsuario($codTurma);
-
-        if (!empty($projetos)) {
-            echo '<div class="projetos-do-usuario">';
-            foreach ($projetos as $projeto) {
-                echo '<div class="card-projetos" onclick="selectProject(' . $projeto['idprojeto'] . ')">';
-                echo '<div class="apagar-projeto">';
-                echo '<button type="button" class="button-apagar-projeto" data-projeto-id="' . $projeto['idprojeto'] . '">X</button>';
+        $selectProjetos = "SELECT * FROM projetos WHERE codTurma = '$codTurma'";
+        $executar = $conexao -> query($selectProjetos);
+        if($executar && $executar -> num_rows > 0){
+            $numRows = $executar->num_rows;
+            for($i = 0; $i <= $numRows; $i++){
+                $projeto = $executar -> fetch_assoc();
+                echo '<div class="projetos-do-usuario">';
+                    echo '<div class="card-projetos" onclick="selectProject(' . $projeto['idprojeto'] . ')">';
+                    echo '<div class="apagar-projeto">';
+                    echo '<button type="button" class="button-apagar-projeto" data-projeto-id="' . $projeto['idprojeto'] . '">X</button>';
+                    echo '</div>';
+                    echo '<h4>' . $projeto['nome'] . '</h4>';
+                    echo '</div>';
                 echo '</div>';
-                echo '<h4>' . $projeto['nome'] . '</h4>';
-                echo '</div>';
-            }
-            echo '</div>';
+        }
         } else {
             echo '<p>Nenhum projeto encontrado para esta turma.</p>';
         }
 
-    } else {
-        echo 'Erro: Código da turma não informado.';
     }
 }
     ?>
@@ -92,11 +98,6 @@ if (empty($_SESSION['nome'])){
 </main>
 
 <script>
-        function selectProject(projectId) {
-            document.getElementById('project_id').value = projectId;
-            document.getElementById('projectForm').submit();
-        }
-
         document.addEventListener('DOMContentLoaded', function() {
             var buttons = document.querySelectorAll('.button-apagar-projeto');
             buttons.forEach(function(button) {
