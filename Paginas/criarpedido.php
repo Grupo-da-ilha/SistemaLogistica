@@ -104,7 +104,6 @@ if (empty($_SESSION['nome'])){
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-pedido">
                                 <h5>PEDIDOS:</h5>
-                                    <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
                                     <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
                                 <h5>NOTA FISCAL:</h5>
                                     <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
