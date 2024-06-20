@@ -249,16 +249,16 @@ if (empty($_SESSION['nome'])) {
                     echo'</div>';
                     echo'</div>';
                     } else {
-                        echo "<br><br>Destinatário não encontrado";
+                        echo "<p>Destinatário não encontrado</p>";
                     }
                 } else {
-                    echo "<br><br>Fabricante não encontrado";
+                    echo "<p>Fabricante não encontrado</p>";
                 }
             } else {
-                echo "<br><br>Transportadora não encontrada";
+                echo "<p>Transportadora não encontrada</p>";
             }
         } else {
-            echo "<br><br>Pedido não encontrado";
+            echo "<p>Pedido não encontrado</p>";
         }
     }
 
@@ -384,20 +384,20 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo'</div>';
 
                 } else {
-                    echo "<br><br>Destinatário não encontrado";
+                    echo "<p>Destinatário não encontrado</p>";
                 }
             } else {
-                echo "<br><br>Fabricante não encontrado";
+                echo "<p>Fabricante não encontrado</p>";
             }
         } else {
-            echo "<br><br>Transportadora não encontrada";
+            echo "<p>Transportadora não encontrada</p>";
         }
     } else {
-        echo "<br><br>Pedido não encontrado ou não foi finalizado";
+        echo "<p>Pedido não encontrado ou não foi finalizado</p>";
     }
 }
     }else{
-        echo 'Código do pedido não corresponde, por favor verifique os seus pedidos criados';
+        echo '<p>Código do pedido não corresponde, por favor verifique os seus pedidos criados</p>';
     }
 }
 
