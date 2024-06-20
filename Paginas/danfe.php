@@ -117,8 +117,6 @@ if (empty($_SESSION['nome'])) {
                                 <h5>PEDIDOS:</h5>
                                 <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
                                 <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
-                                <h5>NOTA FISCAL:</h5>
-                                <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
                             </div>
                         </div>
                         <div class="criar-danfes-container">
@@ -189,57 +187,78 @@ if (empty($_SESSION['nome'])) {
                         $RuaDest = $rowDest['rua'];
                         $CidadeDest = $rowDest['cidade'];
                         $EstadoDest = $rowDest['estado'];
-
-                        echo '<div class="nota_fiscal" style="display:flex;">';
-                        echo '<div class="nota_transp">';
-                        echo '<h5>DANFE correspondente ao pedido com código: ' . htmlspecialchars($_SESSION['cod_pedido']) . '</h5>';
-                        echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
-                        echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
-                        echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
-                        echo '<h7>Informações da Transportadora: ' . htmlspecialchars($nomeTransp) . '</h7>';
-                        echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_Transportadora) . '</p>';
-                        echo '<p>Quantidade de Frota: ' . htmlspecialchars($FrotaTransp) . '</p>';
-                        echo '<p>Telefone: ' . htmlspecialchars($TelefeoneTransp) . '</p>';
-                        echo '<p>CEP: ' . htmlspecialchars($CEPTransp) . '</p>';
-                        echo '<p>Bairro: ' . htmlspecialchars($BairroTransp) . '</p>';
-                        echo '<p>Rua: ' . htmlspecialchars($RuaTransp) . '</p>';
-                        echo '<p>Cidade: ' . htmlspecialchars($CidadeTransp) . '</p>';
-                        echo '<p>Estado: ' . htmlspecialchars($EstadoTransp) . '</p>';
-                        echo '<hr>';
-                        echo '</div>';
-                        echo '<div class="nota_fabriDest">';
-                        echo '<h7>Informações do Emitente: ' . htmlspecialchars($nomeFabri) . '</h7>';
-                        echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_fabricante) . '</p>';
-                        echo '<p>Telefone: ' . htmlspecialchars($TelefeoneFabri) . '</p>';
-                        echo '<p>CEP: ' . htmlspecialchars($CEPFabri) . '</p>';
-                        echo '<p>Bairro: ' . htmlspecialchars($BairroFabri) . '</p>';
-                        echo '<p>Rua: ' . htmlspecialchars($RuaFabri) . '</p>';
-                        echo '<p>Cidade: ' . htmlspecialchars($CidadeFabri) . '</p>';
-                        echo '<p>Estado: ' . htmlspecialchars($EstadoFabri) . '</p>';
-                        echo '<hr>';
-                        echo '<h7>Informações do Destinatário: ' . htmlspecialchars($nomeDest) . '</h7>';
-                        echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_destinatario) . '</p>';
-                        echo '<p>Telefone: ' . htmlspecialchars($TelefeoneDest) . '</p>';
-                        echo '<p>CEP: ' . htmlspecialchars($CEPDest) . '</p>';
-                        echo '<p>Bairro: ' . htmlspecialchars($BairroDest) . '</p>';
-                        echo '<p>Rua: ' . htmlspecialchars($RuaDest) . '</p>';
-                        echo '<p>Cidade: ' . htmlspecialchars($CidadeDest) . '</p>';
-                        echo '<p>Estado: ' . htmlspecialchars($EstadoDest) . '</p>';
-                        echo '<hr>';
-                        echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
-                        echo '</div>';
-                        echo '</div>';
+                        echo '<div class="danfe">
+                    <div class="logo-danfe">
+                    <img src="../css/cssimg/logo.png" style="width: 100%;">
+                    </div>
+                    <div class="coddanfe">';
+                    echo '<h5>CÓDIGO PEDIDO: ' . htmlspecialchars($_SESSION['cod_pedido']) . '</h5>
+                    </div>
+                    <div class="infos-danfe">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>INFORMAÇÕES DANFE</h7>';
+                    echo '</div>';
+                    echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
+                    echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
+                    echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
+                    echo'</div>
+                    <div class="barras-danfe">
+                    </div>
+                    <div class="infos-trans">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>TRANSPORTADORA: ' . htmlspecialchars($nomeTransp) . '</h7>';
+                    echo '</div>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_Transportadora) . '</p>';
+                    echo '<p>Quantidade de Frota: ' . htmlspecialchars($FrotaTransp) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneTransp) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPTransp) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroTransp) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaTransp) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeTransp) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoTransp) . '</p>';
+                    echo'</div>';
+                    echo'<div class="infos-fornecedor">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>FORNECEDOR: ' . htmlspecialchars($nomeFabri) . '</h7>';
+                    echo '</div>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_fabricante) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneFabri) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPFabri) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroFabri) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaFabri) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeFabri) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoFabri) . '</p>';
+                    echo'</div>';
+                    echo'<div class="infos-recptor">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>DESTINATÁRIO: ' . htmlspecialchars($nomeDest) . '</h7>';
+                    echo '</div>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_destinatario) . '</p>';
+                    echo '<p>Telefone: ' . htmlspecialchars($TelefeoneDest) . '</p>';
+                    echo '<p>CEP: ' . htmlspecialchars($CEPDest) . '</p>';
+                    echo '<p>Bairro: ' . htmlspecialchars($BairroDest) . '</p>';
+                    echo '<p>Rua: ' . htmlspecialchars($RuaDest) . '</p>';
+                    echo '<p>Cidade: ' . htmlspecialchars($CidadeDest) . '</p>';
+                    echo '<p>Estado: ' . htmlspecialchars($EstadoDest) . '</p>';
+                    echo'</div>';
+                    echo'<div class="infos-adicionais">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>INFORMAÇÕES ADICIONAIS:</h7>';
+                    echo '</div>';
+                    echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
+                    echo'</div>';
+                    echo'</div>';
                     } else {
-                        echo "<br><br>Destinatário não encontrado";
+                        echo "<p>Destinatário não encontrado</p>";
                     }
                 } else {
-                    echo "<br><br>Fabricante não encontrado";
+                    echo "<p>Fabricante não encontrado</p>";
                 }
             } else {
-                echo "<br><br>Transportadora não encontrada";
+                echo "<p>Transportadora não encontrada</p>";
             }
         } else {
-            echo "<br><br>Pedido não encontrado";
+            echo "<p>Pedido não encontrado</p>";
         }
     }
 
@@ -302,14 +321,27 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     $RuaDest = $rowDest['rua'];
                     $CidadeDest = $rowDest['cidade'];
                     $EstadoDest = $rowDest['estado'];
-
-                    echo '<div class="nota_fiscal" style="display:flex;">';
-                    echo '<div class="nota_transp">';
-                    echo '<h5>DANFE correspondente ao pedido com código: ' . htmlspecialchars($cod_pedido) . '</h5>';
+                    echo '<div class="danfe">
+                    <div class="logo-danfe">
+                    <img src="../css/cssimg/logo.png" style="width: 100%;">
+                    </div>
+                    <div class="coddanfe">';
+                    echo '<h5>CÓDIGO PEDIDO: ' . htmlspecialchars($_SESSION['cod_pedido']) . '</h5>
+                    </div>
+                    <div class="infos-danfe">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>INFORMAÇÕES DANFE</h7>';
+                    echo '</div>';
                     echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
-                    echo '<h7>Informações da Transportadora: ' . htmlspecialchars($nomeTransp) . '</h7>';
+                    echo'</div>
+                    <div class="barras-danfe">
+                    </div>
+                    <div class="infos-trans">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>TRANSPORTADORA: ' . htmlspecialchars($nomeTransp) . '</h7>';
+                    echo '</div>';
                     echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_Transportadora) . '</p>';
                     echo '<p>Quantidade de Frota: ' . htmlspecialchars($FrotaTransp) . '</p>';
                     echo '<p>Telefone: ' . htmlspecialchars($TelefeoneTransp) . '</p>';
@@ -318,10 +350,11 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<p>Rua: ' . htmlspecialchars($RuaTransp) . '</p>';
                     echo '<p>Cidade: ' . htmlspecialchars($CidadeTransp) . '</p>';
                     echo '<p>Estado: ' . htmlspecialchars($EstadoTransp) . '</p>';
-                    echo '<hr>';
+                    echo'</div>';
+                    echo'<div class="infos-fornecedor">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>FORNECEDOR: ' . htmlspecialchars($nomeFabri) . '</h7>';
                     echo '</div>';
-                    echo '<div class="nota_fabriDest">';
-                    echo '<h7>Informações do Emitente: ' . htmlspecialchars($nomeFabri) . '</h7>';
                     echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_fabricante) . '</p>';
                     echo '<p>Telefone: ' . htmlspecialchars($TelefeoneFabri) . '</p>';
                     echo '<p>CEP: ' . htmlspecialchars($CEPFabri) . '</p>';
@@ -329,8 +362,11 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<p>Rua: ' . htmlspecialchars($RuaFabri) . '</p>';
                     echo '<p>Cidade: ' . htmlspecialchars($CidadeFabri) . '</p>';
                     echo '<p>Estado: ' . htmlspecialchars($EstadoFabri) . '</p>';
-                    echo '<hr>';
-                    echo '<h7>Informações do Destinatário: ' . htmlspecialchars($nomeDest) . '</h7>';
+                    echo'</div>';
+                    echo'<div class="infos-recptor">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>DESTINATÁRIO: ' . htmlspecialchars($nomeDest) . '</h7>';
+                    echo '</div>';
                     echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_destinatario) . '</p>';
                     echo '<p>Telefone: ' . htmlspecialchars($TelefeoneDest) . '</p>';
                     echo '<p>CEP: ' . htmlspecialchars($CEPDest) . '</p>';
@@ -338,25 +374,30 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<p>Rua: ' . htmlspecialchars($RuaDest) . '</p>';
                     echo '<p>Cidade: ' . htmlspecialchars($CidadeDest) . '</p>';
                     echo '<p>Estado: ' . htmlspecialchars($EstadoDest) . '</p>';
-                    echo '<hr>';
+                    echo'</div>';
+                    echo'<div class="infos-adicionais">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>INFORMAÇÕES ADICIONAIS:</h7>';
+                    echo '</div>';
                     echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
-                    echo '</div>';
-                    echo '</div>';
+                    echo'</div>';
+                    echo'</div>';
+
                 } else {
-                    echo "<br><br>Destinatário não encontrado";
+                    echo "<p>Destinatário não encontrado</p>";
                 }
             } else {
-                echo "<br><br>Fabricante não encontrado";
+                echo "<p>Fabricante não encontrado</p>";
             }
         } else {
-            echo "<br><br>Transportadora não encontrada";
+            echo "<p>Transportadora não encontrada</p>";
         }
     } else {
-        echo "<br><br>Pedido não encontrado ou não foi finalizado";
+        echo "<p>Pedido não encontrado ou não foi finalizado</p>";
     }
 }
     }else{
-        echo 'Código do pedido não corresponde, por favor verifique os seus pedidos criados';
+        echo '<p>Código do pedido não corresponde, por favor verifique os seus pedidos criados</p>';
     }
 }
 

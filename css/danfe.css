@@ -15,6 +15,12 @@ body {
     background-repeat: no-repeat;
     height: auto;
 }
+p {
+  color: #000000;
+  font-size: 14px;
+  margin-left: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
 h1 {
     font-family: 'Poppins', sans-serif;
     font-size: 30px;
@@ -222,19 +228,88 @@ h8 {
   animation: animate 1s linear infinite;
   background-color: #4ea0ff;
 }
-.nota_fiscal {
+.danfe {
+  width: 100%;
+  min-height: 50vh;
+  max-height: 50vh;
+  background-color: #eeeeee;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  overflow-y: auto;
+  flex-wrap: wrap;
+}
+.logo-danfe {
+  width: 15%;
+  height: auto;
+  height: 13vh;
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 150vh;
-  height: auto;
 }
-.nota_transp, .nota_fabriDest {
-  width: 90%;
-  height: auto;
-  justify-content: first baseline;
-  align-items: first baseline;
+.titulo-div-danfe {
+  margin-top: -20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.coddanfe {
+  width: 85%;
+  height: 13vh;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.infos-danfe {
+  width: 30%;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start
+}
+.barras-danfe {
+  width: 70%;
+  height: 100%;
+  min-height: 20%;
+  max-height: 20vh;
+  background-image: url('cssimg/codigobarras.png');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px solid black;
+}
+.infos-trans {
+  width: 50%;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start
+}
+.infos-fornecedor {
+  width: 50%;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start
+}
+.infos-recptor {
+  width: 50%;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start
+}
+.infos-adicionais {
+  width: 50%;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start
 }
 @media only screen and (max-width: 600px) {
   body {
