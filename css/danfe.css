@@ -290,6 +290,27 @@ h8 {
   flex-direction: column;
   align-items: flex-start
 }
+.infos-fornecedor {
+  width: 50%;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start
+}
+.infos-recptor {
+  width: 50%;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start
+}
+.infos-adicionais {
+  width: 50%;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start
+}
 @media only screen and (max-width: 600px) {
   body {
     background-image: url("cssimg/fundopag.jpg");
