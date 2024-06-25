@@ -97,9 +97,10 @@ if (empty($_SESSION['nome'])) {
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
                     <a href="carga.php" class="functions-menu">VISTORIA</a>
-                    <a href="recebimentodoca.php" class="functions-menu">CONTROLE</a>
-                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="controledoca.php" class="functions-menu">CONTROLE</a>
                     <a href="#" class="functions-menu">ESTOQUE</a>
+                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="#" class="functions-menu">PICKING</a>
                     <a href="#" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="#" class="functions-menu">RELATÓRIOS</a>
@@ -198,7 +199,7 @@ if (empty($_SESSION['nome'])) {
                     <div class="titulo-div-danfe">';
                     echo '<h7>INFORMAÇÕES DANFE</h7>';
                     echo '</div>';
-                    echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
+                    echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
                     echo'</div>
