@@ -430,6 +430,8 @@ th, tr, td {
 }
 #texto {
   width: 80%;
+  height: 30px;
+  margin-bottom: 10px;
   border: 1px solid rgb(0, 119, 255);
   border-radius: 20px;
   text-align: center;
