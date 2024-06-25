@@ -41,6 +41,9 @@ h3 {
     height: 95%;
 }
 .card-function-log-pedido,
+.card-function-log-meuspedidos,
+.card-function-log-danfe,
+.card-function-log-vistoria,
 .card-function-log-recebimento,
 .card-function-log-movimentacao, 
 .card-function-log-estoque, 
@@ -60,6 +63,9 @@ h3 {
     transition: all 0.3s;
 }
 .card-function-log-pedido:hover,
+.card-function-log-meuspedidos:hover,
+.card-function-log-danfe:hover,
+.card-function-log-vistoria:hover,
 .card-function-log-recebimento:hover,
 .card-function-log-movimentacao:hover, 
 .card-function-log-estoque:hover, 
@@ -73,6 +79,15 @@ h3 {
 }
 .card-function-log-pedido {
     background-image: url("cssimg/pedido.png");
+}
+.card-function-log-meuspedidos {
+    background-image: url("cssimg/meuspedidos.png");
+}
+.card-function-log-danfe {
+    background-image: url("cssimg/danfe.png");
+}
+.card-function-log-vistoria {
+    background-image: url("cssimg/vistoria.png");
 }
 .card-function-log-recebimento {
     background-image: url("cssimg/recebimento.png");
