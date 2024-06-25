@@ -267,6 +267,10 @@ th, tr, td {
   transform: scale(1.05);
   animation: animate 1s linear infinite;
 } 
+
+
+
+
 @media only screen and (max-width: 600px) {
   body {
     background-image: url("cssimg/fundopag.jpg");
@@ -275,12 +279,19 @@ th, tr, td {
     background-repeat: no-repeat;
     height: auto;
   }
+  p {
+    font-size: 20px;
+    margin:auto;
+  }
   h1 {
     font-size: 19px;
     text-shadow: 0 0 2px rgb(0, 119, 255);
     text-wrap: nowrap;
 }
-
+h3{
+  font-size: 24px;
+  text-align: center;
+}
 h2 {
     margin-left: 2vh;
     font-size: 15px;
@@ -316,7 +327,7 @@ nav {
     margin-top: 90vh;
 }
 .container-prin {
-    margin-top: -91vh;
+    margin-top: -10vh;
     width: 100%;
     height: 100%;
     display: flex;
@@ -325,7 +336,36 @@ nav {
     justify-content: center;
     align-items: center;
 }
+.info-total {
+  flex-direction: column;
+  justify-content: first baseline;
+  height: auto;
 }
+.recebimentocontainer{
+  width: 95vw;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
+}
+.vistoria-carga {
+  width: 95vw;
+  height: auto;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: center;
+  border-radius: 0;
+}
+
+
+
+
+
+
+
 
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
   body {
@@ -384,8 +424,16 @@ nav {
     justify-content: center;
     align-items: center;
 }
-
 }
+
+
+
+
+
+
+
+
+
 
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
   h1 {
@@ -438,8 +486,4 @@ width: 100%;
 width: 30%;
 height: 100%;
 }
-}
-
-@media only screen and (min-width: 1441px) {
-    /* Add your responsive styles for large screens (e.g., larger monitors) here */
 }
