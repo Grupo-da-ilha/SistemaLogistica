@@ -72,6 +72,16 @@ h8 {
   text-shadow: 0 0 5px rgb(0, 119, 255);
   cursor: default;
 }
+.container-prin {
+  margin-top: -91vh;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 .criar-danfe-container {
     z-index: 0;
     width: 95%;
