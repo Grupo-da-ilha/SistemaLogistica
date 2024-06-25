@@ -198,7 +198,7 @@ if (empty($_SESSION['nome'])) {
                     <div class="titulo-div-danfe">';
                     echo '<h7>INFORMAÇÕES DANFE</h7>';
                     echo '</div>';
-                    echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
+                    echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
                     echo'</div>
