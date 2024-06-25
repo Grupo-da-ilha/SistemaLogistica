@@ -11,6 +11,7 @@ if ($conexao->connect_errno) {
     echo "Failed to connect to MySQL: " . $conexao->connect_error;
     exit();
 } else {
+    //Buscando id do projeto e consequentemente a turma
     if (isset($_SESSION['Idprojeto'])) {
         $sql = "SELECT codTurma FROM projetos WHERE idprojeto = '".$_SESSION['Idprojeto']."'";
         $execute = $conexao->query($sql);
@@ -22,6 +23,8 @@ if ($conexao->connect_errno) {
     } else {
         echo ''.$_SESSION['Idprojeto']. '';
     }
+
+    //Excluir item do pedido
     if (isset($_POST['Excluir']) && !empty($_POST['codigoItemPedido'])) {
         $cod_item = $_POST['codigoItemPedido'];
         $sql = "DELETE FROM `itenspedido` WHERE cod_itenPedido = '$cod_item'";
@@ -32,13 +35,14 @@ if ($conexao->connect_errno) {
         exit();
     }
 
+    //Autualizar Quantidade do item 
     if (isset($_POST['AtualizarQTD']) && !empty($_POST['codigoItemPedido']) && !empty($_POST['QTD']) && !empty($_SESSION['cod_pedido'])) {
         $cod_item = $_POST['codigoItemPedido'];
         $Quantidade = $_POST['QTD'];
         $valorUnitario = $_POST['valorUnitario'];
         $valorTotalItem = $Quantidade * $valorUnitario;
 
-        $sql2 = "UPDATE `itenspedido` SET Quantidade = '$Quantidade', ValorTotal = '$valorTotalItem' WHERE cod_itenPedido = '$cod_item'";
+        $sql2 = "UPDATE `itenspedido` SET Quantidade = '$Quantidade', Quantidade_doca = '$Quantidade', ValorTotal = '$valorTotalItem' WHERE cod_itenPedido = '$cod_item'";
         $resultado = $conexao->query($sql2);
 
 
@@ -50,9 +54,12 @@ if ($conexao->connect_errno) {
     } else{
         echo 'Quantidade não digitada'; 
     }
+
+    //Definindo data e horário atuais
     date_default_timezone_set('America/Sao_Paulo');
     $datahoje = date("Y-m-d H:i:s");
 
+    //Atualizando dados do pedido e da nota fiscal
     if (isset($_POST['UpdateValor']) && !empty($_SESSION['cod_pedido'])) {
         $sql = "UPDATE `pedido` SET Situacao = 'Em transporte', DataVenda = '$datahoje' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
         $resultado = $conexao->query($sql);
