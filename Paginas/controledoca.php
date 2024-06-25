@@ -138,7 +138,7 @@ if (empty($_SESSION['nome'])) {
                                     <tr>
                                         <td>Produtos</td>
                                         <td>UN</td>
-                                        <td>Quantidade</td>
+                                        <td>Quantidade à espera</td>
                                         <td>QTD para Estoque</td>
                                         <td>Posição no Estoque</td>
                                         <td>Ações</td>
@@ -159,8 +159,6 @@ if (empty($_SESSION['nome'])) {
                             if($resultado && $resultado -> num_rows > 0){
                                 $rowItenEstoque = $resultado -> fetch_assoc();
                                 $QuantidadeEstoque = $rowItenEstoque['Quantidade'];
-
-                                $QuantidadeItemEstoque = $QuantidadeEstoque - $QuantidadeEstoque;
                             } else{
                                 $QuantidadeEstoque = 0;
                             }
@@ -170,7 +168,7 @@ if (empty($_SESSION['nome'])) {
                                     echo '<tr>
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
-                                            <td>' . htmlspecialchars($Quantidade) . '</td>
+                                             <td class="Quantidade_espera" data-cod_itempedido="' . htmlspecialchars($codItemPedido) . '" data-id_pedido="' . htmlspecialchars($idpedido) . '">' . htmlspecialchars($Quantidade) . '</td>
                                             <form class="form-enviar-produtos">
                                                 <td>
                                                     <input type="text" id="QTDEstoque" name="QTDEstoque" placeholder="Quantidade Estoque" style="display:block;">
@@ -181,7 +179,7 @@ if (empty($_SESSION['nome'])) {
                                                 <td>
                                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
                                                     <input type="hidden" name="QTTdoca" value="' . htmlspecialchars($QuantidadeDoca) . '">
-                                                    <input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeItemEstoque) . '">
+                                                    <input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeEstoque) . '">
                                                     <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">
                                                     <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
                                                 </td>
@@ -217,8 +215,8 @@ if (empty($_SESSION['nome'])) {
 ?>
 <script>
 $('.form-enviar-produtos').submit(function(e) {
-    e.preventDefault(); 
-    var formData = $(this).serialize(); 
+    e.preventDefault();
+    var formData = $(this).serialize();
     $.ajax({
         type: 'POST',
         url: 'function/definirQTTposicao.php',
@@ -226,11 +224,19 @@ $('.form-enviar-produtos').submit(function(e) {
         success: function(response) {
             var jsonResponse = JSON.parse(response);
             if (jsonResponse.success) {
-                alert(jsonResponse.message);
+                var cod_itempedido = formData.match(/cod_itempedido=([^&]*)/)[1];
+                var id_pedido = formData.match(/id_pedido=([^&]*)/)[1];
+                var novaQuantidade = response.new_quantity;
+
+                $('td.Quantidade_espera[data-cod_itempedido="' + cod_itempedido + '"][data-id_pedido="' + id_pedido + '"]').text(novaQuantidade);
+                alert(jsonResponse.success);
             } else {
-                alert(jsonResponse.message); 
+                alert(jsonResponse.success);
             }
         },
+        error: function(xhr, status, error) {
+            alert('Erro na comunicação com o servidor: ' + error);
+        }
     });
 });
 </script>
