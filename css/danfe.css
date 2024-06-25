@@ -72,9 +72,20 @@ h8 {
   text-shadow: 0 0 5px rgb(0, 119, 255);
   cursor: default;
 }
+.container-prin {
+  margin-top: -91vh;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 .criar-danfe-container {
     z-index: 0;
     width: 95%;
+    min-height: 8vh;
     height: 90%;
     background-color: #ffffff;;
     border-radius: 30px;
@@ -323,6 +334,23 @@ h8 {
     font-size: 19px;
     text-shadow: 0 0 2px rgb(0, 119, 255);
     text-wrap: nowrap;
+}
+h3{
+  font-size: 24px;
+}
+.info-total {
+  z-index: 1;
+  background-color: #ffffff00;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: auto;
+  width: 100%;
+}
+.criar-danfe{
+  background-color: #ff000000;
+  display: flex;
+  flex-direction: column;
 }
 }
 

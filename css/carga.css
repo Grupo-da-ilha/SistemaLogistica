@@ -69,13 +69,13 @@ h6 {
     margin-top: 10px;
     z-index: 0;
     width: 95%;
-    min-height: 91%;
+    min-height: 82vh;
     background-color: #ffffff;;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
     justify-content:first baseline;
-    align-items: first baseline;
+    align-items: center;
 }
 .titulo-recebimento {
     z-index: 2;
