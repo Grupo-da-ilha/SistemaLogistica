@@ -44,6 +44,16 @@ h5 {
   text-shadow: 0 0 5px rgb(0, 119, 255);
   cursor: default;
 }
+.container-prin {
+  margin-top: -65vh;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
 .projetos-criados {
     width: 95%;
     height: 95%;
@@ -135,7 +145,7 @@ h5 {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
+    height: 100%;
   }
   h1 {
     font-size: 19px;

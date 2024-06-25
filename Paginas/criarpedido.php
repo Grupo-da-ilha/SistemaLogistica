@@ -126,7 +126,7 @@ if (empty($_SESSION['nome'])){
                                             <option class="options-label">Tilibra</option>
                                         </select>
                                     </label>
-                                        <h5>TRENSPORTADORA:</h5>
+                                        <h5>TRANSPORTADORA:</h5>
                                             <label class="label-input" for="">
                                                 <i class="far fa-envelope icon-modify"></i>
                                                 <select name="Transportadora" required style="display: block;" class="input-options-criar-pedido-select" id="Transp">
@@ -344,7 +344,8 @@ if (empty($_SESSION['nome'])){
                                                         <form action=\"function/processoItens.php\" method=\"POST\">
                                                             <div class=\"input-finalizar-pedido\">
                                                                 <input type=\"hidden\" name=\"codigoPedido\" value=\"" .$_SESSION['cod_pedido']. "\" style=\"display: block;\">
-                                                                <textarea id=\"texto\" name=\"texto\" rows=\"4\" cols=\"50\" placeholder=\"Informações adicionais para sua DANFE\"></textarea><br>
+                                                                <textarea id=\"texto\" name=\"texto\" placeholder=\"Informações adicionais para sua DANFE\"></textarea><br>
+                                                                <input type=\"text\" id=\"texto\" name=\"#\" placeholder=\"Data de Entrega:\" style=\"display: block;\">
                                                                 <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
                                                             </div>
                                                         </form>
