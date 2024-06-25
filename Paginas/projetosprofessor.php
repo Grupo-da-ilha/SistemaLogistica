@@ -14,7 +14,7 @@
 </head>
 <body>
 <?php
-// iniciar uma sessão
+// iniciar uma sessão 
 session_start();
 
 if (empty($_SESSION['nome'])){

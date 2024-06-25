@@ -8,8 +8,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/carga.css"/>
+    <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -82,9 +82,10 @@ if (empty($_SESSION['nome'])){
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
                     <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
                     <a href="danfe.php" class="functions-menu">DANFE</a>
-                    <a href="recebimentodoca.php" class="functions-menu">CONTROLE</a>
-                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="controledoca.php" class="functions-menu">CONTROLE</a>
                     <a href="#" class="functions-menu">ESTOQUE</a>
+                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="#" class="functions-menu">PICKING</a>
                     <a href="#" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="#" class="functions-menu">RELATÓRIOS</a>

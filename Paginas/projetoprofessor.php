@@ -133,13 +133,17 @@
         <div class="container-prin">
             <div class="functions-logistica">
                 <a href="criarpedido.php"><div class="card-function-log-pedido"></div></a>
-                <a href="#" id="openModal"><div class="card-function-log-recebimento"></div></a>
+                <a href="meuspedidos.php"><div class="card-function-log-meuspedidos"></div></a>
+                <a href="danfe.php"><div class="card-function-log-danfe"></div></a>
+                <a href="carga.php"><div class="card-function-log-vistoria"></div></a>
+                <a href="recebimentodoca.php"><div class="card-function-log-recebimento"></div></a>
+                <a href="controledoca.php"><div class="card-function-log-controle"></div></a>
+                <a href="estoque.php"><div class="card-function-log-estoque"></div></a>
                 <a href="movimentacao.php"><div class="card-function-log-movimentacao"></div></a>
-                <div class="card-function-log-estoque"></div>
+                <a href="operacaomovimentacao.php"><div class="card-function-log-operacao"></div></a>
                 <div class="card-function-log-picking"></div>
                 <div class="card-function-log-expedicao"></div>
                 <div class="card-function-log-relatorios"></div>
-                <a href="recebimentodoca.php"><div class="card-function-log-controle"></div></a>
                 <div class="card-function-log-cadas"></div>
             </div>
         </div>

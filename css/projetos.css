@@ -33,6 +33,7 @@ h4 {
     color: #fff;
     font-family: 'Poppins', sans-serif;
     font-size: 40px;
+    text-align: center;
     text-shadow: 0 0 5px rgb(0, 0, 0);
     cursor: default;
 }
@@ -133,8 +134,8 @@ h5 {
     background-image: url("cssimg/fundopag.jpg");
     background-position: center;
     background-size: cover;
-    background-repeat: repeat;
-    height: auto;
+    background-repeat: no-repeat;
+    height: 100vh;
   }
   h1 {
     font-size: 19px;
