@@ -57,10 +57,10 @@ if (isset($_POST['QTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_PO
 
         // Verificando se a ação é possível
         if ($quantidadeEstoque > $QuantidadeItem) {
-            echo json_encode(['success' => false, 'message' => 'Você selecionou mais itens do que o pedido possui para irem ao estoque']);
+            //echo json_encode(['success' => false, 'message' => 'Você selecionou mais itens do que o pedido possui para irem ao estoque']);
             exit();
         } elseif ($quantidadeEstoque > $QttDoca) {
-            echo json_encode(['success' => false, 'message' => 'Você selecionou mais itens para irem ao estoque do que estão parados na doca, verifique se os itens já não foram estocados']);
+           // echo json_encode(['success' => false, 'message' => 'Você selecionou mais itens para irem ao estoque do que estão parados na doca, verifique se os itens já não foram estocados']);
             exit();
         } else {
             // Atualizando a quantidade do item à espera na doca                 
@@ -70,12 +70,12 @@ if (isset($_POST['QTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_PO
             $executar = $conexao->query($Updateitem);
 
             if (!$executar) {
-                echo json_encode(['success' => false, 'message' => 'Erro ao atualizar a quantidade']);
+                //echo json_encode(['success' => false, 'message' => 'Erro ao atualizar a quantidade']);
                 exit();
             }
         }
     } else {
-        echo json_encode(['success' => false, 'message' => 'Erro ao processar dados']);
+        //echo json_encode(['success' => false, 'message' => 'Erro ao processar dados']);
         exit();
     }
 
@@ -92,14 +92,15 @@ if (isset($_POST['QTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_PO
         $execute = $conexao->query($InsetItemEstoque);
 
         if ($execute) {
-            echo json_encode(['success' => true, 'new_quantity' => $NewQTTDoca, 'message' => 'Item enviado para a movimentação']);
+            header("Location: ../controledoca.php");
+            //echo json_encode(['success' => true, 'new_quantity' => $NewQTTDoca, 'message' => 'Item enviado para a movimentação']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Erro ao enviar pedido para a movimentação']);
+            //echo json_encode(['success' => false, 'message' => 'Erro ao enviar pedido para a movimentação']);
         }
     } else {
-        echo json_encode(['success' => false, 'message' => 'A posição selecionada não existe no estoque']);
+        //echo json_encode(['success' => false, 'message' => 'A posição selecionada não existe no estoque']);
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Dados insuficientes']);
+    //echo json_encode(['success' => false, 'message' => 'Dados insuficientes']);
 }
 ?>

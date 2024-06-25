@@ -129,12 +129,13 @@ if (empty($_SESSION['nome'])){
                                         $codProduto = $rowProduct['cod_produto'];
 
                                         $selectinfoProdutos = "SELECT * FROM produtos WHERE cod_produto='$codProduto'";
-                                        $executeInforProduct = $conexao -> query($selectinfoProdutos)
-                                        ;
+                                        $executeInforProduct = $conexao -> query($selectinfoProdutos);
 
                                     }
 
                                     echo '';
+                                }else{
+
                                 }
 
                             }
