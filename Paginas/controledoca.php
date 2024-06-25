@@ -168,7 +168,7 @@ if (empty($_SESSION['nome'])) {
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                              <td class="Quantidade_espera" data-cod_itempedido="' . htmlspecialchars($codItemPedido) . '" data-id_pedido="' . htmlspecialchars($idpedido) . '">' . htmlspecialchars($Quantidade) . '</td>
-                                            <form class="form-enviar-produtos">
+                                            <form class="form-enviar-produtos" action="function/definirQTTposicao.php" method="POST">
                                                 <td>
                                                     <input type="text" id="QTDEstoque" name="QTDEstoque" placeholder="Quantidade Estoque" style="display:block;">
                                                 </td>
@@ -213,31 +213,6 @@ if (empty($_SESSION['nome'])) {
 }
 ?>
 <script>
-$('.form-enviar-produtos').submit(function(e) {
-    e.preventDefault();
-    var formData = $(this).serialize();
-    $.ajax({
-        type: 'POST',
-        url: 'function/definirQTTposicao.php',
-        data: formData,
-        success: function(response) {
-            var jsonResponse = JSON.parse(response);
-            if (jsonResponse.success) {
-                var cod_itempedido = formData.match(/cod_itempedido=([^&]*)/)[1];
-                var id_pedido = formData.match(/id_pedido=([^&]*)/)[1];
-                var novaQuantidade = response.new_quantity;
-
-                $('td.Quantidade_espera[data-cod_itempedido="' + cod_itempedido + '"][data-id_pedido="' + id_pedido + '"]').text(novaQuantidade);
-                alert(jsonResponse.success);
-            } else {
-                alert(jsonResponse.success);
-            }
-        },
-        error: function(xhr, status, error) {
-            alert('Erro na comunicação com o servidor: ' + error);
-        }
-    });
-});
 </script>
 </body>
 </html>
