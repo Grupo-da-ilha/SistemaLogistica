@@ -67,6 +67,7 @@ h8 {
   cursor: default;
 }
 .criar-pedido-container {
+    margin-top: 10px;
     z-index: 0;
     width: 95%;
     min-height: 91%;
