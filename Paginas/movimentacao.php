@@ -11,31 +11,6 @@
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/movimentacao.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
-    <style>
-        .tabela {
-            padding: 5px;
-            width: 100%;
-            height: 300px;
-            background-color: rgb(0, 119, 255);
-            border: 1px;
-            border-radius: 15px;
-            box-shadow: 0 0 10px rgb(0, 119, 255);
-        }
-        .tabela {
-            width: 100px;
-            height: auto;
-        }
-        th, tr, td {
-            padding: 5px;
-            justify-content: center;
-            align-items: center;
-            background-color: #ffffff;
-            border-radius: 3px;
-            font-family: 'Poppins', sans-serif;
-            color: #000000;
-            font-size: 15px;
-        }
-    </style>
 </head>
 <body>
 <?php
@@ -108,7 +83,7 @@ if (empty($_SESSION['nome'])){
                 <div class="titulo-recebimento">
                     <h3>MOVIMENTAÇÃO</h3>    
                 </div>
-                <h6> Operações em aberto </h6>
+                <h4> Operações em aberto </h6>
                 <h7> Selecione os produtos desejados para ir à operação </h7>
                 ';
                 $sql = "SELECT * FROM itensestoque WHERE Situacao = 'Em movimentação'";
@@ -183,7 +158,9 @@ if (empty($_SESSION['nome'])){
                     echo '
                         </table>
                         <br>
-                        <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Ir para operação" style="display:block;">
+                        <div class="iroperacao">
+                            <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Ir para operação" style="display:block;" class="irparaoperacao">
+                        </div>  
                     </form>
                     </div>
                     ';
