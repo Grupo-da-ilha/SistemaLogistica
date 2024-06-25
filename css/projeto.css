@@ -46,7 +46,8 @@ h3 {
 .card-function-log-vistoria,
 .card-function-log-recebimento,
 .card-function-log-movimentacao, 
-.card-function-log-estoque, 
+.card-function-log-estoque,
+.card-function-log-operacao, 
 .card-function-log-picking, 
 .card-function-log-expedicao,
 .card-function-log-relatorios,
@@ -68,7 +69,8 @@ h3 {
 .card-function-log-vistoria:hover,
 .card-function-log-recebimento:hover,
 .card-function-log-movimentacao:hover, 
-.card-function-log-estoque:hover, 
+.card-function-log-estoque:hover,
+.card-function-log-operacao:hover,
 .card-function-log-picking:hover, 
 .card-function-log-expedicao:hover,
 .card-function-log-relatorios:hover,
@@ -98,6 +100,9 @@ h3 {
 }
 .card-function-log-estoque {
     background-image: url("cssimg/estoque.png");
+}
+.card-function-log-operacao {
+    background-image: url("cssimg/operacao.png");
 }
 .card-function-log-picking {
     background-image: url("cssimg/picking.png");
