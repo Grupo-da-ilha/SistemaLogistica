@@ -85,6 +85,7 @@ h8 {
 .criar-danfe-container {
     z-index: 0;
     width: 95%;
+    min-height: 8vh;
     height: 90%;
     background-color: #ffffff;;
     border-radius: 30px;
