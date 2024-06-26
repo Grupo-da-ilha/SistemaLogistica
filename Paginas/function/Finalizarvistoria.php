@@ -22,6 +22,7 @@ if ($conexao->connect_errno) {
     } else {
         echo ''.$_SESSION['Idprojeto']. '';
     }
+    
     $sql = "SELECT * FROM itenspedido WHERE cod_pedido = '{$_SESSION['Idpedido']}' AND codTurma ='{$_SESSION['codTurma']}'";
     $execute = $conexao -> query($sql);
 

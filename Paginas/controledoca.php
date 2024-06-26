@@ -123,6 +123,10 @@ if (empty($_SESSION['nome'])) {
                     $row = $execute->fetch_assoc();
                     $cod_pedido = $row['cod_pedido'];
 
+                    //Atualizar situação do pedido
+                    $UpdateSituacao = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE id_pedido = '$idpedido'";
+                    $ExecuteUpdate = $conexao -> query($UpdateSituacao);
+
                     echo '<div class="DivInicial" style="display:flex; margin-bottom: 50px">
                             <h6> Código do pedido: ' . htmlspecialchars($cod_pedido) . '</h6>
                             <h6> Doca: ' . htmlspecialchars($doca) . '</h6>
