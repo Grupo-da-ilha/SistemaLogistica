@@ -174,7 +174,7 @@ if (empty($_SESSION['nome'])){
         }
         echo '</table></div>';
     } else {
-        echo "Nenhum item selecionado";
+        echo "Nenhuma operação em aberto";
     }
 }
 ?>

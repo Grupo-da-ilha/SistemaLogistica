@@ -289,28 +289,30 @@ $('#form-doca').submit(function(e) {
     });
 });
 
-$('.form-conferencia').submit(function(e) {
-    e.preventDefault(); 
-    var formData = $(this).serialize(); 
-    console.log(formData);
-    $.ajax({
-        type: 'POST',
-        url: 'function/processorecebimento.php',
-        data: formData,
-        success: function(response) {
-            var jsonResponse = JSON.parse(response);
-            if (jsonResponse.success) {
-                alert(jsonResponse.message); 
-            } else {
-                alert(jsonResponse.message); 
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-            alert('Erro ao enviar dados do formulário.');
-        }
+$(document).ready(function() {
+        $('.form-conferencia').on('submit', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            console.log(formData);
+            $.ajax({
+                type: 'POST',
+                url: 'function/processorecebimento.php',
+                data: formData,
+                success: function(response) {
+                    var jsonResponse = JSON.parse(response);
+                    if (jsonResponse.success) {
+                        alert(jsonResponse.message);
+                    } else {
+                        alert(jsonResponse.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Erro ao enviar dados do formulário.');
+                }
+            });
+        });
     });
-});
 
 $('.form-vistoria-completa').submit(function(e) {
     e.preventDefault(); 
