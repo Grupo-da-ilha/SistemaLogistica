@@ -60,14 +60,15 @@ if ($conexao->connect_errno) {
     $datahoje = date("Y-m-d H:i:s");
 
     //Atualizando dados do pedido e da nota fiscal
-    if (isset($_POST['UpdateValor']) && !empty($_SESSION['cod_pedido'])) {
-        $sql = "UPDATE `pedido` SET Situacao = 'Em transporte', DataVenda = '$datahoje' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
+    if (isset($_POST['UpdateValor']) && !empty($_SESSION['cod_pedido']) && !empty($_POST['DataEntrega'])) {
+        $dataentrega = $_POST['DataEntrega'];
+        $sql = "UPDATE `pedido` SET Situacao = 'Em transporte', DataVenda = '$datahoje', DataEntrega = '$dataentrega' WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
         $resultado = $conexao->query($sql);
 
 
         if($resultado && !empty($_POST['texto'])){
             $texto = $_POST['texto'];
-            $sql = "UPDATE `pedido` SET InformacaoAdicional = '".$texto."', DataVenda = '$datahoje'  WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
+            $sql = "UPDATE `pedido` SET InformacaoAdicional = '".$texto."', DataVenda = '$datahoje', DataEntrega = '$dataentrega'  WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
             $resultado = $conexao->query($sql);
         }
         if ($resultado) {

@@ -123,10 +123,6 @@ if (empty($_SESSION['nome'])) {
                     $row = $execute->fetch_assoc();
                     $cod_pedido = $row['cod_pedido'];
 
-                    //Atualizar situação do pedido
-                    $UpdateSituacao = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE id_pedido = '$idpedido'";
-                    $ExecuteUpdate = $conexao -> query($UpdateSituacao);
-
                     echo '<div class="DivInicial" style="display:flex; margin-bottom: 50px">
                             <h6> Código do pedido: ' . htmlspecialchars($cod_pedido) . '</h6>
                             <h6> Doca: ' . htmlspecialchars($doca) . '</h6>
@@ -171,8 +167,8 @@ if (empty($_SESSION['nome'])) {
                                     echo '<tr>
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
-                                             <td class="Quantidade_espera" data-cod_itempedido="' . htmlspecialchars($codItemPedido) . '" data-id_pedido="' . htmlspecialchars($idpedido) . '">' . htmlspecialchars($Quantidade) . '</td>
-                                            <form class="form-enviar-produtos" action="function/definirQTTposicao.php" method="POST">
+                                             <td class="Quantidade_espera" data-cod_itempedido="' . htmlspecialchars($codItemPedido) . '" data-id_pedido="' . htmlspecialchars($idpedido) . '">' . htmlspecialchars($QuantidadeDoca) . '</td>
+                                            <form class="form-enviar-produtos">
                                                 <td>
                                                     <input type="text" id="QTDEstoque" name="QTDEstoque" placeholder="Quantidade Estoque" style="display:block;">
                                                 </td>
@@ -216,7 +212,36 @@ if (empty($_SESSION['nome'])) {
             </main>';
 }
 ?>
-<script>
+<script>    
+$('.form-enviar-produtos').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    console.log(formData);  // Verifique se os dados do formulário estão corretos
+    $.ajax({
+        type: 'POST',
+        url: 'function/definirQTTposicao.php',
+        data: formData,
+        success: function(response) {
+            console.log(response);  // Verifique a resposta do servidor
+            var jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                var inputEspera = document.getElementsByClassName('Quantidade_espera');
+                for (var i = 0; i < inputEspera.length; i++) {
+                    if (inputEspera[i].getAttribute('data-cod_itempedido') == jsonResponse.codItemPedido) {
+                        inputEspera[i].textContent = jsonResponse.newqttdoca;
+                        break;
+                    }
+                }
+            } else {
+                alert(jsonResponse.message); 
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
 </script>
 </body>
 </html>

@@ -132,6 +132,12 @@ if (empty($_SESSION['nome'])) {
     $execute = $conexao->query($sql);
 
     if ($execute && $execute->num_rows > 0){
+
+        //Buscando data de entrega
+        $rowPedido = $execute -> fetch_assoc();
+        $dataentrega = $rowPedido['DataEntrega'];
+        $valortotal = $rowPedido['ValorTotal'];
+
         if(!isset($_POST['enviar_cod']) && empty($_POST['cod_pedido'])){
         $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
                 nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.id_pedido
@@ -202,6 +208,8 @@ if (empty($_SESSION['nome'])) {
                     echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
+                    echo '<p>Data de Entrega: ' . htmlspecialchars($dataentrega) . '</p>';
+                    echo '<p>Valor Total: ' . htmlspecialchars($valortotal) . '</p>';
                     echo'</div>
                     <div class="barras-danfe">
                     </div>
@@ -248,7 +256,66 @@ if (empty($_SESSION['nome'])) {
                     echo '</div>';
                     echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
                     echo'</div>';
+                    echo'<div class="infos-adicionais">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>INFORMAÇÕES DO PEDIDO:</h7>';
+                    echo '</div>';
+                    echo '<table class="tabela">
+                            <th> 
+                                <tr> NOME <tr>
+                                <tr> Quantidade <tr>
+                                <tr> Valor Unitario <tr>
+                                <tr> Valor  Total<tr>
+                                <tr> UN<tr>
+                            </th>';
+                         //Buscas itenspedido 
+                            $selectItens = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['idpedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
+                            $executeItens = $conexao -> query($selectItens);
+
+                            if($executeItens && $executeItens -> num_rows > 0){
+                                while($rowitens = $executeItens -> fetch_assoc()){
+
+                                    //Informações dos itens
+                                    $cod_produto = $rowitens['cod_produto'];
+                                    $QuantidadeItem = $rowitens['Quantidade'];
+                                    $ValorUnitario = $rowitens['ValorUnitario'];
+                                    $ValorTotalItem = $rowitens['ValorTotal'];
+
+
+                                    $selectProdutos = "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
+                                    $executeProdutos = $conexao -> query($selectProdutos);
+
+                                    if($executeProdutos && $executeProdutos -> num_rows > 0){
+
+                                        while($rowProdutos = $executeProdutos-> fetch_assoc()){
+                                        
+                                        //Informações dos Produtos
+                                        $nome_produto = $rowProdutos['Nome'];
+                                        $UN_produto = $rowProdutos['UN'];
+                                        $NCM_produto = $rowProdutos['NCM'];
+
+                                        echo '<tr>
+                                            <td>' . htmlspecialchars($nome_produto) . '</td>
+                                            <td>' . htmlspecialchars($QuantidadeItem) . '</td>
+                                            <td>' . htmlspecialchars($ValorUnitario) . '</td>
+                                            <td>' . htmlspecialchars($ValorTotalItem) . '</td>
+                                            <td>' . htmlspecialchars($UN_produto) . '</td>
+                                        </tr>
+                                        ';
+                                        
+                                    }
+                                    echo'</table>';
+                                    }else{
+                                        echo 'erro sql produtos';
+                                    }
+                                }
+                            }else{
+                                echo 'erro sql itenspedido';
+                            }
                     echo'</div>';
+                    echo'</div>';
+                    echo'</div>';
+                    
                     } else {
                         echo "<p>Destinatário não encontrado</p>";
                     }
@@ -266,6 +333,18 @@ if (empty($_SESSION['nome'])) {
 
 if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
     $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
+
+    
+    $sqlPedido = "SELECT * FROM pedido  WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
+    $executarPedido = $conexao->query($sqlPedido);
+
+    if($executarPedido && $executarPedido -> num_rows > 0){
+        $rowPedido2 = $executarPedido -> fetch_assoc();
+        $dataEntrega = $rowPedido2['DataEntrega'];
+        $valorTotal = $rowPedido2['ValorTotal'];
+    }else{
+        echo 'erro';
+    }
     
     $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
             nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.id_pedido
@@ -336,6 +415,8 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
+                    echo '<p>Data de Emissão: ' . htmlspecialchars($dataEntrega) . '</p>';
+                    echo '<p>Valor Total: ' . htmlspecialchars($valorTotal) . '</p>';
                     echo'</div>
                     <div class="barras-danfe">
                     </div>
@@ -381,6 +462,63 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<h7>INFORMAÇÕES ADICIONAIS:</h7>';
                     echo '</div>';
                     echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
+                    echo'</div>';
+                    echo'<div class="infos-adicionais">
+                    <div class="titulo-div-danfe">';
+                    echo '<h7>INFORMAÇÕES DO PEDIDO:</h7>';
+                    echo '</div>';
+                    echo '<table class="tabela">
+                            <th> 
+                                <tr> NOME <tr>
+                                <tr> Quantidade <tr>
+                                <tr> Valor Unitario <tr>
+                                <tr> Valor  Total<tr>
+                                <tr> UN<tr>
+                            </th>';
+                         //Buscas itenspedido 
+                            $selectItens = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['idpedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
+                            $executeItens = $conexao -> query($selectItens);
+
+                            if($executeItens && $executeItens -> num_rows > 0){
+                                while($rowitens = $executeItens -> fetch_assoc()){
+
+                                    //Informações dos itens
+                                    $cod_produto = $rowitens['cod_produto'];
+                                    $QuantidadeItem = $rowitens['Quantidade'];
+                                    $ValorUnitario = $rowitens['ValorUnitario'];
+                                    $ValorTotalItem = $rowitens['ValorTotal'];
+
+
+                                    $selectProdutos = "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
+                                    $executeProdutos = $conexao -> query($selectProdutos);
+
+                                    if($executeProdutos && $executeProdutos -> num_rows > 0){
+
+                                        while($rowProdutos = $executeProdutos-> fetch_assoc()){
+                                        
+                                        //Informações dos Produtos
+                                        $nome_produto = $rowProdutos['Nome'];
+                                        $UN_produto = $rowProdutos['UN'];
+                                        $NCM_produto = $rowProdutos['NCM'];
+
+                                        echo '<tr>
+                                            <td>' . htmlspecialchars($nome_produto) . '</td>
+                                            <td>' . htmlspecialchars($QuantidadeItem) . '</td>
+                                            <td>' . htmlspecialchars($ValorUnitario) . '</td>
+                                            <td>' . htmlspecialchars($ValorTotalItem) . '</td>
+                                            <td>' . htmlspecialchars($UN_produto) . '</td>
+                                        </tr>
+                                        ';
+                                        
+                                    }
+                                    echo'</table>';
+                                    }else{
+                                        echo 'erro sql produtos';
+                                    }
+                                }
+                            }else{
+                                echo 'erro sql itenspedido';
+                            }
                     echo'</div>';
                     echo'</div>';
 

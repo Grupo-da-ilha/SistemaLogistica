@@ -345,7 +345,7 @@ if (empty($_SESSION['nome'])){
                                                             <div class=\"input-finalizar-pedido\">
                                                                 <input type=\"hidden\" name=\"codigoPedido\" value=\"" .$_SESSION['cod_pedido']. "\" style=\"display: block;\">
                                                                 <textarea id=\"texto\" name=\"texto\" placeholder=\"Informações adicionais para sua DANFE\"></textarea><br>
-                                                                <input type=\"text\" id=\"texto\" name=\"#\" placeholder=\"Data de Entrega:\" style=\"display: block;\">
+                                                                <input type=\"datetime-local\" id=\"texto\" name=\"DataEntrega\" placeholder=\"Data de Entrega:\" style=\"display: block;\">
                                                                 <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
                                                             </div>
                                                         </form>
