@@ -229,6 +229,7 @@ nav {
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: space-evenly;
+      border-radius: 0;
   }
   .button-main {
       margin-left: 0;
