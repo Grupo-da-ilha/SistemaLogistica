@@ -156,10 +156,12 @@ if (empty($_SESSION['nome'])){
                                     <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                     <td>' . htmlspecialchars($Quantidade) . '</td>
                                     <td>' . htmlspecialchars($posicao) . '</td>
-                                    <td>
-                                        <input type="hidden" name="CodigoItemEstoque" value="' . htmlspecialchars($codItemEstoque) . '">
-                                        <input type="submit" id="FinalizarEstoque" name="FinalizarEstoque" value="Finalizar" style="display:block;">
-                                    </td>
+                                    <form action="function/EnviarEstoque.php" method="POST">
+                                        <td>
+                                            <input type="hidden" name="CodigoItemEstoque" value="' . htmlspecialchars($codItemEstoque) . '">
+                                            <input type="submit" id="FinalizarEstoque" name="FinalizarEstoque" value="Finalizar" style="display:block;">
+                                        </td>
+                                    </form>
                                 </tr>';
                         }   
                     } else {
@@ -183,4 +185,4 @@ if (empty($_SESSION['nome'])){
     </div>
 </main>
 </body>
-</html>
+</html> 
