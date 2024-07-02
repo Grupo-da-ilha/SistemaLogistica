@@ -163,7 +163,7 @@ if (empty($_SESSION['nome'])) {
 
                             if ($executar && $executar->num_rows > 0) {
                                 while ($rowProdutos = $executar->fetch_assoc()) {
-                                    echo '<tr class = "tr-itens">
+                                    echo '<tr>
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td class="Quantidade_espera" cod_itempedido="' . htmlspecialchars($codItemPedido) . '">' . htmlspecialchars($QuantidadeDoca) . '</td>

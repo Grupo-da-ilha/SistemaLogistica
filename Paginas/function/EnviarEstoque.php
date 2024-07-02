@@ -31,9 +31,9 @@ if ($conexao->connect_errno) {
         $sqlUpdate = $conexao -> query($UpdateSituacao);
 
         if(!$sqlUpdate){
-            echo 'Erro ao atualizar situacao';
+            echo json_encode(['success' => false, 'message' => 'Erro ao atualizar situacao']);
         }else{
-            header('Location: ../operacaomovimentacao.php?update=1', true, 301);
+            echo json_encode(['success' => true, 'cod_itenestoque' => $cod_itenestoque, 'Situacao' => 'No estoque']);
         }
     }
 }

@@ -156,9 +156,9 @@ if (empty($_SESSION['nome'])){
                                     <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                     <td>' . htmlspecialchars($Quantidade) . '</td>
                                     <td>' . htmlspecialchars($posicao) . '</td>
-                                    <form action="function/EnviarEstoque.php" method="POST">
+                                    <form class="form-finalizar-operacao">
                                         <td>
-                                            <input type="hidden" name="CodigoItemEstoque" value="' . htmlspecialchars($codItemEstoque) . '">
+                                            <input type="hidden" class="CodigoItemEstoque" name="CodigoItemEstoque" value="' . htmlspecialchars($codItemEstoque) . '">
                                             <input type="submit" id="FinalizarEstoque" name="FinalizarEstoque" value="Finalizar" style="display:block;">
                                         </td>
                                     </form>
@@ -171,7 +171,7 @@ if (empty($_SESSION['nome'])){
                     echo 'Erro ao buscar item';
                 }  
             } else {
-                echo 'Erro';
+                echo 'Operações finalizadas com sucesso';
             }
         }
         echo '</table></div>';
@@ -184,5 +184,43 @@ if (empty($_SESSION['nome'])){
         </div>
     </div>
 </main>
+<script>
+$('.form-finalizar-operacao').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    console.log(formData);  // Verifique se os dados do formulário estão corretos
+    $.ajax({
+        type: 'POST',
+        url: 'function/EnviarEstoque.php',
+        data: formData,
+        success: function(response) {
+            console.log(response);  // Verifique a resposta do servidor
+            var jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                var inputcoditem = document.getElementsByClassName('CodigoItemEstoque');
+                for (var i = 0; i < inputcoditem.length; i++) {
+                    if (inputcoditem[i].getAttribute('value') == jsonResponse.cod_itenestoque) {
+                        if (jsonResponse.Situacao == 'No estoque') {
+                            var row = inputcoditem[i].closest('tr');
+                            if (row) {
+                                row.remove();
+                            }
+                        } else {
+                            inputcoditem[i].textContent = jsonResponse.cod_itenestoque;
+                        }
+                        break;
+                    }
+                }
+            } else {
+                alert(jsonResponse.message); 
+            }       
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
+</script>
 </body>
 </html> 
