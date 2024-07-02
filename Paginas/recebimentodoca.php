@@ -139,6 +139,12 @@ if (empty($_SESSION['nome'])){
                 while($row = $executeItem->fetch_assoc()){
                     $faltando = $conexao->real_escape_string($row['Faltando']);
                     $avariado = $conexao->real_escape_string($row['Avariado']);
+                    $QttDoca = $conexao->real_escape_string($row['Quantidade_doca']);
+
+                    if($QttDoca == 0){
+                        $sqlUpdatepedido = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE codTurma ='$codTurma' AND id_pedido = '$idpedidos'";
+                        $executeUpdate = $conexao->query($sqlUpdatepedido);
+                    }
 
                     if($avariado == 1 && $faltando == 0){
                         $Avariado = 'SIM';
@@ -193,6 +199,7 @@ if (empty($_SESSION['nome'])){
         </div>
     </main>';
 
-} ?>
+} 
+?>
 </body>
 </html>

@@ -142,7 +142,6 @@ if (empty($_SESSION['nome'])) {
                                         <td>Posição no Estoque</td>
                                         <td>Ações</td>
                                     </tr>';
-
                         while ($row = $execute->fetch_assoc()) {
                             $cod_produto = $row['cod_produto'];
                             $Quantidade = $row['Quantidade'];
@@ -164,11 +163,11 @@ if (empty($_SESSION['nome'])) {
 
                             if ($executar && $executar->num_rows > 0) {
                                 while ($rowProdutos = $executar->fetch_assoc()) {
-                                    echo '<tr>
+                                    echo '<tr class = "tr-itens">
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
-                                             <td class="Quantidade_espera" data-cod_itempedido="' . htmlspecialchars($codItemPedido) . '" data-id_pedido="' . htmlspecialchars($idpedido) . '">' . htmlspecialchars($QuantidadeDoca) . '</td>
-                                            <form class="form-enviar-produtos">
+                                            <td class="Quantidade_espera" cod_itempedido="' . htmlspecialchars($codItemPedido) . '">' . htmlspecialchars($QuantidadeDoca) . '</td>
+                                            <form class="form-enviar-produtos" >
                                                 <td>
                                                     <input type="text" id="QTDEstoque" name="QTDEstoque" placeholder="Quantidade Estoque" style="display:block;">
                                                 </td>
@@ -192,7 +191,10 @@ if (empty($_SESSION['nome'])) {
                         echo '</table>
                         </div>';
                     } else {
-                        echo '<p>Esse pedido não possui itens</p>';
+                        $UpdateSituation = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE cod_pedido = '$idpedido' AND codTurma = '{$_SESSION['codTurma']}'";
+                        $executeUpdate = $conexao -> query($UpdateSituation);
+
+                        echo '<p>Esse pedido não possui itens ou itens já foram enviados para a movimentação</p>';
                     }
                 } else {
                     echo '<p>Pedido não encontrado ou pedido não passou pela vistoria ainda</p>';
@@ -227,14 +229,24 @@ $('.form-enviar-produtos').submit(function(e) {
             if (jsonResponse.success) {
                 var inputEspera = document.getElementsByClassName('Quantidade_espera');
                 for (var i = 0; i < inputEspera.length; i++) {
-                    if (inputEspera[i].getAttribute('data-cod_itempedido') == jsonResponse.codItemPedido) {
-                        inputEspera[i].textContent = jsonResponse.newqttdoca;
+                    if (inputEspera[i].getAttribute('cod_itempedido') == jsonResponse.codItemPedido) {
+                        if (jsonResponse.newqttdoca == 0) {
+                            var row = inputEspera[i].closest('tr');
+                            if (row) {
+                                row.remove();
+                            }
+                        } else {
+                            inputEspera[i].textContent = jsonResponse.newqttdoca;
+                        }
                         break;
                     }
                 }
+                setTimeout(function() {
+                    window.location.reload();
+                }, 100);
             } else {
                 alert(jsonResponse.message); 
-            }
+            }       
         },
         error: function(xhr, status, error) {
             console.error(error);
