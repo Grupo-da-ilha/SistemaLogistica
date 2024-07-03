@@ -115,10 +115,12 @@ if (empty($_SESSION['nome'])){
                             <div class="submenus-pedidos">
                                 <h4> FILTRO:</h4>
                                 <div class="info-pedido">
-                                <input type="text" name="#" style="display: block;" class="input-options-criar-pedido" placeholder="Produto:">
-                                <input type="text" name="#" style="display: block;" class="input-options-criar-pedido" placeholder="UN">
-                                <input type="text" name="#" style="display: block;" class="input-options-criar-pedido" placeholder="Quantidade:">
-                                <input type="submit" name="#" value="CONSULTAR" style="display: block;" class="input-function-criar-pedido">
+                                    <form class="form-estoque-posicao">
+                                        <input type="text" name="nome_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Produto:">
+                                        <input type="text" name="UN_produto" style="display: block;" class="input-options-criar-pedido" placeholder="UN">
+                                        <input type="text" name="Quantidade_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Quantidade:">
+                                        <input type="submit" value="CONSULTAR" style="display: block;" class="input-function-criar-pedido">
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -159,6 +161,31 @@ if (empty($_SESSION['nome'])){
             </div>
         </div>
     </main>
+    <script>
+    $('.form-estoque-posicao').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    console.log(formData);  // Verifique se os dados do formulário estão corretos
+    $.ajax({
+        type: 'POST',
+        url: 'function/VerificarEstoque.php',
+        data: formData,
+        success: function(response) {
+            console.log(response);  // Verifique a resposta do servidor
+            var jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                alert(jsonResponse.message); 
+            } else {
+                alert(jsonResponse.message); 
+            }       
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
+    </script>
 </body>
 </html>
 
