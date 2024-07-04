@@ -1,0 +1,491 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap');
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("cssimg/fundopag.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+}
+p {
+  margin-left: 27%;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-size:  30px;
+  text-shadow: 0 0 2px rgb(0, 119, 255);
+  cursor: default;
+}
+h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    text-shadow: 0 0 2px rgb(0, 119, 255);
+    cursor: default;
+}
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 25px;
+    text-shadow: 0 0 2px rgb(0, 119, 255);
+    cursor: default;
+}
+h3 {
+    color: #eeeeee;
+    font-family: 'Poppins', sans-serif;
+    font-size: 70px;
+    text-shadow: 0 0 10px rgb(0, 0, 0);
+    cursor: default;
+}
+h4 {
+  margin-top: 4vh;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  text-shadow: 0 0 10px rgb(0, 119, 255);
+  cursor: default;
+}
+h5 {  
+  margin-top: 1vh;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-size:  20px;
+  cursor: default;
+}
+h6 {  
+  margin-left: 10px;
+  margin-top: 1vh;
+  color: #000000;
+  font-family: 'Poppins', sans-serif;
+  font-size:  20px;
+  cursor: default;
+}
+.recebimentocontainer {
+    margin-top: 10px;
+    z-index: 0;
+    width: 95%;
+    min-height: 82vh;
+    background-color: #ffffff;;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content:first baseline;
+    align-items: center;
+}
+.titulo-recebimento {
+    z-index: 2;
+    width: 100%;
+    height: 10vh;
+    border-radius: 30px 30px 30px 5px;
+    background-color: rgb(0, 119, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px rgb(0, 119, 255);
+}
+.info-total {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: first baseline;
+}
+.vistoria-carga {
+  z-index: 0;
+    width: 191.5vh;
+    min-height: 74vh;
+    background-color: #eeeeee;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content:first baseline;
+    align-items: center;
+    text-align: center;
+}
+.notafiscal {
+  height: 74vh;
+  border-radius: 0 30px 30px 0;
+  box-shadow: 0 0 15px rgb(0, 119, 255);
+  background-color: #eeeeee;
+}
+.vistoria {
+  z-index: 3;
+  margin-top: -1vh;
+  width: 70vh;
+  height: 74vh;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: center;
+  border-radius: 0 30px 30px 30px;
+  box-shadow: 0 0 15px rgb(0, 119, 255);
+}
+.info-vistoria {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: first baseline;
+}
+#form-nota-pedido {
+  margin: 20px;
+  width: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+#form-doca {
+  margin: 20px;
+  width: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.idnotafiscal, .pedidodecompra, .doca {
+  margin-top: 10px;
+  display: block;
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 0 0 7px rgb(0, 119, 255);
+}
+#pedido-nota, #enviar_doca {
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: rgb(0, 119, 255);
+  border-radius: 20px;
+  border: none;
+  height: 40px;
+  color: white;
+  box-shadow: 0 0 7px rgb(0, 119, 255);
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#pedido-nota:hover, #enviar_doca:hover {
+  background-color: rgb(45, 143, 255);
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.05);
+  animation: animate 1s linear infinite;
+}
+.produtos {
+  width: 100%;
+  height: 74vh;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: center;
+  border-radius: 0 0px 30px 0px;
+  box-shadow: 0 0 15px rgb(0, 119, 255);
+}
+#idprodutos {
+  margin-top: 10px;
+  display: block;
+  width: 95%;
+  height: 40px;
+  outline: none;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 0 0 7px rgb(0, 119, 255);
+}
+.avariado-produto, .falta-produto {
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 2px;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: none;
+  outline: none;
+  background-color: #eeeeee00;
+}
+.tabela {
+  margin-top: 20px;
+  padding: 5px;
+  width: 90vw;
+  height: auto;
+  background-color: rgb(0, 119, 255);
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgb(0, 119, 255);
+}
+th, tr, td {
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 3px;
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+  font-size: 15px;
+}
+#Registrar, .Vistoria-Concluída {
+  cursor: pointer;
+  width: 100%;
+  height: 25px;
+  background-color: rgb(0, 119, 255);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgb(0, 119, 255);
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+.Vistoria-Concluída:hover {
+  background-color: lightgreen;
+}
+#Finalizar {
+  cursor: pointer;
+  width: 40vh;
+  height: 35px;
+  background-color: rgb(0, 119, 255);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgb(0, 119, 255);
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+#Registrar:hover, .Vistoria-Concluída:hover, #Finalizar:hover {
+  background-color: rgb(45, 143, 255);
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.05);
+  animation: animate 1s linear infinite;
+} 
+
+
+
+
+@media only screen and (max-width: 600px) {
+  body {
+    background-image: url("cssimg/fundopag.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+  }
+  p {
+    font-size: 20px;
+    margin:auto;
+  }
+  h1 {
+    font-size: 19px;
+    text-shadow: 0 0 2px rgb(0, 119, 255);
+    text-wrap: nowrap;
+}
+h3{
+  font-size: 24px;
+  text-align: center;
+}
+h2 {
+    margin-left: 2vh;
+    font-size: 15px;
+    text-wrap: nowrap;
+}
+.main-horizontal {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.button-main {
+    margin-left: 0;
+}
+.ul-main {
+    display: flex;
+    flex-direction: row;
+}
+
+.li-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.teste {
+    width: auto;
+    height: 100%;
+}
+nav {
+    width: 20em;
+    height: 85%;
+    margin-top: 90vh;
+}
+.container-prin {
+    margin-top: -10vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.info-total {
+  flex-direction: column;
+  justify-content: first baseline;
+  height: auto;
+}
+.recebimentocontainer{
+  width: 95vw;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #ffffff;
+}
+.vistoria-carga {
+  width: 95vw;
+  height: auto;
+  background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: first baseline;
+  align-items: center;
+  border-radius: 0;
+}
+
+
+
+
+
+
+
+
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+  body {
+    background-image: url("cssimg/fundopag.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: auto;
+  }
+  h1 {
+    font-size: 30px;
+    cursor: default;
+    text-wrap: nowrap;
+}
+
+h2 {
+    text-align: right;
+    font-size: 25px;
+    cursor: default;
+    text-wrap: nowrap;
+}
+.main-horizontal {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.teste2 {
+    width: 50vh;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: baseline;
+    align-items: center;
+}
+.button-main {
+    margin-left: 0;
+}
+nav {
+    width: 20em;
+    height: auto;
+    margin-top: 60vh;
+}
+.li-vertical, .li-vertical-menu {
+  height: 5em;
+  margin-top: 5px;
+}
+.container-prin {
+    margin-top: -91vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+}
+
+
+
+
+
+
+
+
+
+
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  h1 {
+    font-size: 30px;
+    cursor: default;
+    text-wrap: nowrap;
+}
+
+h2 {
+    margin-left: 300%;
+    font-size: 25px;
+    cursor: default;
+    text-wrap: nowrap;
+}
+h4 {
+  margin: 5px;
+}
+nav {
+    width: 20em;
+    height: auto;
+    margin-top: 90vh;
+}
+.container-prin {
+    margin-top: -91vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.submenu {
+  margin-top: 6vh;
+  height: 6vh;
+}
+.criar-pedido-container {
+  margin-top: 40px;
+  width: 95%;
+  height: auto;
+}
+.criar-pedidos-container {
+  width: 100%;
+}
+.info-total {
+justify-content: left;
+width: 100%;
+}
+.submenus-pedidos {
+width: 30%;
+height: 100%;
+}
+}
