@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06/06/2024 às 01:42
+-- Tempo de geração: 04/07/2024 às 13:44
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -58,6 +58,13 @@ CREATE TABLE `docas` (
   `codTurma` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Despejando dados para a tabela `docas`
+--
+
+INSERT INTO `docas` (`cod_doca`, `posicao`, `id_pedido`, `codTurma`) VALUES
+(18, '2', 16, 'S3naiAdmin');
+
 -- --------------------------------------------------------
 
 --
@@ -67,35 +74,34 @@ CREATE TABLE `docas` (
 CREATE TABLE `estoque` (
   `cod_estoque` int(11) NOT NULL,
   `Andar` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Apartamento` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Quantidade_setor` int(11) NOT NULL
+  `Apartamento` varchar(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Despejando dados para a tabela `estoque`
 --
 
-INSERT INTO `estoque` (`cod_estoque`, `Andar`, `Apartamento`, `Quantidade_setor`) VALUES
-(1, 'A', '1', 0),
-(2, 'A', '2', 0),
-(3, 'A', '3', 0),
-(4, 'A', '4', 0),
-(5, 'A', '5', 0),
-(6, 'B', '1', 0),
-(7, 'B', '2', 0),
-(8, 'B', '3', 0),
-(9, 'B', '4', 0),
-(10, 'B', '5', 0),
-(11, 'C', '1', 0),
-(12, 'C', '2', 0),
-(13, 'C', '3', 0),
-(14, 'C', '4', 0),
-(15, 'C', '5', 0),
-(16, 'D', '1', 0),
-(17, 'D', '2', 0),
-(18, 'D', '3', 0),
-(19, 'D', '4', 0),
-(20, 'D', '5', 0);
+INSERT INTO `estoque` (`cod_estoque`, `Andar`, `Apartamento`) VALUES
+(1, 'A', '1'),
+(2, 'A', '2'),
+(3, 'A', '3'),
+(4, 'A', '4'),
+(5, 'A', '5'),
+(6, 'B', '1'),
+(7, 'B', '2'),
+(8, 'B', '3'),
+(9, 'B', '4'),
+(10, 'B', '5'),
+(11, 'C', '1'),
+(12, 'C', '2'),
+(13, 'C', '3'),
+(14, 'C', '4'),
+(15, 'C', '5'),
+(16, 'D', '1'),
+(17, 'D', '2'),
+(18, 'D', '3'),
+(19, 'D', '4'),
+(20, 'D', '5');
 
 -- --------------------------------------------------------
 
@@ -138,6 +144,15 @@ CREATE TABLE `itensestoque` (
   `codTurma` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Despejando dados para a tabela `itensestoque`
+--
+
+INSERT INTO `itensestoque` (`cod_itenEstoque`, `Quantidade`, `Situacao`, `cod_estoque`, `cod_itenpedido`, `codTurma`) VALUES
+(98, 3, 'No estoque', 2, 44, 'S3naiAdmin'),
+(99, 1, 'No estoque', 7, 45, 'S3naiAdmin'),
+(100, 1, 'No estoque', 12, 45, 'S3naiAdmin');
+
 -- --------------------------------------------------------
 
 --
@@ -163,10 +178,8 @@ CREATE TABLE `itenspedido` (
 --
 
 INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quantidade`, `Quantidade_doca`, `ValorUnitario`, `ValorTotal`, `Avariado`, `Faltando`, `VistoriaConcluida`, `codTurma`) VALUES
-(4, 4, 3, 3, 3, 7.3, 21.9, 1, 0, 1, 'S3naiAdmin'),
-(5, 5, 3, 2, 2, 29.99, 59.98, 0, 1, 1, 'S3naiAdmin'),
-(14, 8, 2, 4, 4, 2.99, 11.96, 1, 0, 1, 'S3naiAdmin'),
-(21, 4, 2, 2, 2, 7.3, 14.6, 0, 0, 1, 'S3naiAdmin');
+(44, 5, 16, 3, 0, 29.99, 89.97, 0, 0, 1, 'S3naiAdmin'),
+(45, 4, 16, 2, 0, 7.3, 14.6, 0, 0, 1, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -190,8 +203,7 @@ CREATE TABLE `nota_fiscal` (
 --
 
 INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(10102, '68783809217985877382226814365056760872965139', '2024-06-05 20:25:59', '', 2, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60'),
-(11017, '26365596556660022024977410739194557049833025', '2024-06-05 20:25:59', '', 3, '03.774.819/0001-02', '42.555.657/0001-65', '07.175.725/0001-60');
+(27697, '82967373076763540062689873164848558562583216', '2024-07-03 08:15:50', 'Mercadoria frágil', 16, '03.774.819/0001-02', '07.639.029/0001-67', '03.389.993/0001-23');
 
 -- --------------------------------------------------------
 
@@ -203,6 +215,7 @@ CREATE TABLE `pedido` (
   `id_pedido` int(11) NOT NULL,
   `cod_pedido` int(11) NOT NULL,
   `DataVenda` datetime NOT NULL,
+  `DataEntrega` datetime NOT NULL,
   `ValorTotal` double NOT NULL,
   `CNPJEmitente` varchar(65) NOT NULL,
   `CNPJ_Destinatario` varchar(64) NOT NULL,
@@ -216,9 +229,8 @@ CREATE TABLE `pedido` (
 -- Despejando dados para a tabela `pedido`
 --
 
-INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
-(2, 1, '2024-06-05 20:25:59', 26.56, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Nas docas', '', 'S3naiAdmin'),
-(3, 23, '2024-06-05 20:35:40', 81.88, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', '', 'S3naiAdmin');
+INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `DataEntrega`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
+(16, 10, '2024-07-03 08:15:50', '2024-07-10 14:20:00', 104.57, '03.389.993/0001-23', '03.774.819/0001-02', '07.639.029/0001-67', 'Nas docas', 'Mercadoria frágil', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -263,7 +275,9 @@ CREATE TABLE `projetos` (
 --
 
 INSERT INTO `projetos` (`idprojeto`, `nome`, `codTurma`) VALUES
-(10, 'Projeto 1', 'S3naiAdmin');
+(10, 'Projeto 1', 'S3naiAdmin'),
+(13, 'Projeto 1 teste', 'terceiro'),
+(14, 'Projeto 2 teste', 'terceiro');
 
 -- --------------------------------------------------------
 
@@ -310,7 +324,8 @@ CREATE TABLE `turmas` (
 --
 
 INSERT INTO `turmas` (`codTurma`, `nomeTurma`, `total_alunos`, `data_turma`) VALUES
-('S3naiAdmin', 'SenaiADM', 0, '2024-05-29 20:59:55');
+('S3naiAdmin', 'SenaiADM', 0, '2024-05-29 20:59:55'),
+('terceiro', '3 DS', 0, '2024-06-20 11:39:35');
 
 -- --------------------------------------------------------
 
@@ -334,7 +349,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Id`, `email`, `senha`, `nome`, `ativo`, `data_entrada`, `tipousuario`, `codTurma`) VALUES
-(124, 'kauan007@gmail.com', 'eijks', 'Kauan', 's', '2024-05-31 19:42:49', 'Professor', 'S3naiAdmin');
+(124, 'kauan007@gmail.com', 'eijks', 'Kauan', 's', '2024-05-31 19:42:49', 'Professor', 'S3naiAdmin'),
+(132, 'jonas@gmail.com', 'eijks', 'Jonas', 's', '2024-06-20 11:39:57', 'Aluno', 'terceiro'),
+(133, 'bet@email', '1234', 'bet', 's', '2024-07-03 14:35:59', 'Professor', 'Senai2024');
 
 --
 -- Índices para tabelas despejadas
@@ -444,7 +461,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `docas`
 --
 ALTER TABLE `docas`
-  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cod_doca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de tabela `estoque`
@@ -456,19 +473,19 @@ ALTER TABLE `estoque`
 -- AUTO_INCREMENT de tabela `itensestoque`
 --
 ALTER TABLE `itensestoque`
-  MODIFY `cod_itenEstoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cod_itenEstoque` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
-  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
@@ -480,13 +497,13 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `projetos`
 --
 ALTER TABLE `projetos`
-  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
 
 --
 -- Restrições para tabelas despejadas
