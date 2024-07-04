@@ -9,7 +9,7 @@
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
-    <link rel="stylesheet" href="../css/carga.css"/>
+    <link rel="stylesheet" href="../css/operacao.css"/>
     <link rel="shortcut icon" type="imagex/png" href="#"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -99,7 +99,7 @@ if (empty($_SESSION['nome'])){
                 <h3>OPERAÇÃO DE MOVIMENTAÇÃO</h3>    
             </div>
             <div class="info-total">
-                <h6> Operações em aberto </h6>
+                <h6> OPERAÇÕES EM ABERTO</h6>
 <?php
     if (isset($_POST['itemselecionado']) && is_array($_POST['itemselecionado'])) {
         echo '<div class="MainContainer">
