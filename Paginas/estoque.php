@@ -11,10 +11,10 @@
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/estoque.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <?php
-// Iniciar uma sessão
 session_start();
 if (empty($_SESSION['nome'])){
     header('Location: sair.php');
@@ -115,7 +115,7 @@ if (empty($_SESSION['nome'])){
                             <div class="submenus-pedidos">
                                 <h4> FILTRO:</h4>
                                 <div class="info-pedido">
-                                    <form class="form-estoque-posicao">
+                                    <form id="form-estoque-posicao"> 
                                         <input type="text" name="nome_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Produto:">
                                         <input type="text" name="UN_produto" style="display: block;" class="input-options-criar-pedido" placeholder="UN">
                                         <input type="text" name="Quantidade_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Quantidade:">
@@ -127,34 +127,34 @@ if (empty($_SESSION['nome'])){
                     </div>
                     <div class="locais-estoque">
                         <div class="posicao">
-                            <div class="posicao-container">A1</div>
-                            <div class="posicao-container">A2</div>
-                            <div class="posicao-container">A3</div>
-                            <div class="posicao-container">A4</div>
+                            <div class="posicao-container" cod-estoque="1">A1</div>
+                            <div class="posicao-container" cod-estoque="2">A2</div>
+                            <div class="posicao-container" cod-estoque="3">A3</div>
+                            <div class="posicao-container" cod-estoque="4">A4</div>
                         </div>
                         <div class="posicao">
-                            <div class="posicao-container">B1</div>
-                            <div class="posicao-container">B2</div>
-                            <div class="posicao-container">B3</div>
-                            <div class="posicao-container">B4</div>
+                            <div class="posicao-container" cod-estoque="5">B1</div>
+                            <div class="posicao-container" cod-estoque="6">B2</div>
+                            <div class="posicao-container" cod-estoque="7">B3</div>
+                            <div class="posicao-container" cod-estoque="8">B4</div>
                         </div>
                         <div class="posicao">
-                            <div class="posicao-container">C1</div>
-                            <div class="posicao-container">C2</div>
-                            <div class="posicao-container">C3</div>
-                            <div class="posicao-container">C4</div>
+                            <div class="posicao-container" cod-estoque="9">C1</div>
+                            <div class="posicao-container" cod-estoque="10">C2</div>
+                            <div class="posicao-container" cod-estoque="11">C3</div>
+                            <div class="posicao-container" cod-estoque="12">C4</div>
                         </div>
                         <div class="posicao">
-                            <div class="posicao-container">D1</div>
-                            <div class="posicao-container">D2</div>
-                            <div class="posicao-container">D3</div>
-                            <div class="posicao-container">D4</div>
+                            <div class="posicao-container" cod-estoque="13">D1</div>
+                            <div class="posicao-container" cod-estoque="14">D2</div>
+                            <div class="posicao-container" cod-estoque="15">D3</div>
+                            <div class="posicao-container" cod-estoque="16">D4</div>
                         </div>
                         <div class="posicao">
-                            <div class="posicao-container">E1</div>
-                            <div class="posicao-container">E2</div>
-                            <div class="posicao-container">E3</div>
-                            <div class="posicao-container">E4</div>
+                            <div class="posicao-container" cod-estoque="17">E1</div>
+                            <div class="posicao-container" cod-estoque="18">E2</div>
+                            <div class="posicao-container" cod-estoque="19">E3</div>
+                            <div class="posicao-container" cod-estoque="20">E4</div>
                         </div>
                     </div>
                 </div>
@@ -162,7 +162,7 @@ if (empty($_SESSION['nome'])){
         </div>
     </main>
     <script>
-    $('.form-estoque-posicao').submit(function(e) {
+$('#form-estoque-posicao').submit(function(e) {
     e.preventDefault(); 
     var formData = $(this).serialize(); 
     console.log(formData);  // Verifique se os dados do formulário estão corretos
@@ -173,11 +173,17 @@ if (empty($_SESSION['nome'])){
         success: function(response) {
             console.log(response);  // Verifique a resposta do servidor
             var jsonResponse = JSON.parse(response);
-            if (jsonResponse.success) {
-                alert(jsonResponse.message); 
+            if (jsonResponse.success) {  // Verifique jsonResponse.success em vez de response.success
+                var inputposicao = document.getElementsByClassName('posicao-container');
+                for (var i = 0; i < inputposicao.length; i++) {
+                    if (jsonResponse.positions.includes(inputposicao[i].getAttribute('cod-estoque'))) {
+                        inputposicao[i].style.backgroundColor = jsonResponse.color;
+                        inputposicao[i].style.color = 'white';  // Defina a cor como string válida
+                    }
+                }
             } else {
-                alert(jsonResponse.message); 
-            }       
+                alert(jsonResponse.message);  // Mostra mensagem apenas quando success é false
+            }    
         },
         error: function(xhr, status, error) {
             console.error(error);
@@ -185,7 +191,7 @@ if (empty($_SESSION['nome'])){
         }
     });
 });
+
     </script>
 </body>
 </html>
-
