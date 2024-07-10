@@ -175,10 +175,20 @@ $('#form-estoque-posicao').submit(function(e) {
             var jsonResponse = JSON.parse(response);
             if (jsonResponse.success) {  // Verifique jsonResponse.success em vez de response.success
                 var inputposicao = document.getElementsByClassName('posicao-container');
+
                 for (var i = 0; i < inputposicao.length; i++) {
-                    if (jsonResponse.positions.includes(inputposicao[i].getAttribute('cod-estoque'))) {
-                        inputposicao[i].style.backgroundColor = jsonResponse.color;
-                        inputposicao[i].style.color = 'white';  // Defina a cor como string válida
+                    inputposicao[i].style.backgroundColor = '';  // Resetar cor de fundo
+                    inputposicao[i].style.color = '';  // Resetar cor do texto
+                }
+
+                for (var i = 0; i < jsonResponse.positions.length; i++) {
+                    var codEstoque = jsonResponse.positions[i].cod_estoque;
+                    var color = jsonResponse.positions[i].color;
+                    for (var j = 0; j < inputposicao.length; j++) {
+                        if (inputposicao[j].getAttribute('cod-estoque') == codEstoque) {
+                            inputposicao[j].style.backgroundColor = color;
+                            inputposicao[j].style.color = 'white';  // Defina a cor como string válida
+                        }
                     }
                 }
             } else {
