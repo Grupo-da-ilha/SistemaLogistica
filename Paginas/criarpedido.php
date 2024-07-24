@@ -108,6 +108,9 @@ if (empty($_SESSION['nome'])){
                                     <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
                                 <h5>NOTA FISCAL:</h5>
                                     <a href="danfe.php" class="button-pedidos">Minhas DANFE</a>
+                                <h5>SOLICITAÇÕES:</h5>
+                                    <a href="solicitacao.php" class="button-pedidos">Cria Solicitacao</a>
+                                    <a href="minhassolicitacoes.php" class="button-pedidos">Minhas Solicitações</a>
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
@@ -275,6 +278,7 @@ if (empty($_SESSION['nome'])){
                                                     echo "<h6>Produto não encontrado.</h6>";
                                                 }
                                             }
+                                            
                                             $selectidPedido = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
                                             $executar = $conexao->query($selectidPedido);
                                             
