@@ -24,15 +24,30 @@
                     date_default_timezone_set('America/Sao_Paulo');
                     $data_entrada = date("Y-m-d H:i:s");
 
-                    $sql = "INSERT INTO `logistica`.`usuarios`
+                    $SelectUsuarios = "SELECT * FROM usuarios";
+                    $executeUsers = $conexao -> query($SelectUsuarios);
+
+                    if($executeUsers && $executeUsers -> num_rows >= 0){
+                        while($rowUsers = $executeUsers -> fetch_assoc()){
+                            $emailcadastrado = $rowUsers['email'];
+
+                            if($email == $emailcadastrado){
+                                echo 'Este Email já está sendo usado';
+                            }else{
+                                $sql = "INSERT INTO `logistica`.`usuarios`
                                 (`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`)
-                            VALUES
+                             VALUES
                                 ('".$nome."', '".$email."', '".$senha."', '".$data_entrada."', 's', '".$tipousuario."','".$turmausuario."');";
 
-                    if ($conexao->query($sql) === TRUE) {
-                        $conexao->close();
-                        header('Location: ../Paginas/aluno.php', true, 301);
-                        exit();
+                            if ($conexao->query($sql) === TRUE) {
+                                $conexao->close();
+                                header('Location: ../Paginas/aluno.php', true, 301);
+                                exit();
+                            } else {
+                                throw new Exception("Erro ao inserir dados: " . $conexao->error);
+                            }
+                            }
+                        }
                     } else {
                         throw new Exception("Erro ao inserir dados: " . $conexao->error);
                     }
@@ -44,8 +59,8 @@
                     }
                 }
 
-                $conexao->close();
             }
+                $conexao->close();
         ?>
     </body>
 </html>
