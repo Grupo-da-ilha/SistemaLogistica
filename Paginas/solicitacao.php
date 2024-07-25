@@ -195,7 +195,7 @@ if (empty($_SESSION['nome'])){
                                         $row = $resultado->fetch_assoc();
                                         $COD_produto = $row['cod_produto']; 
 
-                                        $sql2 = "INSERT INTO itenssolicitacao (cod_produto, cod_solicitacao , Quantidade, codTurma) VALUES ('$COD_produto', '{$_SESSION['id_solicitacao']}', 0, '".$_SESSION['codTurma']."')";
+                                        $sql2 = "INSERT INTO itenssolicitacao (cod_produto, cod_solicitacao , Quantidade, Quantidade_espera, codTurma) VALUES ('$COD_produto', '{$_SESSION['id_solicitacao']}', 0, 0, '".$_SESSION['codTurma']."')";
                                         $resultado = $conexao->query($sql2);
 
                                         if (!$resultado) {

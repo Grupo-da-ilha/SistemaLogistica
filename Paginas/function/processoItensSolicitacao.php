@@ -40,7 +40,7 @@ if ($conexao->connect_errno) {
         $cod_itemsolicitacao = $_POST['codigoItemSolicitacao'];
         $Quantidade = $_POST['QTD'];
 
-        $sql2 = "UPDATE `itenssolicitacao` SET Quantidade = '$Quantidade' WHERE cod_itemSolicitacao = '$cod_itemsolicitacao'";
+        $sql2 = "UPDATE `itenssolicitacao` SET Quantidade = '$Quantidade', Quantidade_espera = '$Quantidade' WHERE cod_itemSolicitacao = '$cod_itemsolicitacao'";
         $resultado = $conexao->query($sql2);
 
         $conexao->close();

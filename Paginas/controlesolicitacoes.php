@@ -12,6 +12,24 @@
     <link rel="stylesheet" href="../css/controle.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .overlay-content {
+            background: white;
+            padding: 100px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
 <?php
@@ -100,10 +118,12 @@ if (empty($_SESSION['nome'])) {
                         <div class="submenus-pedidos">
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-pedido">
-                                <h5>DOCAS:</h5>
-                                    <a href="recebimentodoca.php" class="button-pedidos">Recebimento das docas</a>
+                                <h5>SOLICITAÇÕES:</h5>
+                                    <a href="recebimentosolicitacoes.php" class="button-pedidos">Recebimento das solicitações</a>
                                 <h5>ESTOQUE:</h5>
                                     <a href="estoque.php" class="button-pedidos">Meu Estoque</a>
+                                <h5>DOCAS:</h5>
+                                    <a href="recebimentodoca.php" class="button-pedidos">Recebimento das docas</a>
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
@@ -111,25 +131,22 @@ if (empty($_SESSION['nome'])) {
                                 <div class="produtos-pedido">
                                     <h4>PARA ONDE OS ITENS VÃO?</h4>';
 
-            if (isset($_POST['id_pedido']) && isset($_POST['posicao_doca'])) {
-                $idpedido = $conexao->real_escape_string($_POST['id_pedido']);
-                $doca = $conexao->real_escape_string($_POST['posicao_doca']);
-                $QuantidadeItemEstoque = 0; 
+            if (isset($_POST['id_solicitacao'])) {
+                $id_solicitacao = $conexao->real_escape_string($_POST['id_solicitacao']);
 
-                $sql = "SELECT cod_pedido FROM pedido WHERE id_pedido = '$idpedido' AND Situacao = 'Nas docas' AND codTurma = '{$_SESSION['codTurma']}'";
+                $sql = "SELECT cod_solicitacao FROM solicitacoes WHERE id_solicitacao = '$id_solicitacao' AND Situacao = 'Em processamento' AND codTurma = '{$_SESSION['codTurma']}'";
                 $execute = $conexao->query($sql);
 
                 if ($execute && $execute->num_rows > 0) {
                     $row = $execute->fetch_assoc();
-                    $cod_pedido = $row['cod_pedido'];
+                    $cod_solicitacao = $row['cod_solicitacao'];
 
                     echo '<div class="DivInicial" style="display:flex; margin-bottom: 50px">
-                            <h6> Código do pedido: ' . htmlspecialchars($cod_pedido) . '</h6>
-                            <h6> Doca: ' . htmlspecialchars($doca) . '</h6>
+                            <h6> Código da solicitação: ' . htmlspecialchars($cod_solicitacao) . '</h6>
                         </div>';
 
-                    $sqlItenspedidos= "SELECT * FROM itenspedido WHERE cod_pedido = '$idpedido' AND codTurma = '{$_SESSION['codTurma']}' AND Quantidade_doca != 0";
-                    $execute = $conexao->query($sqlItenspedidos);
+                    $sqlItensSolicitacao= "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '$id_solicitacao' AND codTurma = '{$_SESSION['codTurma']}'";
+                    $execute = $conexao->query($sqlItensSolicitacao);
 
                     if ($execute && $execute->num_rows > 0) {
                         echo '<div class="MainContainer">
@@ -138,20 +155,20 @@ if (empty($_SESSION['nome'])) {
                                         <td>Produtos</td>
                                         <td>UN</td>
                                         <td>Quantidade à espera</td>
-                                        <td>QTD para Estoque</td>
+                                        <td>QTD para retirada</td>
                                         <td>Posição no Estoque</td>
                                         <td>Ações</td>
                                     </tr>';
                         while ($row = $execute->fetch_assoc()) {
                             $cod_produto = $row['cod_produto'];
                             $Quantidade = $row['Quantidade'];
-                            $QuantidadeDoca = $row['Quantidade_doca'];
-                            $codItemPedido = $row['cod_itenPedido'];
+                            $Quantidade_espera = $row['Quantidade_espera'];
+                            $codItemSolicitacao = $row['cod_itemSolicitacao'];
 
                             $sqlProdutos= "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
                             $executar = $conexao->query($sqlProdutos);
 
-                            $SelectItensEstoque = "SELECT * FROM itensestoque WHERE cod_itenpedido = '$codItemPedido' AND Situacao = 'Em movimentação'";
+                            /*$SelectItensEstoque = "SELECT * FROM itensestoque WHERE cod_itenpedido = '$codItemPedido' AND Situacao = 'Em movimentação'";
                             $resultado = $conexao -> query($SelectItensEstoque);
 
                             if($resultado && $resultado -> num_rows > 0){
@@ -159,26 +176,37 @@ if (empty($_SESSION['nome'])) {
                                 $QuantidadeEstoque = $rowItenEstoque['Quantidade'];
                             } else{
                                 $QuantidadeEstoque = 0;
-                            }
+                            }*/
 
                             if ($executar && $executar->num_rows > 0) {
                                 while ($rowProdutos = $executar->fetch_assoc()) {
                                     echo '<tr>
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
-                                            <td class="Quantidade_espera" cod_itempedido="' . htmlspecialchars($codItemPedido) . '">' . htmlspecialchars($QuantidadeDoca) . '</td>
+                                            <td class="Quantidade_espera" cod_itempedido="' . htmlspecialchars($codItemSolicitacao) . '">' . htmlspecialchars($Quantidade_espera) . '</td>
                                             <form class="form-enviar-produtos" >
                                                 <td>
-                                                    <input type="text" id="QTDEstoque" name="QTDEstoque" placeholder="Quantidade Estoque" style="display:block;">
+                                                    <div class="main-overlay">
+                                                        <input type="hidden" name="cod_produto" value="' . htmlspecialchars($cod_produto) . '">
+                                                        <input type="text" name="QTDEstoque" placeholder="Quantidade para retirada" style="display:block;">
+                                                        <input type="submit" name="VerificarEstoque" value="Verificar Disponibilidade" style="display:block;" class="verificarDisponibilidadeBtn">
+                                                    </div>
+                                                    <div class="overlay" id="codigoOverlay">
+                                                        <div class="overlay-content">
+                                                            <p>Posições onde se encontra esse produto </p>
+                                                            
+                                                            <button type="button" id="fecharOverlayBtn">Fechar</button>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <input type="text" id="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
                                                 </td>
                                                 <td>
-                                                    <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedido) . '">
-                                                    <input type="hidden" name="QTTdoca" value="' . htmlspecialchars($QuantidadeDoca) . '">
-                                                    <input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeEstoque) . '">
-                                                    <input type="hidden" name="cod_itempedido" value="' . htmlspecialchars($codItemPedido) . '">
+                                                    <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '">
+                                                    <input type="hidden" name="QTTespera" value="' . htmlspecialchars($Quantidade_espera) . '">
+                                                    '/*'<input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeEstoque) . '">'*/;'
+                                                    <input type="hidden" name="cod_itempSolicitacao" value="' . htmlspecialchars($codItemSolicitacao) . '">
                                                     <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
                                                 </td>
                                             </form>
@@ -214,7 +242,40 @@ if (empty($_SESSION['nome'])) {
             </main>';
 }
 ?>
-<script>    
+<script> 
+   //Ajax para enviar informações
+   $(document).ready(function() {
+    $('.verificarDisponibilidadeBtn').submit(function(e) {
+        e.preventDefault(); 
+        var formData = $(this).serialize(); 
+        console.log(formData);  // Verifique se os dados do formulário estão corretos
+        $.ajax({
+            type: 'POST',
+            url: 'function/consulta_estoque.php',
+            data: formData,
+            success: function(response) {
+                console.log(response);  // Verifique a resposta do servidor
+                var jsonResponse = JSON.parse(response);
+                if (jsonResponse.success) {
+
+                } else {
+                    alert(jsonResponse.message); 
+                }       
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Erro ao enviar dados do formulário.');
+            }
+        });
+    });
+
+//Botao de fechar a overlay
+$('#fecharOverlayBtn').click(function() {
+        $('#codigoOverlay').hide();
+    });
+});
+
+
 $('.form-enviar-produtos').submit(function(e) {
     e.preventDefault(); 
     var formData = $(this).serialize(); 
