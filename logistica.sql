@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 10/07/2024 às 02:17
+-- Tempo de geração: 25/07/2024 às 18:53
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -191,6 +191,27 @@ INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quant
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `itenssolicitacao`
+--
+
+CREATE TABLE `itenssolicitacao` (
+  `cod_itemSolicitacao` int(11) NOT NULL,
+  `cod_produto` int(11) NOT NULL,
+  `cod_solicitacao` int(11) NOT NULL,
+  `Quantidade` int(11) NOT NULL,
+  `codTurma` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `itenssolicitacao`
+--
+
+INSERT INTO `itenssolicitacao` (`cod_itemSolicitacao`, `cod_produto`, `cod_solicitacao`, `Quantidade`, `codTurma`) VALUES
+(12, 1, 5, 2, 'S3naiAdmin');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `nota_fiscal`
 --
 
@@ -285,6 +306,28 @@ CREATE TABLE `projetos` (
 
 INSERT INTO `projetos` (`idprojeto`, `nome`, `codTurma`) VALUES
 (10, 'Projeto 1', 'S3naiAdmin');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `solicitacoes`
+--
+
+CREATE TABLE `solicitacoes` (
+  `id_solicitacao` int(11) NOT NULL,
+  `cod_solicitacao` int(11) DEFAULT NULL,
+  `Observacao` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Situacao` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Data_criacao` datetime NOT NULL,
+  `codTurma` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `solicitacoes`
+--
+
+INSERT INTO `solicitacoes` (`id_solicitacao`, `cod_solicitacao`, `Observacao`, `Situacao`, `Data_criacao`, `codTurma`) VALUES
+(5, 1, '', 'Em criação', '2024-07-25 13:41:47', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -406,6 +449,15 @@ ALTER TABLE `itenspedido`
   ADD KEY `FK_cod_turma_item` (`codTurma`);
 
 --
+-- Índices de tabela `itenssolicitacao`
+--
+ALTER TABLE `itenssolicitacao`
+  ADD PRIMARY KEY (`cod_itemSolicitacao`),
+  ADD KEY `FK_cod_PRODUTO` (`cod_produto`),
+  ADD KEY `FK_COD_TURMAS` (`codTurma`),
+  ADD KEY `FK_COD_SOLICITACAO` (`cod_solicitacao`);
+
+--
 -- Índices de tabela `nota_fiscal`
 --
 ALTER TABLE `nota_fiscal`
@@ -437,6 +489,13 @@ ALTER TABLE `produtos`
 ALTER TABLE `projetos`
   ADD PRIMARY KEY (`idprojeto`),
   ADD KEY `FK_codigoTurma` (`codTurma`);
+
+--
+-- Índices de tabela `solicitacoes`
+--
+ALTER TABLE `solicitacoes`
+  ADD PRIMARY KEY (`id_solicitacao`),
+  ADD KEY `FK_COD_TURMA` (`codTurma`);
 
 --
 -- Índices de tabela `transportadoras`
@@ -486,6 +545,12 @@ ALTER TABLE `itenspedido`
   MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
+-- AUTO_INCREMENT de tabela `itenssolicitacao`
+--
+ALTER TABLE `itenssolicitacao`
+  MODIFY `cod_itemSolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
@@ -504,6 +569,12 @@ ALTER TABLE `projetos`
   MODIFY `idprojeto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT de tabela `solicitacoes`
+--
+ALTER TABLE `solicitacoes`
+  MODIFY `id_solicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -520,6 +591,20 @@ ALTER TABLE `itensestoque`
   ADD CONSTRAINT `FK_codItemPedido` FOREIGN KEY (`cod_itenpedido`) REFERENCES `itenspedido` (`cod_itenPedido`),
   ADD CONSTRAINT `FK_codestoque` FOREIGN KEY (`cod_estoque`) REFERENCES `estoque` (`cod_estoque`),
   ADD CONSTRAINT `FK_id_turma` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
+
+--
+-- Restrições para tabelas `itenssolicitacao`
+--
+ALTER TABLE `itenssolicitacao`
+  ADD CONSTRAINT `FK_COD_SOLICITACAO` FOREIGN KEY (`cod_solicitacao`) REFERENCES `solicitacoes` (`id_solicitacao`),
+  ADD CONSTRAINT `FK_COD_TURMAS` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`),
+  ADD CONSTRAINT `FK_cod_PRODUTO` FOREIGN KEY (`cod_produto`) REFERENCES `produtos` (`cod_produto`);
+
+--
+-- Restrições para tabelas `solicitacoes`
+--
+ALTER TABLE `solicitacoes`
+  ADD CONSTRAINT `FK_COD_TURMA` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
