@@ -258,7 +258,7 @@ if (empty($_SESSION['nome'])){
                                         echo "</table>";
                                         echo "<form action=\"function/processoItensSolicitacao.php\" method=\"POST\">
                                                 <div class=\"input-finalizar-pedido\">
-                                                    <input type=\"hidden\" name=\"codigoSolicitacao\" value=\"" . $_SESSION['cod_solicitacao'] . "\" style=\"display: block;\">
+                                                    <input type=\"hidden\" name=\"codigoSolicitacao\" value=\"" . $_SESSION['id_solicitacao'] . "\" style=\"display: block;\">
                                                     <textarea id=\"texto\" name=\"texto\" placeholder=\"Observações para a solicitação\"></textarea><br>
                                                     <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Solicitacao\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
                                                 </div>

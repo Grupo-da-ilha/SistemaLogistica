@@ -82,7 +82,7 @@ if (empty($_SESSION['nome'])){
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
+                    <a href="criarpedido.php" class="functions-menu">PEDIDO/SOLICITAÇÕES</a>
                     <a href="danfe.php" class="functions-menu">DANFE</a>
                     <a href="carga.php" class="functions-menu">VISTORIA</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
@@ -93,7 +93,7 @@ if (empty($_SESSION['nome'])){
             </div>
             <div class="criar-pedido-container">
                 <div class="titulo-pedido">
-                    <h3>RECEBIMENTO DAS DOCAS</h3>    
+                    <h3>CONTROLE DAS SOLICITAÇÕES</h3>    
                 </div>
                 <div class="info-total">
                     <div class="criar-pedido">
@@ -101,7 +101,7 @@ if (empty($_SESSION['nome'])){
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-pedido">
                                 <h5>DOCAS:</h5>
-                                    <a href="controledoca.php" class="button-pedidos">Controle das docas</a>
+                                    <a href="recebimentodoca.php" class="button-pedidos">Controle das docas</a>
                                 <h5>ESTOQUE:</h5>
                                     <a href="estoque.php" class="button-pedidos">Meu Estoque</a>
                             </div>
@@ -109,88 +109,44 @@ if (empty($_SESSION['nome'])){
                         <div class="criar-pedidos-container">
                             <div class="options-pedido">
                                 <div class="produtos-pedido">
-                                    <h4>PEDIDOS:</h4>';
+                                    <h4>SOLICITAÇÕES:</h4>';
 
 
-    $sql = "SELECT * FROM pedido WHERE codTurma ='$codTurma' AND Situacao = 'Nas docas'";
+    $sql = "SELECT * FROM solicitacoes WHERE codTurma ='$codTurma' AND Situacao = 'Em processamento'";
     $executar = $conexao->query($sql);
 
     if($executar && $executar->num_rows > 0){
         echo "<div class='main'>
                 <div class='tablebox'>
-                    <h7>Confira os pedidos que estão parados nas docas</h7>
+                    <h7>Confira as solicitações que estão parados no controle</h7>
                     <table class='tabela'>
                         <tr>
-                            <th>Código do pedido</th>
-                            <th>Doca</th>
-                            <th>Algum item avariado?</th>
-                            <th>Algum item faltando?</th>
+                            <th>Código da solicitação</th>
                             <th>Ações</th>
                         </tr>";
 
         while($row = $executar->fetch_assoc()){
-            $idpedidos = $conexao->real_escape_string($row['id_pedido']);
-            $cod_pedido = $conexao->real_escape_string($row['cod_pedido']);
-            
-            $sql = "SELECT * FROM itenspedido WHERE codTurma ='$codTurma' AND cod_pedido = '$idpedidos'";
-            $executeItem = $conexao->query($sql);
-
-            if($executeItem && $executeItem->num_rows > 0){
-                while($row = $executeItem->fetch_assoc()){
-                    $faltando = $conexao->real_escape_string($row['Faltando']);
-                    $avariado = $conexao->real_escape_string($row['Avariado']);
-                    $QttDoca = $conexao->real_escape_string($row['Quantidade_doca']);
-
-                    if($QttDoca == 0){
-                        $sqlUpdatepedido = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE codTurma ='$codTurma' AND id_pedido = '$idpedidos'";
-                        $executeUpdate = $conexao->query($sqlUpdatepedido);
-                    }
-
-                    if($avariado == 1 && $faltando == 0){
-                        $Avariado = 'SIM';
-                        $Faltando = 'Não';
-                    } elseif($faltando == 1 && $avariado == 0){
-                        $Faltando = 'SIM';
-                        $Avariado = 'Não';
-                    } elseif($avariado == 1 && $faltando == 1){
-                        $Avariado = 'SIM';
-                        $Faltando = 'SIM';
-                    } else{
-                        $Avariado = 'Não';
-                        $Faltando = 'Não';
-                    }
-                
-
-            $sqlDoca = "SELECT * FROM docas WHERE codTurma ='$codTurma' AND id_pedido = '$idpedidos'";
-            $executeDoca = $conexao->query($sqlDoca);
-                }
-            if($executeDoca && $executeDoca->num_rows > 0){
-                while($rowDoca = $executeDoca->fetch_assoc()){
+            $id_solicitacao = $conexao->real_escape_string($row['id_solicitacao']);
+            $cod_solicitacao = $conexao->real_escape_string($row['cod_solicitacao']);
                     echo '<tr>
-                            <td>' . $cod_pedido . '</td>
-                            <td>' . htmlspecialchars($rowDoca['posicao']) . '</td>
-                            <td>' . $Avariado . '</td>
-                            <td>' . $Faltando . '</td>
+                            <td>' . $cod_solicitacao . '</td>
                             <td>    
-                                <form action="controledoca.php" method="POST">
-                                    <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedidos) . '">
-                                    <input type="hidden" name="posicao_doca" value="' . htmlspecialchars($rowDoca['posicao']) . '">
-                                    <input type="submit" name="DesignarProdutos" value="Abrir" style="display: block;" id="abrir">
+                                <form action="controlesolicitacoes.php" method="POST">
+                                    <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '">
+                                    <input type="submit" name="AbrirSolicitacao" value="Abrir" style="display: block;" id="abrir">
                                 </form>
                             </td>
                         </tr>';
                 }
-            } 
+            } else {
+                echo 'Nenhuma solicitação para o controle';
+            }
         
     }
-}
 
         echo '</table>
             </div>
         </div>';
-    } else {
-        echo 'Nenhum pedido encontrado nas docas';
-    }
 
     $conexao->close();
     echo '
@@ -198,8 +154,6 @@ if (empty($_SESSION['nome'])){
             </div>
         </div>
     </main>';
-
-} 
 ?>
 </body>
 </html>

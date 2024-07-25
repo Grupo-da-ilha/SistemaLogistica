@@ -36,20 +36,18 @@ if ($conexao->connect_errno) {
     }
 
     //Atualizar Quantidade do item 
-    if (isset($_POST['AtualizarQTD'])) {
-        if (!empty($_POST['codigoItemSolicitacao']) && !empty($_POST['QTD'])) {
-            $cod_itemsolicitacao = $_POST['codigoItemSolicitacao'];
-            $Quantidade = $_POST['QTD'];
+    if (isset($_POST['AtualizarQTD']) && !empty($_POST['codigoItemSolicitacao']) && !empty($_POST['QTD'])) {
+        $cod_itemsolicitacao = $_POST['codigoItemSolicitacao'];
+        $Quantidade = $_POST['QTD'];
 
-            $sql2 = "UPDATE `itenssolicitacao` SET Quantidade = '$Quantidade' WHERE cod_itemSolicitacao = '$cod_itemsolicitacao'";
-            $resultado = $conexao->query($sql2);
+        $sql2 = "UPDATE `itenssolicitacao` SET Quantidade = '$Quantidade' WHERE cod_itemSolicitacao = '$cod_itemsolicitacao'";
+        $resultado = $conexao->query($sql2);
 
-            $conexao->close();
-            header('Location: ../solicitacao.php', true, 301);
-            exit();     
-        } else {
-            echo 'Quantidade não digitada'; 
-        }
+        $conexao->close();
+        header('Location: ../solicitacao.php', true, 301);
+        exit();     
+    } else {
+        echo 'Quantidade não digitada'; 
     }
 
     //Definindo data e horário atuais
@@ -57,7 +55,7 @@ if ($conexao->connect_errno) {
     $datahoje = date("Y-m-d H:i:s");
 
     //Atualizando dados do pedido e da nota fiscal
-    if (isset($_POST['UpdateValor']) && !empty($_SESSION['codigoSolicitacao'])) {
+    if (isset($_POST['UpdateValor']) && !empty($_POST['codigoSolicitacao'])) {
         $sql = "UPDATE `solicitacoes` SET Situacao = 'Em processamento' WHERE cod_solicitacao = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
         $resultado = $conexao->query($sql);
 
@@ -68,8 +66,10 @@ if ($conexao->connect_errno) {
         }
         
         $conexao->close();
-        header('Location: ../controlesolicitacoes.php', true, 301);
+        header('Location: ../recebimentosolicitacoes.php', true, 301);
         exit();
+    } else{
+        echo 'Erro ao finalizar solicitação';
     }
 }
 ?>
