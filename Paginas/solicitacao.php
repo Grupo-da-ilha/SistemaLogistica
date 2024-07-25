@@ -134,8 +134,6 @@ if (empty($_SESSION['nome'])){
                                 <div class="produtos-pedido">
                                     <h4>PRODUTOS:</h4>';?>
                                     <?php   
-                                echo $_SESSION['id_solicitacao'];
-                                echo $_SESSION['cod_solicitacao'];
 
                                 if (!isset($_SESSION['cod_solicitacao']) || empty($_SESSION['cod_solicitacao'])) {
                                     $_SESSION['cod_solicitacao'] = "";
@@ -148,6 +146,11 @@ if (empty($_SESSION['nome'])){
                                 } else {
                                     echo '';
                                 }
+
+                                
+                                //Definindo data e horário atuais
+                                date_default_timezone_set('America/Sao_Paulo');
+                                $datahoje = date("Y-m-d H:i:s");
 
                                 if (isset($_POST['enviar_solicitacao']) && !empty($_POST['codSolicitacao'])) {
                                     $cod_solicitacao = $conexao->real_escape_string($_POST['codSolicitacao']);
@@ -163,18 +166,20 @@ if (empty($_SESSION['nome'])){
                                         $_SESSION['id_solicitacao'] = $idsolicitacao;
                                         echo "<h6>Alterando a solicitação com o seguinte código: " . htmlspecialchars($codigo_solicitacao) . "</h6>";
 
-                                        $sql = "UPDATE solicitacoes SET Observacao = '' WHERE cod_solicitacao = '{$_SESSION['cod_solicitacao']}' AND codTurma = '{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
+                                        $sql = "UPDATE solicitacoes SET Observacao = '', Situacao = 'Em criação' WHERE cod_solicitacao = '{$_SESSION['cod_solicitacao']}' AND codTurma = '{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
                                         $execute = $conexao->query($sql);
 
                                         if($execute){
                                             // Código para manipular os itens da solicitação, se necessário
                                         }
                                     } else {
-                                        $InsertSolicitacao = "INSERT INTO solicitacoes (cod_solicitacao, Observacao, codTurma) VALUES ('".$cod_solicitacao."', '', '".$_SESSION['codTurma']."')";
+                                        $InsertSolicitacao = "INSERT INTO solicitacoes (cod_solicitacao, Observacao, Situacao, Data_criacao, codTurma) VALUES ('".$cod_solicitacao."', '', '', '$datahoje', '".$_SESSION['codTurma']."')";
                                         $conexao->query($InsertSolicitacao);
 
                                         echo "<h6>Solicitação criada com sucesso com o código: " . htmlspecialchars($cod_solicitacao) . "</h6>";
                                     }
+                                } elseif(!isset($_POST['enviar_solicitacao']) && empty($_POST['codSolicitacao'])) {
+
                                 } else {
                                     echo 'Por favor preencha os campos ao lado'; 
                                 }
@@ -201,7 +206,7 @@ if (empty($_SESSION['nome'])){
                                     }
                                 }
 
-                                $selectidSolicitacao = "SELECT * FROM pedido WHERE cod_pedido = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}'";
+                                $selectidSolicitacao = "SELECT * FROM solicitacoes WHERE cod_solicitacao = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}'";
                                 $executar = $conexao->query($selectidSolicitacao);
                                 
                                 if ($executar->num_rows > 0) {
@@ -237,7 +242,7 @@ if (empty($_SESSION['nome'])){
                                                     <td>" . htmlspecialchars($row['UN']) . "</td>
                                                     <td>
                                                         <form action=\"function/processoItensSolicitacao.php\" method=\"POST\">
-                                                            <input type=\"hidden\" name=\"codigoItemPedido\" value=\"" . $row['cod_itemSolicitacao'] . "\" style=\"display: block;\">
+                                                            <input type=\"hidden\" name=\"codigoItemSolicitacao\" value=\"" . $row['cod_itemSolicitacao'] . "\" style=\"display: block;\">
                                                             <input type=\"text\" name=\"QTD\" placeholder=\"" . $row['Quantidade'] . "\" style=\"display: block;\" class=\"input-informacao\">
                                                             <input type=\"submit\" name=\"AtualizarQTD\" value=\"ATUALIZAR\" style=\"display: block;\" class=\"input-informacao-atualizar\">
                                                         </form>
@@ -251,12 +256,11 @@ if (empty($_SESSION['nome'])){
                                                 </tr>";
                                         }
                                         echo "</table>";
-                                        echo "<form action=\"function/processoItens.php\" method=\"POST\">
+                                        echo "<form action=\"function/processoItensSolicitacao.php\" method=\"POST\">
                                                 <div class=\"input-finalizar-pedido\">
-                                                    <input type=\"hidden\" name=\"codigoPedido\" value=\"" . $_SESSION['cod_pedido'] . "\" style=\"display: block;\">
-                                                    <textarea id=\"texto\" name=\"texto\" placeholder=\"Informações adicionais para sua DANFE\"></textarea><br>
-                                                    <input type=\"datetime-local\" id=\"texto\" name=\"DataEntrega\" placeholder=\"Data de Entrega:\" style=\"display: block;\">
-                                                    <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
+                                                    <input type=\"hidden\" name=\"codigoSolicitacao\" value=\"" . $_SESSION['cod_solicitacao'] . "\" style=\"display: block;\">
+                                                    <textarea id=\"texto\" name=\"texto\" placeholder=\"Observações para a solicitação\"></textarea><br>
+                                                    <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Solicitacao\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
                                                 </div>
                                             </form>
                                         </div>
@@ -267,7 +271,6 @@ if (empty($_SESSION['nome'])){
 
                                     $conexao->close();
                                 } else {
-                                    echo 'Solicitação ainda não criada nessa turma';
                                 }
                             }
                         }
