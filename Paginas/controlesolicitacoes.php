@@ -190,24 +190,26 @@ if (empty($_SESSION['nome'])) {
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td class="Quantidade_espera" cod_itempedido="' . htmlspecialchars($codItemSolicitacao) . '">' . htmlspecialchars($Quantidade_espera) . '</td>
                                                 <td>
-                                                <div class="main-overlay">             
-                                                    <form class="form-verificacao">
-                                                        <input type="hidden" name="cod_produto" value="' . htmlspecialchars($cod_produto) . '">
-                                                        <input type="text" name="QTDEstoque" placeholder="Quantidade para retirada" style="display:block;">
-                                                        <input type="submit" id="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
-                                                    </form>
-                                                </div>
+                                                    <div class="main-overlay">             
+                                                        <form class="form-verificacao">
+                                                            <input type="hidden" name="cod_produto" value="' . htmlspecialchars($cod_produto) . '">
+                                                            <input type="text" name="QTDEstoque" placeholder="Quantidade para retirada" style="display:block;">
+                                                            <input type="submit" id="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
+                                                        </form>
+                                                    </div>
                                                 </td>
-                                                <td>
-                                                    <input type="text" id="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
-                                                </td>
-                                                <td>
-                                                    <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '">
-                                                    <input type="hidden" name="QTTespera" value="' . htmlspecialchars($Quantidade_espera) . '">
-                                                    '/*'<input type="hidden" name="ItemEstoque" value="' . htmlspecialchars($QuantidadeEstoque) . '">'*/;'
-                                                    <input type="hidden" name="cod_itempSolicitacao" value="' . htmlspecialchars($codItemSolicitacao) . '">
-                                                    <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
-                                                </td>
+                                                <form class="form-enviar-produtos">
+                                                    <td>
+                                                        <input type="text" id="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
+                                                    </td>
+                                                    <td>
+                                                            <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '">
+                                                            <input type="hidden" name="QTTespera" value="' . htmlspecialchars($Quantidade_espera) . '">
+                                                            <input type="hidden" name="cod_itempSolicitacao" value="' . htmlspecialchars($codItemSolicitacao) . '">
+                                                            <input type="hidden" id="hiddenQTDEstoque" name="hiddenQTDEstoque" value="">
+                                                            <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
+                                                    </td>
+                                                </form>
                                           </tr>';
                                 }
                             } else {
@@ -296,7 +298,45 @@ $(document).ready(function() {
     });
 });
 
-
+$('.form-enviar-produtos').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    console.log(formData);  // Verifique se os dados do formulário estão corretos
+    $.ajax({
+        type: 'POST',
+        url: 'function/DefinirPickingSolicitacao.php',
+        data: formData,
+        success: function(response) {
+            console.log(response);  // Verifique a resposta do servidor
+            var jsonResponse = JSON.parse(response);
+            if (jsonResponse.success) {
+                var inputEspera = document.getElementsByClassName('Quantidade_espera');
+                for (var i = 0; i < inputEspera.length; i++) {
+                    if (inputEspera[i].getAttribute('cod_itempedido') == jsonResponse.codItemPedido) {
+                        if (jsonResponse.newqttdoca == 0) {
+                            var row = inputEspera[i].closest('tr');
+                            if (row) {
+                                row.remove();
+                            }
+                        } else {
+                            inputEspera[i].textContent = jsonResponse.newqttdoca;
+                        }
+                        break;
+                    }
+                }
+                setTimeout(function() {
+                    window.location.reload();
+                }, 100);
+            } else {
+                alert(jsonResponse.message); 
+            }       
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
 
 </script>
 </body>
