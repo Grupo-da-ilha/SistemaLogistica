@@ -157,6 +157,10 @@ if (empty($_SESSION['nome'])){
                                 <input type=\"hidden\" name=\"id_solicitacao\" value=\"" . $row['id_solicitacao'] . "\" >
                                 <input type=\"submit\" name=\"VerProdutos\" value=\"Ver Produtos\" style=\"display:block;\" class=\"vermais\">
                             </form>
+                            <form action=\"minhassolicitacoes.php\" method=\"POST\">
+                                <input type=\"hidden\" name=\"id_solicitacaoDelete\" value=\"" . $row['id_solicitacao'] . "\" >
+                                <input type=\"submit\" name=\"DeleteSolici\" value=\"Deletar Solicitação\" style=\"display:block; background-color:red; color: white;\" class=\"vermais\">
+                            </form>
                         </td>
                     </tr>";
                 }
@@ -203,6 +207,23 @@ if (empty($_SESSION['nome'])){
                     }
                     echo "</table></div></div>"; // Fechar divs
                 }   
+            }
+        }
+        if (isset($_POST['DeleteSolici']) && !empty($_POST['id_solicitacaoDelete'])) {
+            $id_solicitacaoDelete = $conexao->real_escape_string($_POST['id_solicitacaoDelete']);
+        
+            // Primeiro, exclua os registros dependentes na tabela `itenssolicitacao`
+            $DeleteItensSolicitacao = "DELETE FROM itenssolicitacao WHERE cod_solicitacao = '".$id_solicitacaoDelete."'";
+            $conexao->query($DeleteItensSolicitacao);
+        
+            // Agora, exclua o registro principal na tabela `solicitacoes`
+            $DeleteSolicitacao = "DELETE FROM solicitacoes WHERE id_solicitacao = '".$id_solicitacaoDelete."' AND codTurma ='$cod_turma'";
+            $executar = $conexao->query($DeleteSolicitacao);
+        
+            if ($conexao->affected_rows > 0) {
+                echo "Solicitação excluída com sucesso.";
+            } else {
+                echo "Nenhuma solicitação encontrada para excluir ou erro na exclusão.";
             }
         }
     }
