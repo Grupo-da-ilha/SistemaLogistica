@@ -1,4 +1,7 @@
 <?php
+session_start();
+header('Content-Type: application/json');
+
 $hostname = "127.0.0.1";
 $user = "root";
 $password = "";
@@ -6,42 +9,82 @@ $database = "logistica";
 $conexao = new mysqli($hostname, $user, $password, $database);
 
 if ($conexao->connect_errno) {
-    echo "Failed to connect to MySQL: " . htmlspecialchars($conexao->connect_error);
+    echo json_encode(['success' => false, 'message' => 'Falha na conexão com o banco de dados: ' . htmlspecialchars($conexao->connect_error)]);
     exit();
 }
 
-// Depuração: Verifique o conteúdo do array $_POST
-error_log(print_r($_POST, true));
+if (isset($_SESSION['Idprojeto'])) {
+    $sql = "SELECT codTurma FROM projetos WHERE idprojeto = '".$_SESSION['Idprojeto']."'";
+    $execute = $conexao->query($sql);
 
-if (isset($_POST['cod_produto']) && isset($_POST['qtde_estoque'])) {
-    $cod_produto = $_POST['cod_produto'];
-    $qtde_estoque = $_POST['qtde_estoque'];
-    $codTurma = $_SESSION['codTurma']; // Assumindo que você já tem a sessão iniciada
+    if ($execute->num_rows > 0) {
+        $row = $execute->fetch_assoc();
+        $_SESSION['codTurma'] = $row['codTurma'];
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Projeto não encontrado']);
+        exit();
+    }
+}
 
-    // Consulta ao banco de dados
-    $SelectItenSolicitacaoEstoque = "SELECT produtos.Nome
+if (isset($_POST['QTDEstoque']) && isset($_POST['cod_produto'])) {
+    $cod_produto = $conexao->real_escape_string($_POST['cod_produto']);
+    $qtde_estoque = intval($_POST['QTDEstoque']); // Certifique-se de que a quantidade seja um número inteiro
+
+    $SelectItenSolicitacaoEstoque = "SELECT itensestoque.cod_estoque, itensestoque.Quantidade
         FROM produtos
         INNER JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto
-        INNER JOIN itensestoque ON itenspedido.cod_itenpedido = itensestoque.cod_itenpedido
+        INNER JOIN itensestoque ON itenspedido.cod_itenPedido = itensestoque.cod_itenpedido
         WHERE produtos.cod_produto = '$cod_produto'
         AND itensestoque.Situacao = 'No estoque'
-        AND itensestoque.codTurma = '$codTurma'
-        AND itensestoque.quantidade >= '$qtde_estoque'";
+        AND itensestoque.codTurma = '".$_SESSION['codTurma']."'
+        AND itensestoque.Quantidade IS NOT NULL";
 
     $resultado = $conexao->query($SelectItenSolicitacaoEstoque);
 
     if ($resultado->num_rows > 0) {
+        $posicoes_estoque = [];
         while ($row = $resultado->fetch_assoc()) {
-            $posicoes_estoque = [];
+            $cod_estoque = $row['cod_estoque'];
+            $QTD_estocada = intval($row['Quantidade']); // Converte a quantidade para inteiro
 
-            echo json_encode(array('success' => true, $posicoes_estoque));
-            exit();
+            if ($qtde_estoque > $QTD_estocada) {
+                $color = 'red';
+            } elseif ($qtde_estoque == $QTD_estocada) {
+                $color = 'green';
+            } else {
+                $color = 'blue';
+            }
+
+            $SelectPosicaoEstoque = "SELECT * FROM estoque WHERE cod_estoque = '$cod_estoque'";
+            $executar = $conexao->query($SelectPosicaoEstoque);
+            
+            if ($executar && $executar->num_rows > 0) {
+                $row = $executar->fetch_assoc();
+                $andar = $row['Andar'];  // Converta para inteiro se necessário
+                $apartamento = $row['Apartamento'];  // Converta para inteiro se necessário
+                
+                // Combine Andar e Apartamento em uma única string com um delimitador
+                $posicao = $andar . "" . $apartamento;  
+            } else {
+                $posicao = 'Desconhecido';  // Valor padrão se não for encontrada a posição
+            }
+            
+            $posicoes_estoque[] = [
+                'cod_estoque' => $posicao, 
+                'color' => $color,
+                'quantidade' => $QTD_estocada
+            ];
         }
+
+        echo json_encode(['success' => true, 'positions' => $posicoes_estoque]);
+        exit();
     } else {
-        echo "Nenhum produto encontrado no estoque";
+        echo json_encode(['success' => false, 'message' => 'Este produto não se apresenta estocado']);
+        exit();
     }
 } else {
-    echo "Dados não recebidos corretamente.";
+    echo json_encode(['success' => false, 'message' => 'Dados insuficientes']);
+    exit();
 }
 
 $conexao->close();

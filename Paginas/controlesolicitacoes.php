@@ -14,20 +14,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            position: absolute; /* Alterado de 'fixed' para 'absolute' */
+            top: 100;
+            left: 50;
+            width: 55%;
+            height: 60%;
+            background: rgba(0, 0, 0, 0.7);
             display: none;
             justify-content: center;
             align-items: center;
+            z-index: 99; /* Certifique-se de que o overlay esteja acima de outros elementos */
         }
+
         .overlay-content {
             background: white;
-            padding: 100px;
+            padding: 10px; /* Ajuste o padding conforme necessário */
             border-radius: 10px;
+            width: 70%; /* Ajuste a largura conforme necessário */
+            height: 50%;
+            max-width: 300px; /* Ajuste a largura máxima conforme necessário */
         }
     </style>
 </head>
@@ -184,20 +189,14 @@ if (empty($_SESSION['nome'])) {
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td class="Quantidade_espera" cod_itempedido="' . htmlspecialchars($codItemSolicitacao) . '">' . htmlspecialchars($Quantidade_espera) . '</td>
-                                            <form class="form-enviar-produtos" >
                                                 <td>
-                                                    <div class="main-overlay">
+                                                <div class="main-overlay">             
+                                                    <form class="form-verificacao">
                                                         <input type="hidden" name="cod_produto" value="' . htmlspecialchars($cod_produto) . '">
                                                         <input type="text" name="QTDEstoque" placeholder="Quantidade para retirada" style="display:block;">
-                                                        <input type="submit" name="VerificarEstoque" value="Verificar Disponibilidade" style="display:block;" class="verificarDisponibilidadeBtn">
-                                                    </div>
-                                                    <div class="overlay" id="codigoOverlay">
-                                                        <div class="overlay-content">
-                                                            <p>Posições onde se encontra esse produto </p>
-                                                            
-                                                            <button type="button" id="fecharOverlayBtn">Fechar</button>
-                                                        </div>
-                                                    </div>
+                                                        <input type="submit" id="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
+                                                    </form>
+                                                </div>
                                                 </td>
                                                 <td>
                                                     <input type="text" id="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
@@ -209,7 +208,6 @@ if (empty($_SESSION['nome'])) {
                                                     <input type="hidden" name="cod_itempSolicitacao" value="' . htmlspecialchars($codItemSolicitacao) . '">
                                                     <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
                                                 </td>
-                                            </form>
                                           </tr>';
                                 }
                             } else {
@@ -217,6 +215,14 @@ if (empty($_SESSION['nome'])) {
                             }
                         }
                         echo '</table>
+                                </div>
+                                    <div class="overlay" id="codigoOverlay" style="display:none;">
+                                    <div class="overlay-content">
+                                        <p>Posições onde se encontra esse produto:</p>
+                                        <br>
+                                        <div id="posicoesEstoque"></div>
+                                        <button type="button" id="fecharOverlayBtn">Fechar</button>
+                                </div>
                         </div>';
                     } else {
                         $UpdateSituation = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE cod_pedido = '$idpedido' AND codTurma = '{$_SESSION['codTurma']}'";
@@ -234,6 +240,7 @@ if (empty($_SESSION['nome'])) {
 
     $conexao->close();
     echo '
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -243,9 +250,8 @@ if (empty($_SESSION['nome'])) {
 }
 ?>
 <script> 
-   //Ajax para enviar informações
-   $(document).ready(function() {
-    $('.verificarDisponibilidadeBtn').submit(function(e) {
+$(document).ready(function() {
+    $('.form-verificacao').submit(function(e) {
         e.preventDefault(); 
         var formData = $(this).serialize(); 
         console.log(formData);  // Verifique se os dados do formulário estão corretos
@@ -253,13 +259,29 @@ if (empty($_SESSION['nome'])) {
             type: 'POST',
             url: 'function/consulta_estoque.php',
             data: formData,
+            dataType: 'json',  // Adicione esta linha
             success: function(response) {
                 console.log(response);  // Verifique a resposta do servidor
-                var jsonResponse = JSON.parse(response);
-                if (jsonResponse.success) {
+                if (response.success) {
+                    var overlay = $('#codigoOverlay');
+                    var posicoesEstoque = $('#posicoesEstoque');
+                    
+                    posicoesEstoque.empty();  // Limpar conteúdo anterior
 
+                    response.positions.forEach(function(posicao) {
+                        var codEstoque = posicao.cod_estoque;
+                        var color = posicao.color;
+                        var quantidade = posicao.quantidade; // Assumindo que a quantidade também é retornada
+                        posicoesEstoque.append(
+                            '<div style="background-color:' + color + '; color:white; text-align: center;">' +
+                            'Posição: ' + codEstoque + ' - Quantidade: ' + quantidade +
+                            '</div>'  + '<br>' 
+                        );
+                    });
+
+                    overlay.show();
                 } else {
-                    alert(jsonResponse.message); 
+                    alert(response.message); 
                 }       
             },
             error: function(xhr, status, error) {
@@ -269,52 +291,13 @@ if (empty($_SESSION['nome'])) {
         });
     });
 
-//Botao de fechar a overlay
-$('#fecharOverlayBtn').click(function() {
+    $('#fecharOverlayBtn').click(function() {
         $('#codigoOverlay').hide();
     });
 });
 
 
-$('.form-enviar-produtos').submit(function(e) {
-    e.preventDefault(); 
-    var formData = $(this).serialize(); 
-    console.log(formData);  // Verifique se os dados do formulário estão corretos
-    $.ajax({
-        type: 'POST',
-        url: 'function/definirQTTposicao.php',
-        data: formData,
-        success: function(response) {
-            console.log(response);  // Verifique a resposta do servidor
-            var jsonResponse = JSON.parse(response);
-            if (jsonResponse.success) {
-                var inputEspera = document.getElementsByClassName('Quantidade_espera');
-                for (var i = 0; i < inputEspera.length; i++) {
-                    if (inputEspera[i].getAttribute('cod_itempedido') == jsonResponse.codItemPedido) {
-                        if (jsonResponse.newqttdoca == 0) {
-                            var row = inputEspera[i].closest('tr');
-                            if (row) {
-                                row.remove();
-                            }
-                        } else {
-                            inputEspera[i].textContent = jsonResponse.newqttdoca;
-                        }
-                        break;
-                    }
-                }
-                setTimeout(function() {
-                    window.location.reload();
-                }, 100);
-            } else {
-                alert(jsonResponse.message); 
-            }       
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-            alert('Erro ao enviar dados do formulário.');
-        }
-    });
-});
+
 </script>
 </body>
 </html>

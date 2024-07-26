@@ -104,6 +104,8 @@ if (empty($_SESSION['nome'])){
                                     <a href="controledoca.php" class="button-pedidos">Controle das docas</a>
                                 <h5>ESTOQUE:</h5>
                                     <a href="estoque.php" class="button-pedidos">Meu Estoque</a>
+                                <h5>SOLICITAÇÕES:</h5>
+                                    <a href="recebimentosolicitacoes.php" class="button-pedidos">Recebimento solicitações</a>
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
