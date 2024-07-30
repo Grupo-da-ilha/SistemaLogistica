@@ -133,7 +133,7 @@ h1 {
 
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+@media only screen and (min-width: 899px) and (max-width: 1441px) {
   h1 {
     font-size: 30px;
     cursor: default;
@@ -159,6 +159,3 @@ h1 {
 }
 
 
-@media only screen and (min-width: 1441px) {
-    /* Add your responsive styles for large screens (e.g., larger monitors) here */
-}
