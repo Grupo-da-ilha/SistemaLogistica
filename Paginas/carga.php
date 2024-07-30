@@ -395,12 +395,15 @@ $('.form_quantidade').submit(function(e) {
 $('#form-conferencia-completa').submit(function(e) {
     e.preventDefault(); 
     var formData = $(this).serialize(); 
+    console.log(formData);
     $.ajax({
         type: 'POST',
         url: 'function/Finalizarvistoria.php',
         data: formData,
         success: function(response) {
+            console.log(response);
             var jsonResponse = JSON.parse(response);
+            console.log(jsonResponse);
             if (jsonResponse.success) {
                 window.location.href = "recebimentodoca.php";
             } else {
