@@ -71,13 +71,11 @@ if (empty($_SESSION['nome'])){
     <div class="container-prin">
     <?php
         $codTurma =  $_SESSION['codTurma'];
-
+        echo "$codTurma";
         $selectProjetos = "SELECT * FROM projetos WHERE codTurma = '$codTurma'";
         $executar = $conexao -> query($selectProjetos);
         if($executar && $executar -> num_rows > 0){
-            $numRows = $executar->num_rows;
-            for($i = 0; $i <= $numRows; $i++){
-                $projeto = $executar -> fetch_assoc();
+            while($projeto = $executar -> fetch_assoc()){
                 echo '<div class="projetos-do-usuario">';
                     echo '<div class="card-projetos" onclick="selectProject(' . $projeto['idprojeto'] . ')">';
                     echo '<div class="apagar-projeto">';
@@ -86,11 +84,14 @@ if (empty($_SESSION['nome'])){
                     echo '<h4>' . $projeto['nome'] . '</h4>';
                     echo '</div>';
                 echo '</div>';
-        }
+            }
         } else {
-            echo '<p>Nenhum projeto encontrado para esta turma.</p>';
+            echo '<p style="color: white;">Nenhum projeto encontrado para esta turma.</p>';
         }
-
+        echo '<form id="projectForm" action="projetoaluno.php" method="POST" style="display: none;">
+            <input type="hidden" name="project_id" id="project_id">
+            <input type="hidden" name="cod_turma" id="cod_turma" value="' . htmlspecialchars($codTurma) . '">
+        </form>';
     }
 }
     ?>
@@ -98,6 +99,11 @@ if (empty($_SESSION['nome'])){
 </main>
 
 <script>
+    function selectProject(projectId, codTurma) {
+        document.getElementById('project_id').value = projectId;
+        document.getElementById('cod_turma').value = codTurma;
+        document.getElementById('projectForm').submit();
+    }
         document.addEventListener('DOMContentLoaded', function() {
             var buttons = document.querySelectorAll('.button-apagar-projeto');
             buttons.forEach(function(button) {
