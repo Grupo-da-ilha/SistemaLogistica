@@ -205,11 +205,13 @@ if (empty($_SESSION['nome'])){
                                             while ($row = $resultado->fetch_assoc()){
                                                 echo'<tr>';
                                                 echo '<td>' . htmlspecialchars($row['Nome']). '</td>';
-                                                echo '<td>UN: ' . htmlspecialchars($row['UN']). '</td>';
+                                                echo '<td>' . htmlspecialchars($row['UN']). '</td>';
                                                 echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '
-                                                <form style="display: none;" class="form_quantidade">
-                                                    <input type="text" name="Quantidade falta">
-                                                    <input type="submit" name="UpdateQt" value="Salvar" margin-left: 10px;">
+                                                <form style="display: none; border: 1px solid black; width: auto; height:50px;" class="form_quantidade">
+                                                    <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
+                                                    <input type="hidden" name="Clausula" class="clausula" value="">
+                                                    <input type="text" class="quantidade_falta" name="Quantidade_falta" style="display: none;">
+                                                    <input type="submit" class="update_qt" name="UpdateQt" value="Salvar" style="display: none; margin-left: 10px;">
                                                 </form>
                                                 </td>';
                                                 echo '<td>Preço Unitário: ' . htmlspecialchars($row['PrecoUNI']). '</td>';
@@ -290,29 +292,57 @@ $('#form-doca').submit(function(e) {
 });
 
 $(document).ready(function() {
-        $('.form-conferencia').on('submit', function(e) {
-            e.preventDefault();
-            var formData = $(this).serialize();
-            console.log(formData);
-            $.ajax({
-                type: 'POST',
-                url: 'function/processorecebimento.php',
-                data: formData,
-                success: function(response) {
-                    var jsonResponse = JSON.parse(response);
-                    if (jsonResponse.success) {
+    $('.form-conferencia').on('submit', function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        console.log(formData);
+
+        $.ajax({
+            type: 'POST',
+            url: 'function/processorecebimento.php',
+            data: formData,
+            success: function(response) {
+                console.log(response);
+                var jsonResponse = JSON.parse(response);
+                console.log(jsonResponse);
+
+                if (jsonResponse.success) {
+                    // Encontrar o formulário 'form_quantidade' mais próximo do formulário atual
+                    var form_quantidade = $(e.target).closest('tr').find('.form_quantidade')[0];
+                    var form_quantidade_input_text = $(e.target).closest('tr').find('.quantidade_falta')[0];
+                    var form_quantidade_input_hidden = $(e.target).closest('tr').find('.clausula')[0];
+                    var form_quantidade_input_submit = $(e.target).closest('tr').find('.update_qt')[0];
+
+                    if (jsonResponse.avariado === true && jsonResponse.faltando === false) {
                         alert(jsonResponse.message);
+                        form_quantidade.style.display = 'block';
+                        form_quantidade_input_text.style.display = 'block';
+                        form_quantidade_input_submit.style.display = 'block';
+                        form_quantidade_input_hidden.value = 'Avariado';
+
+                    } else if (jsonResponse.avariado === false && jsonResponse.faltando === true) {
+                        alert(jsonResponse.message);
+                        form_quantidade.style.display = 'block';
+                        form_quantidade_input_text.style.display = 'block';
+                        form_quantidade_input_submit.style.display = 'block';
+                        form_quantidade_input_hidden.value = 'Faltando';
+
                     } else {
                         alert(jsonResponse.message);
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                    alert('Erro ao enviar dados do formulário.');
+                } else {
+                    alert(jsonResponse.message);
                 }
-            });
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Erro ao enviar dados do formulário.');
+            }
         });
     });
+});
+
+
 
 $('.form-vistoria-completa').submit(function(e) {
     e.preventDefault(); 
@@ -325,6 +355,32 @@ $('.form-vistoria-completa').submit(function(e) {
             var jsonResponse = JSON.parse(response);
             if (jsonResponse.success) {
                 alert(jsonResponse.message);
+            } else {
+                alert(jsonResponse.message); 
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
+    });
+});
+
+$('.form_quantidade').submit(function(e) {
+    e.preventDefault(); 
+    var formData = $(this).serialize(); 
+    console.log(formData);
+    $.ajax({
+        type: 'POST',
+        url: 'function/SalvarNovaQTT.php',
+        data: formData,
+        success: function(response) {
+            console.log(response);
+            var jsonResponse = JSON.parse(response);
+            console.log(jsonResponse);
+            if (jsonResponse.success) {
+                // Atualizar a página para mudar a quantidade
+                location.reload();
             } else {
                 alert(jsonResponse.message); 
             }

@@ -27,7 +27,7 @@ if ($conexao->connect_errno) {
             $execute = $conexao -> query($sql);
 
             if($execute){
-                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de pedido avariado'));
+                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de pedido avariado, por favor digite qual a quantidade de itens avariados', 'avariado' => true, 'faltando' => false));
                 exit();
             } else {
                 echo json_encode(array('success' => false, 'message' => 'Erro ao inserir cláusula de avariado no pedido'));
@@ -47,7 +47,7 @@ if ($conexao->connect_errno) {
             $execute = $conexao -> query($sql);
 
             if($execute){
-                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de pedido faltando'));
+                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de pedido faltando, por favor digite quantos itens faltam', 'avariado' => false, 'faltando' => true));
                 exit();
             } else {
                 echo json_encode(array('success' => false, 'message' => 'Erro ao inserir cláusula de faltando no pedido'));
@@ -55,25 +55,8 @@ if ($conexao->connect_errno) {
             }
         }
         }elseif(isset($_POST['faltando']) && isset($_POST['avariado'])){
-            $faltando = 1;
-            $avariado = 1;
-            $sql = "SELECT * FROM itenspedido WHERE cod_itenPedido =  '$cod_itenPedido' AND Avariado = '$avariado' AND Faltando = '$faltando'";
-            $execute = $conexao -> query($sql);
-
-            if($execute -> num_rows > 0){
-                echo json_encode(array('success' => true, 'message' => 'O item já foi registrado como avariado e faltando'));
-            } else{
-            $sql = "UPDATE itenspedido SET Faltando = '$faltando', Avariado = '$avariado' WHERE cod_itenPedido = '$cod_itenPedido' AND cod_pedido = '".$_SESSION['Idpedido']."'";
-            $execute = $conexao -> query($sql);
-
-            if($execute){
-                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de pedido faltando e pedido avariado'));
-                exit();
-            } else {
-                echo json_encode(array('success' => false, 'message' => 'Erro ao inserir as duas cláusulas no pedido'));
-                exit();
-            }
-        }
+            echo json_encode(array('success' => false, 'message' => 'Por favor, registre as clausulas separadamente'));
+            exit();
         }
     } else {
         echo json_encode(array('success' => false, 'message' => 'Dados insuficientes para processar a vistoria'));
