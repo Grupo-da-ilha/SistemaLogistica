@@ -24,8 +24,8 @@ if ($conexao->connect_errno) {
         echo ''.$_SESSION['Idprojeto']. '';
     }
 
-        if(isset($_POST['QTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_POST['QTTespera']) && isset($_POST['id_solicitacao'])  && isset($_POST['cod_itempSolicitacao'])  && isset($_POST['ItemEstoque'])){
-            $quantidadeEstoque = $conexao -> real_escape_string($_POST['QTDEstoque']);
+        if(isset($_POST['hiddenQTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_POST['QTTespera']) && isset($_POST['id_solicitacao'])  && isset($_POST['cod_itempSolicitacao'])){
+            $quantidadeEstoque = $conexao -> real_escape_string($_POST['hiddenQTDEstoque']);
             $posicaoEstoque = $conexao -> real_escape_string($_POST['PosicaoEstoque']);
             $QTTespera = $conexao -> real_escape_string($_POST['QTTespera']);
             $cod_itempSolicitacao = $conexao -> real_escape_string($_POST['cod_itempSolicitacao']);
@@ -34,25 +34,25 @@ if ($conexao->connect_errno) {
             $andar = substr($posicaoEstoque, 0, 1);
             $apartamento = substr($posicaoEstoque, 1);
 
-            $sql="SELECT * FROM itenssolicitacao WHERE cod_itempSolicitacao = ' $cod_itempSolicitacao' AND cod_solicitacao = '$id_solicitacao' AND codTurma = '{$_SESSION['codTurma']}'";
+            $sql="SELECT * FROM itenssolicitacao WHERE cod_itemSolicitacao = ' $cod_itempSolicitacao' AND cod_solicitacao = '$id_solicitacao' AND codTurma = '{$_SESSION['codTurma']}'";
             $execute = $conexao -> query($sql);
 
             if($execute && $execute -> num_rows > 0){
                 $row = $execute -> fetch_assoc();
                 $QuantidadeItem = $row['Quantidade'];
-                $Quantidade_espera = $row['Quantidade_eséra'];
+                $Quantidade_espera = $row['Quantidade_espera'];
 
                 if($quantidadeEstoque > $QuantidadeItem){
                     echo json_encode(array('success' => false, 'message' => 'Você selecionou mais itens do que o pedido possui para irem ao estoque'));
                     exit();
-                } elseif($quantidadeEstoque > $Quantidade_na_doca){
+                } elseif($quantidadeEstoque > $Quantidade_espera){
                     echo json_encode(array('success' => false, 'message' => 'Você selecionou mais itens para irem ao estoque do que estão parados na doca, verifique se os itens já não foram estocados'));
                     exit();
                 } else{
                     // Atualizando a quantidade do item à espera na doca                 
-                    $NewQTTEspera = $QTTespera - $quantidadeEstoque;
+                    $NewQTTEspera = $Quantidade_espera - $quantidadeEstoque;
 
-                    $Updateitem = "UPDATE itenssolicitacao SET Quantidade_espera = '$NewQTTEspera' WHERE cod_itempSolicitacao = '$cod_itempSolicitacao' AND cod_solicitacao = '$id_solicitacao' AND codTurma = '{$_SESSION['codTurma']}'";
+                    $Updateitem = "UPDATE itenssolicitacao SET Quantidade_espera = '$NewQTTEspera' WHERE cod_itemSolicitacao = '$cod_itempSolicitacao' AND cod_solicitacao = '$id_solicitacao' AND codTurma = '{$_SESSION['codTurma']}'";
                     $executar = $conexao->query($Updateitem);
 
                     if (!$executar) {
@@ -66,21 +66,22 @@ if ($conexao->connect_errno) {
                             $row = $executar->fetch_assoc();
                             $cod_estoque = $row['cod_estoque'];
                             
-                            $InsetItensPicking = "INSERT INTO itensestoque (Quantidade, Situacao, cod_estoque, cod_itenPedido, codTurma)
-                            VALUES ('$quantidadeEstoque', 'Em movimentação', '$cod_estoque', '$cod_itempedido', '{$_SESSION['codTurma']}')";
-                            $execute = $conexao->query($InsetItemEstoque);
+                            $InsetItensPicking = "INSERT INTO itenspicking (Quantidade, Situacao, cod_estoque, cod_itemSolicitacao , codTurma)
+                            VALUES ('$quantidadeEstoque', 'No processo de picking', '$cod_estoque', '$cod_itempSolicitacao', '{$_SESSION['codTurma']}')";
+                            $execute = $conexao->query($InsetItensPicking);
+
+                            if ($execute) {
+                                echo json_encode(['success' => true, 'message' => 'Item enviado para Picking', 'newqttespera' => $NewQTTEspera, 'cod_itempSolicitacao' => $cod_itempSolicitacao]);
+                                exit();
+                            }else {
+                                echo json_encode(['success' => false, 'message' => 'Erro ao enviar pedido para o picking']);
+                                exit();
+                            }
+                        }else {
+                            echo json_encode(['success' => false, 'message' => 'A posição selecionada não existe no estoque']);
+                            exit();
                         }
 
-                    $UpdateSolicitacao = "UPDATE solicitacoes SET Situacao='No Picking' WHERE id_solicitacao='$id_solicitacao'";
-                    $executar = $conexao -> query($UpdateSolicitacao);
-
-                    if($executar){
-                        echo json_encode(array('success' => true, 'message' => 'Item enviado para o picking'));
-                        exit();
-                    } else{
-                        echo json_encode(array('success' => true, 'message' => 'Erro ao enviar item para picking'));
-                        exit();
-                    }
                 }
             }
 

@@ -188,26 +188,26 @@ if (empty($_SESSION['nome'])) {
                                     echo '<tr>
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
-                                            <td class="Quantidade_espera" cod_itempedido="' . htmlspecialchars($codItemSolicitacao) . '">' . htmlspecialchars($Quantidade_espera) . '</td>
+                                            <td class="Quantidade_espera" codItemSolicitacao="' . htmlspecialchars($codItemSolicitacao) . '">' . htmlspecialchars($Quantidade_espera) . '</td>
                                                 <td>
                                                     <div class="main-overlay">             
-                                                        <form class="form-verificacao">
+                                                        <form class="form-verificacao" data-form-id="1">
                                                             <input type="hidden" name="cod_produto" value="' . htmlspecialchars($cod_produto) . '">
-                                                            <input type="text" name="QTDEstoque" placeholder="Quantidade para retirada" style="display:block;">
-                                                            <input type="submit" id="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
+                                                            <input type="text" class="QTDEstoque" name="QTDEstoque" placeholder="Quantidade para retirada" style="display:block;">
+                                                            <input type="submit" class="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
                                                         </form>
                                                     </div>
                                                 </td>
-                                                <form class="form-enviar-produtos">
+                                                <form class="form-enviar-produtos" data-form-id="1">
                                                     <td>
-                                                        <input type="text" id="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
+                                                        <input type="text" class="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
                                                     </td>
                                                     <td>
-                                                            <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '">
-                                                            <input type="hidden" name="QTTespera" value="' . htmlspecialchars($Quantidade_espera) . '">
-                                                            <input type="hidden" name="cod_itempSolicitacao" value="' . htmlspecialchars($codItemSolicitacao) . '">
-                                                            <input type="hidden" id="hiddenQTDEstoque" name="hiddenQTDEstoque" value="">
-                                                            <input type="submit" id="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
+                                                        <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '">
+                                                        <input type="hidden" name="QTTespera" value="' . htmlspecialchars($Quantidade_espera) . '">
+                                                        <input type="hidden" name="cod_itempSolicitacao" value="' . htmlspecialchars($codItemSolicitacao) . '">
+                                                        <input type="hidden" class="hiddenQTDEstoque" name="hiddenQTDEstoque" value="">
+                                                        <input type="submit" class="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
                                                     </td>
                                                 </form>
                                           </tr>';
@@ -236,7 +236,7 @@ if (empty($_SESSION['nome'])) {
                     echo '<p>Pedido não encontrado ou pedido não passou pela vistoria ainda</p>';
                 }
             } else {
-                echo '<p>Dados insuficientes, por favor clique para abrir o pedido que está nas docas</p>';
+                echo '<p>Dados insuficientes, por favor clique para abrir a solicitação que à espera</p>';
             }
         }
 
@@ -298,45 +298,67 @@ $(document).ready(function() {
     });
 });
 
-$('.form-enviar-produtos').submit(function(e) {
-    e.preventDefault(); 
-    var formData = $(this).serialize(); 
-    console.log(formData);  // Verifique se os dados do formulário estão corretos
-    $.ajax({
-        type: 'POST',
-        url: 'function/DefinirPickingSolicitacao.php',
-        data: formData,
-        success: function(response) {
-            console.log(response);  // Verifique a resposta do servidor
-            var jsonResponse = JSON.parse(response);
-            if (jsonResponse.success) {
-                var inputEspera = document.getElementsByClassName('Quantidade_espera');
-                for (var i = 0; i < inputEspera.length; i++) {
-                    if (inputEspera[i].getAttribute('cod_itempedido') == jsonResponse.codItemPedido) {
-                        if (jsonResponse.newqttdoca == 0) {
-                            var row = inputEspera[i].closest('tr');
-                            if (row) {
-                                row.remove();
-                            }
-                        } else {
-                            inputEspera[i].textContent = jsonResponse.newqttdoca;
-                        }
-                        break;
-                    }
-                }
-                setTimeout(function() {
-                    window.location.reload();
-                }, 100);
-            } else {
-                alert(jsonResponse.message); 
-            }       
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-            alert('Erro ao enviar dados do formulário.');
-        }
+document.querySelectorAll('.form-enviar-produtos').forEach(function(formEnviar) {
+        formEnviar.addEventListener('submit', function() {
+            var formId = formEnviar.getAttribute('data-form-id');
+            
+            // Encontra o formulário de verificação correspondente
+            var formVerificacao = document.querySelector('.form-verificacao[data-form-id="' + formId + '"]');
+            
+            if (formVerificacao) {
+                var qtdeEstoque = formVerificacao.querySelector('.QTDEstoque').value;
+                console.log('QTDEstoque:', qtdeEstoque);  // Debug
+                formEnviar.querySelector('.hiddenQTDEstoque').value = qtdeEstoque;
+            }
+        });
     });
-});
+
+    // Envio do formulário com AJAX
+    $('.form-enviar-produtos').submit(function(e) {
+        e.preventDefault(); 
+        var formData = $(this).serialize(); 
+        console.log(formData);  // Verifique se os dados do formulário estão corretos
+        $.ajax({
+            type: 'POST',
+            url: 'function/DefinirPickingSolicitacao.php',
+            data: formData,
+            success: function(response) {
+                console.log('Resposta do servidor:', response);  // Debug
+                try {
+                    var jsonResponse = JSON.parse(response);
+                    console.log(jsonResponse);
+                    if (jsonResponse.success) {
+                        var inputEspera = document.getElementsByClassName('Quantidade_espera');
+                        for (var i = 0; i < inputEspera.length; i++) {
+                            if (inputEspera[i].getAttribute('codItemSolicitacao') == jsonResponse.codItemSolicitacao) {
+                                if (jsonResponse.newqttespera == 0) {
+                                    var row = inputEspera[i].closest('tr');
+                                    if (row) {
+                                        row.remove();
+                                    }
+                                } else {
+                                    inputEspera[i].textContent = jsonResponse.newqttespera;
+                                }
+                                break;
+                            }
+                        }
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 100);
+                    } else {
+                        alert(jsonResponse.message); 
+                    }
+                } catch (e) {
+                    console.error('Erro ao analisar JSON:', e);
+                    alert('Erro na resposta do servidor.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Erro ao enviar dados do formulário.');
+            }
+        });
+    });
 
 </script>
 </body>
