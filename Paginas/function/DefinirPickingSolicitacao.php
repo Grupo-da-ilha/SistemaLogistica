@@ -59,6 +59,17 @@ if ($conexao->connect_errno) {
                         echo json_encode(['success' => false, 'message' => 'ERRO', 'newqttdoca' => 0, 'codItemPedido' => 0]);
                         exit();
                     }else{
+                        $SelectEstoque = "SELECT cod_estoque FROM estoque WHERE Andar ='$andar' AND Apartamento = '$apartamento'";
+                        $executar = $conexao->query($SelectEstoque);
+
+                        if ($executar && $executar->num_rows > 0) {
+                            $row = $executar->fetch_assoc();
+                            $cod_estoque = $row['cod_estoque'];
+                            
+                            $InsetItensPicking = "INSERT INTO itensestoque (Quantidade, Situacao, cod_estoque, cod_itenPedido, codTurma)
+                            VALUES ('$quantidadeEstoque', 'Em movimentação', '$cod_estoque', '$cod_itempedido', '{$_SESSION['codTurma']}')";
+                            $execute = $conexao->query($InsetItemEstoque);
+                        }
 
                     $UpdateSolicitacao = "UPDATE solicitacoes SET Situacao='No Picking' WHERE id_solicitacao='$id_solicitacao'";
                     $executar = $conexao -> query($UpdateSolicitacao);
