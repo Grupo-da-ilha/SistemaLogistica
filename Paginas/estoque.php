@@ -92,15 +92,15 @@ if (empty($_SESSION['nome'])){
         <div class="container-prin">
             <div class="submenu">
                 <li class="lisubmenu">
-                    <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
-                    <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
-                    <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
-                    <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
-                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
+                    <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
+                    <a href="carga.php" class="functions-menu">VISTORIA</a>
+                    <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="controledoca.php" class="functions-menu">CONTROLE</a>
+                    <a href="estoque.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
-                    <a href="pickingaluno.php" class="functions-menu">PICKING</a>
-                    <a href="expedicaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="relatoriosaluno.php" class="functions-menu">RELATÓRIOS</a>
+                    <a href="picking.php" class="functions-menu">PICKING</a>
+                    <a href="expedicao.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
                 </li>
             </div>
             <div class="criar-pedido-container">
