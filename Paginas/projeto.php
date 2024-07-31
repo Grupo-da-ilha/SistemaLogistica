@@ -36,9 +36,7 @@
                                 <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="perfil.php">PERFIL</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="ajuda.php">AJUDA</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="sobrenos.php">SOBRE NÓS</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="">CONFIGURAÇÕES</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
                         </nav>
