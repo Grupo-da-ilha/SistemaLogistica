@@ -119,6 +119,29 @@ if (empty($_SESSION['nome'])){
                                         <input type="text" name="Quantidade_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Quantidade:">
                                         <input type="submit" value="CONSULTAR" style="display: block;" class="input-function-criar-pedido">
                                     </form>
+                                    <div class="legenda">
+                                        <p>LEGENDA:</p>
+                                        <div class="legenda-sub">
+                                            <div class="vermelho"></div>
+                                            <p>NÃO HÁ QUANTIDADE SOLICITADA</p>
+                                        </div>
+                                        <div class="legenda-sub">
+                                            <div class="azul"></div>
+                                            <p>MAIS DA QUANTIDADE SOLICITADA</p>
+                                        </div>
+                                        <div class="legenda-sub">
+                                            <div class="verde"></div>
+                                            <p>EXATAMENTE A QUANTIDADE SOLICITADA</p>
+                                        </div>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div class="submenus-pedidos">
+                                <h4> QUANTIDADE:</h4>
+                                <div class="info-pedido">
+                                    <form id="#"> 
+                                        <p>Quantidade:</p>
+                                    </form>
                                 </div>
                             </div>
                         </div>
