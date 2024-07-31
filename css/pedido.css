@@ -567,14 +567,29 @@ th, tr, td {
 }
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+@media only screen and (min-width: 899px) and (max-width: 1441px) {
+  .main-horizontal{
+    border-radius: 0;
+  }
   h1 {
     font-size: 30px;
     cursor: default;
     text-wrap: nowrap;
 }
+.titulo-pedido{
+  height: 7vh;
+  border-radius: 30px 30px 0 0;
+}
+h3{
+  font-size: 40px;
+}
 h4 {
   margin: 5px;
+  padding: 5px;
+  font-size: 30px;
+}
+h5{
+  font-size: 25px;
 }
 .container-prin {
     margin-top: -91vh;
@@ -587,7 +602,7 @@ h4 {
     align-items: center;
 }
 .submenu {
-  margin-top: 6vh;
+  margin-top: 1.3vh;
   height: 6vh;
 }
 .criar-pedido-container {
@@ -605,6 +620,14 @@ width: 100%;
 .submenus-pedidos {
 width: 30%;
 height: 100%;
+border-radius: 0 0 0 30px;
+margin-top: 0;
+}
+.input-options-consulta{
+  width: 50%;
+}
+#verprodutoscadastrados{
+  width: 390px;
 }
 .criarpedidos {
     margin: 30px;
@@ -648,8 +671,4 @@ th, tr, td {
   color: #000000;
   font-size: 15px;
 }
-}
-
-@media only screen and (min-width: 1441px) {
-    /* Add your responsive styles for large screens (e.g., larger monitors) here */
 }
