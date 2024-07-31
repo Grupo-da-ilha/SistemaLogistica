@@ -206,13 +206,17 @@ h3 {
   }
   
   @media only screen and (min-width: 899px) and (max-width: 1441px) {
+    html{
+        width: 100vw;
+    }
     h1 {
       font-size: 30px;
       cursor: default;
       text-wrap: nowrap;
   }
-  
-  
+  .container-prin{
+    margin-top: -77vh;
+  }
 .card-function-log-pedido,
 .card-function-log-recebimento,
 .card-function-log-movimentacao, 
@@ -220,11 +224,15 @@ h3 {
 .card-function-log-picking, 
 .card-function-log-expedicao,
 .card-function-log-relatorios,
-.card-function-log-controle {
+.card-function-log-controle,
+.card-function-log-vistoria,
+.card-function-log-danfe,
+.card-function-log-meuspedidos,
+.card-function-log-operacao {
     cursor: pointer;
     margin-top: 50px;
-    width: 210px;
-    height: 210px;
+    width: 190px;
+    height: 190px;
     border-radius: 30px;
     box-shadow: 0 0 7px white;
     background-position: center;
@@ -233,7 +241,7 @@ h3 {
     transition: all 0.3s;
 }
   .body{
-    height: 100vh;
+    height: 100%;
   }
   }
   
