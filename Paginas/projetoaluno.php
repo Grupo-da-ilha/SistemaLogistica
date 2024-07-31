@@ -130,10 +130,10 @@
     <main>
         <div class="container-prin">
             <div class="functions-logistica">
-                <a href="recebimentoaluno.php"><div class="card-function-log-recebimento"></div></a>
+                <a href="recebimentodocaaluno.php"><div class="card-function-log-recebimento"></div></a>
                 <a href="movimentacaoaluno.php"><div class="card-function-log-movimentacao"></div></a>
-                <div class="card-function-log-estoque"></div>
-                <div class="card-function-log-picking"></div>
+                <a href="estoquealuno.php"><div class="card-function-log-estoque"></div></a>
+                <a href="pickingaluno.php"><div class="card-function-log-picking"></div></a>
                 <div class="card-function-log-expedicao"></div>
                 <div class="card-function-log-relatorios"></div>
                 <a href="recebimentodocaaluno.php"><div class="card-function-log-controle"></div></a>

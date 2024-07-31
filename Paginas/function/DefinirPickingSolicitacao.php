@@ -72,7 +72,7 @@ if ($conexao->connect_errno) {
                             $execute = $conexao->query($InsetItensPicking);
 
                             if ($execute) {
-                                echo json_encode(['success' => true, 'message' => 'Item enviado para Picking', 'newqttespera' => $NewQTTEspera, 'cod_itempSolicitacao' => $cod_itempSolicitacao]);
+                                echo json_encode(['success' => true, 'message' => 'Item enviado para Picking', 'newqttespera' => $NewQTTEspera, 'cod_itemSolicitacao' => $cod_itempSolicitacao]);
                                 exit();
                             }else {
                                 echo json_encode(['success' => false, 'message' => 'Erro ao enviar pedido para o picking']);
