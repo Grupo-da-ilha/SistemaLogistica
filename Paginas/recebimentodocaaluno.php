@@ -80,7 +80,6 @@ if (empty($_SESSION['nome'])){
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
-                    <a href="criarpedidoaluno.php" class="functions-menu">PEDIDO</a>
                     <a href="danfealuno.php" class="functions-menu">DANFE</a>
                     <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
                     <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
