@@ -132,7 +132,7 @@ if (empty($_SESSION['nome'])) {
                         <div class="criar-pedidos-container">
                             <div class="options-pedido">
                                 <div class="produtos-pedido">
-                                    <h4>PARA ONDE OS ITENS VÃO?</h4>';
+                                    <h4>DE ONDE VAI SER RETIRADO?</h4>';
 
             if (isset($_POST['id_solicitacao'])) {
                 $id_solicitacao = $conexao->real_escape_string($_POST['id_solicitacao']);
@@ -193,7 +193,7 @@ if (empty($_SESSION['nome'])) {
                                     echo '<tr>
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
-                                            <td class="Quantidade_espera" codItemSolicitacao="' . htmlspecialchars($codItemSolicitacao) . '">' . htmlspecialchars($Quantidade_espera) . '</td>
+                                            <td class="Quantidade_esperar" codItemSolicitacao="' . htmlspecialchars($codItemSolicitacao) . '">' . htmlspecialchars($Quantidade_espera) . '</td>
                                             <form class="form-enviar-produtos">
                                                 <td>
                                                     <input type="hidden" name="cod_produto" value="' . htmlspecialchars($cod_produto) . '">
@@ -313,9 +313,9 @@ $(document).ready(function() {
                     var jsonResponse = JSON.parse(response);
                     console.log(jsonResponse);
                     if (jsonResponse.success) {
-                        var inputEspera = document.getElementsByClassName('Quantidade_espera');
+                        var inputEspera = document.getElementsByClassName('Quantidade_esperar');
                         for (var i = 0; i < inputEspera.length; i++) {
-                            if (inputEspera[i].getAttribute('codItemSolicitacao') == jsonResponse.codItemSolicitacao) {
+                            if (inputEspera[i].getAttribute('codItemSolicitacao') == jsonResponse.cod_itemSolicitacao) {
                                 if (jsonResponse.newqttespera == 0) {
                                     var row = inputEspera[i].closest('tr');
                                     if (row) {
@@ -327,9 +327,6 @@ $(document).ready(function() {
                                 break;
                             }
                         }
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 100);
                     } else {
                         alert(jsonResponse.message); 
                     }
