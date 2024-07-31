@@ -149,7 +149,7 @@ if (empty($_SESSION['nome'])) {
                             $sqlProdutos= "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
                             $executar = $conexao->query($sqlProdutos);
 
-                            $SelectItensEstoque = "SELECT * FROM itensestoque WHERE cod_itenpedido = '$codItemPedido' AND Situacao = 'Em movimentação'";
+                            $SelectItensEstoque = "SELECT * FROM itensestoque WHERE cod_itenpedido = '$codItemPedido' AND Situacao = 'Em movimentação' AND codTurma = '{$_SESSION['codTurma']}'";
                             $resultado = $conexao -> query($SelectItensEstoque);
 
                             if($resultado && $resultado -> num_rows > 0){

@@ -24,10 +24,11 @@ if ($conexao->connect_errno) {
         echo ''.$_SESSION['Idprojeto']. '';
     }
 
-        if(isset($_POST['hiddenQTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_POST['QTTespera']) && isset($_POST['id_solicitacao'])  && isset($_POST['cod_itempSolicitacao'])){
-            $quantidadeEstoque = $conexao -> real_escape_string($_POST['hiddenQTDEstoque']);
+        if(isset($_POST['QTDEstoque']) && isset($_POST['PosicaoEstoque']) && isset($_POST['QTTespera']) && isset($_POST['id_solicitacao'])  && isset($_POST['cod_itempSolicitacao']) && isset($_POST['ItemPicking'])){
+            $quantidadeEstoque = $conexao -> real_escape_string($_POST['QTDEstoque']);
             $posicaoEstoque = $conexao -> real_escape_string($_POST['PosicaoEstoque']);
             $QTTespera = $conexao -> real_escape_string($_POST['QTTespera']);
+            $QuantidadePicking = $conexao -> real_escape_string($_POST['ItemPicking']);
             $cod_itempSolicitacao = $conexao -> real_escape_string($_POST['cod_itempSolicitacao']);
             $id_solicitacao = $conexao -> real_escape_string($_POST['id_solicitacao']);
 
@@ -56,7 +57,7 @@ if ($conexao->connect_errno) {
                     $executar = $conexao->query($Updateitem);
 
                     if (!$executar) {
-                        echo json_encode(['success' => false, 'message' => 'ERRO', 'newqttdoca' => 0, 'codItemPedido' => 0]);
+                        echo json_encode(['success' => false, 'message' => 'ERRO', 'newqttdoca' => 0, 'cod_itemSolicitacao' => 0]);
                         exit();
                     }else{
                         $SelectEstoque = "SELECT cod_estoque FROM estoque WHERE Andar ='$andar' AND Apartamento = '$apartamento'";
