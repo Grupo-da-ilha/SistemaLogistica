@@ -207,7 +207,7 @@ h7 {
   .locais-estoque {
     margin-top: 5vh;
     padding: 0px;
-    width: 52vw;
+    width: 48vw;
     height: 62vh;
     margin-left: -10vw;
     background-color: rgb(0, 119, 255);
@@ -225,7 +225,7 @@ h7 {
   .posicao-container {
     cursor: pointer;
     margin: 5px;
-    width: 7vw;
+    width: 8vw;
     border-radius: 6px;
     background-color: white;
     height: 11vh;
