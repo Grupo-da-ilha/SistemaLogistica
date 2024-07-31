@@ -32,7 +32,10 @@
                             $emailcadastrado = $rowUsers['email'];
 
                             if($email == $emailcadastrado){
-                                echo 'Este Email já está sendo usado';
+                                echo'<div class="tratar-erro" style="background-image: url('../css/cssimg/fundoprojetos.png'); width: 100vw; height: 100vh;
+                                background-position: center; background-size: cover; background-repeat: no-repeat; display: flex; flex-direction: column; justify-content: center; align-items: center;">  
+                                    <p style="color: white; font-size: 30px; font-family: Arial, Helvetica, sans-serif; text-shadow: 0 0 15px rgb(38, 150, 255);">ESTE EMAIL JÁ ESTÁ SENDO UTILIZADO</p>
+                                </div>';
                             }else{
                                 $sql = "INSERT INTO `logistica`.`usuarios`
                                 (`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`)
