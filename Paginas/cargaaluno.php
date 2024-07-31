@@ -58,7 +58,7 @@ if (empty($_SESSION['nome'])){
                         <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="perfilaluno.php">PERFIL</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sobrenos.php">SOBRE NÓS</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="sobrenosaluno.php">SOBRE NÓS</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                         </ul>
                     </nav>
@@ -82,7 +82,7 @@ if (empty($_SESSION['nome'])){
                     <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
                     <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
-                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="pickingaluno.php" class="functions-menu">PICKING</a>
                     <a href="expedicaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="relatoriosaluno.php" class="functions-menu">RELATÓRIOS</a>
