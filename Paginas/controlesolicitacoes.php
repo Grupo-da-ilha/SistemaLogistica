@@ -153,6 +153,13 @@ if (empty($_SESSION['nome'])) {
 
                     if ($execute && $execute->num_rows > 0) {
                         echo '<div class="MainContainer">
+                                                    <div class="main-overlay">             
+                                                        <form class="form-verificacao">
+                                                            <input type="text" name="Nome_produto" placeholder="Nome do produto" style="display:block;">
+                                                            <input type="text" name="QTDEstoqueDisponivel" placeholder="Quantidade para retirada" style="display:block;">
+                                                            <input type="submit" class="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
+                                                        </form>
+                                                    </div>
                                 <table class="tabela"> 
                                     <tr>
                                         <td>Produtos</td>
@@ -171,15 +178,15 @@ if (empty($_SESSION['nome'])) {
                             $sqlProdutos= "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
                             $executar = $conexao->query($sqlProdutos);
 
-                            /*$SelectItensEstoque = "SELECT * FROM itensestoque WHERE cod_itenpedido = '$codItemPedido' AND Situacao = 'Em movimentação'";
-                            $resultado = $conexao -> query($SelectItensEstoque);
+                            $SelectItensPicking = "SELECT * FROM itenspicking WHERE cod_itemSolicitacao = '$codItemSolicitacao' AND Situacao = 'No processo de picking' AND codTurma = '{$_SESSION['codTurma']}'";
+                            $resultado = $conexao -> query($SelectItensPicking);
 
                             if($resultado && $resultado -> num_rows > 0){
-                                $rowItenEstoque = $resultado -> fetch_assoc();
-                                $QuantidadeEstoque = $rowItenEstoque['Quantidade'];
+                                $rowItenPicking = $resultado -> fetch_assoc();
+                                $QuantidadePicking = $rowItenPicking['Quantidade'];
                             } else{
-                                $QuantidadeEstoque = 0;
-                            }*/
+                                $QuantidadePicking = 0;
+                            }
 
                             if ($executar && $executar->num_rows > 0) {
                                 while ($rowProdutos = $executar->fetch_assoc()) {
@@ -187,24 +194,19 @@ if (empty($_SESSION['nome'])) {
                                             <td>' . htmlspecialchars($rowProdutos['Nome']) . '</td>
                                             <td>' . htmlspecialchars($rowProdutos['UN']) . '</td>
                                             <td class="Quantidade_espera" codItemSolicitacao="' . htmlspecialchars($codItemSolicitacao) . '">' . htmlspecialchars($Quantidade_espera) . '</td>
+                                            <form class="form-enviar-produtos">
                                                 <td>
-                                                    <div class="main-overlay">             
-                                                        <form class="form-verificacao" data-form-id="1">
-                                                            <input type="hidden" name="cod_produto" value="' . htmlspecialchars($cod_produto) . '">
-                                                            <input type="text" class="QTDEstoque" name="QTDEstoque" placeholder="Quantidade para retirada" style="display:block;">
-                                                            <input type="submit" class="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
-                                                        </form>
-                                                    </div>
+                                                    <input type="hidden" name="cod_produto" value="' . htmlspecialchars($cod_produto) . '">
+                                                    <input type="text" class="QTDEstoque" name="QTDEstoque" placeholder="Quantidade para retirada" style="display:block;">
                                                 </td>
-                                                <form class="form-enviar-produtos" data-form-id="1">
                                                     <td>
                                                         <input type="text" class="PosicaoEstoque" name="PosicaoEstoque" placeholder="Posição" style="display:block;">
                                                     </td>
                                                     <td>
                                                         <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '">
                                                         <input type="hidden" name="QTTespera" value="' . htmlspecialchars($Quantidade_espera) . '">
+                                                        <input type="hidden" name="ItemPicking" value="' . htmlspecialchars($QuantidadePicking) . '">
                                                         <input type="hidden" name="cod_itempSolicitacao" value="' . htmlspecialchars($codItemSolicitacao) . '">
-                                                        <input type="hidden" class="hiddenQTDEstoque" name="hiddenQTDEstoque" value="">
                                                         <input type="submit" class="EnviarEstoque" name="EnviarEstoque" value="Enviar" style="display:block;">
                                                     </td>
                                                 </form>
@@ -216,14 +218,14 @@ if (empty($_SESSION['nome'])) {
                         }
                         echo '</table>
                                 </div>
-                                    <div class="overlay" id="codigoOverlay" style="display:none;">
+                                <div class="overlay" id="codigoOverlay" style="display:none;">
                                     <div class="overlay-content">
                                         <p>Posições onde se encontra esse produto:</p>
                                         <br>
                                         <div id="posicoesEstoque"></div>
                                         <button type="button" id="fecharOverlayBtn">Fechar</button>
-                                </div>
-                        </div>';
+                                    </div>
+                                </div>';
                     } else {
                         $UpdateSituation = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE cod_pedido = '$idpedido' AND codTurma = '{$_SESSION['codTurma']}'";
                         $executeUpdate = $conexao -> query($UpdateSituation);
@@ -295,20 +297,6 @@ $(document).ready(function() {
         $('#codigoOverlay').hide();
     });
 });
-
-document.querySelectorAll('.form-enviar-produtos').forEach(function(formEnviar) {
-        formEnviar.addEventListener('submit', function() {
-            var formId = formEnviar.getAttribute('data-form-id');
-            
-            var formVerificacao = document.querySelector('.form-verificacao[data-form-id="' + formId + '"]');
-            
-            if (formVerificacao) {
-                var qtdeEstoque = formVerificacao.querySelector('.QTDEstoque').value;
-                console.log('QTDEstoque:', qtdeEstoque);  // Debug
-                formEnviar.querySelector('.hiddenQTDEstoque').value = qtdeEstoque;
-            }
-        });
-    });
 
     // Envio do formulário com AJAX
     $('.form-enviar-produtos').submit(function(e) {

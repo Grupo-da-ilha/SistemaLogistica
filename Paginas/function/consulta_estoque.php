@@ -26,9 +26,21 @@ if (isset($_SESSION['Idprojeto'])) {
     }
 }
 
-if (isset($_POST['QTDEstoque']) && isset($_POST['cod_produto'])) {
-    $cod_produto = $conexao->real_escape_string($_POST['cod_produto']);
-    $qtde_estoque = intval($_POST['QTDEstoque']); // Certifique-se de que a quantidade seja um número inteiro
+if (isset($_POST['QTDEstoqueDisponivel']) && isset($_POST['Nome_produto'])) {
+    $Nome_produto = $conexao->real_escape_string($_POST['Nome_produto']);
+    $qtde_estoque = intval($_POST['QTDEstoqueDisponivel']); 
+    
+    //Selecionar cod_produto pelo Nome Digitado pela pessoa
+    $SelectCodProduto = "SELECT * FROM produtos WHERE Nome='$Nome_produto'";
+    $executarCodProduto = $conexao -> query($SelectCodProduto);
+
+    if($executarCodProduto && $executarCodProduto -> num_rows > 0){
+        $rowProdutos = $executarCodProduto -> fetch_assoc();
+        $cod_produto = $rowProdutos['cod_produto'];
+    }else{
+        echo json_encode(['success' => false, 'message' => 'Não foi possível encontrar este prodtuo, verifique a escrita por favor!!']);
+        exit();
+    }
 
     $SelectItenSolicitacaoEstoque = "SELECT itensestoque.cod_estoque, itensestoque.Quantidade
         FROM produtos
