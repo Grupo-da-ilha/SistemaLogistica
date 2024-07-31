@@ -254,18 +254,17 @@ if (empty($_SESSION['nome'])) {
                     echo '</div>';
                     echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
                     echo'</div>';
-                    echo'<div class="infos-adicionais">
+                    echo'<div class="itens-danfe">
                     <div class="titulo-div-danfe">';
                     echo '<h7>INFORMAÇÕES DO PEDIDO:</h7>';
                     echo '</div>';
-                    echo '<table class="tabela">
-                            <th> 
-                                <tr> NOME <tr>
-                                <tr> Quantidade <tr>
-                                <tr> Valor Unitario <tr>
-                                <tr> Valor  Total<tr>
-                                <tr> UN<tr>
-                            </th>';
+                    echo '<div class="tabela-itens">
+                                <div class="sub-produtos"> NOME </div>
+                                <div class="sub-produtos"> QUANTIDADE </div>
+                                <div class="sub-produtos"> VALOR UNITÁRIO </div>
+                                <div class="sub-produtos"> VALOR TOTAL </div>
+                                <div class="sub-produtos"> UN </div>
+                            </div>';
                          //Buscas itenspedido 
                             $selectItens = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['idpedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
                             $executeItens = $conexao -> query($selectItens);
@@ -292,13 +291,16 @@ if (empty($_SESSION['nome'])) {
                                         $UN_produto = $rowProdutos['UN'];
                                         $NCM_produto = $rowProdutos['NCM'];
 
-                                        echo '<tr>
-                                            <td>' . htmlspecialchars($nome_produto) . '</td>
-                                            <td>' . htmlspecialchars($QuantidadeItem) . '</td>
-                                            <td>' . htmlspecialchars($ValorUnitario) . '</td>
-                                            <td>' . htmlspecialchars($ValorTotalItem) . '</td>
-                                            <td>' . htmlspecialchars($UN_produto) . '</td>
-                                        </tr>
+                                        echo '
+                                        <div class="caixa-itens">
+                                            <div class="itens-pedido">
+                                                <div class="info-itens-pedido">' . htmlspecialchars($nome_produto) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($QuantidadeItem) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($ValorUnitario) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($ValorTotalItem) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($UN_produto) . '</div>
+                                            </div>    
+                                        </div>
                                         ';
                                         
                                     }
@@ -461,18 +463,17 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '</div>';
                     echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
                     echo'</div>';
-                    echo'<div class="infos-adicionais">
-                    <div class="titulo-div-danfe">';
+                    echo'<div class="itens-danfe">
+                    <div class="titulo-div-danfe-itens">';
                     echo '<h7>INFORMAÇÕES DO PEDIDO:</h7>';
                     echo '</div>';
-                    echo '<table class="tabela">
-                            <th> 
-                                <tr> NOME <tr>
-                                <tr> Quantidade <tr>
-                                <tr> Valor Unitario <tr>
-                                <tr> Valor  Total<tr>
-                                <tr> UN<tr>
-                            </th>';
+                    echo '<div class="tabela-itens">
+                                <div class="sub-produtos"> NOME </div>
+                                <div class="sub-produtos"> QUANTIDADE </div>
+                                <div class="sub-produtos"> VALOR UNITÁRIO </div>
+                                <div class="sub-produtos"> VALOR TOTAL </div>
+                                <div class="sub-produtos"> UN </div>
+                            </div>';
                          //Buscas itenspedido 
                             $selectItens = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['idpedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
                             $executeItens = $conexao -> query($selectItens);
@@ -499,13 +500,16 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                                         $UN_produto = $rowProdutos['UN'];
                                         $NCM_produto = $rowProdutos['NCM'];
 
-                                        echo '<tr>
-                                            <td>' . htmlspecialchars($nome_produto) . '</td>
-                                            <td>' . htmlspecialchars($QuantidadeItem) . '</td>
-                                            <td>' . htmlspecialchars($ValorUnitario) . '</td>
-                                            <td>' . htmlspecialchars($ValorTotalItem) . '</td>
-                                            <td>' . htmlspecialchars($UN_produto) . '</td>
-                                        </tr>
+                                        echo '
+                                        <div class="caixa-itens">
+                                            <div class="itens-pedido">
+                                                <div class="info-itens-pedido">' . htmlspecialchars($nome_produto) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($QuantidadeItem) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($ValorUnitario) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($ValorTotalItem) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($UN_produto) . '</div>
+                                            </div>    
+                                        </div>
                                         ';
                                         
                                     }

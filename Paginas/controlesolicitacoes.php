@@ -300,7 +300,6 @@ document.querySelectorAll('.form-enviar-produtos').forEach(function(formEnviar) 
         formEnviar.addEventListener('submit', function() {
             var formId = formEnviar.getAttribute('data-form-id');
             
-            // Encontra o formulário de verificação correspondente
             var formVerificacao = document.querySelector('.form-verificacao[data-form-id="' + formId + '"]');
             
             if (formVerificacao) {

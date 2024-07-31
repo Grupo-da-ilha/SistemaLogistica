@@ -46,9 +46,9 @@ if (empty($_SESSION['nome'])){
                     <nav>
                         <ul class="ul-button">
                         <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="perfilaluno.php">PERFIL</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="sobrenosaluno.php">SOBRE NÓS</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                         </ul>
                     </nav>
@@ -67,13 +67,12 @@ if (empty($_SESSION['nome'])){
         <div class="container-prin">
             <div class="submenu">
                 <li class="lisubmenu">
-                    <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
-                    <a href="carga.php" class="functions-menu">RECEBIMENTO</a>
-                    <a href="estoque.php" class="functions-menu">ESTOQUE</a>
-                    <a href="picking.php" class="functions-menu">PICKING</a>
-                    <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
+                    <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
+                    <a href="cargaaluno.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
+                    <a href="pickingaluno.php" class="functions-menu">PICKING</a>
+                    <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="relatoriosaluno.php" class="functions-menu">RELATÓRIOS</a>
                 </li>
             </div>
             <div class="movimentacao-container">
