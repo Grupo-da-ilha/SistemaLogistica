@@ -133,8 +133,11 @@ h1 {
 
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
-  h1 {
+@media only screen and (min-width: 899px) and (max-width: 1441px) {
+body{
+    height: 100vh;
+}
+h1 {
     font-size: 30px;
     cursor: default;
     text-wrap: nowrap;
@@ -149,7 +152,6 @@ h1 {
     justify-content: center;
     align-items: center;
 }
-
 .options-senai-new, .options-senai-continue, .options-senai-turma {
     margin-top: 20vh;
     width: 300px;
@@ -159,6 +161,3 @@ h1 {
 }
 
 
-@media only screen and (min-width: 1441px) {
-    /* Add your responsive styles for large screens (e.g., larger monitors) here */
-}

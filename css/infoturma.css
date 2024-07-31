@@ -181,27 +181,11 @@ font-size: 12px;
 
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
-  h1 {
-    font-size: 30px;
-    cursor: default;
-    text-wrap: nowrap;
-}
-
-.container-prin {
-    margin-top: -91vh;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-}
-
-
-@media only screen and (min-width: 1441px) {
-    /* Add your responsive styles for large screens (e.g., larger monitors) here */
+@media only screen and (min-width: 899px) and (max-width: 1441px) {
+ .titulo-turmas{
+  width: 125.3%;
+ }
+ .alunos-turma{
+  border-radius: 30px 30px 10px 10px;
+ }
 }
