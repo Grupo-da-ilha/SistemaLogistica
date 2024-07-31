@@ -76,7 +76,6 @@ if (empty($_SESSION['nome'])){
                     <a href="picking.php" class="functions-menu">PICKING</a>
                     <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
-                    <a href="controle.php" class="functions-menu">CONTROLE</a>
                 </li>
             </div>
             <div class="movimentacao-container">
