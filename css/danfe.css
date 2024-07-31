@@ -322,6 +322,17 @@ h8 {
   flex-direction: column;
   align-items: flex-start
 }
+.itens-danfe {
+  width: 100vw;
+  height: 20vh;
+  border: 1px solid black;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #000000;
+}
+.titulo-div-danfe-itens {
+  width: 50vw;
+}
 @media only screen and (max-width: 600px) {
   body {
     background-image: url("cssimg/fundopag.jpg");

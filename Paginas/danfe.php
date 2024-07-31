@@ -256,7 +256,7 @@ if (empty($_SESSION['nome'])) {
                     echo '</div>';
                     echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
                     echo'</div>';
-                    echo'<div class="infos-adicionais">
+                    echo'<div class="itens-danfe">
                     <div class="titulo-div-danfe">';
                     echo '<h7>INFORMAÇÕES DO PEDIDO:</h7>';
                     echo '</div>';
@@ -463,8 +463,8 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '</div>';
                     echo '<p>Informações Adicionais: ' . htmlspecialchars($InformacoesAdicionais) . '</p>';
                     echo'</div>';
-                    echo'<div class="infos-adicionais">
-                    <div class="titulo-div-danfe">';
+                    echo'<div class="itens-danfe">
+                    <div class="titulo-div-danfe-itens">';
                     echo '<h7>INFORMAÇÕES DO PEDIDO:</h7>';
                     echo '</div>';
                     echo '<table class="tabela">
