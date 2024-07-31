@@ -146,10 +146,6 @@
             </div>
         </div>
     </main>';
-    if (isset($_SESSION['Idprojeto'])) {
-    } else {
-        echo '<p>Nenhum projeto selecionado.</p>';
-    }
 }
 ?>
 <!-- Modal -->
