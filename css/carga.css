@@ -69,7 +69,7 @@ h6 {
     margin-top: 10px;
     z-index: 0;
     width: 95%;
-    min-height: 82vh;
+    height: 70vh;
     background-color: #ffffff;;
     border-radius: 30px;
     display: flex;
@@ -98,7 +98,7 @@ h6 {
 .vistoria-carga {
   z-index: 0;
     width: 191.5vh;
-    min-height: 74vh;
+    height: 70vh;
     background-color: #eeeeee;
     border-radius: 30px;
     display: flex;
@@ -108,7 +108,7 @@ h6 {
     text-align: center;
 }
 .notafiscal {
-  height: 74vh;
+  height: 70vh;
   border-radius: 0 30px 30px 0;
   box-shadow: 0 0 15px rgb(0, 119, 255);
   background-color: #eeeeee;
@@ -117,7 +117,7 @@ h6 {
   z-index: 3;
   margin-top: -1vh;
   width: 70vh;
-  height: 74vh;
+  height: 70vh;
   background-color: #eeeeee;
   display: flex;
   flex-direction: column;
@@ -180,8 +180,7 @@ h6 {
 }
 .produtos {
   width: 100%;
-  height: 74vh;
-  background-color: #ffffff;
+  height: 70vh;
   display: flex;
   flex-direction: column;
   justify-content: first baseline;
@@ -231,6 +230,40 @@ th, tr, td {
   font-family: 'Poppins', sans-serif;
   color: #000000;
   font-size: 15px;
+}
+.form_quantidade {
+  width: 100%;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.quantidade_falta {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  outline: none;
+  background-color:#eeeeee;
+  border: 1px solid rgb(0, 119, 255);
+}
+.update_qt {
+  cursor: pointer;
+  margin-top: 5px;
+  width: 90%;
+  height: 3vh;
+  background-color: rgb(0, 119, 255);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  border: none;
+}
+.update_qt:hover {
+  background-color: rgb(45, 143, 255);
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transform: scale(1.05);
+  animation: animate 1s linear infinite;
 }
 #Registrar, .Vistoria-Concluída {
   cursor: pointer;
