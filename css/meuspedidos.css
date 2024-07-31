@@ -65,7 +65,7 @@ h7 {
     margin-top: 10px;
     z-index: 0;
     width: 95%;
-    min-height: 91%;
+    height: 80vh;
     background-color: #ffffff;;
     border-radius: 30px;
     display: flex;
@@ -102,7 +102,7 @@ h7 {
   z-index: 3;
   margin-top: 0vh;
   width: 50vh;
-  height: 74vh;
+  height: 70vh;
   background-color: #eeeeee;
   display: flex;
   flex-direction: column;

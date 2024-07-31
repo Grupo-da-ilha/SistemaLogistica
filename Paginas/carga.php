@@ -205,7 +205,7 @@ if (empty($_SESSION['nome'])){
                                                 echo '<td>' . htmlspecialchars($row['Nome']). '</td>';
                                                 echo '<td>' . htmlspecialchars($row['UN']). '</td>';
                                                 echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '
-                                                <form style="display: none; border: 1px solid black; width: auto; height:50px;" class="form_quantidade">
+                                                <form style="display: none; width: auto; height:50px;" class="form_quantidade">
                                                     <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
                                                     <input type="hidden" name="Clausula" class="clausula" value="">
                                                     <input type="text" class="quantidade_falta" name="Quantidade_falta" style="display: none;">
