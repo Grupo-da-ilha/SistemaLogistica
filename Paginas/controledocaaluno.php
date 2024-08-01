@@ -82,9 +82,9 @@ if (empty($_SESSION['nome'])) {
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
                     <a href="danfealuno.php" class="functions-menu">DANFE</a>
                     <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
-                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="pickingaluno.php" class="functions-menu">PICKING</a>
-                    <a href="expedicaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
                 </li>
             </div>
             <div class="criar-pedido-container">

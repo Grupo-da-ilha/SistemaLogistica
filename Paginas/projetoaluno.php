@@ -130,13 +130,14 @@
     <main>
         <div class="container-prin">
             <div class="functions-logistica">
-                 <a href="danfealuno.php"><div class="card-function-log-danfe"></div></a>
+                <a href="danfealuno.php"><div class="card-function-log-danfe"></div></a>
+                <a href="cargaaluno.php"><div class="card-function-log-vistoria"></div></a>
                 <a href="recebimentodocaaluno.php"><div class="card-function-log-recebimento"></div></a>
-                <a href="movimentacaoaluno.php"><div class="card-function-log-movimentacao"></div></a>
+                <a href="controledocaaluno.php"><div class="card-function-log-controle"></div></a>
                 <a href="estoquealuno.php"><div class="card-function-log-estoque"></div></a>
-                <a href="pickingaluno.php"><div class="card-function-log-picking"></div></a>
-                <a href="expedicaoaluno.php"<div class="card-function-log-expedicao"></div></a>
-                <a href="controledocaaluno.php" class="functions-menu">Controle</a>
+                <a href="movimentacaoaluno.php"><div class="card-function-log-movimentacao"></div></a>
+                <a href="operacaomovimentacaoaluno.php"><div class="card-function-log-operacao"></div></a>
+                
                 <div class="card-function-log-cadas"></div>
             </div>
         </div>
