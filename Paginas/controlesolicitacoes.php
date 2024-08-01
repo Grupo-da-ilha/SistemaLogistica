@@ -155,8 +155,8 @@ if (empty($_SESSION['nome'])) {
                         echo '<div class="MainContainer">
                                                     <div class="main-overlay">             
                                                         <form class="form-verificacao">
-                                                            <input type="text" name="Nome_produto" placeholder="Nome do produto" style="display:block;">
-                                                            <input type="text" name="QTDEstoqueDisponivel" placeholder="Quantidade para retirada" style="display:block;">
+                                                            <input type="text" class="button-disponilidade" name="Nome_produto" placeholder="Nome do produto" style="display:block;">
+                                                            <input type="text" class="button-disponilidade" name="QTDEstoqueDisponivel" placeholder="Quantidade para retirada" style="display:block;">
                                                             <input type="submit" class="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
                                                         </form>
                                                     </div>
