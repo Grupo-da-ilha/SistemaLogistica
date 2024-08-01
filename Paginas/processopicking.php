@@ -162,16 +162,6 @@ if (empty($_SESSION['nome'])){
                 } else{
                     echo 'Nenhuma operação em aberto';
                 }
-
-                    echo '
-                        </table>
-                        <br>
-                        <div class="iroperacao">
-                            <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Ir para operação" style="display:block;" class="irparaoperacao">
-                        </div>  
-                    </form>
-                    </div>
-                    ';
 echo '
             </div>
         </div>
