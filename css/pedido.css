@@ -623,11 +623,8 @@ height: 100%;
 border-radius: 0 0 0 30px;
 margin-top: 0;
 }
-.input-options-consulta{
-  width: 50%;
-}
 #verprodutoscadastrados{
-  width: 390px;
+  width: 450px;
 }
 .criarpedidos {
     margin: 30px;
@@ -641,12 +638,16 @@ margin-top: 0;
     overflow-y: auto;
 }
 .options-pedido {
-  width: 83vh;
+  width: 36vw;
   height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.produtos-pedido{
+  border-radius: 30px;
+  width: 97%;
 }
 .options-criarpedido {
   background-color: #00000000;
