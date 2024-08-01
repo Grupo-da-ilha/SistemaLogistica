@@ -36,8 +36,7 @@
                         $conexao = new mysqli($hostname, $user, $password, $database);
 
                         if ($conexao->connect_errno) {
-                            echo "Failed to connect to MySQL: " . $conexao->connect_error;
-                            exit();
+                            $error_message = "Failed to connect to MySQL: " . $conexao->connect_error;
                         } else {
                             try {
                                 // Evita caracteres especiais (SQL Injection)
@@ -56,33 +55,35 @@
                                 $executeUsers = $conexao->query($SelectUsuarios);
 
                                 if ($executeUsers && $executeUsers->num_rows > 0) {
-                                    $error_message = "ESTE EMAIL JÁ ESTÁ SENDO UTILIZADO";
+                                    $error_message = "ESTE EMAIL JÁ ESTÁ SENDO UTILIZADO!";
                                 } else {
                                     // Verifica se a turma existe
                                     $SelectTurma = "SELECT * FROM turmas WHERE codTurma = '$turmausuario'";
                                     $executeTurma = $conexao->query($SelectTurma);
 
                                     if ($executeTurma && $executeTurma->num_rows == 0) {
-                                        $error_message = "ESSA TURMA NÃO EXISTE";
+                                        $error_message = "ESTA TURMA NÃO EXISTE!";
                                     } else {
                                         $sql = "INSERT INTO `logistica`.`usuarios` (`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`)
                                                 VALUES ('$nome', '$email', '$senha', '$data_entrada', 's', '$tipousuario', '$turmausuario')";
 
                                         if ($conexao->query($sql) === TRUE) {
-                                            $conexao->close();
-                                            header('Location: ../Paginas/aluno.php', true, 301);
-                                            exit();
+                                            // Redireciona baseado no tipo de usuário
+                                            if ($tipousuario == "Aluno") {
+                                                header('Location: Paginas/aluno.php', true, 301);
+                                            } else if ($tipousuario == "Professor") {
+                                                header('Location: Paginas/professor.php', true, 301);
+                                            } else {
+                                                $error_message = "Tipo de usuário inválido";
+                                            }
+                                            exit(); // Saia do script após redirecionar
                                         } else {
                                             throw new Exception("Erro ao inserir dados: " . $conexao->error);
                                         }
                                     }
                                 }
                             } catch (Exception $e) {
-                                if ($conexao->errno == 1452) { // Código de erro para falha de chave estrangeira
-                                    $error_message = 'Turma inválida';
-                                } else {
-                                    $error_message = 'Erro: ' . $e->getMessage();
-                                }
+                                $error_message = 'Erro: ' . $e->getMessage();
                             }
                             $conexao->close();
                         }
@@ -90,7 +91,7 @@
                 ?>
 
                 <?php if (!empty($error_message)): ?>
-                    <div class="error-message" style="color: red; font-size: 18px;">
+                    <div class="error-message" style="color: red; font-size: 15x;">
                         <?php echo $error_message; ?>
                     </div>
                 <?php endif; ?>
