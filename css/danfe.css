@@ -436,7 +436,7 @@ h3{
 
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+@media only screen and (min-width: 899px) and (max-width: 1440px) {
   h1 {
     font-size: 30px;
     cursor: default;
@@ -461,7 +461,7 @@ nav {
     align-items: center;
 }
 .submenu {
-  margin-top: 6vh;
+  margin-top: 1.1vh;
   height: 6vh;
 }
 .criar-danfe-container {
@@ -522,6 +522,7 @@ th, tr, td {
   color: #000000;
   font-size: 15px;
 }
+
 }
 
 @media only screen and (min-width: 1441px) {
