@@ -148,7 +148,7 @@ if (empty($_SESSION['nome'])) {
                             <h6> Código da solicitação: ' . htmlspecialchars($cod_solicitacao) . '</h6>
                         </div>';
 
-                    $sqlItensSolicitacao= "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '$id_solicitacao' AND codTurma = '{$_SESSION['codTurma']}'";
+                    $sqlItensSolicitacao= "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '$id_solicitacao' AND codTurma = '{$_SESSION['codTurma']}' AND Quantidade_espera != 0";
                     $execute = $conexao->query($sqlItensSolicitacao);
 
                     if ($execute && $execute->num_rows > 0) {
@@ -227,13 +227,13 @@ if (empty($_SESSION['nome'])) {
                                     </div>
                                 </div>';
                     } else {
-                        $UpdateSituation = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE cod_pedido = '$idpedido' AND codTurma = '{$_SESSION['codTurma']}'";
+                        $UpdateSituation = "UPDATE solicitacoes SET Situacao = 'Em Processo de picking' WHERE id_solicitacao = '$id_solicitacao' AND codTurma = '{$_SESSION['codTurma']}'";
                         $executeUpdate = $conexao -> query($UpdateSituation);
 
-                        echo '<p>Esse pedido não possui itens ou itens já foram enviados para a movimentação</p>';
+                        echo '<p>Esta solicitação não possui itens ou itens já foram enviados para a movimentação</p>';
                     }
                 } else {
-                    echo '<p>Pedido não encontrado ou pedido não passou pela vistoria ainda</p>';
+                    echo '<p>Solicitação não encontrada ou solicitação não passou pela vistoria ainda</p>';
                 }
             } else {
                 echo '<p>Dados insuficientes, por favor clique para abrir a solicitação que à espera</p>';
