@@ -349,6 +349,12 @@ h5{
   .criar-pedido-container{
     height: 100%;
   }
+  .tablebox{
+    margin-left: 1.0em;
+  }
+  th, td{
+    font-size: 14px;
+  }
 }
 
 
