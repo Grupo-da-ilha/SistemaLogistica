@@ -23,13 +23,84 @@
             <div class="second-column">
                 <h2 class="title title-second">Criar Conta</h2>
                 <p class="description description-second">Use seu e-mail para cadastro:</p>
-                <form class="form" method="post" action="CadastroLogin/cadastro.php" id="formlogin" name="formlogin">
+                
+                <?php
+                    $error_message = "";
+
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $hostname = "127.0.0.1";
+                        $user = "root";
+                        $password = "";
+                        $database = "logistica";
+                    
+                        $conexao = new mysqli($hostname, $user, $password, $database);
+
+                        if ($conexao->connect_errno) {
+                            echo "Failed to connect to MySQL: " . $conexao->connect_error;
+                            exit();
+                        } else {
+                            try {
+                                // Evita caracteres especiais (SQL Injection)
+                                $nome = $conexao->real_escape_string($_POST['nomeUsuario']);
+                                $email = $conexao->real_escape_string($_POST['emailUsuario']);
+                                $senha = $conexao->real_escape_string($_POST['senhaUsuario']);
+                                $tipousuario = $conexao->real_escape_string($_POST['tipoUsuario']);
+                                $turmausuario = $conexao->real_escape_string($_POST['turmaUsuario']);
+
+                                // Definindo o fuso horário, para a função date buscar o horário correto
+                                date_default_timezone_set('America/Sao_Paulo');
+                                $data_entrada = date("Y-m-d H:i:s");
+
+                                // Verifica se o email já está cadastrado
+                                $SelectUsuarios = "SELECT * FROM usuarios WHERE email = '$email'";
+                                $executeUsers = $conexao->query($SelectUsuarios);
+
+                                if ($executeUsers && $executeUsers->num_rows > 0) {
+                                    $error_message = "ESTE EMAIL JÁ ESTÁ SENDO UTILIZADO";
+                                } else {
+                                    // Verifica se a turma existe
+                                    $SelectTurma = "SELECT * FROM turmas WHERE codTurma = '$turmausuario'";
+                                    $executeTurma = $conexao->query($SelectTurma);
+
+                                    if ($executeTurma && $executeTurma->num_rows == 0) {
+                                        $error_message = "ESSA TURMA NÃO EXISTE";
+                                    } else {
+                                        $sql = "INSERT INTO `logistica`.`usuarios` (`nome`, `email`, `senha`, `data_entrada`, `ativo`, `tipousuario`, `codTurma`)
+                                                VALUES ('$nome', '$email', '$senha', '$data_entrada', 's', '$tipousuario', '$turmausuario')";
+
+                                        if ($conexao->query($sql) === TRUE) {
+                                            $conexao->close();
+                                            header('Location: ../Paginas/aluno.php', true, 301);
+                                            exit();
+                                        } else {
+                                            throw new Exception("Erro ao inserir dados: " . $conexao->error);
+                                        }
+                                    }
+                                }
+                            } catch (Exception $e) {
+                                if ($conexao->errno == 1452) { // Código de erro para falha de chave estrangeira
+                                    $error_message = 'Turma inválida';
+                                } else {
+                                    $error_message = 'Erro: ' . $e->getMessage();
+                                }
+                            }
+                            $conexao->close();
+                        }
+                    }
+                ?>
+
+                <?php if (!empty($error_message)): ?>
+                    <div class="error-message" style="color: red; font-size: 18px;">
+                        <?php echo $error_message; ?>
+                    </div>
+                <?php endif; ?>
+
+                <form class="form" method="post" action="" id="formlogin" name="formlogin">
                     <label class="label-input" for="">
                         <i class="far fa-user icon-modify"></i>
                         <input type="text" placeholder="Nome" id="nomeUsuario" name="nomeUsuario" required>
                     </label>
                     
-
                     <label class="label-input" for="">
                         <i class="far fa-envelope icon-modify"></i>
                         <select id="tipoUsuario" name="tipoUsuario" required>
@@ -53,7 +124,6 @@
                         <i class="fas fa-lock icon-modify"></i>
                         <input type="password" placeholder="Senha" id="senhaUsuario" name="senhaUsuario" required>
                     </label>
-                    
                     
                     <button class="btn btn-second">CADASTRAR</button>        
                 </form>
@@ -88,6 +158,4 @@
     </div>
     <script src="js/index.js"></script>
 </body>
-<?php
-?>
 </html>
