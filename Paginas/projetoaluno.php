@@ -136,6 +136,7 @@
                 <a href="estoquealuno.php"><div class="card-function-log-estoque"></div></a>
                 <a href="pickingaluno.php"><div class="card-function-log-picking"></div></a>
                 <a href="expedicaoaluno.php"<div class="card-function-log-expedicao"></div></a>
+                <a href="controledocaaluno.php" class="functions-menu">Controle</a>
                 <div class="card-function-log-cadas"></div>
             </div>
         </div>
