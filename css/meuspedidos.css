@@ -305,12 +305,56 @@ th, tr, td {
 
 }
 
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+@media only screen and (min-width: 899px) and (max-width: 1441px) {
+  html{
+    width: 100vw;
+    height: 100vh;
+  }
+  body{
+    height: 100vh;
+  }
+  .main-horizontal{
+    border-radius: 0;
+  }
   h1 {
     font-size: 30px;
     cursor: default;
     text-wrap: nowrap;
 }
+h3{
+  font-size: 40px;
+}
+h4 {
+  margin: 5px;
+  padding: 5px;
+  font-size: 30px;
+}
+h5{
+  font-size: 25px;
+}
+.titulo-pedido{
+  height: 7vh;
+  border-radius: 30px 30px 0 0;
+}
+.submenu {
+  margin-top: 1vh;
+  height: 6vh;
+}
+.submenus-pedidos {
+  width: 30%;
+  height: 100%;
+  border-radius: 0 0 0 30px;
+  margin-top: 0;
+  }
+  .criar-pedido-container{
+    height: 100%;
+  }
+  .tablebox{
+    margin-left: 1.0em;
+  }
+  th, td{
+    font-size: 14px;
+  }
 }
 
 

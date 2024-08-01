@@ -107,7 +107,7 @@ if (empty($_SESSION['nome'])) {
                     <a href="danfe.php" class="functions-menu">DANFE</a>
                     <a href="carga.php" class="functions-menu">VISTORIA</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
-                    <a href="#" class="functions-menu">PICKING</a>
+                    <a href="picking.php" class="functions-menu">PICKING</a>
                     <a href="#" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="#" class="functions-menu">RELATÓRIOS</a>
                 </li>
@@ -155,8 +155,8 @@ if (empty($_SESSION['nome'])) {
                         echo '<div class="MainContainer">
                                                     <div class="main-overlay">             
                                                         <form class="form-verificacao">
-                                                            <input type="text" name="Nome_produto" placeholder="Nome do produto" style="display:block;">
-                                                            <input type="text" name="QTDEstoqueDisponivel" placeholder="Quantidade para retirada" style="display:block;">
+                                                            <input type="text" class="button-disponilidade" name="Nome_produto" placeholder="Nome do produto" style="display:block;">
+                                                            <input type="text" class="button-disponilidade" name="QTDEstoqueDisponivel" placeholder="Quantidade para retirada" style="display:block;">
                                                             <input type="submit" class="VerificarEstoque" name="VerificarEstoque" value="VerificarDisponibilidade" style="display:block;">
                                                         </form>
                                                     </div>

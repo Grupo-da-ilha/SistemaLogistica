@@ -78,12 +78,15 @@ if (empty($_SESSION['nome'])){
             </div>
             <div class="movimentacao-container">
                 <div class="titulo-recebimento">
-                    <h3>PICKING</h3>    
+                    <h3>PROCESSO DE PICKING</h3>    
                 </div>
-                <h4> Operações de picking em aberto: </h6>
-                <h7> Abra a solicitação que você deseja operar </h7>
+                <h7> Selecione os produtos desejados para ir à operação </h7>
                 ';
-                $sql = "SELECT * FROM solicitacoes WHERE Situacao = 'Em processo de Picking' AND codTurma ='{$_SESSION['codTurma']}'";
+                //Verificar se a pessoa clicou para abrir a solicitação
+                if(isset($_POST['id_solicitacao_picking'])){
+                $id_solicitacao = $conexao -> real_escape_string($_POST['id_solicitacao_picking']);
+                    
+                $sql = "SELECT * FROM itenspicking WHERE Situacao = 'No processo de picking'";
                 $execute = $conexao -> query($sql);
 
                 if($execute && $execute -> num_rows > 0){
@@ -91,22 +94,58 @@ if (empty($_SESSION['nome'])){
                         <div class="div-operacoes">
                             <table class="tabela">
                                 <tr>
-                                    <td> Número das solicitações </td>
+                                    <td> Produtos </td>
+                                    <td> UN </td>
+                                    <td> QTD </td>
+                                    <td> Posição </td>
                                     <td> Ações </td>
                                 </tr>
                     ';
                     while($row = $execute -> fetch_assoc()){
                         //Quandar cod_estoque
-                        $cod_solicitacao = $row['cod_solicitacao'];
-                        $id_solicitacao = $row['id_solicitacao'];
+                        $cod_estoque = $row['cod_estoque'];
+                        $cod_itemPicking = $row['cod_itemPicking'];
+                        $cod_itemSolicitacao = $row['cod_itemSolicitacao'];
+                        $QuantidadeItemPicking = $row['Quantidade'];
+
+                        //Pesquisar itens
+                        $selectItens = "SELECT * FROM itenssolicitacao WHERE cod_itemSolicitacao = '$cod_itemSolicitacao'";
+                        $executar = $conexao -> query($selectItens);
+
+                        if($executar && $executar -> num_rows > 0){
+                            while($rowItens = $executar -> fetch_assoc()){
+                                $cod_produto = $rowItens['cod_produto'];
+
+                                //Pesquisar produtos
+                                $selectProdutos = "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
+                                $resultado = $conexao -> query($selectProdutos);
+                                
+                                if($resultado && $resultado -> num_rows > 0){
+                                    while($rowPorduto = $resultado -> fetch_assoc()){
+                                        $Nome = $rowPorduto['Nome'];
+                                        $UN = $rowPorduto['UN'];
+                                    }
+                                }
+                                }
+                        }
+
+                        //Pesquisar a posição do item
+                        $selectPosicao = "SELECT * FROM estoque WHERE cod_estoque = '$cod_estoque '";
+                        $executePosicao = $conexao -> query($selectPosicao);
+
+                        if($executePosicao && $executePosicao -> num_rows > 0){
+                            while($rowEstoque = $executePosicao -> fetch_assoc()){
+                                $andar = $rowEstoque['Andar'];
+                                $apartamento = $rowEstoque['Apartamento'];
+                            }
+                        }
                         
                         echo '<tr>
-                                <td>' . htmlspecialchars($cod_solicitacao) . '</td>
-                                <td>
-                                    <form action="processopicking.php" method="POST">
-                                        <input type="hidden" name="id_solicitacao_picking" value="' . $id_solicitacao . '" style="display: block;"></label>
-                                        <input type="submit" name="AbrirSolicitacao" value="ARIR" style="display: block;">
-                                    </form>
+                                <td>' . htmlspecialchars($Nome) . '</td>
+                                <td>' . htmlspecialchars($UN) . '</td>
+                                <td>' . htmlspecialchars($QuantidadeItemPicking) . '</td>
+                                <td>' . htmlspecialchars($andar . $apartamento) . '</td>
+                                <td style="display: flex;">
                                 </td>
                             </tr>';
                     }
@@ -114,16 +153,22 @@ if (empty($_SESSION['nome'])){
                     echo '
                         </table>
                         <br>
+                        <div class="iroperacao">
+                            <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Ir para operação" style="display:block;" class="irparaoperacao">
+                        </div>  
+                    </form>
                     </div>
                     ';
                 } else{
-                    echo 'Nenhuma solicitação no processo de picking';
+                    echo 'Nenhuma operação em aberto';
                 }
 echo '
             </div>
         </div>
     </main>';          
     }
-    } ?>
+    } 
+    
+}?>
 </body>
 </html>
