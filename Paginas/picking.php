@@ -105,7 +105,7 @@ if (empty($_SESSION['nome'])){
                                 <td>
                                     <form action="processopicking.php" method="POST">
                                         <input type="hidden" name="id_solicitacao_picking" value="' . $id_solicitacao . '" style="display: block;"></label>
-                                        <input type="submit" name="AbrirSolicitacao" value="ARIR" style="display: block;">
+                                        <input type="submit" name="AbrirSolicitacao" value="ABRIR" style="display: block;">
                                     </form>
                                 </td>
                             </tr>';

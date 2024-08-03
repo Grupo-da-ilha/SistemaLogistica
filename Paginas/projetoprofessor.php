@@ -139,7 +139,7 @@
                 <a href="estoque.php"><div class="card-function-log-estoque"></div></a>
                 <a href="movimentacao.php"><div class="card-function-log-movimentacao"></div></a>
                 <a href="operacaomovimentacao.php"><div class="card-function-log-operacao"></div></a>
-                <div class="card-function-log-picking"></div>
+                <a href="picking.php"><div class="card-function-log-picking"></div></a>
                 <div class="card-function-log-expedicao"></div>
                 <div class="card-function-log-relatorios"></div>
                 <div class="card-function-log-cadas"></div>

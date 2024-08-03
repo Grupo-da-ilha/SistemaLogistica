@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
     <link rel="stylesheet" href="../css/movimentacao.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <?php
@@ -86,8 +87,8 @@ if (empty($_SESSION['nome'])){
                 if(isset($_POST['id_solicitacao_picking'])){
                 $id_solicitacao = $conexao -> real_escape_string($_POST['id_solicitacao_picking']);
                     
-                $sql = "SELECT * FROM itenspicking WHERE Situacao = 'No processo de picking'";
-                $execute = $conexao -> query($sql);
+                $selectItens = "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '$id_solicitacao' AND codTurma ='{$_SESSION['codTurma']}'";
+                $execute = $conexao -> query($selectItens);
 
                 if($execute && $execute -> num_rows > 0){
                     echo '
@@ -102,19 +103,22 @@ if (empty($_SESSION['nome'])){
                                 </tr>
                     ';
                     while($row = $execute -> fetch_assoc()){
-                        //Quandar cod_estoque
-                        $cod_estoque = $row['cod_estoque'];
-                        $cod_itemPicking = $row['cod_itemPicking'];
+                        
+                        //guardar código do item solicitacao
                         $cod_itemSolicitacao = $row['cod_itemSolicitacao'];
-                        $QuantidadeItemPicking = $row['Quantidade'];
+                        $cod_produto = $row['cod_produto'];
 
-                        //Pesquisar itens
-                        $selectItens = "SELECT * FROM itenssolicitacao WHERE cod_itemSolicitacao = '$cod_itemSolicitacao'";
-                        $executar = $conexao -> query($selectItens);
+                        $selectPicking = "SELECT * FROM itenspicking WHERE cod_itemSolicitacao = '$cod_itemSolicitacao' AND codTurma ='{$_SESSION['codTurma']}'"; 
+                        $executar = $conexao -> query($selectPicking);
+                        
 
                         if($executar && $executar -> num_rows > 0){
                             while($rowItens = $executar -> fetch_assoc()){
-                                $cod_produto = $rowItens['cod_produto'];
+                                
+                                //Quandar cod_estoque
+                                $cod_estoque = $rowItens['cod_estoque'];
+                                $cod_itemPicking = $rowItens['cod_itemPicking'];
+                                $QuantidadeItemPicking = $rowItens['Quantidade'];
 
                                 //Pesquisar produtos
                                 $selectProdutos = "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
@@ -146,6 +150,10 @@ if (empty($_SESSION['nome'])){
                                 <td>' . htmlspecialchars($QuantidadeItemPicking) . '</td>
                                 <td>' . htmlspecialchars($andar . $apartamento) . '</td>
                                 <td style="display: flex;">
+                                    <form class="form-picking-finalizado">
+                                        <input type="hidden" name="cod_item_picking" value="' . $cod_itemPicking . '" style="display: block;">
+                                        <input type="submit" class="InputPego" name="PegarItem" value="PEGO" style="display: block;" cod_item_picking="' . $cod_itemPicking . '">
+                                    </form>
                                 </td>
                             </tr>';
                     }
@@ -153,10 +161,10 @@ if (empty($_SESSION['nome'])){
                     echo '
                         </table>
                         <br>
-                        <div class="iroperacao">
-                            <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Ir para operação" style="display:block;" class="irparaoperacao">
-                        </div>  
-                    </form>
+                        <form id="form-finalizar-picking">
+                            <input type="hidden" name="id_solicitacao" value="' . $id_solicitacao . '" style="display: block;">
+                            <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Finalizar Picking" style="display:block;" class="irparaoperacao">
+                        </form>  
                     </div>
                     ';
                 } else{
@@ -165,10 +173,70 @@ if (empty($_SESSION['nome'])){
 echo '
             </div>
         </div>
-    </main>';          
+    </main>';           
     }
     } 
     
 }?>
+<script>
+$(document).ready(function() {
+    $('.form-picking-finalizado').submit(function(e) {
+        e.preventDefault(); 
+        var formData = $(this).serialize(); 
+        console.log(formData);  // Verifique se os dados do formulário estão corretos
+        $.ajax({
+            type: 'POST',
+            url: 'function/pegarItem.php',
+            data: formData,
+            success: function(response) {
+                console.log(response);  // Verifique a resposta do servidor
+                var jsonResponse = JSON.parse(response);
+                console.log(jsonResponse);  
+                if (jsonResponse.success) {
+                    var inputPego = document.getElementsByClassName('InputPego');
+
+                    for (var i = 0; i < inputPego.length; i++) {
+                        if (jsonResponse.Expedicao == 1 && inputPego[i].getAttribute('cod_item_picking') == jsonResponse.cod_item_picking) {
+                            inputPego[i].style.backgroundColor = 'green';
+                            inputPego[i].style.color = 'white';
+                        }
+                    }
+                } else {
+                    alert(jsonResponse.message); 
+                }       
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Erro ao enviar dados do formulário.');
+            }
+        });
+    });
+});
+
+$(document).ready(function() {
+    $('#form-finalizar-picking').submit(function(e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        $.ajax({
+            type: 'POST',
+            url: 'function/FinalizarPicking.php',
+            data: formData,
+            success: function(response) {
+                console.log(response);  // Verifique a resposta do servidor
+                var jsonResponse = JSON.parse(response);
+                if (jsonResponse.success) {
+                    window.location.href = 'expedicao.php'
+                } else {
+                    alert('Erro ao atualizar a situação: ' + jsonResponse.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Erro ao enviar dados do formulário.');
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
