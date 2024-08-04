@@ -225,7 +225,7 @@ $(document).ready(function() {
                 console.log(response);  // Verifique a resposta do servidor
                 var jsonResponse = JSON.parse(response);
                 if (jsonResponse.success) {
-                    window.location.href = 'expedicao.php'
+                    window.location.href = 'expediçao.php'
                 } else {
                     alert('Erro ao atualizar a situação: ' + jsonResponse.message);
                 }
