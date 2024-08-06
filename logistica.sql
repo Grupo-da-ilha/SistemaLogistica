@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06/08/2024 às 13:50
+-- Tempo de geração: 06/08/2024 às 16:55
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -211,9 +211,9 @@ CREATE TABLE `itenspicking` (
 INSERT INTO `itenspicking` (`cod_itemPicking`, `Quantidade`, `Situacao`, `Observacoes`, `cod_estoque`, `cod_itemSolicitacao`, `codTurma`) VALUES
 (1, 1, 'No processo de picking', NULL, 11, 12, 'S3naiAdmin'),
 (3, 1, 'No processo de picking', NULL, 14, 20, 'S3naiAdmin'),
-(4, 2, 'Nas docas', NULL, 11, 22, 'S3naiAdmin'),
+(4, 2, 'Esperando transportadora', 'Mercadoria frágil', 11, 22, 'S3naiAdmin'),
 (5, 1, 'No processo de picking', NULL, 7, 23, 'S3naiAdmin'),
-(6, 1, 'Nas docas', NULL, 15, 23, 'S3naiAdmin');
+(6, 1, 'Esperando transportadora', NULL, 15, 23, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -364,7 +364,7 @@ CREATE TABLE `solicitacoes` (
 INSERT INTO `solicitacoes` (`id_solicitacao`, `cod_solicitacao`, `Observacao`, `Situacao`, `Doca`, `Doca_saida`, `Data_criacao`, `codTurma`) VALUES
 (5, 1, 'URGENTE', 'Em processamento', NULL, 0, '2024-07-25 13:41:47', 'S3naiAdmin'),
 (10, 2, 'NÃO É URGENTE', 'Em processamento', NULL, 0, '2024-07-26 12:36:09', 'S3naiAdmin'),
-(11, 3, '', 'Nas docas', 8, 0, '2024-08-03 18:33:41', 'S3naiAdmin');
+(11, 3, '', 'Mercadoria(s) em transporte', 8, 11, '2024-08-03 18:33:41', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
