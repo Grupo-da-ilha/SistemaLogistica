@@ -298,49 +298,75 @@ $(document).ready(function() {
     });
 });
 
-    // Envio do formulário com AJAX
-    $('.form-enviar-produtos').submit(function(e) {
-        e.preventDefault(); 
-        var formData = $(this).serialize(); 
-        console.log(formData);  // Verifique se os dados do formulário estão corretos
-        $.ajax({
-            type: 'POST',
-            url: 'function/DefinirPickingSolicitacao.php',
-            data: formData,
-            success: function(response) {
-                console.log('Resposta do servidor:', response);  // Debug
-                try {
-                    var jsonResponse = JSON.parse(response);
-                    console.log(jsonResponse);
-                    if (jsonResponse.success) {
-                        var inputEspera = document.getElementsByClassName('Quantidade_esperar');
-                        for (var i = 0; i < inputEspera.length; i++) {
-                            if (inputEspera[i].getAttribute('codItemSolicitacao') == jsonResponse.cod_itemSolicitacao) {
-                                if (jsonResponse.newqttespera == 0) {
-                                    var row = inputEspera[i].closest('tr');
-                                    if (row) {
-                                        row.remove();
-                                    }
-                                } else {
-                                    inputEspera[i].textContent = jsonResponse.newqttespera;
+$('.form-enviar-produtos').submit(function(e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
+    console.log(formData);  // Verifique se os dados do formulário estão corretos
+    $.ajax({
+        type: 'POST',
+        url: 'function/DefinirPickingSolicitacao.php',
+        data: formData,
+        success: function(response) {
+            console.log('Resposta do servidor:', response);  // Debug
+            try {
+                var jsonResponse = JSON.parse(response);
+                console.log(jsonResponse);
+                if (jsonResponse.success) {
+                    var inputEspera = document.getElementsByClassName('Quantidade_esperar');
+                    for (var i = 0; i < inputEspera.length; i++) {
+                        if (inputEspera[i].getAttribute('codItemSolicitacao') == jsonResponse.cod_itemSolicitacao) {
+                            if (jsonResponse.newqttespera == 0) {
+                                var row = inputEspera[i].closest('tr');
+                                if (row) {
+                                    row.remove();
                                 }
-                                break;
+                            } else {
+                                inputEspera[i].textContent = jsonResponse.newqttespera;
                             }
+                            break;
                         }
-                    } else {
-                        alert(jsonResponse.message); 
                     }
-                } catch (e) {
-                    console.error('Erro ao analisar JSON:', e);
-                    alert('Erro na resposta do servidor.');
+                    
+                    // Verificar se a tabela está vazia
+                    var table = document.querySelector('.tabela');
+                    var rows = table.getElementsByTagName('tr');
+                    // Descontar a primeira linha que é o cabeçalho
+                    if (rows.length <= 1) {
+                        // Atualizar a situação da solicitação aqui
+                        $.ajax({
+                            type: 'POST',
+                            url: 'function/AtualizarSituacaoSolicitacao.php',
+                            data: { solicitacaoId: <?php echo json_encode($id_solicitacao) ?>},
+                            success: function(updateResponse) {
+                                console.log(updateResponse);
+                                var jsonUpdateResponse = JSON.parse(updateResponse);
+                                if(jsonUpdateResponse.success){
+                                    alert(jsonUpdateResponse.message);
+                                } else{
+                                    alert(jsonUpdateResponse.message);
+                                }
+                                
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Erro ao atualizar a situação da solicitação:', error);
+                            }
+                        });
+                    }
+
+                } else {
+                    alert(jsonResponse.message);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-                alert('Erro ao enviar dados do formulário.');
+            } catch (e) {
+                console.error('Erro ao analisar JSON:', e);
+                alert('Erro na resposta do servidor.');
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            alert('Erro ao enviar dados do formulário.');
+        }
     });
+});
 
 </script>
 </body>

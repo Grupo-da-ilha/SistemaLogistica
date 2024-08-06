@@ -141,56 +141,11 @@
                 <a href="operacaomovimentacao.php"><div class="card-function-log-operacao"></div></a>
                 <a href="picking.php"><div class="card-function-log-picking"></div></a>
                 <a href="expediçao.php"><div class="card-function-log-expedicao"></div></a>
-                <div class="card-function-log-cadas"></div>
+                <a href="vistoriasolicitacoes.php"><div class="card-function-log-vistoria-carga"></div></a>
             </div>
         </div>
     </main>';
 }
 ?>
-<!-- Modal -->
-<div id="myModal" class="modal">
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <h4>Escolha uma opção:</h4>
-    <button id="carga">Carga</button>
-    <button id="container">Container</button>
-  </div>
-</div>
-<script>
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("openModal");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-
-    // Redirect based on button click
-    document.getElementById("carga").onclick = function() {
-        window.location.href = "carga.php";
-    }
-
-    document.getElementById("container").onclick = function() {
-        window.location.href = "container.php";
-    }
-</script>
 </body>
 </html>
