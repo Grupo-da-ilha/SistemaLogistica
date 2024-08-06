@@ -9,7 +9,7 @@
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
-    <link rel="stylesheet" href="../css/movimentacao.css"/>
+    <link rel="stylesheet" href="../css/picking.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
 <body>
@@ -105,7 +105,7 @@ if (empty($_SESSION['nome'])){
                                 <td>
                                     <form action="processopicking.php" method="POST">
                                         <input type="hidden" name="id_solicitacao_picking" value="' . $id_solicitacao . '" style="display: block;"></label>
-                                        <input type="submit" name="AbrirSolicitacao" value="ABRIR" style="display: block;">
+                                        <input type="submit" name="AbrirSolicitacao" class="AbrirSolicitacao" value="ABRIR" style="display: block;">
                                     </form>
                                 </td>
                             </tr>';
