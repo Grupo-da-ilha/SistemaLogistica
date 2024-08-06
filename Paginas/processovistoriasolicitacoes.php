@@ -148,7 +148,8 @@ if (empty($_SESSION['nome'])){
                                         $UN = $rowPorduto['UN'];
                                     }
                                 }
-                                }
+                                $codigos_itens_picking[] = ['cod_item_picking' => $cod_itemPicking, 'observacao' => ''];
+                            }
                         }else {
                             // Definindo variáveis padrão
                             $cod_itemPicking = "";
@@ -177,14 +178,19 @@ if (empty($_SESSION['nome'])){
                     echo '
                         </table>
                         <br>
-                            <form id="form-finalizar-solicitacao">
-                                <div style="display: flex;">
-                                    Qual a doca de saída desses itens?
-                                    <input type="text" name="doca_saida" style="display: block; margin-left: 10px;">
-                                </div>
-                                <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '" style="display: block;">
-                                <input type="submit" id="EnviarExpedicao" name="EnviarExpedicao" value="Finalizar Expedição" style="display:block;" class="irparaoperacao">
-                            </form>  
+                            <div style="display: flex;">
+                                <form id="form-finalizar-solicitacao">
+                                    <div style="display: flex;">
+                                        Qual a doca de saída desses itens?
+                                        <input type="text" name="doca_saida" style="display: block; margin-left: 10px;">
+                                    </div>
+                                    <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '" style="display: block;">
+                                    <input type="submit" id="EnviarExpedicao" name="EnviarExpedicao" value="Finalizar Expedição" style="display:block;" class="irparaoperacao">
+                                </form>
+                                <form id="form-ok-geral">
+                                    <input type="submit" id="okgeral" name="okgeral" value="Ok para todos" style="display:block;">
+                                <form>
+                            </div>
                     </div>
                     ';
                 } else{
@@ -200,6 +206,7 @@ echo '
 }?>
 <script>
 var tipousuario = "<?php echo $tipousuario; ?>";
+var codigosItensPicking = <?php echo json_encode($codigos_itens_picking)?>;
 
 $(document).ready(function() {
     $('.form-observacao-solicitacao').submit(function(e) {
@@ -265,6 +272,53 @@ $(document).ready(function() {
         });
     });
 });
+
+// A função para lidar com o botão "OK para todos"
+$(document).ready(function() {
+    $('#form-ok-geral').submit(function(e) {
+        e.preventDefault();
+
+        // Atualize as observações dos itens na array
+        $('.form-observacao-solicitacao input[name="observacao_solicitacao"]').each(function(index) {
+            var observacao = $(this).val();
+            if (observacao !== "") {
+                codigosItensPicking[index]['observacao'] = observacao;
+            }
+        });
+
+        // Envie a array atualizada para o servidor
+        $.ajax({
+            type: 'POST',
+            url: 'function/okgeral.php',
+            data: { codigosItensPicking: codigosItensPicking },
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                try {
+                    if (response.success) {
+                        alert(response.message);
+                        var inputPego = document.getElementsByClassName('InputPego');
+
+                        for (var i = 0; i < inputPego.length; i++) {
+                                inputPego[i].style.backgroundColor = 'green';
+                                inputPego[i].style.color = 'white';
+                            }
+                    } else {
+                        alert('Erro ao atualizar a situação: ' + response.message);
+                    }
+                } catch (e) {
+                    alert('Erro ao processar a resposta do servidor.');
+                    console.error(e);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+                alert('Erro ao enviar dados do formulário.');
+            }
+        });
+    });
+});
+
 </script>
 </body>
 </html>
