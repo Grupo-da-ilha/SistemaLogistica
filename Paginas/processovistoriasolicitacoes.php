@@ -158,8 +158,11 @@ if (empty($_SESSION['nome'])){
                                 <td>' . htmlspecialchars($Nome) . '</td>
                                 <td>' . htmlspecialchars($UN) . '</td>
                                 <td>' . htmlspecialchars($QuantidadeItemPicking) . '</td>
+                                <td>
+                                    <form class="form-observacao-solicitacao">
+                                        <input type="text" name="observacao_solicitacao" style="display: block;">
+                                </td>
                                 <td style="display: flex;">
-                                    <form class="form-picking-finalizado">
                                         <input type="hidden" name="cod_item_picking" value="' . $cod_itemPicking . '" style="display: block;">
                                         <input type="submit" class="InputPego" name="PegarItem" value="OK" style="display: block;" cod_item_picking="' . $cod_itemPicking . '">
                                     </form>
@@ -170,10 +173,14 @@ if (empty($_SESSION['nome'])){
                     echo '
                         </table>
                         <br>
-                        <form id="form-finalizar-picking">
-                            <input type="hidden" name="id_solicitacao" value="' . $id_solicitacao . '" style="display: block;">
-                            <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Finalizar Picking" style="display:block;" class="irparaoperacao">
-                        </form>  
+                            <form id="form-finalizar-solicitacao">
+                                <div style="display: flex;">
+                                    Qual a doca de saída desses itens?
+                                    <input type="text" name="doca" style="display: block; margin-left: 10px;">
+                                </div>
+                                <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '" style="display: block;">
+                                <input type="submit" id="EnviarExpedicao" name="EnviarExpedicao" value="Finalizar Expedição" style="display:block;" class="irparaoperacao">
+                            </form>  
                     </div>
                     ';
                 } else{
@@ -189,13 +196,13 @@ echo '
 }?>
 <script>
 $(document).ready(function() {
-    $('.form-picking-finalizado').submit(function(e) {
+    $('.form-observacao-solicitacao').submit(function(e) {
         e.preventDefault(); 
         var formData = $(this).serialize(); 
         console.log(formData);  // Verifique se os dados do formulário estão corretos
         $.ajax({
             type: 'POST',
-            url: 'function/pegarItem.php',
+            url: 'function/vistoriaitemsolicitacao.php',
             data: formData,
             success: function(response) {
                 console.log(response);  // Verifique a resposta do servidor
