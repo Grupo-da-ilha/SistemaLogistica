@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 04/08/2024 às 22:46
+-- Tempo de geração: 06/08/2024 às 13:50
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -198,6 +198,7 @@ CREATE TABLE `itenspicking` (
   `cod_itemPicking` int(11) NOT NULL,
   `Quantidade` int(11) NOT NULL,
   `Situacao` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Observacoes` varchar(255) DEFAULT NULL,
   `cod_estoque` int(11) NOT NULL,
   `cod_itemSolicitacao` int(11) NOT NULL,
   `codTurma` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
@@ -207,12 +208,12 @@ CREATE TABLE `itenspicking` (
 -- Despejando dados para a tabela `itenspicking`
 --
 
-INSERT INTO `itenspicking` (`cod_itemPicking`, `Quantidade`, `Situacao`, `cod_estoque`, `cod_itemSolicitacao`, `codTurma`) VALUES
-(1, 1, 'No processo de picking', 11, 12, 'S3naiAdmin'),
-(3, 1, 'No processo de picking', 14, 20, 'S3naiAdmin'),
-(4, 2, 'Nas docas', 11, 22, 'S3naiAdmin'),
-(5, 1, 'No processo de picking', 7, 23, 'S3naiAdmin'),
-(6, 1, 'Nas docas', 15, 23, 'S3naiAdmin');
+INSERT INTO `itenspicking` (`cod_itemPicking`, `Quantidade`, `Situacao`, `Observacoes`, `cod_estoque`, `cod_itemSolicitacao`, `codTurma`) VALUES
+(1, 1, 'No processo de picking', NULL, 11, 12, 'S3naiAdmin'),
+(3, 1, 'No processo de picking', NULL, 14, 20, 'S3naiAdmin'),
+(4, 2, 'Nas docas', NULL, 11, 22, 'S3naiAdmin'),
+(5, 1, 'No processo de picking', NULL, 7, 23, 'S3naiAdmin'),
+(6, 1, 'Nas docas', NULL, 15, 23, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -351,6 +352,7 @@ CREATE TABLE `solicitacoes` (
   `Observacao` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `Situacao` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `Doca` int(11) DEFAULT NULL,
+  `Doca_saida` int(11) DEFAULT NULL,
   `Data_criacao` datetime NOT NULL,
   `codTurma` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -359,10 +361,10 @@ CREATE TABLE `solicitacoes` (
 -- Despejando dados para a tabela `solicitacoes`
 --
 
-INSERT INTO `solicitacoes` (`id_solicitacao`, `cod_solicitacao`, `Observacao`, `Situacao`, `Doca`, `Data_criacao`, `codTurma`) VALUES
-(5, 1, 'URGENTE', 'Em processamento', NULL, '2024-07-25 13:41:47', 'S3naiAdmin'),
-(10, 2, 'NÃO É URGENTE', 'Em processamento', NULL, '2024-07-26 12:36:09', 'S3naiAdmin'),
-(11, 3, '', 'Nas docas', 8, '2024-08-03 18:33:41', 'S3naiAdmin');
+INSERT INTO `solicitacoes` (`id_solicitacao`, `cod_solicitacao`, `Observacao`, `Situacao`, `Doca`, `Doca_saida`, `Data_criacao`, `codTurma`) VALUES
+(5, 1, 'URGENTE', 'Em processamento', NULL, 0, '2024-07-25 13:41:47', 'S3naiAdmin'),
+(10, 2, 'NÃO É URGENTE', 'Em processamento', NULL, 0, '2024-07-26 12:36:09', 'S3naiAdmin'),
+(11, 3, '', 'Nas docas', 8, 0, '2024-08-03 18:33:41', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -592,13 +594,13 @@ ALTER TABLE `itenspedido`
 -- AUTO_INCREMENT de tabela `itenspicking`
 --
 ALTER TABLE `itenspicking`
-  MODIFY `cod_itemPicking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `cod_itemPicking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `itenssolicitacao`
 --
 ALTER TABLE `itenssolicitacao`
-  MODIFY `cod_itemSolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `cod_itemSolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
@@ -622,7 +624,7 @@ ALTER TABLE `projetos`
 -- AUTO_INCREMENT de tabela `solicitacoes`
 --
 ALTER TABLE `solicitacoes`
-  MODIFY `id_solicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_solicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
