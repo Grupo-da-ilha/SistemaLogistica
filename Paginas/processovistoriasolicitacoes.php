@@ -22,6 +22,8 @@ if (empty($_SESSION['nome'])){
     header('Location: sair.php');
     exit();
 } else {  
+    $tipousuario = $_SESSION['tipousuario'];
+
     $hostname = "127.0.0.1";
     $user = "root";
     $password = "";
@@ -79,29 +81,36 @@ if (empty($_SESSION['nome'])){
             </div>
             <div class="movimentacao-container">
                 <div class="titulo-recebimento">
-                    <h3>PROCESSO DE PICKING</h3>    
+                    <h3>PROCESSO DE VISTORIA E CONFERÊNCIA</h3>    
                 </div>
-                <h7> Selecione os produtos desejados para ir à operação </h7>
+                <h4> CONFIRA OS ITENS PARA A TRANSPORTADORA PEGÁ-LOS </h4>
                 ';
                 //Verificar se a pessoa clicou para abrir a solicitação
                 if(isset($_POST['id_solicitacao_vistoria'])){
                 $id_solicitacao = $conexao -> real_escape_string($_POST['id_solicitacao_vistoria']);
 
-                $SelectcodSolicitacao = "SELECT cod_solicitacao FROM solicitacoes WHERE id_solicitacao = '$id_solicitacao'";
+                $SelectcodSolicitacao = "SELECT cod_solicitacao FROM solicitacoes WHERE id_solicitacao = '$id_solicitacao' AND Situacao = 'Nas docas'";
                 $executecodsolicitacao = $conexao -> query($SelectcodSolicitacao);
 
                 if($executecodsolicitacao && $executecodsolicitacao -> num_rows > 0){
                     $row = $executecodsolicitacao -> fetch_assoc();
 
                     $cod_solicitcao = $row['cod_solicitacao'];
+                }else{
+                    $cod_solicitcao = "";
                 }
                     
                 $selectItens = "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '$id_solicitacao' AND codTurma ='{$_SESSION['codTurma']}'";
                 $execute = $conexao -> query($selectItens);
 
                 if($execute && $execute -> num_rows > 0){
-                    echo '
-                        <h7>Número da solicitação: ' . htmlspecialchars($cod_solicitcao) . '</h7>
+                     
+                    if($cod_solicitcao != ""){
+                            echo '<h7>Número da solicitação: ' . htmlspecialchars($cod_solicitcao) . '</h7>';
+                        } else{
+                            echo '';
+                        }
+                        echo '
                         <div class="div-operacoes">
                             <table class="tabela">
                                 <tr>
@@ -126,7 +135,6 @@ if (empty($_SESSION['nome'])){
                             while($rowItens = $executar -> fetch_assoc()){
                                 
                                 //Quandar cod_estoque
-                                $cod_estoque = $rowItens['cod_estoque'];
                                 $cod_itemPicking = $rowItens['cod_itemPicking'];
                                 $QuantidadeItemPicking = $rowItens['Quantidade'];
 
@@ -141,17 +149,13 @@ if (empty($_SESSION['nome'])){
                                     }
                                 }
                                 }
-                        }
-
-                        //Pesquisar a posição do item
-                        $selectPosicao = "SELECT * FROM estoque WHERE cod_estoque = '$cod_estoque '";
-                        $executePosicao = $conexao -> query($selectPosicao);
-
-                        if($executePosicao && $executePosicao -> num_rows > 0){
-                            while($rowEstoque = $executePosicao -> fetch_assoc()){
-                                $andar = $rowEstoque['Andar'];
-                                $apartamento = $rowEstoque['Apartamento'];
-                            }
+                        }else {
+                            // Definindo variáveis padrão
+                            $cod_itemPicking = "";
+                            $QuantidadeItemPicking = "";
+                            $Nome = "";
+                            $UN = "";
+                            $cod_solicitcao = "";
                         }
                         
                         echo '<tr>
@@ -163,7 +167,7 @@ if (empty($_SESSION['nome'])){
                                         <input type="text" name="observacao_solicitacao" style="display: block;">
                                 </td>
                                 <td style="display: flex;">
-                                        <input type="hidden" name="cod_item_picking" value="' . $cod_itemPicking . '" style="display: block;">
+                                        <input type="hidden" name="cod_item_picking" value="'. htmlspecialchars($cod_itemPicking) . '" style="display: block;">
                                         <input type="submit" class="InputPego" name="PegarItem" value="OK" style="display: block;" cod_item_picking="' . $cod_itemPicking . '">
                                     </form>
                                 </td>
@@ -176,7 +180,7 @@ if (empty($_SESSION['nome'])){
                             <form id="form-finalizar-solicitacao">
                                 <div style="display: flex;">
                                     Qual a doca de saída desses itens?
-                                    <input type="text" name="doca" style="display: block; margin-left: 10px;">
+                                    <input type="text" name="doca_saida" style="display: block; margin-left: 10px;">
                                 </div>
                                 <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '" style="display: block;">
                                 <input type="submit" id="EnviarExpedicao" name="EnviarExpedicao" value="Finalizar Expedição" style="display:block;" class="irparaoperacao">
@@ -195,6 +199,8 @@ echo '
     
 }?>
 <script>
+var tipousuario = "<?php echo $tipousuario; ?>";
+
 $(document).ready(function() {
     $('.form-observacao-solicitacao').submit(function(e) {
         e.preventDefault(); 
@@ -205,14 +211,15 @@ $(document).ready(function() {
             url: 'function/vistoriaitemsolicitacao.php',
             data: formData,
             success: function(response) {
-                console.log(response);  // Verifique a resposta do servidor
+                console.log(response);
                 var jsonResponse = JSON.parse(response);
                 console.log(jsonResponse);  
                 if (jsonResponse.success) {
+                    alert(jsonResponse.message); 
                     var inputPego = document.getElementsByClassName('InputPego');
 
                     for (var i = 0; i < inputPego.length; i++) {
-                        if (jsonResponse.Expedicao == 1 && inputPego[i].getAttribute('cod_item_picking') == jsonResponse.cod_item_picking) {
+                        if (jsonResponse.Validacao == 1 && inputPego[i].getAttribute('cod_item_picking') == jsonResponse.cod_item_picking) {
                             inputPego[i].style.backgroundColor = 'green';
                             inputPego[i].style.color = 'white';
                         }
@@ -230,18 +237,23 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    $('#form-finalizar-picking').submit(function(e) {
+    $('#form-finalizar-solicitacao').submit(function(e) {
         e.preventDefault();
         var formData = $(this).serialize();
         $.ajax({
             type: 'POST',
-            url: 'function/FinalizarPicking.php',
+            url: 'function/Finalizarsolicitacao.php',
             data: formData,
             success: function(response) {
                 console.log(response);  // Verifique a resposta do servidor
                 var jsonResponse = JSON.parse(response);
                 if (jsonResponse.success) {
-                    window.location.href = 'expediçao.php'
+                    alert(jsonResponse.message);
+                    if(tipousuario == 'Professor'){
+                        window.location.href = 'projetoprofessor.php';
+                    }else{
+                        window.location.href = 'projetoaluno.php';
+                    }
                 } else {
                     alert('Erro ao atualizar a situação: ' + jsonResponse.message);
                 }
