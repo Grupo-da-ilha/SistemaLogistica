@@ -254,7 +254,7 @@ if (empty($_SESSION['nome'])){
                                             if (isset($_POST['enviar_produto']) && !empty($_POST['codProduto'])) {
 
                                                 $cod_produto = $conexao->real_escape_string($_POST['codProduto']);
-                                                $sql = "SELECT Nome, PrecoUNI, UN, NCM, PesoGramas FROM produtos WHERE cod_produto = '$cod_produto'";
+                                                $sql = "SELECT Nome, PrecoUNI, UN, NCM, PesoGramas, SKU FROM produtos WHERE cod_produto = '$cod_produto'";
                                                 $result = $conexao->query($sql);
 
                                                 if ($result && $result->num_rows > 0) {
@@ -264,6 +264,7 @@ if (empty($_SESSION['nome'])){
                                                     $_SESSION['Peso'] = $row['PesoGramas'];
                                                     $_SESSION['UN'] = $row['UN'];
                                                     $_SESSION['NCM'] = $row['NCM'];
+                                                    $_SESSION['SKU'] = $row['SKU'];
 
                                                     $sql2 = "INSERT INTO itenspedido (cod_produto, cod_pedido, Quantidade, ValorUnitario, ValorTotal, codTurma) 
                                                             VALUES ('$cod_produto', '{$_SESSION['idpedido']}', 0, '{$_SESSION['PrecoUnitario']}', 0.0, '".$_SESSION['codTurma']."')";
@@ -289,7 +290,7 @@ if (empty($_SESSION['nome'])){
                                             $executar = $conexao->query($selectPedido);
 
                                             if ($executar && $executar->num_rows > 0) {
-                                            $sql3 = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
+                                            $sql3 = "SELECT produtos.cod_produto, produtos.Nome, produtos.PrecoUNI, produtos.UN, produtos.SKU, produtos.NCM, produtos.PesoGramas, itenspedido.Quantidade, itenspedido.cod_itenPedido, itenspedido.ValorTotal
                                                     FROM produtos 
                                                     LEFT JOIN itenspedido ON produtos.cod_produto = itenspedido.cod_produto 
                                                     WHERE itenspedido.cod_pedido = '{$_SESSION['idpedido']}' ORDER BY produtos.Nome ASC";
@@ -307,6 +308,7 @@ if (empty($_SESSION['nome'])){
                                                                     <th>QTD</th>
                                                                     <th>R$/unit</th>
                                                                     <th>NCM</th>
+                                                                    <th>SKU</th>
                                                                     <th>Valor total</th>
                                                                     <th>Delete</th>
                                                                 </tr>";
@@ -330,6 +332,7 @@ if (empty($_SESSION['nome'])){
                                                             </td>
                                                             <td>" . htmlspecialchars($row['PrecoUNI']) . "</td>
                                                             <td>" . htmlspecialchars($row['NCM']) . "</td>
+                                                            <td>" . htmlspecialchars($row['SKU']) . "</td>
                                                             <td><h8>".$valorTotalItem."</h8></td>
                                                             <td>
                                                                 <form action=\"function/processoItens.php\" method=\"POST\" class=\"deletebox\">
@@ -346,6 +349,7 @@ if (empty($_SESSION['nome'])){
                                                         <form action=\"function/processoItens.php\" method=\"POST\">
                                                             <div class=\"input-finalizar-pedido\">
                                                                 <input type=\"hidden\" name=\"codigoPedido\" value=\"" .$_SESSION['cod_pedido']. "\" style=\"display: block;\">
+                                                                 <input type='hidden' value=\"Pedido\" name=\"Tipo_nota\">
                                                                 <textarea id=\"texto\" name=\"texto\" placeholder=\"Informações adicionais para sua DANFE\"></textarea><br>
                                                                 <input type=\"datetime-local\" id=\"texto\" name=\"DataEntrega\" placeholder=\"Data de Entrega:\" style=\"display: block;\">
                                                                 <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">

@@ -264,6 +264,7 @@ if (empty($_SESSION['nome'])) {
                                 <div class="sub-produtos"> VALOR UNITÁRIO </div>
                                 <div class="sub-produtos"> VALOR TOTAL </div>
                                 <div class="sub-produtos"> UN </div>
+                                <div class="sub-produtos"> SKU </div>
                             </div>';
                          //Buscas itenspedido 
                             $selectItens = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['idpedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
@@ -290,6 +291,7 @@ if (empty($_SESSION['nome'])) {
                                         $nome_produto = $rowProdutos['Nome'];
                                         $UN_produto = $rowProdutos['UN'];
                                         $NCM_produto = $rowProdutos['NCM'];
+                                        $SKU_produto = $rowProdutos['SKU'];
 
                                         echo '
                                         <div class="caixa-itens">
@@ -299,6 +301,7 @@ if (empty($_SESSION['nome'])) {
                                                 <div class="info-itens-pedido">' . htmlspecialchars($ValorUnitario) . '</div>
                                                 <div class="info-itens-pedido">' . htmlspecialchars($ValorTotalItem) . '</div>
                                                 <div class="info-itens-pedido">' . htmlspecialchars($UN_produto) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($SKU_produto) . '</div>
                                             </div>    
                                         </div>
                                         ';
