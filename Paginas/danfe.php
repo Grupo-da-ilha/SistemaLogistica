@@ -122,10 +122,20 @@ if (empty($_SESSION['nome'])) {
                             <h4>VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h4>
                             <form action="danfe.php" method="POST" style="display: flex;" class="cod-pedido-danfe">
                                 <input class="input-cod-danfe" type="text" name="cod_pedido" placeholder="Cod do pedido" style="display: block;">
-                                <input class="input-enviar-cod-danfe" type="submit" name="enviar_cod" value="GERAR" style="display: block; width: auto;">
+                                <select id="tipoDanfe" name="tipoDanfe" required>
+                                    <option>Selecione:</option>
+                                    <option>Pedido</option>
+                                    <option>Solicitação</option>
+                                </select>
+                                <input class="input-enviar-cod-danfe" type="submit" name="enviar_cod" value="BUSCAR" style="display: block; width: auto;">
                             </form>
                             <br>';
     
+    if(empty($_POST['tipoDanfe'])){
+        $_POST['tipoDanfe'] = "";
+    }
+
+    if($_POST['tipoDanfe'] == 'Pedido'){
     $sql = "SELECT * FROM pedido  WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
     $execute = $conexao->query($sql);
 
@@ -543,6 +553,9 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
     }else{
         echo '<p>Código do pedido não corresponde, por favor verifique os seus pedidos criados</p>';
     }
+} else{
+
+}
 }
 
     echo ' 
