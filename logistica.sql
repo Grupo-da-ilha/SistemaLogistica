@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 06/08/2024 às 16:55
+-- Tempo de geração: 13/08/2024 às 01:43
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -186,7 +186,8 @@ INSERT INTO `itenspedido` (`cod_itenPedido`, `cod_produto`, `cod_pedido`, `Quant
 (29, 5, 8, 0, 0, 29.99, 29.99, 0, 0, 1, 'S3naiAdmin'),
 (30, 4, 8, 0, 0, 7.3, 14.6, 0, 0, 1, 'S3naiAdmin'),
 (35, 1, 11, 0, 0, 5.5, 11, 0, 0, 1, 'S3naiAdmin'),
-(36, 2, 11, 0, 0, 1.2, 3.6, 0, 0, 1, 'S3naiAdmin');
+(36, 2, 11, 0, 0, 1.2, 3.6, 0, 0, 1, 'S3naiAdmin'),
+(40, 10, 13, 10, 10, 7.9, 79, 0, 0, 0, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -211,9 +212,9 @@ CREATE TABLE `itenspicking` (
 INSERT INTO `itenspicking` (`cod_itemPicking`, `Quantidade`, `Situacao`, `Observacoes`, `cod_estoque`, `cod_itemSolicitacao`, `codTurma`) VALUES
 (1, 1, 'No processo de picking', NULL, 11, 12, 'S3naiAdmin'),
 (3, 1, 'No processo de picking', NULL, 14, 20, 'S3naiAdmin'),
-(4, 2, 'Esperando transportadora', 'Mercadoria frágil', 11, 22, 'S3naiAdmin'),
+(4, 2, 'Nas docas', 'Cuidado com as tesouras', 11, 22, 'S3naiAdmin'),
 (5, 1, 'No processo de picking', NULL, 7, 23, 'S3naiAdmin'),
-(6, 1, 'Esperando transportadora', NULL, 15, 23, 'S3naiAdmin');
+(6, 1, 'Nas docas', 'Mercadoria frágil', 15, 23, 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -252,6 +253,7 @@ CREATE TABLE `nota_fiscal` (
   `chave_acesso` varchar(65) NOT NULL,
   `DataExpedicao` datetime NOT NULL,
   `InformacoesAdicionais` varchar(255) NOT NULL,
+  `Tipo` varchar(20) DEFAULT NULL,
   `id_pedido` int(11) NOT NULL,
   `CNPJ_Destinatario` varchar(65) NOT NULL,
   `CNPJ_Transportadora` varchar(65) NOT NULL,
@@ -262,10 +264,11 @@ CREATE TABLE `nota_fiscal` (
 -- Despejando dados para a tabela `nota_fiscal`
 --
 
-INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(85430, '36298890168740512810013638509660969452805168', '2024-07-09 20:49:47', 'Mercadoria Super frágil', 11, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
-(94257, '38570232079270610615744439288819397184361533', '2024-07-09 20:49:47', 'Mercadoria pequena', 12, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
-(96344, '89942527962953630750710024629946201069103589', '2024-07-09 20:49:47', 'Mercadoria frágil', 8, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23');
+INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `Tipo`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
+(58774, '28214821004665626633266497835725068503861069', '2024-07-09 20:49:47', '', 'Pedido', 13, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
+(85430, '36298890168740512810013638509660969452805168', '2024-07-09 20:49:47', 'Mercadoria Super frágil', 'Pedido', 11, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
+(94257, '38570232079270610615744439288819397184361533', '2024-07-09 20:49:47', 'Mercadoria pequena', 'Pedido', 12, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
+(96344, '89942527962953630750710024629946201069103589', '2024-07-09 20:49:47', 'Mercadoria frágil', 'Pedido', 8, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23');
 
 -- --------------------------------------------------------
 
@@ -293,7 +296,8 @@ CREATE TABLE `pedido` (
 
 INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `DataEntrega`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
 (8, 1, '2024-07-09 20:49:47', '2024-07-16 20:49:00', 44.59, '03.389.993/0001-23', '03.774.819/0001-02', '13.161.095/0001-77', 'Em movimentação', 'Mercadoria frágil', 'S3naiAdmin'),
-(11, 2, '2024-07-09 21:06:13', '2024-07-23 00:00:00', 0, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em movimentação', 'Mercadoria Super frágil', 'S3naiAdmin');
+(11, 2, '2024-07-09 21:06:13', '2024-07-23 00:00:00', 0, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em movimentação', 'Mercadoria Super frágil', 'S3naiAdmin'),
+(13, 100, '2024-08-12 20:02:20', '2024-08-12 22:00:00', 79, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em transporte', '', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -307,19 +311,21 @@ CREATE TABLE `produtos` (
   `Nome` varchar(255) NOT NULL,
   `PesoGramas` double DEFAULT NULL,
   `NCM` varchar(8) DEFAULT NULL,
-  `UN` varchar(5) NOT NULL
+  `UN` varchar(5) NOT NULL,
+  `SKU` varchar(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Despejando dados para a tabela `produtos`
 --
 
-INSERT INTO `produtos` (`cod_produto`, `PrecoUNI`, `Nome`, `PesoGramas`, `NCM`, `UN`) VALUES
-(1, 5.5, 'Tesoura', 26, '82016000', 'UN'),
-(2, 1.2, 'Lápis', 20, '96091000', 'UN'),
-(4, 7.3, 'Caderno', 100, '48202000', 'UN'),
-(5, 29.99, 'Caneta Marca Texto', 20, '96082000', 'UN'),
-(8, 2.99, 'Borracha', 20, '40025908', 'UN');
+INSERT INTO `produtos` (`cod_produto`, `PrecoUNI`, `Nome`, `PesoGramas`, `NCM`, `UN`, `SKU`) VALUES
+(1, 5.5, 'Tesoura', 26, '82016000', 'UN', '461036'),
+(2, 1.2, 'Lápis', 20, '96091000', 'UN', '291050'),
+(4, 7.3, 'Caderno', 100, '48202000', 'UN', '086034'),
+(5, 29.99, 'Caneta Marca Texto', 20, '96082000', 'UN', '985467'),
+(8, 2.99, 'Borracha', 20, '40025908', 'UN', '076003'),
+(10, 7.9, 'Mouse', 15, '84716053', 'UN', '513081');
 
 -- --------------------------------------------------------
 
@@ -364,7 +370,7 @@ CREATE TABLE `solicitacoes` (
 INSERT INTO `solicitacoes` (`id_solicitacao`, `cod_solicitacao`, `Observacao`, `Situacao`, `Doca`, `Doca_saida`, `Data_criacao`, `codTurma`) VALUES
 (5, 1, 'URGENTE', 'Em processamento', NULL, 0, '2024-07-25 13:41:47', 'S3naiAdmin'),
 (10, 2, 'NÃO É URGENTE', 'Em processamento', NULL, 0, '2024-07-26 12:36:09', 'S3naiAdmin'),
-(11, 3, '', 'Mercadoria(s) em transporte', 8, 11, '2024-08-03 18:33:41', 'S3naiAdmin');
+(11, 3, '', 'Nas docas', 8, 11, '2024-08-03 18:33:41', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -588,7 +594,7 @@ ALTER TABLE `itensestoque`
 -- AUTO_INCREMENT de tabela `itenspedido`
 --
 ALTER TABLE `itenspedido`
-  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `cod_itenPedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de tabela `itenspicking`
@@ -606,13 +612,13 @@ ALTER TABLE `itenssolicitacao`
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `cod_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `cod_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `projetos`
