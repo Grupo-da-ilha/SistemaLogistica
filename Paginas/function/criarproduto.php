@@ -16,10 +16,11 @@
         $peso = $conexao -> real_escape_string($_POST['peso']);
         $UN = $conexao -> real_escape_string($_POST['UN']);
         $NCM = $conexao -> real_escape_string($_POST['NCM']);
+        $SKU = $conexao -> real_escape_string($_POST['SKU']);
 
         $sql = "INSERT INTO `produtos` (`Nome`, `PrecoUNI`, `PesoGramas`,
-        `NCM`, `UN`)
-        VALUES ('".$nome."', '".$preco."', '".$peso."', '".$NCM."', '".$UN."')";
+        `NCM`, `UN`, `SKU`)
+        VALUES ('".$nome."', '".$preco."', '".$peso."', '".$NCM."', '".$UN."', '".$SKU."')";
 
         $resultado = $conexao->query($sql);
         $conexao -> close();
