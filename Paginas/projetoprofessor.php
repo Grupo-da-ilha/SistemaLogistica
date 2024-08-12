@@ -141,6 +141,7 @@
                 <a href="estoque.php"><div class="card-function-log-estoque"></div></a>
                 <a href="picking.php"><div class="card-function-log-picking"></div></a>
                 <a href="expediçao.php"><div class="card-function-log-expedicao"></div></a>
+                <a href="inventario.php"><div class="card-function-log-expedicao"></div></a>
                 <a href="vistoriasolicitacoes.php"><div class="card-function-log-vistoria-carga"></div></a>
             </div>
         </div>

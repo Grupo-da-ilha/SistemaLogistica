@@ -125,7 +125,7 @@ if (empty($_SESSION['nome'])){
                                         </div>
                                     <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido">
                                     <br>
-                                    <a class="ahrefcadastrar" href="produtosestoque.php"><input type="button" value="VER PRODUTOS ESTOCADOS" style="display:block"></a>
+                                    <a class="ahrefcadastrar" href="inventario.php"><input type="button" value="VER PRODUTOS ESTOCADOS" style="display:block"></a>
                                 </form>
                             </div>
                             <div class="options-pedido">
