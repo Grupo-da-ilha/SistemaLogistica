@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="../css/imprimirdanfe.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
+<script>
+        window.onload = function() {
+            window.print(); // Abre a caixa de diálogo de impressão assim que a página é carregada
+        };
+    </script>
 <body>
 <?php
 session_start();
@@ -63,7 +68,6 @@ if (empty($_SESSION['nome'])) {
                 <div class="info-total">
                     <div class="criar-danfe">
                         <div class="criar-danfes-container">
-                        <button onclick="window.print()">Imprimir esta danfe</button>
                             <br>';
     
     if(empty($_POST['tipoDanfe'])){
