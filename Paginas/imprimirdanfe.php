@@ -158,7 +158,7 @@ if (empty($_SESSION['nome'])) {
                     echo '<p>Data de Entrega: ' . htmlspecialchars($dataentrega) . '</p>';
                     echo '<p>Valor Total: ' . htmlspecialchars($valortotal) . '</p>';
                     echo'</div>
-                    <div class="barras-danfe">
+                    <div class="bar-danfe">
                     </div>
                     <div class="infos-trans">
                     <div class="titulo-div-danfe">';
@@ -370,7 +370,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<p>Data de Emissão: ' . htmlspecialchars($dataEntrega) . '</p>';
                     echo '<p>Valor Total: ' . htmlspecialchars($valorTotal) . '</p>';
                     echo'</div>
-                    <div class="barras-danfe">
+                    <div class="bar-danfe">
                     </div>
                     <div class="infos-trans">
                     <div class="titulo-div-danfe">';

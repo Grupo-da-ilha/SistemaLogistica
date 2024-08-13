@@ -127,9 +127,8 @@ if (empty($_SESSION['nome'])) {
                                     <option>Pedido</option>
                                     <option>Solicitação</option>
                                 </select>
-                                <input class="input-enviar-cod-danfe" type="submit" name="enviar_cod" value="BUSCAR" style="display: block; width: auto;">
+                                <input class="input-enviar-cod-danfe" type="submit" name="enviar_cod" value="BUSCAR" style="display: block;">
                             </form>
-                            <button onclick="submitPrintForm()">Imprimir</button>
 
                             <form id="printForm" action="imprimirdanfe.php" method="POST" style="display: none;">
                                 <input type="hidden" name="cod_pedido" value' .htmlspecialchars($_SESSION['cod_pedido']).'>
@@ -209,6 +208,7 @@ if (empty($_SESSION['nome'])) {
                         $RuaDest = $rowDest['rua'];
                         $CidadeDest = $rowDest['cidade'];
                         $EstadoDest = $rowDest['estado'];
+                        echo '<button class ="imprimir" onclick="submitPrintForm()">Imprimir</button>';
                         echo '<div class="danfe">
                     <div class="logo-danfe">
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
@@ -421,6 +421,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     $RuaDest = $rowDest['rua'];
                     $CidadeDest = $rowDest['cidade'];
                     $EstadoDest = $rowDest['estado'];
+                    echo '<button class ="imprimir" onclick="submitPrintForm()">Imprimir</button>';
                     echo '<div class="danfe">
                     <div class="logo-danfe">
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
