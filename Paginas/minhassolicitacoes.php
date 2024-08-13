@@ -209,19 +209,43 @@ if (empty($_SESSION['nome'])){
         }
         if (isset($_POST['DeleteSolici']) && !empty($_POST['id_solicitacaoDelete'])) {
             $id_solicitacaoDelete = $conexao->real_escape_string($_POST['id_solicitacaoDelete']);
-        
-            // Primeiro, exclua os registros dependentes na tabela `itenssolicitacao`
-            $DeleteItensSolicitacao = "DELETE FROM itenssolicitacao WHERE cod_solicitacao = '".$id_solicitacaoDelete."'";
-            $conexao->query($DeleteItensSolicitacao);
-        
-            // Agora, exclua o registro principal na tabela `solicitacoes`
-            $DeleteSolicitacao = "DELETE FROM solicitacoes WHERE id_solicitacao = '".$id_solicitacaoDelete."' AND codTurma ='$cod_turma'";
-            $executar = $conexao->query($DeleteSolicitacao);
-        
-            if ($conexao->affected_rows > 0) {
-                echo "Solicitação excluída com sucesso.";
-            } else {
-                echo "Nenhuma solicitação encontrada para excluir ou erro na exclusão.";
+
+            $SelectSolicitacoes = "SELECT * FROM solicitacoes WHERE id_solicitacao = '$id_solicitacaoDelete'";
+            $executeSelectSolicitacoes = $conexao -> query($SelectSolicitacoes);
+
+            if($executeSelectSolicitacoes){
+                $SelectItensSolicitacao = "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '".$id_solicitacaoDelete."'";
+                $executeItensSolicitacao = $conexao -> query($SelectItensSolicitacao);
+
+                if($executeItensSolicitacao){
+                    while($rowitensSolicitacao = $executeItensSolicitacao -> fetch_assoc()){
+                        $cod_itemSolicitacao = $rowitensSolicitacao['cod_itemSolicitacao'];
+
+                        $deleteItenspicking = "DELETE FROM itenspicking WHERE cod_itemSolicitacao = '$cod_itemSolicitacao' AND codTurma ='$cod_turma'";
+                        $executeItensPicking = $conexao -> query($deleteItenspicking);
+
+                        if(!$executeItensPicking){
+                            echo "Erro ao excluir itens do picing";
+                        }
+                    }
+                } else{
+                    echo "Erro ao buscar itens da solicitação";
+                }
+
+                $DeleteItensSolicitacao = "DELETE FROM itenssolicitacao WHERE cod_solicitacao = '".$id_solicitacaoDelete."' AND codTurma ='$cod_turma'";
+                $conexao->query($DeleteItensSolicitacao);
+            
+                // Agora, exclua o registro principal na tabela `solicitacoes`
+                $DeleteSolicitacao = "DELETE FROM solicitacoes WHERE id_solicitacao = '".$id_solicitacaoDelete."' AND codTurma ='$cod_turma'";
+                $executarDeleteSolicitacao = $conexao->query($DeleteSolicitacao);
+
+                if ($executarDeleteSolicitacao) {
+                    echo "Solicitação excluída com sucesso.";
+                } else {
+                    echo "Nenhuma solicitação encontrada para excluir";
+                }
+            } else{
+
             }
         }
     }
