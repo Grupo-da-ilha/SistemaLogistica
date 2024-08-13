@@ -109,7 +109,7 @@ h7 {
   margin-left: 1vw;
   margin-top: 0vh;
   width: 50vh;
-  height: 50vh;
+  height: 60vh;
   background-color: #eeeeee;
   display: flex;
   flex-direction: column;
@@ -159,6 +159,7 @@ h7 {
     color: #3691fa;
   }
   .legenda {
+    padding: 5px;
     margin-top: 10px;
     width: 100%;
     height: 13vh;
@@ -204,6 +205,20 @@ h7 {
     height: 20px;
     background-color: green;
   }
+.info-pedido-item{
+    background-color: white;
+    border: 1px solid rgb(0, 119, 255);
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 7px;
+    padding: 15px;
+    width: 10vw;
+    margin: 10px;
+}
+
+.info-posicao{
+    display: flex;
+    justify-content: space-evenly;
+}
   .locais-estoque {
     margin-top: 5vh;
     padding: 0px;

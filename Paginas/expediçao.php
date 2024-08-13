@@ -88,7 +88,7 @@ if (empty($_SESSION['nome'])){
                 if($execute && $execute -> num_rows > 0){
                     echo '
                         <div class="div-operacoes">
-                            <table class="tabela">
+                            <table class="tabela" style="width: 500px;">
                                 <tr>
                                     <td> Número das solicitações </td>
                                     <td> Ações </td>
@@ -101,10 +101,10 @@ if (empty($_SESSION['nome'])){
                         
                         echo '<tr>
                                 <td>' . htmlspecialchars($cod_solicitacao) . '</td>
-                                <td>
+                                <td style="align-itens=center; display:flex; justify-content: center;">
                                     <form action="processoexpedicao.php" method="POST">
                                         <input type="hidden" name="id_solicitacao_expedicao" value="' . $id_solicitacao . '" style="display: block;"></label>
-                                        <input type="submit" name="AbrirSolicitacaoExpedicao" value="ABRIR" style="display: block;">
+                                        <input type="submit" name="AbrirSolicitacaoExpedicao" value="ABRIR" style="display: block;" class="InputPego">
                                     </form>
                                 </td>
                             </tr>';

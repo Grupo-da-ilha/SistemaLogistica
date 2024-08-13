@@ -12,16 +12,6 @@
     <link rel="stylesheet" href="../css/estoque.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .info-pedido-item{
-            border: 1px solid black;
-        }
-
-        .info-posicao{
-            display: flex;
-            justify-content: space-evenly;
-        }
-    </style>
 </head>
 <body>
 <?php
@@ -106,7 +96,6 @@ if (empty($_SESSION['nome'])){
                     <a href="carga.php" class="functions-menu">VISTORIA</a>
                     <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="controledoca.php" class="functions-menu">CONTROLE</a>
-                    <a href="estoque.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="picking.php" class="functions-menu">PICKING</a>
                     <a href="expedicao.php" class="functions-menu">EXPEDIÇÃO</a>

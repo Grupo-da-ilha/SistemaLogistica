@@ -185,9 +185,9 @@ if (empty($_SESSION['nome'])){
                             </table>
                             <br>
                             <form id="form-finalizar-expedicao">
-                                <div style="display: flex;">
-                                    Para qual doca será enviado esses itens?
-                                    <input type="text" name="doca" style="display: block; margin-left: 10px;">
+                                <div style="display: flex; flex-direction:row; justify-content:center; align-itens:center;">
+                                    <h7>PARA QUAL DOCA SERÁ ENVIADO OS ITENS?</h7>
+                                    <input type="text" name="doca" class="doca-itens" style="display: block; margin-left: 10px;" placeholder="Doca:">
                                 </div>
                                 <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '" style="display: block;">
                                 <input type="submit" id="EnviarExpedicao" name="EnviarExpedicao" value="Finalizar Expedição" style="display:block;" class="irparaoperacao">

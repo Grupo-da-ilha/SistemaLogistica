@@ -100,11 +100,11 @@ if (empty($_SESSION['nome'])) {
                     <a href="carga.php" class="functions-menu">VISTORIA</a>
                     <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="controledoca.php" class="functions-menu">CONTROLE</a>
-                    <a href="#" class="functions-menu">ESTOQUE</a>
+                    <a href="estoque.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
-                    <a href="#" class="functions-menu">PICKING</a>
-                    <a href="#" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="#" class="functions-menu">RELATÓRIOS</a>
+                    <a href="picking.php" class="functions-menu">PICKING</a>
+                    <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
                 </li>
             </div>
             <div class="criar-danfe-container">

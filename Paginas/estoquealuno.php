@@ -96,7 +96,6 @@ if (empty($_SESSION['nome'])){
                     <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
                     <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
-                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="pickingaluno.php" class="functions-menu">PICKING</a>
                     <a href="expedicaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>

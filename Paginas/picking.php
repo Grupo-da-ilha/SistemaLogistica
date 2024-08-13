@@ -71,7 +71,6 @@ if (empty($_SESSION['nome'])){
                     <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
                     <a href="carga.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="estoque.php" class="functions-menu">ESTOQUE</a>
-                    <a href="picking.php" class="functions-menu">PICKING</a>
                     <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
                 </li>
