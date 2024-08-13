@@ -161,7 +161,7 @@ if (empty($_SESSION['nome'])){
                                     if (!$resultado) {
                                         echo "Erro na consulta";
                                     } else {
-                                        echo "<div style='display: flex; width: 300px; justify-content: space-evenly'>";
+                                        echo "<div style='display: flex; width: auto; justify-content: space-evenly'>";
                                         while($row = $resultado -> fetch_assoc()){
 
                                             //Select estoque
@@ -180,7 +180,7 @@ if (empty($_SESSION['nome'])){
                                             }
 
                                             echo "
-                                                <div style='border: 1px solid black'>
+                                                <div class=\"info\">
                                                     <p> Produto: ". htmlspecialchars($row['Nome']) ." </p>
                                                     <p> SKU: ". htmlspecialchars($row['SKU']) ." </p>
                                                     <p> UN: ". htmlspecialchars($row['UN']) ." </p>

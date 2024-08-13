@@ -70,7 +70,7 @@ h8 {
     margin-top: 10px;
     z-index: 0;
     width: 95%;
-    min-height: 91%;
+    height: 70%;
     background-color: #ffffff;;
     border-radius: 30px;
     display: flex;
@@ -91,6 +91,7 @@ h8 {
 }
 .info-total {
   z-index: 1;
+  height: auto;
   background-color: #ffffff00;
   display: flex;
   flex-direction: row;
@@ -107,7 +108,7 @@ h8 {
   z-index: 3;
   margin-top: -1vh;
   width: 50vh;
-  height: 74vh;
+  height: 71vh;
   background-color: #eeeeee;
   display: flex;
   flex-direction: column;
@@ -167,8 +168,8 @@ h8 {
 }
 .criar-pedidos-container {
   margin-top: -1vh;
-  width: 141vh;
-  height: 74ssvh;
+  width: 70vw;
+  height: 71vh;
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
@@ -178,9 +179,11 @@ h8 {
   box-shadow: 0 0 15px rgb(0, 119, 255);
 }
 .criarpedidos {
+    padding: 15px;
     margin: 15px;
-    width: 500px;
-    height: auto;
+    margin-left: 50px;
+    width: 30vw;
+    height: 80%;
     background-color: #eeeeee;
     border-radius: 30px;
     display: flex;
@@ -191,14 +194,13 @@ h8 {
 .options-pedido {
   width: 100%;
   height: 100%;
-  background-color: rgba(17, 0, 255, 0);
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 .produtos-pedido {
-    width: 80%;
+    width: 70%;
     height: 80%;
     background-color: #eeeeee;
     border-radius: 30px 0 0 30px;
@@ -438,6 +440,21 @@ th, tr, td {
   outline-color: #3691fa;
   box-shadow: 0 0 12px #3691fa;
 }
+.info {
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: default;
+    width: 12vw;
+    height: auto;
+    padding: 10px;
+    margin: 15px;
+    border-radius: 5px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: first baseline;
+    border: 1px solid rgb(0, 119, 255);
+}
 @media only screen and (max-width: 600px) {
   body {
     background-image: url("cssimg/fundopag.jpg");
@@ -628,7 +645,7 @@ margin-top: 0;
 }
 .criarpedidos {
     margin: 30px;
-    width:50vh;
+    width:60vh;
     height: 80%;
     border-radius: 30px;
     display: flex;
@@ -638,7 +655,7 @@ margin-top: 0;
     overflow-y: auto;
 }
 .options-pedido {
-  width: 30vw;
+  width: 36vw;
   height: 100%;
   display: flex;
   flex-direction: row;
