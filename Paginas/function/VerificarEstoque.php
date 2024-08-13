@@ -24,15 +24,17 @@ if ($conexao->connect_errno) {
         echo ''.$_SESSION['Idprojeto']. '';
     }
 
-    if(isset($_POST['nome_produto']) && isset($_POST['UN_produto']) && isset($_POST['Quantidade_produto'])){
+    if(isset($_POST['nome_produto']) && isset($_POST['UN_produto']) && isset($_POST['Quantidade_produto']) && isset($_POST['SKU_produto'])){
         $nome_produto_digitado = $conexao -> real_escape_string($_POST['nome_produto']);
         $UN_produto_digitado = $conexao -> real_escape_string($_POST['UN_produto']);
+        $SKU_produto_digitado = $conexao -> real_escape_string($_POST['SKU_produto']);
         $Quantidade_produto_digitada = $conexao -> real_escape_string($_POST['Quantidade_produto']);
 
         //Pesquisar os produtos e o código do produto com base no nome e UN que a pessoa digitou
-        $SelectProduto = "SELECT * FROM produtos WHERE Nome='$nome_produto_digitado' AND UN = '$UN_produto_digitado'";
+        $SelectProduto = "SELECT * FROM produtos WHERE Nome='$nome_produto_digitado' AND UN = '$UN_produto_digitado' AND SKU = '$SKU_produto_digitado'";
         $executeProdutos = $conexao -> query($SelectProduto);
 
+        if($executeProdutos && $executeProdutos -> num_rows > 0){
         while($rowProdutos = $executeProdutos -> fetch_assoc()){
             $cod_produto = $rowProdutos['cod_produto'];
 
@@ -53,8 +55,7 @@ if ($conexao->connect_errno) {
                         while($rowEstoque = $executeEstoque->fetch_assoc()){
                             $cod_estoque = $rowEstoque['cod_estoque'];
                             $Quantidade_estoque = $rowEstoque['Quantidade'];
-            
-            
+
                             if($Quantidade_produto_digitada == $Quantidade_estoque){
                                 $color = 'green';
                             } elseif($Quantidade_produto_digitada > $Quantidade_estoque){
@@ -62,13 +63,23 @@ if ($conexao->connect_errno) {
                             } else {
                                 $color = 'blue';
                             }
+                            
+                            //Select posicao do estoque
+                            $SelectPosicaoEstoque = "SELECT * FROM estoque WHERE cod_estoque = '$cod_estoque'";
+                            $executePosicaoEstoque = $conexao -> query($SelectPosicaoEstoque);
 
-                            $posicoes_estoque[] = ['cod_estoque' => $cod_estoque, 'color' => $color];
+                            while($rowEstoque = $executePosicaoEstoque -> fetch_assoc()){
+                                $andar = $rowEstoque['Andar'];
+                                $Apartamento = $rowEstoque['Apartamento'];
+
+                                $posicao = $andar . $Apartamento;
+
+                                $posicoes_estoque[] = ['cod_estoque' => $cod_estoque, 'color' => $color, 'Quantidade' => $Quantidade_estoque, 'Posicoes' => $posicao];
                         }
-            
-                        echo json_encode(['success' => true, 'message' => 'Quantidade comparada', 'positions' => $posicoes_estoque]);
-                        exit();
-                    }else{
+                    }
+                    echo json_encode(['success' => true, 'message' => 'Quantidade comparada', 'positions' => $posicoes_estoque]);
+                    exit();
+                }else{
                         echo json_encode(['success' => false, 'message' => 'Erro ao pesquisar itens do estoque']);
                         exit();
                     }
@@ -78,6 +89,10 @@ if ($conexao->connect_errno) {
             exit();
         }
     }
+}else{
+    echo json_encode(['success' => false, 'message' => 'Erro ao pesquisar produtos, confira o SKU e a UN do produto']);
+    exit();
+}
     } else{
         echo json_encode(['success' => false, 'message' => 'Dados insuficientes']);
         exit();
