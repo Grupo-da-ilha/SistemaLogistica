@@ -349,7 +349,7 @@ if (empty($_SESSION['nome'])){
                                                         <form action=\"function/processoItens.php\" method=\"POST\">
                                                             <div class=\"input-finalizar-pedido\">
                                                                 <input type=\"hidden\" name=\"codigoPedido\" value=\"" .$_SESSION['cod_pedido']. "\" style=\"display: block;\">
-                                                                 <input type='hidden' value=\"Pedido\" name=\"Tipo_nota\">
+                                                                <input type='hidden' value=\"Pedido\" name=\"Tipo_nota\">
                                                                 <textarea id=\"texto\" name=\"texto\" placeholder=\"Informações adicionais para sua DANFE\"></textarea><br>
                                                                 <input type=\"datetime-local\" id=\"texto\" name=\"DataEntrega\" placeholder=\"Data de Entrega:\" style=\"display: block;\">
                                                                 <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Pedido\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">

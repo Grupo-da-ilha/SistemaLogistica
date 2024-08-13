@@ -115,6 +115,26 @@ if (empty($_SESSION['nome'])){
                             <div class="options-criarpedido" style="height:49vh;">
                                 <h5>CÓDIGO DA SOLICITAÇÃO:</h5>
                                 <input type="text" name="codSolicitacao" style="display: block;" class="input-options-criar-pedido">
+                                <h5>DESTINATÁRIO:</h5>
+                                    <label class="label-input" for="">
+                                        <i class="far fa-envelope icon-modify"></i>
+                                        <select name="Destinatario" required style="display: block;" class="input-options-criar-pedido-select">
+                                            <option class="options-label">Selecione:</option>
+                                            <option class="options-label">BIC</option>
+                                            <option class="options-label">Samsung</option>
+                                            <option class="options-label">Quanta coisa</option>
+                                        </select>
+                                    </label>
+                                        <h5>TRANSPORTADORA:</h5>
+                                            <label class="label-input" for="">
+                                                <i class="far fa-envelope icon-modify"></i>
+                                                <select name="Transportadora" required style="display: block;" class="input-options-criar-pedido-select" id="Transp">
+                                                    <option>Selecione:</option>
+                                                    <option>Tac Transportes</option>
+                                                    <option>Graédi Transportes</option>
+                                                    <option>NSL Brasil</option>
+                                                </select>
+                                            </label>
                                     <div class="options-criarpedido-input">
                                         <input type="submit" name="enviar_solicitacao" value="CONFIRMAR SOLICITAÇÃO" style="display: block;" class="input-function-criar-pedido"> 
                                     </div> 
@@ -144,7 +164,6 @@ if (empty($_SESSION['nome'])){
                                 } else {
                                     echo '';
                                 }
-
                                 
                                 //Definindo data e horário atuais
                                 date_default_timezone_set('America/Sao_Paulo');
@@ -164,17 +183,62 @@ if (empty($_SESSION['nome'])){
                                         $_SESSION['id_solicitacao'] = $idsolicitacao;
                                         echo "<h6>Alterando a solicitação com o seguinte código: " . htmlspecialchars($codigo_solicitacao) . "</h6>";
 
-                                        $sql = "UPDATE solicitacoes SET Observacao = '', Situacao = 'Em criação' WHERE cod_solicitacao = '{$_SESSION['cod_solicitacao']}' AND codTurma = '{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
+                                        $sql = "UPDATE solicitacoes SET Observacao = '', Situacao = 'Em criação', Doca = NULL, Doca_saida = NULL WHERE cod_solicitacao = '{$_SESSION['cod_solicitacao']}' AND codTurma = '{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
                                         $execute = $conexao->query($sql);
-
+                                        
                                         if($execute){
-                                            // Código para manipular os itens da solicitação, se necessário
+                                            $selectItensSolicitacao = "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '$idsolicitacao'";
+                                            $executar = $conexao -> query($selectItensSolicitacao);
+
+                                            if($executar -> num_rows > 0){
+                                                while($rowItem = $executar -> fetch_assoc()){
+                                                    $Quantidade_espera = $rowItem['Quantidade_espera'];
+                                                    $cod_itemSolicitacao = $rowItem['cod_itemSolicitacao'];
+                                                    $sql = "UPDATE itenssolicitacao SET Quantidade = '0', Quantidade_espera = '$Quantidade_espera' WHERE cod_solicitacao = '$idsolicitacao' 
+                                                    AND codTurma ='{$_SESSION['codTurma']}' AND cod_itemSolicitacao = '$cod_itemSolicitacao'";
+                                                    $execute = $conexao -> query($sql);
+                                                    if($execute){
+                                                        $sql = "DELETE FROM nota_fiscal WHERE id_solicitacao = '$idsolicitacao'";
+                                                        $execute = $conexao -> query($sql);
+
+                                                        if($execute){
+                                                            $sql = "DELETE FROM docas WHERE id_pedido = '$idpedido'";
+                                                            $execute = $conexao -> query($sql);
+                                                        }
+                                                    }
+                                                }
+                                            }                 
                                         }
                                     } else {
-                                        $InsertSolicitacao = "INSERT INTO solicitacoes (cod_solicitacao, Observacao, Situacao, Data_criacao, codTurma) VALUES ('".$cod_solicitacao."', '', '', '$datahoje', '".$_SESSION['codTurma']."')";
-                                        $conexao->query($InsertSolicitacao);
+                                        $Nome_destinatario = $conexao -> real_escape_string($_POST['Destinatario']);
 
-                                        echo "<h6>Solicitação criada com sucesso com o código: " . htmlspecialchars($cod_solicitacao) . "</h6>";
+                                        $selectCNPJDestinatario = "SELECT CNPJ FROM clientes WHERE Nome= '$Nome_destinatario'";
+                                        $excuteDestinatario = $conexao -> query($selectCNPJDestinatario);
+
+                                        if($excuteDestinatario && $excuteDestinatario -> num_rows > 0){
+                                            $row = $excuteDestinatario->fetch_assoc();
+                                            $_SESSION['CNPJCliente'] = $row['CNPJ'];
+
+                                            $nomeTransp = $conexao->real_escape_string($_POST['Transportadora']);
+                            
+                                            $selectCNPJTransportadora = "SELECT CNPJ FROM transportadoras WHERE Nome = '$nomeTransp'";
+                                            $execute = $conexao->query($selectCNPJTransportadora);
+
+                                            if ($execute && $execute->num_rows > 0) {
+                                                $row = $execute->fetch_assoc();
+                                                $_SESSION['CNPJTransp'] = $row['CNPJ'];
+                                                $sql = "INSERT INTO solicitacoes (cod_solicitacao, Observacao, Situacao, CNPJEmitente, CNPJ_Destinatario, CNPJ_Transportadora, Data_criacao, codTurma) 
+                                                VALUES ('$cod_solicitacao', '', 'Em processamento', '03.774.819/0001-02', '{$_SESSION['CNPJCliente']}', '{$_SESSION['CNPJTransp']}', '$datahoje', '{$_SESSION['codTurma']}')";
+                                                $conexao->query($sql);
+                                                echo "<h6>Solicitacao criado com sucesso com o código: " . htmlspecialchars($cod_solicitacao) . "</h6>";
+                                            } else {
+                                                echo "<h6>Por favor, selecione a Transportadora</h6>";
+                                            }
+
+                                        }else {
+                                            echo "<h6>Por favor, selecione o Fornecedor</h6>";
+                                        }
+
                                     }
                                 } elseif(!isset($_POST['enviar_solicitacao']) && empty($_POST['codSolicitacao'])) {
 
@@ -257,6 +321,7 @@ if (empty($_SESSION['nome'])){
                                         echo "<form action=\"function/processoItensSolicitacao.php\" method=\"POST\">
                                                 <div class=\"input-finalizar-pedido\">
                                                     <input type=\"hidden\" name=\"codigoSolicitacao\" value=\"" . $_SESSION['id_solicitacao'] . "\" style=\"display: block;\">
+                                                    <input type='hidden' value=\"Solicitação\" name=\"Tipo_nota\">
                                                     <textarea id=\"texto\" name=\"texto\" placeholder=\"Observações para a solicitação\" style=\"margin-top:15px;\"></textarea><br>
                                                     <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Solicitacao\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
                                                 </div>

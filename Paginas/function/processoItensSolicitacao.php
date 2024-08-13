@@ -55,7 +55,9 @@ if ($conexao->connect_errno) {
     $datahoje = date("Y-m-d H:i:s");
 
     //Atualizando dados do pedido e da nota fiscal
-    if (isset($_POST['UpdateValor']) && !empty($_POST['codigoSolicitacao'])) {
+    if (isset($_POST['UpdateValor']) && !empty($_POST['codigoSolicitacao']) && !empty($_POST['Tipo_nota'])) {
+        $Tipo_nota = $_POST['Tipo_nota'];
+
         $sql = "UPDATE `solicitacoes` SET Situacao = 'Em processamento' WHERE cod_solicitacao = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
         $resultado = $conexao->query($sql);
 
@@ -63,6 +65,70 @@ if ($conexao->connect_errno) {
             $texto = $_POST['texto'];
             $sql = "UPDATE `solicitacoes` SET Observacao = '".$texto."' WHERE cod_solicitacao = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
             $resultado = $conexao->query($sql);
+        }
+
+        if ($resultado) {
+            $sql = "SELECT solicitacoes.cod_solicitacao, solicitacoes.Data_criacao, solicitacoes.CNPJEmitente, solicitacoes.CNPJ_Destinatario, solicitacoes.CNPJ_Transportadora, solicitacoes.Situacao, solicitacoes.Observacao 
+                    FROM `solicitacoes`";
+            $execute = $conexao->query($sql);
+        
+            if ($execute->num_rows > 0) {
+                $row = $execute->fetch_assoc();
+        
+                $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
+                        nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.Tipo
+                        FROM `nota_fiscal` WHERE id_solicitacao = '{$_SESSION['id_solicitacao']}' AND Tipo = 'Solicitação'";
+                $resultado = $conexao->query($sql);
+        
+                if ($resultado->num_rows > 0) {
+                    $sql = "DELETE FROM nota_fiscal WHERE id_solicitacao = '" . $_SESSION['id_solicitacao'] . "' AND Tipo = 'Solicitação'";
+                    $execute = $conexao->query($sql);
+        
+                    if ($execute) {
+                        $total_numeros = 44;
+                        $sequencia = array();
+        
+                        for ($i = 0; $i < $total_numeros; $i++) {
+                            $numero_aleatorio = rand(0, 9);
+                            $sequencia[] = $numero_aleatorio;
+                        }
+        
+                        $total_numero = 5 ;
+                        $cod_nota = array();
+        
+                        for ($i = 0; $i < $total_numero; $i++) {
+                            $numero_aleatorio = rand(0, 9);
+                            $cod_nota[] = $numero_aleatorio;
+                        }
+        
+                        $sql = "INSERT INTO nota_fiscal (cod_nota, chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, id_solicitacao, Tipo) 
+                                VALUES ('" . implode($cod_nota) . "', '" . implode($sequencia) . "', '" . $row['Data_criacao'] . "', '" . $row['CNPJ_Destinatario'] . "', '" . $row['CNPJ_Transportadora'] . "', '" . $row['CNPJEmitente'] . "', '" .$texto. "', '" . $_SESSION['id_solicitacao'] . "', '$Tipo_nota')";
+        
+                        $execute = $conexao->query($sql);
+                    }
+                } else {
+                    $total_numeros = 44;
+                    $sequencia = array();
+        
+                    for ($i = 0; $i < $total_numeros; $i++) {
+                        $numero_aleatorio = rand(0, 9);
+                        $sequencia[] = $numero_aleatorio;
+                    }
+        
+                    $total_numero = 5;
+                    $cod_nota = array();
+        
+                    for ($i = 0; $i < $total_numero; $i++) {
+                        $numero_aleatorio = rand(0, 9);
+                        $cod_nota[] = $numero_aleatorio;
+                    }
+        
+                    $sql = "INSERT INTO nota_fiscal (cod_nota, chave_acesso, DataExpedicao, CNPJ_Destinatario, CNPJ_Transportadora, CNPJ_Emitente, InformacoesAdicionais, id_solicitacao, Tipo) 
+                            VALUES ('" . implode($cod_nota) . "', '" . implode($sequencia) . "', '" . $row['Data_criacao'] . "', '" . $row['CNPJ_Destinatario'] . "', '" . $row['CNPJ_Transportadora'] . "', '" . $row['CNPJEmitente'] . "', '" . $texto. "', '" . $_SESSION['id_solicitacao'] . "', '$Tipo_nota')";
+        
+                    $execute = $conexao->query($sql);
+                }
+            }
         }
         
         $conexao->close();

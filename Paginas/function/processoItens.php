@@ -83,11 +83,11 @@ if ($conexao->connect_errno) {
         
                 $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
                         nota_fiscal.InformacoesAdicionais, nota_fiscal.CNPJ_Transportadora, nota_fiscal.CNPJ_Destinatario, nota_fiscal.Tipo
-                        FROM `nota_fiscal` WHERE id_pedido = '{$_SESSION['idpedido']}'";
+                        FROM `nota_fiscal` WHERE id_pedido = '{$_SESSION['idpedido']}' AND Tipo = 'Pedido'";
                 $resultado = $conexao->query($sql);
         
                 if ($resultado->num_rows > 0) {
-                    $sql = "DELETE FROM nota_fiscal WHERE id_pedido = '" . $_SESSION['idpedido'] . "'";
+                    $sql = "DELETE FROM nota_fiscal WHERE id_pedido = '" . $_SESSION['idpedido'] . "' AND Tipo = 'Pedido'";
                     $execute = $conexao->query($sql);
         
                     if ($execute) {

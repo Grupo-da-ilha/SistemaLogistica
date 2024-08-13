@@ -124,7 +124,7 @@ if (empty($_SESSION['nome'])) {
                         <div class="criar-danfes-container">
                             <h4>VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h4>
                             <form action="danfe.php" method="POST" style="display: flex;" class="cod-pedido-danfe">
-                                <input class="input-cod-danfe" type="text" name="cod_pedido" placeholder="Cod do pedido" style="display: block;">
+                                <input class="input-cod-danfe" type="text" name="cod_pedido" placeholder="Cod do pedido/solicitacao" style="display: block;">
                                 <select id="tipoDanfe" name="tipoDanfe" required>
                                     <option>Selecione:</option>
                                     <option>Pedido</option>
