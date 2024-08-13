@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="../css/estoque.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .info-pedido-item{
+            border: 1px solid black;
+        }
+
+        .info-posicao{
+            display: flex;
+            justify-content: space-evenly;
+        }
+    </style>
 </head>
 <body>
 <?php
@@ -116,6 +126,7 @@ if (empty($_SESSION['nome'])){
                                     <form id="form-estoque-posicao"> 
                                         <input type="text" name="nome_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Produto:">
                                         <input type="text" name="UN_produto" style="display: block;" class="input-options-criar-pedido" placeholder="UN">
+                                        <input type="text" name="SKU_produto" style="display: block;" class="input-options-criar-pedido" placeholder="SKU:">
                                         <input type="text" name="Quantidade_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Quantidade:">
                                         <input type="submit" value="CONSULTAR" style="display: block;" class="input-function-criar-pedido">
                                     </form>
@@ -138,10 +149,7 @@ if (empty($_SESSION['nome'])){
                             </div>
                             <div class="submenus-pedidos">
                                 <h4> QUANTIDADE:</h4>
-                                <div class="info-pedido">
-                                    <form id="#"> 
-                                        <p>Quantidade:</p>
-                                    </form>
+                                <div class="info-posicao">
                                 </div>
                             </div>
                         </div>
@@ -211,6 +219,29 @@ $('#form-estoque-posicao').submit(function(e) {
                             inputposicao[j].style.color = 'white';  // Defina a cor como string válida
                         }
                     }
+                }
+                var containers = document.getElementsByClassName('info-posicao');
+                
+                // Limpa o conteúdo da div antes de adicionar novos elementos
+                containers[0].innerHTML = ''; // Remove qualquer conteúdo existente na primeira div com a classe 'info-posicao'
+
+                // Cria novos elementos para cada item da lista
+                for (var i = 0; i < jsonResponse.positions.length; i++) {
+                    var p_container = document.createElement('div');
+                    p_container.className = 'info-pedido-item';
+                    
+                    var p_quantidade = document.createElement('p');
+                    p_quantidade.className = 'paragrafo-quantidade';
+                    p_quantidade.textContent = 'Quantidade: ' + jsonResponse.positions[i].Quantidade;
+                    
+                    var p_posicao = document.createElement('p');
+                    p_posicao.className = 'paragrafo-posicao';
+                    p_posicao.textContent = 'Posição: ' + jsonResponse.positions[i].Posicoes;
+                    
+                    p_container.append(p_quantidade);
+                    p_container.append(p_posicao);
+                    
+                    containers[0].append(p_container);
                 }
             } else {
                 alert(jsonResponse.message);  // Mostra mensagem apenas quando success é false
