@@ -112,7 +112,7 @@ if (empty($_SESSION['nome'])){
                         }
                         echo '
                         <div class="div-operacoes">
-                            <table class="tabela">
+                            <table class="tabela" style="width:30vw;">
                                 <tr>
                                     <td> Produtos </td>
                                     <td> UN </td>
@@ -165,7 +165,7 @@ if (empty($_SESSION['nome'])){
                                 <td>' . htmlspecialchars($QuantidadeItemPicking) . '</td>
                                 <td>
                                     <form class="form-observacao-solicitacao">
-                                        <input type="text" name="observacao_solicitacao" style="display: block;">
+                                    <input type="text" name="observacao_solicitacao" style="display: block;" class="observacao">
                                 </td>
                                 <td style="display: flex;">
                                         <input type="hidden" name="cod_item_picking" value="'. htmlspecialchars($cod_itemPicking) . '" style="display: block;">
@@ -178,18 +178,18 @@ if (empty($_SESSION['nome'])){
                     echo '
                         </table>
                         <br>
-                            <div style="display: flex;">
+                            <div style="display: flex; flex-direction:column; justify-content:center; align-itens:center;">
                                 <form id="form-finalizar-solicitacao">
                                     <div style="display: flex;">
-                                        Qual a doca de saída desses itens?
-                                        <input type="text" name="doca_saida" style="display: block; margin-left: 10px;">
+                                        <h7>QUAL A DOCA DE SAÍDA DESSES ITENS?</h7>
+                                        <input type="text" name="doca_saida"class="doca-itens"  style="display: block; margin-left: 10px;" placeholder="Doca:">
+                                        <form id="form-ok-geral">
+                                            <input type="submit" id="okgeral" class="InputPego" name="okgeral" value="CONFERIR TUDO" style="width:300px; display:block; border-radius:5px; margin-left:5px;">
+                                        <form>
                                     </div>
                                     <input type="hidden" name="id_solicitacao" value="' . htmlspecialchars($id_solicitacao) . '" style="display: block;">
-                                    <input type="submit" id="EnviarExpedicao" name="EnviarExpedicao" value="Finalizar Expedição" style="display:block;" class="irparaoperacao">
+                                    <input type="submit" id="EnviarExpedicao" name="EnviarExpedicao" value="Finalizar Expedição" style="display:block; margin-left:2vw;" class="irparaoperacao">
                                 </form>
-                                <form id="form-ok-geral">
-                                    <input type="submit" id="okgeral" name="okgeral" value="Ok para todos" style="display:block;">
-                                <form>
                             </div>
                     </div>
                     ';

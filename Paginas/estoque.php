@@ -12,16 +12,6 @@
     <link rel="stylesheet" href="../css/estoque.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        .info-pedido-item{
-            border: 1px solid black;
-        }
-
-        .info-posicao{
-            display: flex;
-            justify-content: space-evenly;
-        }
-    </style>
 </head>
 <body>
 <?php
