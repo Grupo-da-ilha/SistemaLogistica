@@ -131,7 +131,6 @@
         <div class="container-prin">
             <div class="functions-logistica">
                 <a href="criarpedido.php"><div class="card-function-log-pedido"></div></a>
-                <a href="meuspedidos.php"><div class="card-function-log-meuspedidos"></div></a>
                 <a href="danfe.php"><div class="card-function-log-danfe"></div></a>
                 <a href="carga.php"><div class="card-function-log-vistoria"></div></a>
                 <a href="recebimentodoca.php"><div class="card-function-log-recebimento"></div></a>
@@ -141,7 +140,7 @@
                 <a href="estoque.php"><div class="card-function-log-estoque"></div></a>
                 <a href="picking.php"><div class="card-function-log-picking"></div></a>
                 <a href="expediçao.php"><div class="card-function-log-expedicao"></div></a>
-                <a href="inventario.php"><div class="card-function-log-expedicao"></div></a>
+                <a href="inventario.php"><div class="card-function-log-intervantario"></div></a>
                 <a href="vistoriasolicitacoes.php"><div class="card-function-log-vistoria-carga"></div></a>
             </div>
         </div>

@@ -59,6 +59,7 @@ h3 {
 .card-function-log-operacao, 
 .card-function-log-picking, 
 .card-function-log-expedicao,
+.card-function-log-intervantario,
 .card-function-log-relatorios,
 .card-function-log-vistoria-carga,
 .card-function-log-controle {
@@ -83,6 +84,7 @@ h3 {
 .card-function-log-operacao:hover,
 .card-function-log-picking:hover, 
 .card-function-log-expedicao:hover,
+.card-function-log-intervantario:hover,
 .card-function-log-relatorios:hover,
 .card-function-log-vistoria-carga:hover,
 .card-function-log-controle:hover {
@@ -120,6 +122,9 @@ h3 {
 }
 .card-function-log-expedicao {
     background-image: url("cssimg/expedicao.png");
+}
+.card-function-log-intervantario {
+    background-image: url("cssimg/inventario.png");
 }
 .card-function-log-relatorios {
     background-image: url("cssimg/relatorio.png");

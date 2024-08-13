@@ -9,11 +9,12 @@
 }
 
 body {
-  background-image: url("cssimg/fundopag.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-color: white;
     height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 p {
   color: #000000;
@@ -72,159 +73,8 @@ h8 {
   text-shadow: 0 0 5px rgb(0, 119, 255);
   cursor: default;
 }
-.container-prin {
-  margin-top: -90vh;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-.criar-danfe-container {
-    z-index: 0;
-    width: 95%;
-    min-height: 8vh;
-    height: 90%;
-    background-color: #ffffff;;
-    border-radius: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content:first baseline;
-    align-items: first baseline;
-}
-.titulo-pedido {
-    z-index: 2;
-    width: 100%;
-    height: 10vh;
-    border-radius: 30px 30px 30px 5px;
-    background-color: rgb(0, 119, 255);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 15px rgb(0, 119, 255);
-}
-.info-total {
-  z-index: 1;
-  background-color: #ffffff00;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  height: auto;
-  width: 100%;
-}
-.criar-danfe{
-  background-color: #ff000000;
-  display: flex;
-  flex-direction: row;
-}
-.submenus-danfe{
-  z-index: 3;
-  margin-top: -1vh;
-  width: 50vh;
-  height: 70vh;
-  background-color: #eeeeee;
-  display: flex;
-  flex-direction: column;
-  justify-content: first baseline;
-  align-items: center;
-  border-radius: 0 30px 30px 30px;
-  box-shadow: 0 0 15px rgb(0, 119, 255);
-}
-.info-danfe {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: first baseline;
-}
-.button-pedidos{
-    margin-top: 15px;
-    color: rgb(0, 93, 199);
-    text-decoration: none;
-    outline: none;
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    -moz-transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    transition: all 0.3s;
-}
-.button-pedidos:hover {
-    color: rgb(0, 119, 255);
-    -moz-transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    transform: scale(1.05);
-    animation: animate 1s linear infinite;
-    text-shadow: 0 0 16px rgb(0, 119, 255);
-}
-#enviar-criar-pedidos{
-  cursor: pointer;
-  margin-top: 25vh;
-  display: block;
-  width: 100%;
-  height: 60px;
-  outline: none;
-  border: none;
-  border-radius: 20px;
-  text-align: center;
-  background-color: rgb(0, 119, 255);
-  box-shadow: 0 0 7px rgb(0, 119, 255);
-  -moz-transition: all 0.3s;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
-#enviar-criar-pedidos:hover {
-  -moz-transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  transform: scale(1.05);
-  animation: animate 1s linear infinite;
-  text-shadow: 0 0 16px rgb(0, 119, 255);
-  background-color: #3691fa;;
-}
-.criar-danfes-container {
-  margin-top: -1vh;
-  width: 90%;
-  height: 74vh;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: first baseline;
-  align-items: center;
-  border-radius: 0 0px 30px 0px;
-  box-shadow: 0 0 15px rgb(0, 119, 255);
-}
-
-.input-cod-danfe {
-  text-align: center;
-  width: 300px;
-  height: 40px;
-  border-radius: 30px;
-  border: none;
-  box-shadow: 0 0 12px #3691fa;
-  outline: #0077ff;
-}
-.input-enviar-cod-danfe {
-  margin-left: 5px;
-  cursor: pointer;
-  width: 40px;
-  font-size: 15px;
-  border-radius: 15px;
-  border: 0;
-  background-color: #0077ff;
-  box-shadow: 0 0 12px #0077ff;
-  -moz-transition: all 0.3s;
-  -webkit-transition: all 0.3s;
-  transition: all 0.3s;
-}
-.input-enviar-cod-danfe:hover {
-  -moz-transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  transform: scale(1.05);
-  animation: animate 1s linear infinite;
-  background-color: #4ea0ff;
-}
 .danfe {
+  margin-top: -4vh;
   width: 100%;
   min-height: 100vh;
   max-height: 100vh;
@@ -261,22 +111,11 @@ h8 {
   text-align: center;
 }
 .infos-danfe {
-  width: 30%;
+  width: 100%;
   height: 20vh;
   border: 1px solid black;
   flex-direction: column;
   align-items: flex-start
-}
-.barras-danfe {
-  width: 70%;
-  height: 100%;
-  min-height: 20%;
-  max-height: 20vh;
-  background-image: url('cssimg/codigobarras.png');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  border: 1px solid black;
 }
 .infos-trans {
   width: 50%;
