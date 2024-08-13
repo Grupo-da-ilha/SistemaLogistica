@@ -93,13 +93,13 @@ if (empty($_SESSION['nome'])){
                     <a href="#" class="functions-menu">RELATÓRIOS</a>
                 </li>
             </div>
-            <div class="criar-pedido-container">
+            <div class="criar-pedido-container" style="height:68vh;">
                 <div class="titulo-pedido">
                     <h3>CRIAR SOLICITAÇÃO</h3>    
                 </div>
                 <div class="info-total">
                     <div class="criar-pedido">
-                        <div class="submenus-pedidos">
+                        <div class="submenus-pedidos" style="height:68vh; border-radius:20px 0 0 20px;">
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-pedido">
                                 <h5>PEDIDO:</h5>
@@ -109,10 +109,10 @@ if (empty($_SESSION['nome'])){
                                     <a href="minhassolicitacoes.php" class="button-pedidos">Minhas Solicitações</a>
                             </div>
                         </div>
-                        <div class="criar-pedidos-container">
+                        <div class="criar-pedidos-container" style="height:68vh; width:70vw;">
                             <form action="" method="POST" class="criarpedidos">
                                     <h4>CRIAR:</h4>
-                            <div class="options-criarpedido">
+                            <div class="options-criarpedido" style="height:49vh;">
                                 <h5>CÓDIGO DA SOLICITAÇÃO:</h5>
                                 <input type="text" name="codSolicitacao" style="display: block;" class="input-options-criar-pedido">
                                     <div class="options-criarpedido-input">
@@ -125,7 +125,7 @@ if (empty($_SESSION['nome'])){
                                         </div>
                                     <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido">
                                     <br>
-                                    <a class="ahrefcadastrar" href="inventario.php"><input type="button" value="VER PRODUTOS ESTOCADOS" style="display:block"></a>
+                                    <a class="ahrefcadastrar" href="inventario.php"><input type="button" value="VER PRODUTOS ESTOCADOS" style="display:block"  id="verprodutoscadastrados" class="verprodutoscadastrados"></a>
                                 </form>
                             </div>
                             <div class="options-pedido">
@@ -257,7 +257,7 @@ if (empty($_SESSION['nome'])){
                                         echo "<form action=\"function/processoItensSolicitacao.php\" method=\"POST\">
                                                 <div class=\"input-finalizar-pedido\">
                                                     <input type=\"hidden\" name=\"codigoSolicitacao\" value=\"" . $_SESSION['id_solicitacao'] . "\" style=\"display: block;\">
-                                                    <textarea id=\"texto\" name=\"texto\" placeholder=\"Observações para a solicitação\"></textarea><br>
+                                                    <textarea id=\"texto\" name=\"texto\" placeholder=\"Observações para a solicitação\" style=\"margin-top:15px;\"></textarea><br>
                                                     <input type=\"submit\" name=\"UpdateValor\" onclick=\"FinalizarPedido()\" value=\"Finalizar Solicitacao\" style=\"display: block;\" class=\"input-finalizar-pedido-button\">
                                                 </div>
                                             </form>
