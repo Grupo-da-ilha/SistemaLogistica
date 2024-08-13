@@ -341,10 +341,11 @@ h5{
   height: 6vh;
 }
 .submenus-pedidos {
-  width: 30%;
+  width: 313px;
   height: 100%;
   border-radius: 0 0 0 30px;
   margin-top: 0;
+  margin-bottom: 20px;
   }
   .criar-pedido-container{
     height: 100%;
