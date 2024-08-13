@@ -9,9 +9,14 @@
     <meta name="description" content="SENAI Supply Chain Solutions">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../css/menuhorizontal.css"/>
-    <link rel="stylesheet" href="../css/danfe.css"/>
+    <link rel="stylesheet" href="../css/imprimirdanfe.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
+<script>
+        window.onload = function() {
+            window.print(); // Abre a caixa de diálogo de impressão assim que a página é carregada
+        };
+    </script>
 <body>
 <?php
 session_start();
@@ -57,85 +62,12 @@ if (empty($_SESSION['nome'])) {
         }
     }
 
-    echo ' <header>
-    <div class="container">
-        <div class="main-horizontal">
-            <ul class="ul-main">
-                <li class="li-main">
-                    <div class="teste">
-                    <input id="main-button" type="checkbox" />
-                        <label for="main-button">
-                            <div class="div-button-main">
-                                <span class="button-main"></span>
-                            </div>
-                    </label>
-                    <nav>
-                        <ul class="ul-button">
-                        <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
-                        </ul>
-                    </nav>
-                        <div class="juntos">
-                            <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
-                            <h1>MOVESYS</h1>
-                        </div>
-                        <h2>'.$_SESSION['nome'].'</h2>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</header>
+    echo ' 
     <main>
-        <div class="container-prin">
-            <div class="submenu">
-                <li class="lisubmenu">
-                    <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="carga.php" class="functions-menu">VISTORIA</a>
-                    <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
-                    <a href="controledoca.php" class="functions-menu">CONTROLE</a>
-                    <a href="#" class="functions-menu">ESTOQUE</a>
-                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
-                    <a href="#" class="functions-menu">PICKING</a>
-                    <a href="#" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="#" class="functions-menu">RELATÓRIOS</a>
-                </li>
-            </div>
-            <div class="criar-danfe-container">
-                <div class="titulo-pedido">
-                    <h3>MINHAS DANFES</h3>
-                </div>
+        <br>
                 <div class="info-total">
                     <div class="criar-danfe">
-                        <div class="submenus-danfe">
-                            <h4>INFORMAÇÕES</h4>
-                            <div class="info-danfe">
-                                <h5>PEDIDOS:</h5>
-                                <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
-                                <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
-                            </div>
-                        </div>
                         <div class="criar-danfes-container">
-                            <h4>VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h4>
-                            <form action="danfe.php" method="POST" style="display: flex;" class="cod-pedido-danfe">
-                                <input class="input-cod-danfe" type="text" name="cod_pedido" placeholder="Cod do pedido" style="display: block;">
-                                <select id="tipoDanfe" name="tipoDanfe" required>
-                                    <option>Selecione:</option>
-                                    <option>Pedido</option>
-                                    <option>Solicitação</option>
-                                </select>
-                                <input class="input-enviar-cod-danfe" type="submit" name="enviar_cod" value="BUSCAR" style="display: block; width: auto;">
-                            </form>
-                            <button onclick="submitPrintForm()">Imprimir</button>
-
-                            <form id="printForm" action="imprimirdanfe.php" method="POST" style="display: none;">
-                                <input type="hidden" name="cod_pedido" value' .htmlspecialchars($_SESSION['cod_pedido']).'>
-                                <input type="hidden" name="tipoDanfe" value=' .htmlspecialchars($_POST['tipoDanfe']).'>
-                                <input type="hidden" name="id_pedido" value=' .htmlspecialchars($_SESSION['idpedido']).'>
-                            </form>
                             <br>';
     
     if(empty($_POST['tipoDanfe'])){

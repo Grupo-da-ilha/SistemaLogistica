@@ -60,6 +60,7 @@ h3 {
 .card-function-log-picking, 
 .card-function-log-expedicao,
 .card-function-log-relatorios,
+.card-function-log-vistoria-carga,
 .card-function-log-controle {
     cursor: pointer;
     margin: 15px;
@@ -83,6 +84,7 @@ h3 {
 .card-function-log-picking:hover, 
 .card-function-log-expedicao:hover,
 .card-function-log-relatorios:hover,
+.card-function-log-vistoria-carga:hover,
 .card-function-log-controle:hover {
     transform: scale(1.05);
     animation: animate 1s linear infinite;
@@ -127,6 +129,9 @@ h3 {
 }
 .card-function-log-cadas {
     background-image: url("cssimg/cadastro.png");
+}
+.card-function-log-vistoria-carga{
+    background-image: url("cssimg/conferenciacarga.png");
 }
 .modal {
     display: none;

@@ -31,17 +31,17 @@ if ($conexao->connect_errno) {
 
     // Verificação de login
     if ($resultado->num_rows === 1) {
-        $row = $resultado->fetch_array();
+        $row = $resultado->fetch_assoc();
 
         // Armazenar informações do usuário na sessão
-        $_SESSION['id'] = $row[0];
-        $_SESSION['nome'] = $row[1];
-        $_SESSION['email'] = $row[2];
-        $_SESSION['senha'] = $row[3];
-        $_SESSION['data_entrada'] = $row[4];
-        $_SESSION['ativo'] = $row[5];
-        $_SESSION['tipousuario'] = $row[6];
-        $_SESSION['codTurma'] = $row[7];
+        $_SESSION['id'] = $row['Id'];
+        $_SESSION['email'] = $row['email'];
+        $_SESSION['senha'] = $row['senha'];
+        $_SESSION['nome'] = $row['nome'];
+        $_SESSION['ativo'] = $row['ativo'];
+        $_SESSION['data_entrada'] = $row['data_entrada'];
+        $_SESSION['tipousuario'] = $row['tipousuario'];
+        $_SESSION['codTurma'] = $row['codTurma'];
         $conexao->close();
 
         // Redirecionar de acordo com o tipo de usuário

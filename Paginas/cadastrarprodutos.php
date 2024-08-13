@@ -80,20 +80,24 @@ if (empty($_SESSION['nome'])){
                                 <input type="text" name="nome" placeholder="Nome:" class="button-cadastro-produtos">
                             </div>
                             <div class="detalhes-produtos">
-                                <h5>UN DO PRODUTO:</h5>
+                                <h5>UN:</h5>
                                 <input type="text" name="UN" placeholder="UN:" class="button-cadastro-produtos">
                             </div>
                             <div class="detalhes-produtos">
-                                <h5>PREÇO POR UNIDADE:</h5>
+                                <h5>R$/UNIDADE:</h5>
                                 <input type="text" name="preco" placeholder="Preço por Unidade:" class="button-cadastro-produtos">
                             </div>
                             <div class="detalhes-produtos">
-                                <h5>PESO EM GRAMAS:</h5>
+                                <h5>PESO(g):</h5>
                                 <input type="text" name="peso" placeholder="Peso em Gramas:" class="button-cadastro-produtos">
                             </div>
                             <div class="detalhes-produtos">
                                 <h5>NCM:</h5>
                                 <input type="text" name="NCM"  placeholder="NCM:" class="button-cadastro-produtos">
+                            </div>
+                            <div class="detalhes-produtos">
+                                <h5>SKU:</h5>
+                                <input type="text" name="SKU"  placeholder="SKU:" class="button-cadastro-produtos">
                             </div>
                             <input type="submit" name="Enviar" class="button-cadastro-enviar" value="CADASTRAR" style="height: 70px;">
                         </form>
@@ -111,7 +115,7 @@ if (empty($_SESSION['nome'])){
                         echo "Failed to connect to MySQL: " . $conexao -> connect_error;
                         exit();
                     } else{
-                        $sql="SELECT `cod_produto`, `PrecoUNI`, `Nome`, `PesoGramas`, `NCM`, `UN` FROM `produtos`";
+                        $sql="SELECT `cod_produto`, `PrecoUNI`, `Nome`, `PesoGramas`, `NCM`, `UN`, `SKU` FROM `produtos`";
                     }
                     $result= $conexao->query($sql);
                 
@@ -128,6 +132,7 @@ if (empty($_SESSION['nome'])){
                                             <th>Peso Gramas</th>
                                             <th>UN</th>
                                             <th>NCM</th>
+                                            <th>SKU</th>
                                         </tr>";
                                         while($row = $result-> fetch_array()){
                                             echo "
@@ -138,6 +143,7 @@ if (empty($_SESSION['nome'])){
                                                     <td>".$row['PesoGramas']."</td>
                                                     <td>".$row['UN']."</td>
                                                     <td>".$row['NCM']."</td>
+                                                    <td>".$row['SKU']."</td>
                                                     <td>
                                                         <form action=\"function/deleteproduto.php\" method=\"POST\" class=\"deletebox\">
                                                             <!-- Criando um input do tipo hidden para armazenar o CNPJ da transportadora que queremos excluir-->
