@@ -57,6 +57,9 @@ if (empty($_SESSION['nome'])) {
         }
     }
 
+    if(empty($_POST['tipoDanfe'])){
+        $_POST['tipoDanfe'] = "";
+    }
     echo ' <header>
     <div class="container">
         <div class="main-horizontal">
@@ -137,10 +140,6 @@ if (empty($_SESSION['nome'])) {
                             </form>
                             <br>';
     
-    if(empty($_POST['tipoDanfe'])){
-        $_POST['tipoDanfe'] = "";
-    }
-
     if($_POST['tipoDanfe'] == 'Pedido'){
     $sql = "SELECT * FROM pedido  WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
     $execute = $conexao->query($sql);
