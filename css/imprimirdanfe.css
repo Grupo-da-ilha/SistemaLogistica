@@ -124,6 +124,10 @@ h8 {
   flex-direction: column;
   align-items: flex-start
 }
+.voltar {
+  display: block;
+  background-color: 0 0 2px rgb(0, 119, 255);
+}
 .infos-fornecedor {
   width: 50%;
   height: 20vh;
