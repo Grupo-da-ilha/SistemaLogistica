@@ -112,7 +112,7 @@ if (empty($_SESSION['nome'])){
                         <div class="criar-pedidos-container" style="height:68vh; width:70vw;">
                             <form action="" method="POST" class="criarpedidos">
                                     <h4>CRIAR:</h4>
-                            <div class="options-criarpedido" style="height:49vh;">
+                            <div class="options-criarpedido" style="height:53vh;">
                                 <h5>CÓDIGO DA SOLICITAÇÃO:</h5>
                                 <input type="text" name="codSolicitacao" style="display: block;" class="input-options-criar-pedido">
                                 <h5>DESTINATÁRIO:</h5>
