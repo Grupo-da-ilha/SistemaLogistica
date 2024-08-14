@@ -160,7 +160,7 @@ if (empty($_SESSION['nome'])){
                         <td>
                             <form action=\"meuspedidos.php\" method=\"POST\">
                                 <input type=\"hidden\" name=\"id_pedido\" value=\"" . $row['id_pedido'] . "\" >
-                                <input type=\"submit\"  class=\"InputPego\" name=\"VerProdutos\" value=\"Ver Produtos\" style=\"display:block;\" class=\"vermais\">
+                                <input type=\"submit\"  class=\"InputPego\" name=\"VerProdutos\" value=\"VER PRODUTOS\" style=\"display:block;\" class=\"vermais\">
                             </form>
                         </td>
                     </tr>";
