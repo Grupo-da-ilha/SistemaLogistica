@@ -57,6 +57,16 @@ if (empty($_SESSION['nome'])){
 ?>
 <main>
     <div class="container-prin">
+    <div class="ajuda" style="left:94.4vw; top:-35.7vh;">
+                <input type="submit" class="ajuda-button" value="Ajuda">
+                <div class="ajuda-content" style="width:25vw; left:-25vw;">
+                    <div class="ajuda-container" style="border-right:0px solid rgb(0, 119, 255);">
+                        <div class="continuar-projetos-ajuda"></div>
+                        <p>Nesta tela está todos os projetos criados na determinada turma inserida, ao clicar no card, você será redirecionado para o projeto selecionado, se não houver nenhum card possivelmente não há nenhum projeto criado.</p>
+                        <p>Ao clicar no ícone vermelho o determinado projeto será excluído permanentemente.</p>
+                    </div>
+                </div>
+    </div>
     <?php
     include_once 'function/projcriados.php';
 
@@ -124,6 +134,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.ajuda-button').addEventListener('click', function() {
+            const content = document.querySelector('.ajuda-content');
+            if (content.style.display === "flex") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "flex";
+            }
+        });
+    });
+
+function toggleForm() {
+    var overlay = document.getElementById('overlay');
+    var form = document.getElementById('project_form');
+    if (overlay.style.display === 'block') {
+        overlay.style.display = 'none';
+        form.style.display = 'none';
+    } else {
+        overlay.style.display = 'block';
+        form.style.display = 'block';
+    }
+}
 </script>
 </body>
 </html>

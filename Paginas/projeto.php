@@ -51,6 +51,24 @@
     </header>
     <main>
         <div class="container-prin">
+        <div class="container-prin">
+            <div class="ajuda">
+                <input type="submit" class="ajuda-button" value="Ajuda">
+                <div class="ajuda-content">
+                    <div class="ajuda-container" style="border-right:1px solid rgb(0, 119, 255);">
+                        <div class="novo-projeto"></div>
+                        <p>Ao clicar em "Novo Projeto" você poderá criar um novo projeto logístico, assim especificando para qual turma será direcionada o projeto pelo código da turma, você também pode definir um nome de sua escolha.</p>
+                    </div>
+                    <div class="ajuda-container">
+                        <div class="continuar-projeto"></div>
+                        <p>Ao clicar em "Continuar Projeto" você poderá retomar um projeto já iniciado, basta inserir o código da turma desejada para buscar os projetos salvos da determinada turma. </p>
+                    </div>
+                    <div class="ajuda-container" style="border-left:1px solid rgb(0, 119, 255);">
+                        <div class="turmas-projeto"></div>
+                        <p>Ao clicar em "Turmas" você poderá criar ou administrar as turmas desejadas, assim podendo atribuir nomes e códigos de sua preferência.</p>
+                    </div>
+                </div>
+            </div>
             <div class="functions-logistica">
                 <div class="card-function-log-recebimento">
                 </div>
@@ -72,4 +90,28 @@
         </div>
     </main>'; } ?>
 </body>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.ajuda-button').addEventListener('click', function() {
+            const content = document.querySelector('.ajuda-content');
+            if (content.style.display === "flex") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "flex";
+            }
+        });
+    });
+
+function toggleForm() {
+    var overlay = document.getElementById('overlay');
+    var form = document.getElementById('project_form');
+    if (overlay.style.display === 'block') {
+        overlay.style.display = 'none';
+        form.style.display = 'none';
+    } else {
+        overlay.style.display = 'block';
+        form.style.display = 'block';
+    }
+}
+</script>
 </html>

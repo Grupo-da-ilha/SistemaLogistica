@@ -129,6 +129,15 @@
     </header>
     <main>
         <div class="container-prin">
+        <div class="ajuda" style="left:94.4vw; top:-37.5vh;">
+                <input type="submit" class="ajuda-button" value="Ajuda">
+                <div class="ajuda-content" style="width:25vw; left:-25vw;">
+                    <div class="ajuda-container" style="border-right:0px solid rgb(0, 119, 255);">
+                        <div class="projetos-ajuda" style="width:15vw;"></div>
+                        <p>Nesta tela é aonde começa o processo logístico, aqui você pode observar e adentrar em diversos "setores" e funções de um meio logístico.</p>
+                    </div>
+                </div>
+            </div>
             <div class="functions-logistica">
                 <a href="criarpedido.php"><div class="card-function-log-pedido"></div></a>
                 <a href="danfe.php"><div class="card-function-log-danfe"></div></a>
@@ -148,4 +157,28 @@
 }
 ?>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.ajuda-button').addEventListener('click', function() {
+            const content = document.querySelector('.ajuda-content');
+            if (content.style.display === "flex") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "flex";
+            }
+        });
+    });
+
+function toggleForm() {
+    var overlay = document.getElementById('overlay');
+    var form = document.getElementById('project_form');
+    if (overlay.style.display === 'block') {
+        overlay.style.display = 'none';
+        form.style.display = 'none';
+    } else {
+        overlay.style.display = 'block';
+        form.style.display = 'block';
+    }
+}
+</script>
 </html>
