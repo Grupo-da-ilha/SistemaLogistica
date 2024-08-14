@@ -640,7 +640,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
                     </div>
                     <div class="coddanfe">';
-                    echo '<h5>CÓDIGO PEDIDO: ' . htmlspecialchars($_SESSION['cod_solicitacao']) . '</h5>
+                    echo '<h5>CÓDIGO SOLICITAÇÃO: ' . htmlspecialchars($_SESSION['cod_solicitacao']) . '</h5>
                     </div>
                     <div class="infos-danfe">
                     <div class="titulo-div-danfe">';
@@ -772,9 +772,8 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
 
 
 if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
-    $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
+    $_SESSION['cod_solicitacao'] = $conexao -> real_escape_string($_POST['cod_pedido']);
 
-    
     $sqlSolicitacao = "SELECT * FROM solicitacoes  WHERE cod_solicitacao = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
     $executarSolicitacao = $conexao->query($sqlSolicitacao);
 
@@ -846,7 +845,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
                     </div>
                     <div class="coddanfe">';
-                    echo '<h5>CÓDIGO PEDIDO: ' . htmlspecialchars($_SESSION['cod_solicitacao']) . '</h5>
+                    echo '<h5>CÓDIGO SOLICITAÇÃO: ' . htmlspecialchars($_SESSION['cod_solicitacao']) . '</h5>
                     </div>
                     <div class="infos-danfe">
                     <div class="titulo-div-danfe">';
