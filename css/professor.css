@@ -46,7 +46,9 @@ h1 {
     -webkit-transition: all 0.3s;
     transition: all 0.3s;
 }
-
+.ajuda {
+    
+}
 .options-senai-new:hover, .options-senai-continue:hover, .options-senai-turma:hover {
     -moz-transform: scale(1.1);
     -webkit-transform: scale(1.1);
