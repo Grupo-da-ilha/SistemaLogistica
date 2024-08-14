@@ -140,9 +140,9 @@ if (empty($_SESSION['nome'])) {
                             </form>
 
                             <form id="printFormSolicitacao" action="imprimirdanfe.php" method="POST" style="display: none;">
-                                <input type="hidden" name="cod_pedido" value' .htmlspecialchars($_SESSION['cod_pedido']).'>
+                                <input type="hidden" name="cod_pedido" value' .htmlspecialchars($_SESSION['cod_solicitacao']).'>
                                 <input type="hidden" name="tipoDanfe" value=' .htmlspecialchars($_POST['tipoDanfe']).'>
-                                <input type="hidden" name="id_pedido" value=' .htmlspecialchars($_SESSION['idpedido']).'>
+                                <input type="hidden" name="id_pedido" value=' .htmlspecialchars($_SESSION['id_solicitacao']).'>
                             </form>
                             <br>';
     
@@ -426,7 +426,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     $RuaDest = $rowDest['rua'];
                     $CidadeDest = $rowDest['cidade'];
                     $EstadoDest = $rowDest['estado'];
-                    echo '<button class ="imprimir" onclick="submitPrintForm()">Imprimir</button>';
+                    echo '<button class ="imprimir" onclick="submitPrintFormPedido()">Imprimir</button>';
                     echo '<div class="danfe">
                     <div class="logo-danfe">
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
@@ -575,8 +575,8 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
     if ($execute && $execute->num_rows > 0){
 
         //Buscando data de entrega
-        $rowPedido = $execute -> fetch_assoc();
-        $data_criacao = $rowPedido['Data_criacao'];
+        $rowSolicitacao = $execute -> fetch_assoc();
+        $data_criacao = $rowSolicitacao['Data_criacao'];
 
         if(!isset($_POST['enviar_cod']) && empty($_POST['cod_pedido'])){
         $sql = "SELECT nota_fiscal.cod_nota, nota_fiscal.chave_acesso, nota_fiscal.DataExpedicao, nota_fiscal.CNPJ_Emitente, 
@@ -587,7 +587,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
 
         if ($execute && $execute->num_rows > 0) {
             $row = $execute->fetch_assoc();
-            $CNPJ_fabricante = $row['CNPJ_Emitente'];
+            $CNPJ_emitente = $row['CNPJ_Emitente'];
             $CNPJ_Transportadora = $row['CNPJ_Transportadora'];
             $CNPJ_destinatario = $row['CNPJ_Destinatario'];
             $cod_nota = $row['cod_nota'];
@@ -609,7 +609,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                 $CidadeTransp = $rowTransp['cidade'];
                 $EstadoTransp = $rowTransp['estado'];
 
-                $sqlFabri = "SELECT * FROM fabricantes WHERE CNPJ = '".$CNPJ_fabricante."'";
+                $sqlFabri = "SELECT * FROM clientes WHERE CNPJ = '".$CNPJ_emitente."'";
                 $executeFabri = $conexao->query($sqlFabri);
 
                 if ($executeFabri && $executeFabri->num_rows > 0) {
@@ -649,8 +649,6 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
-                    echo '<p>Data de Entrega: ' . htmlspecialchars($dataentrega) . '</p>';
-                    echo '<p>Valor Total: ' . htmlspecialchars($valortotal) . '</p>';
                     echo'</div>
                     <div class="barras-danfe">
                     </div>
@@ -671,7 +669,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     <div class="titulo-div-danfe">';
                     echo '<h7>FORNECEDOR: ' . htmlspecialchars($nomeFabri) . '</h7>';
                     echo '</div>';
-                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_fabricante) . '</p>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_emitente) . '</p>';
                     echo '<p>Telefone: ' . htmlspecialchars($TelefeoneFabri) . '</p>';
                     echo '<p>CEP: ' . htmlspecialchars($CEPFabri) . '</p>';
                     echo '<p>Bairro: ' . htmlspecialchars($BairroFabri) . '</p>';
@@ -704,9 +702,8 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<div class="tabela-itens">
                                 <div class="sub-produtos"> NOME </div>
                                 <div class="sub-produtos"> QUANTIDADE </div>
-                                <div class="sub-produtos"> VALOR UNITÁRIO </div>
-                                <div class="sub-produtos"> VALOR TOTAL </div>
                                 <div class="sub-produtos"> UN </div>
+                                <div class="sub-produtos"> NCM </div>
                                 <div class="sub-produtos"> SKU </div>
                             </div>';
                          //Buscas itenspedido 
@@ -740,6 +737,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                                                 <div class="info-itens-pedido">' . htmlspecialchars($nome_produto) . '</div>
                                                 <div class="info-itens-pedido">' . htmlspecialchars($QuantidadeItem) . '</div>
                                                 <div class="info-itens-pedido">' . htmlspecialchars($UN_produto) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($NCM_produto) . '</div>
                                                 <div class="info-itens-pedido">' . htmlspecialchars($SKU_produto) . '</div>
                                             </div>    
                                         </div>
@@ -777,12 +775,12 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
     $cod_pedido = $conexao->real_escape_string($_POST['cod_pedido']);
 
     
-    $sqlPedido = "SELECT * FROM solicitacoes  WHERE cod_solicitacao = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
-    $executarPedido = $conexao->query($sqlPedido);
+    $sqlSolicitacao = "SELECT * FROM solicitacoes  WHERE cod_solicitacao = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
+    $executarSolicitacao = $conexao->query($sqlSolicitacao);
 
-    if($executarPedido && $executarPedido -> num_rows > 0){
-        $rowPedido2 = $executarPedido -> fetch_assoc();
-        $Data_Criacao = $rowPedido2['Data_criacao'];
+    if($executarSolicitacao && $executarSolicitacao -> num_rows > 0){
+        $rowSolicitacao2 = $executarSolicitacao -> fetch_assoc();
+        $Data_Criacao = $rowSolicitacao2['Data_criacao'];
     }else{
         echo 'erro';
     }
@@ -795,7 +793,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
 
     if ($execute && $execute->num_rows > 0) {
         $row = $execute->fetch_assoc();
-        $CNPJ_fabricante = $row['CNPJ_Emitente'];
+        $CNPJ_emitente = $row['CNPJ_Emitente'];
         $CNPJ_Transportadora = $row['CNPJ_Transportadora'];
         $CNPJ_destinatario = $row['CNPJ_Destinatario'];
         $cod_nota = $row['cod_nota'];
@@ -817,7 +815,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
             $CidadeTransp = $rowTransp['cidade'];
             $EstadoTransp = $rowTransp['estado'];
 
-            $sqlFabri = "SELECT * FROM fabricantes WHERE CNPJ = '".$CNPJ_fabricante."'";
+            $sqlFabri = "SELECT * FROM clientes WHERE CNPJ = '".$CNPJ_emitente."'";
             $executeFabri = $conexao->query($sqlFabri);
 
             if ($executeFabri && $executeFabri->num_rows > 0) {
@@ -842,7 +840,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     $RuaDest = $rowDest['rua'];
                     $CidadeDest = $rowDest['cidade'];
                     $EstadoDest = $rowDest['estado'];
-                    echo '<button class ="imprimir" onclick="submitPrintForm()">Imprimir</button>';
+                    echo '<button class ="imprimir" onclick="submitPrintFormSolicitacao()">Imprimir</button>';
                     echo '<div class="danfe">
                     <div class="logo-danfe">
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
@@ -857,8 +855,6 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
-                    echo '<p>Data de Emissão: ' . htmlspecialchars($dataEntrega) . '</p>';
-                    echo '<p>Valor Total: ' . htmlspecialchars($valorTotal) . '</p>';
                     echo'</div>
                     <div class="barras-danfe">
                     </div>
@@ -879,7 +875,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     <div class="titulo-div-danfe">';
                     echo '<h7>FORNECEDOR: ' . htmlspecialchars($nomeFabri) . '</h7>';
                     echo '</div>';
-                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_fabricante) . '</p>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_emitente) . '</p>';
                     echo '<p>Telefone: ' . htmlspecialchars($TelefeoneFabri) . '</p>';
                     echo '<p>CEP: ' . htmlspecialchars($CEPFabri) . '</p>';
                     echo '<p>Bairro: ' . htmlspecialchars($BairroFabri) . '</p>';
@@ -912,9 +908,9 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<div class="tabela-itens">
                                 <div class="sub-produtos"> NOME </div>
                                 <div class="sub-produtos"> QUANTIDADE </div>
-                                <div class="sub-produtos"> VALOR UNITÁRIO </div>
-                                <div class="sub-produtos"> VALOR TOTAL </div>
                                 <div class="sub-produtos"> UN </div>
+                                <div class="sub-produtos"> NCM </div>
+                                <div class="sub-produtos"> SKU </div>
                             </div>';
                          //Buscas itenspedido 
                             $selectItens = "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '".$_SESSION['id_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}'";
@@ -947,6 +943,8 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                                                 <div class="info-itens-pedido">' . htmlspecialchars($nome_produto) . '</div>
                                                 <div class="info-itens-pedido">' . htmlspecialchars($QuantidadeItem) . '</div>
                                                 <div class="info-itens-pedido">' . htmlspecialchars($UN_produto) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($NCM_produto) . '</div>
+                                                <div class="info-itens-pedido">' . htmlspecialchars($SKU_produto) . '</div>
                                             </div>    
                                         </div>
                                         ';
@@ -977,7 +975,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
     }
 }
     }else{
-        echo '<p>Código do pedido não corresponde, por favor verifique os seus pedidos criados</p>';
+        echo '<p>Código da solicitação não corresponde, por favor verifique os seus pedidos criados</p>';
     }
 }
 }
