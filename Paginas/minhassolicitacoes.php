@@ -132,7 +132,7 @@ if (empty($_SESSION['nome'])){
             $execute = $conexao->query($sql);
             if ($execute && $execute->num_rows > 0) {
                 echo "
-                <div class=\"tablebox\">
+                <div class=\"tablebox\" style=\"width:50vw; margin-left:10vw;\">
                 <h7>Confira as solicitações já criadas:</h7>
                 <table class=\"tabela\">
                     <tr>
@@ -150,14 +150,14 @@ if (empty($_SESSION['nome'])){
                         <td>".$row['Data_criacao']."</td>
                         <td>".$row['Situacao']."</td>
                         <td>".$row['Observacao']."</td>
-                        <td>
+                        <td style=\"display:flex; flex-direction:column; justify-content:center; align-itens:center;\">
                             <form action=\"minhassolicitacoes.php\" method=\"POST\">
                                 <input type=\"hidden\" name=\"id_solicitacao\" value=\"" . $row['id_solicitacao'] . "\" >
-                                <input type=\"submit\" name=\"VerProdutos\" value=\"Ver Produtos\" style=\"display:block;\" class=\"vermais\">
+                                <input type=\"submit\" class=\"InputPego\" name=\"VerProdutos\" value=\"VER PRODUTOS\" style=\"display:block;\" class=\"vermais\">
                             </form>
                             <form action=\"minhassolicitacoes.php\" method=\"POST\">
                                 <input type=\"hidden\" name=\"id_solicitacaoDelete\" value=\"" . $row['id_solicitacao'] . "\" >
-                                <input type=\"submit\" name=\"DeleteSolici\" value=\"Deletar Solicitação\" style=\"display:block; background-color:red; color: white;\" class=\"vermais\">
+                                <input type=\"submit\" class=\"InputDeletar\" name=\"DeleteSolici\" value=\"EXCLUIR\" style=\"display:block; background-color:red; color: white;\" class=\"vermais\">
                             </form>
                         </td>
                     </tr>";

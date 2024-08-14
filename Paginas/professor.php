@@ -138,6 +138,9 @@ if (empty($_SESSION['nome'])) {
     </header>
     <main>
         <div class="container-prin">
+            <div class="ajuda" style="position:relative; top:-37vh; left:75vw; background-image: url("../css/cssimg/ajuda.png"); width:4.5vw; height:8vh; border-radius:5px;">
+            <input type="submit"  value="AJUDA" style="display:block;">            
+            </div>
             <div class="options-senai-new" onclick="toggleForm()"></div>
             <div class="options-senai-continue" onclick="toggleContinueForm()"></div>
             <div id="overlay_continue"></div>
