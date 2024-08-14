@@ -132,7 +132,7 @@ if ($conexao->connect_errno) {
         }
         
         $conexao->close();
-        header('Location: ../recebimentosolicitacoes.php', true, 301);
+        header('Location: ../danfe.php', true, 301);
         exit();
     } else{
         echo 'Erro ao finalizar solicitação';

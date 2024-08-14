@@ -564,7 +564,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
                     </div>
                     <div class="coddanfe">';
-                    echo '<h5>CÓDIGO PEDIDO: ' . htmlspecialchars($_SESSION['cod_solicitacao']) . '</h5>
+                    echo '<h5>CÓDIGO DA SOLICITAÇÃO: ' . htmlspecialchars($_SESSION['cod_solicitacao']) . '</h5>
                     </div>
                     <div class="infos-danfe">
                     <div class="titulo-div-danfe">';
@@ -770,7 +770,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
                     </div>
                     <div class="coddanfe">';
-                    echo '<h5>CÓDIGO PEDIDO: ' . htmlspecialchars($_SESSION['cod_solicitacao']) . '</h5>
+                    echo '<h5>CÓDIGO DA SOLICITAÇÃO: ' . htmlspecialchars($_SESSION['cod_solicitacao']) . '</h5>
                     </div>
                     <div class="infos-danfe">
                     <div class="titulo-div-danfe">';

@@ -281,7 +281,7 @@ if (empty($_SESSION['nome'])){
                                 $executar = $conexao->query($selectSolicitacao);
 
                                 if ($executar && $executar->num_rows > 0) {
-                                    $Selectprodutos = "SELECT produtos.cod_produto, produtos.Nome, produtos.UN, itenssolicitacao.cod_itemSolicitacao, itenssolicitacao.Quantidade
+                                    $Selectprodutos = "SELECT produtos.cod_produto, produtos.NCM,produtos.Nome, produtos.UN, produtos.SKU, itenssolicitacao.cod_itemSolicitacao, itenssolicitacao.Quantidade
                                         FROM produtos 
                                         LEFT JOIN itenssolicitacao ON produtos.cod_produto = itenssolicitacao.cod_produto 
                                         WHERE itenssolicitacao.cod_solicitacao = '{$_SESSION['id_solicitacao']}' ORDER BY produtos.Nome ASC";
@@ -296,6 +296,8 @@ if (empty($_SESSION['nome'])){
                                                             <th>Nome</th>
                                                             <th>UN</th>
                                                             <th>QTD</th>
+                                                            <th>SKU</th>
+                                                            <th>NCM</th>
                                                             <th>Delete</th>
                                                         </tr>";
                                         while ($row = $resul->fetch_assoc()) {
@@ -309,6 +311,8 @@ if (empty($_SESSION['nome'])){
                                                             <input type=\"submit\" name=\"AtualizarQTD\" value=\"ATUALIZAR\" style=\"display: block;\" class=\"input-informacao-atualizar\">
                                                         </form>
                                                     </td>
+                                                    <td>" . htmlspecialchars($row['SKU']) . "</td>
+                                                    <td>" . htmlspecialchars($row['NCM']) . "</td>
                                                     <td>
                                                         <form action=\"function/processoItensSolicitacao.php\" method=\"POST\" class=\"deletebox\">
                                                             <input type=\"hidden\" name=\"codigoItemSolicitacao\" value=\"" . $row['cod_itemSolicitacao'] . "\" style=\"display: block;\">
