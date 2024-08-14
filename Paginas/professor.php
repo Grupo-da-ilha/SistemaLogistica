@@ -149,7 +149,10 @@ if (empty($_SESSION['nome'])) {
                         <div class="continuar-projeto"></div>
                         <p>Ao clicar em "Continuar Projeto" você poderá retomar um projeto já iniciado, basta inserir o código da turma desejada para buscar os projetos salvos da determinada turma. </p>
                     </div>
-                    <div class="ajuda-container" style="border-left:1px solid rgb(0, 119, 255);"></div>
+                    <div class="ajuda-container" style="border-left:1px solid rgb(0, 119, 255);">
+                        <div class="turmas-projeto"></div>
+                        <p>Ao clicar em "Turmas" você poderá criar ou administrar as turmas desejadas, assim podendo atribuir nomes e códigos de sua preferência.</p>
+                    </div>
                 </div>
             </div>
             <div class="options-senai-new" onclick="toggleForm()"></div>
