@@ -47,7 +47,12 @@ h1 {
     transition: all 0.3s;
 }
 .ajuda {
-    
+    position:relative; 
+    top:-37vh; 
+    left:75vw; 
+    background-image: url("cssimg/ajuda.png"); 
+    width:4.5vw; height:8vh; 
+    border-radius:5px;
 }
 .options-senai-new:hover, .options-senai-continue:hover, .options-senai-turma:hover {
     -moz-transform: scale(1.1);
