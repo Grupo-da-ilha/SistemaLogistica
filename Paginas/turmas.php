@@ -82,7 +82,16 @@
     </header>
         <main>
             <div class="container-prin">
-                <div class="container-turmas">
+            <div class="ajuda" style="left:92.4vw; top:-35.7vh;">
+                <input type="submit" class="ajuda-button" value="Ajuda">
+                <div class="ajuda-content" style="width:25vw; left:-25vw;">
+                    <div class="ajuda-container" style="border-right:0px solid rgb(0, 119, 255);">
+                        <div class="turma-ajuda-ajuda"></div>
+                        <p>Nesta tela, você conseguirá desde criar turmas, definir o código de entrada desta turma, e excluir turmas ao clicar no ícone vermelho, além disso é possivel visualizar os dados das turmas já criadas, como a quantidade de alunos e o código da turma.</p>
+                    </div>
+                </div>
+            </div>
+                <div class="container-turmas" style="margin-left:-4vw;">
                     <div class="criar-turmas">
                         <form class="form" method="post" action="function/criarTurma.php" id="formturma" name="formturma">
                             <div class="titulo-criar-turmas">
@@ -166,4 +175,28 @@
     }
 ?>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.ajuda-button').addEventListener('click', function() {
+            const content = document.querySelector('.ajuda-content');
+            if (content.style.display === "flex") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "flex";
+            }
+        });
+    });
+
+function toggleForm() {
+    var overlay = document.getElementById('overlay');
+    var form = document.getElementById('project_form');
+    if (overlay.style.display === 'block') {
+        overlay.style.display = 'none';
+        form.style.display = 'none';
+    } else {
+        overlay.style.display = 'block';
+        form.style.display = 'block';
+    }
+}
+</script>
 </html>

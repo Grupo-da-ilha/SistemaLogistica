@@ -323,6 +323,15 @@ nav {
     background-size: cover;
     background-repeat: no-repeat;
 }
+.turma-ajuda-ajuda {
+    border-radius: 15px;
+    width: 12vw;
+    height:20vh;
+    background-image: url("cssimg/turmas-ajuda-ajuda.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 @media only screen and (max-width: 600px) {
   
   h2 {
