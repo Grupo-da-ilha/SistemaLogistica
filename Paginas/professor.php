@@ -139,7 +139,18 @@ if (empty($_SESSION['nome'])) {
     <main>
         <div class="container-prin">
             <div class="ajuda">
-            <input type="submit"  value="AJUDA" style="display:block;">            
+                <input type="submit" class="ajuda-button" value="Ajuda">
+                <div class="ajuda-content">
+                    <div class="ajuda-container" style="border-right:1px solid rgb(0, 119, 255);">
+                        <div class="novo-projeto"></div>
+                        <p>Ao clicar em "Novo Projeto" você poderá criar um novo projeto logístico, assim especificando para qual turma será direcionada o projeto pelo código da turma, você também pode definir um nome de sua escolha.</p>
+                    </div>
+                    <div class="ajuda-container">
+                        <div class="continuar-projeto"></div>
+                        <p>Ao clicar em "Continuar Projeto" você poderá retomar um projeto já iniciado, basta inserir o código da turma desejada para buscar os projetos salvos da determinada turma. </p>
+                    </div>
+                    <div class="ajuda-container" style="border-left:1px solid rgb(0, 119, 255);"></div>
+                </div>
             </div>
             <div class="options-senai-new" onclick="toggleForm()"></div>
             <div class="options-senai-continue" onclick="toggleContinueForm()"></div>
@@ -164,6 +175,17 @@ if (empty($_SESSION['nome'])) {
 }
 ?>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.ajuda-button').addEventListener('click', function() {
+            const content = document.querySelector('.ajuda-content');
+            if (content.style.display === "flex") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "flex";
+            }
+        });
+    });
+
 function toggleForm() {
     var overlay = document.getElementById('overlay');
     var form = document.getElementById('project_form');
@@ -193,13 +215,13 @@ function saveProject() {
 }
 
 function getAndDisplayProjects() {
-            var projectClass = document.getElementById('project_sala_form').value;
-            if (projectClass) {
-                window.location.href = "projetosprofessor.php?project_sala=" + encodeURIComponent(projectClass);
-            } else {
-                alert("Por favor, insira o código da turma.");
-            }
-        }
+    var projectClass = document.getElementById('project_sala_form').value;
+    if (projectClass) {
+        window.location.href = "projetosprofessor.php?project_sala=" + encodeURIComponent(projectClass);
+    } else {
+        alert("Por favor, insira o código da turma.");
+    }
+}
 
 function toggleContinueForm() {
     var overlayContinue = document.getElementById('overlay_continue');

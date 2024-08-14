@@ -5,7 +5,14 @@ h2 {
     text-shadow: 0 0 2px rgb(0, 119, 255);
     cursor: default;
 }
-
+p {
+    margin: 10px;
+    margin-top: 35px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    text-wrap: wrap;
+    word-break: break-all;
+}
 .container {
     width: 100%;
     height: 100vh;
@@ -216,6 +223,69 @@ nav {
     transform: scale(1.05);
     animation: animate 1s linear infinite;
     text-shadow: 0 0 16px rgb(0, 119, 255);
+}
+.ajuda {
+    display: inline-block;
+    cursor: pointer;
+    position:relative; 
+    top:-37vh; 
+    left:75vw; 
+    background-image: url("cssimg/ajuda.png");
+    background-size: cover; 
+    background-position: center;
+    width:4.5vw; height:8vh; 
+    border-radius:5px;
+}
+.ajuda-button {
+    display: block;
+    background-color: transparent;
+    color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+.ajuda-content {
+    display: none;
+    position: relative;
+    right:60vw;
+    background-color: #f9f9f9;
+    width: 60vw;
+    border-radius:5px;
+    height: 40vh;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
+}
+.ajuda-container {
+    width: 30vw;
+    max-width: 30vw;
+    height:38vh;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.novo-projeto {
+    border-radius: 15px;
+    width: 10vw;
+    height:20vh;
+    background-image: url("cssimg/novoprojeto-ajuda.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.continuar-projeto {
+    border-radius: 15px;
+    width: 10vw;
+    height:20vh;
+    background-image: url("cssimg/continuar-projeto-ajuda.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 @media only screen and (max-width: 600px) {
   
