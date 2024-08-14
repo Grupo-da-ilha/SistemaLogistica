@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13/08/2024 às 01:43
+-- Tempo de geração: 14/08/2024 às 12:44
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -43,7 +43,10 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`CNPJ`, `Nome`, `CEP`, `rua`, `bairro`, `cidade`, `estado`, `Telefone`) VALUES
-('03.774.819/0001-02', 'SENAI ITAJAÍ', '88305-55', 'Blumenau', 'São João', 'Itajaí', 'SC', '(47) 3341-2900');
+('00.280.273/0007-22', 'Samsung', '88301-32', 'Rua Samuel Heusi', 'Centro', 'Itajaí', 'SC', '(47) 3083-9236'),
+('01.235.188/0001-10', 'Quanta coisa', '89.022-0', 'Rua Amazonas', 'Garcia', 'Blumenau', 'SC', '(47) 3285-8300'),
+('03.774.819/0001-02', 'SENAI ITAJAÍ', '88305-55', 'Blumenau', 'São João', 'Itajaí', 'SC', '(47) 3341-2900'),
+('61.140.349/0003-85', 'BIC', '06.460-0', 'Avenida Marcos Penteado de Ulhoa Rodrigues', 'Tambore', 'Barueri', 'SP', '0800.704.4533');
 
 -- --------------------------------------------------------
 
@@ -205,17 +208,6 @@ CREATE TABLE `itenspicking` (
   `codTurma` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `itenspicking`
---
-
-INSERT INTO `itenspicking` (`cod_itemPicking`, `Quantidade`, `Situacao`, `Observacoes`, `cod_estoque`, `cod_itemSolicitacao`, `codTurma`) VALUES
-(1, 1, 'No processo de picking', NULL, 11, 12, 'S3naiAdmin'),
-(3, 1, 'No processo de picking', NULL, 14, 20, 'S3naiAdmin'),
-(4, 2, 'Nas docas', 'Cuidado com as tesouras', 11, 22, 'S3naiAdmin'),
-(5, 1, 'No processo de picking', NULL, 7, 23, 'S3naiAdmin'),
-(6, 1, 'Nas docas', 'Mercadoria frágil', 15, 23, 'S3naiAdmin');
-
 -- --------------------------------------------------------
 
 --
@@ -231,17 +223,6 @@ CREATE TABLE `itenssolicitacao` (
   `codTurma` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Despejando dados para a tabela `itenssolicitacao`
---
-
-INSERT INTO `itenssolicitacao` (`cod_itemSolicitacao`, `cod_produto`, `cod_solicitacao`, `Quantidade`, `Quantidade_espera`, `codTurma`) VALUES
-(12, 1, 5, 2, 1, 'S3naiAdmin'),
-(20, 2, 10, 2, 0, 'S3naiAdmin'),
-(21, 4, 10, 3, 3, 'S3naiAdmin'),
-(22, 1, 11, 2, 0, 'S3naiAdmin'),
-(23, 4, 11, 2, 0, 'S3naiAdmin');
-
 -- --------------------------------------------------------
 
 --
@@ -254,7 +235,8 @@ CREATE TABLE `nota_fiscal` (
   `DataExpedicao` datetime NOT NULL,
   `InformacoesAdicionais` varchar(255) NOT NULL,
   `Tipo` varchar(20) DEFAULT NULL,
-  `id_pedido` int(11) NOT NULL,
+  `id_pedido` int(11) DEFAULT NULL,
+  `id_solicitacao` int(11) DEFAULT NULL,
   `CNPJ_Destinatario` varchar(65) NOT NULL,
   `CNPJ_Transportadora` varchar(65) NOT NULL,
   `CNPJ_Emitente` varchar(65) NOT NULL
@@ -264,11 +246,11 @@ CREATE TABLE `nota_fiscal` (
 -- Despejando dados para a tabela `nota_fiscal`
 --
 
-INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `Tipo`, `id_pedido`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
-(58774, '28214821004665626633266497835725068503861069', '2024-07-09 20:49:47', '', 'Pedido', 13, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
-(85430, '36298890168740512810013638509660969452805168', '2024-07-09 20:49:47', 'Mercadoria Super frágil', 'Pedido', 11, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
-(94257, '38570232079270610615744439288819397184361533', '2024-07-09 20:49:47', 'Mercadoria pequena', 'Pedido', 12, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
-(96344, '89942527962953630750710024629946201069103589', '2024-07-09 20:49:47', 'Mercadoria frágil', 'Pedido', 8, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23');
+INSERT INTO `nota_fiscal` (`cod_nota`, `chave_acesso`, `DataExpedicao`, `InformacoesAdicionais`, `Tipo`, `id_pedido`, `id_solicitacao`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `CNPJ_Emitente`) VALUES
+(58774, '28214821004665626633266497835725068503861069', '2024-07-09 20:49:47', '', 'Pedido', 13, NULL, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
+(85430, '36298890168740512810013638509660969452805168', '2024-07-09 20:49:47', 'Mercadoria Super frágil', 'Pedido', 11, NULL, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
+(94257, '38570232079270610615744439288819397184361533', '2024-07-09 20:49:47', 'Mercadoria pequena', 'Pedido', 12, NULL, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23'),
+(96344, '89942527962953630750710024629946201069103589', '2024-07-09 20:49:47', 'Mercadoria frágil', 'Pedido', 8, NULL, '03.774.819/0001-02', '13.161.095/0001-77', '03.389.993/0001-23');
 
 -- --------------------------------------------------------
 
@@ -295,7 +277,7 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`id_pedido`, `cod_pedido`, `DataVenda`, `DataEntrega`, `ValorTotal`, `CNPJEmitente`, `CNPJ_Destinatario`, `CNPJ_Transportadora`, `Situacao`, `InformacaoAdicional`, `codTurma`) VALUES
-(8, 1, '2024-07-09 20:49:47', '2024-07-16 20:49:00', 44.59, '03.389.993/0001-23', '03.774.819/0001-02', '13.161.095/0001-77', 'Em movimentação', 'Mercadoria frágil', 'S3naiAdmin'),
+(8, 1, '2024-07-09 20:49:47', '2024-07-16 20:49:00', 0, '03.389.993/0001-23', '03.774.819/0001-02', '13.161.095/0001-77', 'Em movimentação', 'Mercadoria frágil', 'S3naiAdmin'),
 (11, 2, '2024-07-09 21:06:13', '2024-07-23 00:00:00', 0, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em movimentação', 'Mercadoria Super frágil', 'S3naiAdmin'),
 (13, 100, '2024-08-12 20:02:20', '2024-08-12 22:00:00', 79, '07.175.725/0001-60', '03.774.819/0001-02', '42.555.657/0001-65', 'Em transporte', '', 'S3naiAdmin');
 
@@ -360,17 +342,11 @@ CREATE TABLE `solicitacoes` (
   `Doca` int(11) DEFAULT NULL,
   `Doca_saida` int(11) DEFAULT NULL,
   `Data_criacao` datetime NOT NULL,
+  `CNPJEmitente` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `CNPJ_Destinatario` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `CNPJ_Transportadora` varchar(65) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `codTurma` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `solicitacoes`
---
-
-INSERT INTO `solicitacoes` (`id_solicitacao`, `cod_solicitacao`, `Observacao`, `Situacao`, `Doca`, `Doca_saida`, `Data_criacao`, `codTurma`) VALUES
-(5, 1, 'URGENTE', 'Em processamento', NULL, 0, '2024-07-25 13:41:47', 'S3naiAdmin'),
-(10, 2, 'NÃO É URGENTE', 'Em processamento', NULL, 0, '2024-07-26 12:36:09', 'S3naiAdmin'),
-(11, 3, '', 'Nas docas', 8, 11, '2024-08-03 18:33:41', 'S3naiAdmin');
 
 -- --------------------------------------------------------
 
@@ -517,7 +493,8 @@ ALTER TABLE `nota_fiscal`
   ADD KEY `FK_id_pedido` (`id_pedido`),
   ADD KEY `FK_CNPJDestinatario` (`CNPJ_Destinatario`),
   ADD KEY `FK_CNPJTransportadora` (`CNPJ_Transportadora`),
-  ADD KEY `FK_CNPJ_Emitente` (`CNPJ_Emitente`);
+  ADD KEY `FK_CNPJ_Emitente` (`CNPJ_Emitente`),
+  ADD KEY `FK_ID_SOLICITACAO` (`id_solicitacao`);
 
 --
 -- Índices de tabela `pedido`
@@ -547,7 +524,10 @@ ALTER TABLE `projetos`
 --
 ALTER TABLE `solicitacoes`
   ADD PRIMARY KEY (`id_solicitacao`),
-  ADD KEY `FK_COD_TURMA` (`codTurma`);
+  ADD KEY `FK_COD_TURMA` (`codTurma`),
+  ADD KEY `FK_CNPJ_EMITENTE` (`CNPJEmitente`),
+  ADD KEY `FK_CNPJ_DESTINATARIO` (`CNPJ_Destinatario`),
+  ADD KEY `FK_CNPJ_TRANSPORTADORA` (`CNPJ_Transportadora`);
 
 --
 -- Índices de tabela `transportadoras`
@@ -600,13 +580,13 @@ ALTER TABLE `itenspedido`
 -- AUTO_INCREMENT de tabela `itenspicking`
 --
 ALTER TABLE `itenspicking`
-  MODIFY `cod_itemPicking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `cod_itemPicking` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `itenssolicitacao`
 --
 ALTER TABLE `itenssolicitacao`
-  MODIFY `cod_itemSolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `cod_itemSolicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
@@ -630,7 +610,7 @@ ALTER TABLE `projetos`
 -- AUTO_INCREMENT de tabela `solicitacoes`
 --
 ALTER TABLE `solicitacoes`
-  MODIFY `id_solicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_solicitacao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -667,9 +647,18 @@ ALTER TABLE `itenssolicitacao`
   ADD CONSTRAINT `FK_cod_PRODUTO` FOREIGN KEY (`cod_produto`) REFERENCES `produtos` (`cod_produto`);
 
 --
+-- Restrições para tabelas `nota_fiscal`
+--
+ALTER TABLE `nota_fiscal`
+  ADD CONSTRAINT `FK_ID_SOLICITACAO` FOREIGN KEY (`id_solicitacao`) REFERENCES `solicitacoes` (`id_solicitacao`);
+
+--
 -- Restrições para tabelas `solicitacoes`
 --
 ALTER TABLE `solicitacoes`
+  ADD CONSTRAINT `FK_CNPJ_DESTINATARIO` FOREIGN KEY (`CNPJ_Destinatario`) REFERENCES `clientes` (`CNPJ`),
+  ADD CONSTRAINT `FK_CNPJ_EMITENTE` FOREIGN KEY (`CNPJEmitente`) REFERENCES `clientes` (`CNPJ`),
+  ADD CONSTRAINT `FK_CNPJ_TRANSPORTADORA` FOREIGN KEY (`CNPJ_Transportadora`) REFERENCES `transportadoras` (`CNPJ`),
   ADD CONSTRAINT `FK_COD_TURMA` FOREIGN KEY (`codTurma`) REFERENCES `turmas` (`codTurma`);
 COMMIT;
 
