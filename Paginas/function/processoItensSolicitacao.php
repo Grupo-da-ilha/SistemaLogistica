@@ -132,7 +132,8 @@ if ($conexao->connect_errno) {
         }
         
         $conexao->close();
-        header('Location: ../danfe.php', true, 301);
+        $tipo_danfe = 'Solicitação';
+        header('Location: ../danfe.php?tipo=' . urlencode($tipo_danfe), true, 301);
         exit();
     } else{
         echo 'Erro ao finalizar solicitação';

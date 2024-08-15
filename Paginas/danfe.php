@@ -66,8 +66,18 @@ if (empty($_SESSION['nome'])) {
         }
     }
 
+    $tipo_danfe = isset($_GET['tipo']) ? $_GET['tipo'] : 'default';
+
     if(empty($_POST['tipoDanfe'])){
         $_POST['tipoDanfe'] = "";
+    }
+
+    if(empty($_SESSION['cod_solicitacao'])){
+        $_SESSION['cod_solicitacao'] = "";
+    }
+
+    if(empty($_SESSION['id_solicitacao'])){
+        $_SESSION['id_solicitacao'] = "";
     }
     echo ' <header>
     <div class="container">
@@ -94,7 +104,7 @@ if (empty($_SESSION['nome'])) {
                             <img src="../css/cssimg/logo.png" style="max-width: 85px; max-height: 85px; margin-left: 20px; margin-top: 15px;">
                             <h1>MOVESYS</h1>
                         </div>
-                        <h2>'.$_SESSION['nome'].'</h2>
+                        <h2>'.$_SESSION['nome'].'</h2> '.$_SESSION['Idprojeto'].' '.$_POST['tipoDanfe'].' '.$_SESSION['idpedido'].' '.$_SESSION['cod_pedido'].'
                     </div>
                 </li>
             </ul>
@@ -153,7 +163,7 @@ if (empty($_SESSION['nome'])) {
                             </form>
                             <br>';
     
-    if($_POST['tipoDanfe'] == 'Pedido'){
+    if($tipo_danfe == 'Pedido'){
 
     $sql = "SELECT * FROM pedido  WHERE cod_pedido = '".$_SESSION['cod_pedido']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_pedido = '{$_SESSION['idpedido']}'";
     $execute = $conexao->query($sql);
@@ -539,7 +549,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
     }else{
         echo '<p>Código do pedido não corresponde, por favor verifique os seus pedidos criados</p>';
     }
-} elseif($_POST['tipoDanfe'] == 'Solicitação'){
+} elseif($tipo_danfe == 'Solicitação'){
     $sql = "SELECT * FROM solicitacoes  WHERE cod_solicitacao = '".$_SESSION['cod_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}' AND id_solicitacao = '{$_SESSION['id_solicitacao']}'";
     $execute = $conexao->query($sql);
 
