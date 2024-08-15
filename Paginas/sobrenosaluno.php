@@ -70,49 +70,50 @@
                     <div class="caixaslider">
                        <div class="img-slider">
                                         <div class="slide active">
-                                        <img src="../css/imgsobrenos/sobrenos.png" alt="">
+                                        <img src="../css/imgsobrenos/6.png" alt="">
                                         <div class="information">
                                             <h4>MOVESYS</h4>
                                         </div>
                                     </div>
                                    <div class="slide">
-                                       <img src="../css/imgsobrenos/sobrenos.png" alt="">
+                                       <img src="../css/imgsobrenos/2.png" alt="">
                                        <div class="information">
                                            <h4>Iago Souza</h4>
-                                           <p>Biografia</p>
+                                           <p>Meu nome é Iago e gostaria de expressar minha sincera gratidão pela oportunidade de fazer parte deste projeto. Agradeço pela confiança da equipe SENAI e estou à disposição para o que precisar.</p>
                                        </div>
                                    </div>
                                    <div class="slide">
-                                       <img src="../css/imgsobrenos/sobrenos.png"" alt="">
+                                       <img src="../css/imgsobrenos/1.png"" alt="">
                                        <div class="information">
                                            <h4>Elias Alves</h4>
-                                           <p>Biografia</p>
+                                           <p>Sou o Elias e estou muito entusiasmado por ter participado deste projeto. Quero agradecer pela oportunidade de colaborar com equipe SENAI. Muito obrigado pela confiança!</p>
                                        </div>
                                    </div>
                                    <div class="slide">
-                                    <img src="../css/imgsobrenos/sobrenos.png"" alt="">
+                                    <img src="../css/imgsobrenos/4.png"" alt="">
                                     <div class="information">
                                         <h4>Kauan Burguer</h4>
-                                        <p>Biografia</p>
+                                        <p>Meu nome é Kauan e quero expressar minha gratidão pela oportunidade dada pelo SENAI. Espero que todos os alunos possam ter um bom aprendizado com nosso software.</p>
                                     </div>
                                 </div>
                                 <div class="slide">
-                                    <img src="../css/imgsobrenos/sobrenos.png"" alt="">
+                                    <img src="../css/imgsobrenos/5.png"" alt="">
                                     <div class="information">
                                         <h4>Jonas Frees</h4>
-                                        <p>Biografia</p>
+                                        <p>Aqui é o Jonas. Agradeço sinceramente pela chance de participar deste projeto. Fiz o meu melhor para desenvolver este software. Obrigado pela confiança e espero que você possa ter um bom aprendizado.!</p>
                                     </div>
                                 </div>
                                 <div class="slide">
-                                    <img src="../css/imgsobrenos/sobrenos.png"" alt="">
+                                    <img src="../css/imgsobrenos/3.png"" alt="">
                                     <div class="information">
-                                        <h4>Silverado</h4>
-                                        <p>Biografia</p>
+                                        <h4>Silvio</h4>
+                                        <p>Sou o Silvio e gostaria de agradecer pela oportunidade de fazer parte deste projeto. Muito obrigado pela confiança e eu desejo para vocês um bom aprendizado.</p>
                                     </div>
                                 </div>
                                    
                                    <div class="navigationslider">
                                        <div class="btn active"></div>
+                                       <div class="btn"></div>
                                        <div class="btn"></div>
                                        <div class="btn"></div>
                                        <div class="btn"></div>
