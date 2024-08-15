@@ -68,10 +68,14 @@ if (empty($_SESSION['nome'])){
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
-                    <a href="cargaaluno.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="danfealuno.php" class="functions-menu">DANFE</a>
+                    <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
                     <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
+                    <a href="operacaomovimentacaoaluno.php" class="functions-menu">OPERAÇÃO</a>
                     <a href="pickingaluno.php" class="functions-menu">PICKING</a>
                     <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="movimentacao-container">
@@ -86,7 +90,7 @@ if (empty($_SESSION['nome'])){
 
                 if($execute && $execute -> num_rows > 0){
                     echo '
-                        <form action="operacaomovimentacao.php" method="post">
+                        <form action="operacaomovimentacaoaluno.php" method="post">
                         <div class="div-operacoes">
                             <table class="tabela">
                                 <tr>

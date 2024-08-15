@@ -82,12 +82,15 @@ if (empty($_SESSION['nome'])){
     <div class="container-prin">
         <div class="submenu">
             <li class="lisubmenu">
-                <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
-                <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
-                <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
-                <a href="pickingaluno.php" class="functions-menu">PICKING</a>
-                <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
-                <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
+                    <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
+                    <a href="danfealuno.php" class="functions-menu">DANFE</a>
+                    <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
+                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
+                    <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="pickingaluno.php" class="functions-menu">PICKING</a>
+                    <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
             </li>
         </div>
         <div class="recebimentocontainer">
@@ -95,7 +98,8 @@ if (empty($_SESSION['nome'])){
                 <h3>OPERAÇÃO DE MOVIMENTAÇÃO</h3>    
             </div>
             <div class="info-total">
-                <h6> OPERAÇÕES EM ABERTO</h6>
+                <h4> OPERAÇÕES EM ABERTO</h4>
+                <h6> Ao finalizar a operação, clique em Finalizar para levar o item ao estoque </h6>
 <?php
     if (isset($_POST['itemselecionado']) && is_array($_POST['itemselecionado'])) {
         echo '<div class="MainContainer">
