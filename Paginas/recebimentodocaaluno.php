@@ -81,10 +81,13 @@ if (empty($_SESSION['nome'])){
                 <li class="lisubmenu">
                     <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
                     <a href="danfealuno.php" class="functions-menu">DANFE</a>
-                    <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
+                    <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
+                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacaoaluno.php" class="functions-menu">OPERAÇÃO</a>
                     <a href="pickingaluno.php" class="functions-menu">PICKING</a>
                     <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="criar-pedido-container">
@@ -97,11 +100,11 @@ if (empty($_SESSION['nome'])){
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-pedido">
                                 <h5>DOCAS:</h5>
-                                    <a href="controledoca.php" class="button-pedidos">Controle das docas</a>
+                                    <a href="controledocaaluno.php" class="button-pedidos">Controle das docas</a>
                                 <h5>ESTOQUE:</h5>
-                                    <a href="estoque.php" class="button-pedidos">Meu Estoque</a>
+                                    <a href="estoquealuno.php" class="button-pedidos">Meu Estoque</a>
                                 <h5>SOLICITAÇÕES:</h5>
-                                    <a href="recebimentosolicitacoes.php" class="button-pedidos">Recebimento solicitações</a>
+                                    <a href="recebimentosolicitacoesaluno.php" class="button-pedidos">Recebimento solicitações</a>
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
@@ -170,7 +173,7 @@ if (empty($_SESSION['nome'])){
                             <td>' . $Avariado . '</td>
                             <td>' . $Faltando . '</td>
                             <td>    
-                                <form action="controledoca.php" method="POST">
+                                <form action="controledocaaluno.php" method="POST">
                                     <input type="hidden" name="id_pedido" value="' . htmlspecialchars($idpedidos) . '">
                                     <input type="hidden" name="posicao_doca" value="' . htmlspecialchars($rowDoca['posicao']) . '">
                                     <input type="submit" name="DesignarProdutos" value="Abrir" style="display: block;" id="abrir">

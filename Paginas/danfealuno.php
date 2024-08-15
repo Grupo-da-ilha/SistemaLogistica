@@ -123,7 +123,7 @@ if (empty($_SESSION['nome'])) {
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="carga.php" class="functions-menu">VISTORIA</a>
+                    <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
                     <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="controledoca.php" class="functions-menu">CONTROLE</a>
                     <a href="estoque.php" class="functions-menu">ESTOQUE</a>

@@ -81,10 +81,12 @@ if (empty($_SESSION['nome'])) {
                 <li class="lisubmenu">
                     <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
                     <a href="danfealuno.php" class="functions-menu">DANFE</a>
-                    <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
+                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacaoaluno.php" class="functions-menu">OPERAÇÃO</a>
                     <a href="pickingaluno.php" class="functions-menu">PICKING</a>
                     <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="criar-pedido-container">
@@ -97,9 +99,9 @@ if (empty($_SESSION['nome'])) {
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-pedido">
                                 <h5>DOCAS:</h5>
-                                    <a href="recebimentodoca.php" class="button-pedidos">Recebimento das docas</a>
+                                    <a href="recebimentodocaaluno.php" class="button-pedidos">Recebimento das docas</a>
                                 <h5>ESTOQUE:</h5>
-                                    <a href="estoque.php" class="button-pedidos">Meu Estoque</a>
+                                    <a href="estoqueluno.php" class="button-pedidos">Meu Estoque</a>
                             </div>
                         </div>
                         <div class="criar-pedidos-container">

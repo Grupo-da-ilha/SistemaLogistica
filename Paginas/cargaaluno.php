@@ -83,8 +83,10 @@ if (empty($_SESSION['nome'])){
                     <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
                     <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacaoaluno.php" class="functions-menu">OPERAÇÃO</a>
                     <a href="pickingaluno.php" class="functions-menu">PICKING</a>
                     <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="recebimentocontainer">
@@ -203,7 +205,7 @@ if (empty($_SESSION['nome'])){
                                                 echo '<td>' . htmlspecialchars($row['Nome']). '</td>';
                                                 echo '<td>' . htmlspecialchars($row['UN']). '</td>';
                                                 echo '<td>Quantidade: ' . htmlspecialchars($row['Quantidade']). '
-                                                <form style="display: none; border: 1px solid black; width: auto; height:50px;" class="form_quantidade">
+                                                <form style="display: none; width: auto; height:50px;" class="form_quantidade">
                                                     <input type="hidden" name="codigoitem" value="'. htmlspecialchars($row['cod_itenPedido']) .'">
                                                     <input type="hidden" name="Clausula" class="clausula" value="">
                                                     <input type="text" class="quantidade_falta" name="Quantidade_falta" style="display: none;">
@@ -401,7 +403,7 @@ $('#form-conferencia-completa').submit(function(e) {
             var jsonResponse = JSON.parse(response);
             console.log(jsonResponse);
             if (jsonResponse.success) {
-                window.location.href = "recebimentodoca.php";
+                window.location.href = "recebimentodocaaluno.php";
             } else {
                 alert(jsonResponse.message); 
             }
