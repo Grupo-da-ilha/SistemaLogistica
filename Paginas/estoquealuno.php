@@ -93,13 +93,14 @@ if (empty($_SESSION['nome'])){
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
-                    <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
+                    <a href="danfealuno.php" class="functions-menu">DANFE</a>
                     <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
                     <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacaoaluno.php" class="functions-menu">OPERAÇÃO</a>
                     <a href="pickingaluno.php" class="functions-menu">PICKING</a>
-                    <a href="expedicaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="relatoriosaluno.php" class="functions-menu">RELATÓRIOS</a>
+                    <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="criar-pedido-container">
@@ -115,9 +116,30 @@ if (empty($_SESSION['nome'])){
                                     <form id="form-estoque-posicao"> 
                                         <input type="text" name="nome_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Produto:">
                                         <input type="text" name="UN_produto" style="display: block;" class="input-options-criar-pedido" placeholder="UN">
+                                        <input type="text" name="SKU_produto" style="display: block;" class="input-options-criar-pedido" placeholder="SKU:">
                                         <input type="text" name="Quantidade_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Quantidade:">
                                         <input type="submit" value="CONSULTAR" style="display: block;" class="input-function-criar-pedido">
                                     </form>
+                                    <div class="legenda">
+                                        <p>LEGENDA:</p>
+                                        <div class="legenda-sub">
+                                            <div class="vermelho"></div>
+                                            <p>NÃO HÁ QUANTIDADE SOLICITADA</p>
+                                        </div>
+                                        <div class="legenda-sub">
+                                            <div class="azul"></div>
+                                            <p>MAIS DA QUANTIDADE SOLICITADA</p>
+                                        </div>
+                                        <div class="legenda-sub">
+                                            <div class="verde"></div>
+                                            <p>EXATAMENTE A QUANTIDADE SOLICITADA</p>
+                                        </div>
+                                    </div>   
+                                </div>
+                            </div>
+                            <div class="submenus-pedidos">
+                                <h4> QUANTIDADE:</h4>
+                                <div class="info-posicao">
                                 </div>
                             </div>
                         </div>
@@ -187,6 +209,29 @@ $('#form-estoque-posicao').submit(function(e) {
                             inputposicao[j].style.color = 'white';  // Defina a cor como string válida
                         }
                     }
+                }
+                var containers = document.getElementsByClassName('info-posicao');
+                
+                // Limpa o conteúdo da div antes de adicionar novos elementos
+                containers[0].innerHTML = ''; // Remove qualquer conteúdo existente na primeira div com a classe 'info-posicao'
+
+                // Cria novos elementos para cada item da lista
+                for (var i = 0; i < jsonResponse.positions.length; i++) {
+                    var p_container = document.createElement('div');
+                    p_container.className = 'info-pedido-item';
+                    
+                    var p_quantidade = document.createElement('p');
+                    p_quantidade.className = 'paragrafo-quantidade';
+                    p_quantidade.textContent = 'Quantidade: ' + jsonResponse.positions[i].Quantidade;
+                    
+                    var p_posicao = document.createElement('p');
+                    p_posicao.className = 'paragrafo-posicao';
+                    p_posicao.textContent = 'Posição: ' + jsonResponse.positions[i].Posicoes;
+                    
+                    p_container.append(p_quantidade);
+                    p_container.append(p_posicao);
+                    
+                    containers[0].append(p_container);
                 }
             } else {
                 alert(jsonResponse.message);  // Mostra mensagem apenas quando success é false
