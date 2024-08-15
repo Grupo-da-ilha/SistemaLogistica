@@ -137,7 +137,10 @@
                 <a href="movimentacaoaluno.php"><div class="card-function-log-movimentacao"></div></a>
                 <a href="operacaomovimentacaoaluno.php"><div class="card-function-log-operacao"></div></a>
                 <a href="estoquealuno.php"><div class="card-function-log-estoque"></div></a>
-                
+                <a href="pickingaluno.php"><div class="card-function-log-picking"></div></a>
+                <a href="expediçaoaluno.php"><div class="card-function-log-expedicao"></div></a>
+                <a href="inventarioaluno.php"><div class="card-function-log-intervantario"></div></a>
+                <a href="vistoriasolicitacoesaluno.php"><div class="card-function-log-vistoria-carga"></div></a>
                 <div class="card-function-log-cadas"></div>
             </div>
         </div>

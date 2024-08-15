@@ -72,25 +72,27 @@ if (empty($_SESSION['nome'])){
                     <a href="carga.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="estoque.php" class="functions-menu">ESTOQUE</a>
                     <a href="picking.php" class="functions-menu">PICKING</a>
+                    <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
                     <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
                 </li>
             </div>
             <div class="movimentacao-container">
                 <div class="titulo-recebimento">
-                    <h3>EXPEDIÇÃO</h3>    
+                    <h3>VISTORIA DAS SOLICITAÇÕES</h3>    
                 </div>
-                <h4> Operações de expedição em aberto </h6>
-                <h7> Abra a solicitação que você deseja operar </h7>
+                <h4> Solicitações esperando na doca: </h6>
+                <h7> Abra a solicitação que você deseja conferir </h7>
                 ';
-                $sql = "SELECT * FROM solicitacoes WHERE Situacao = 'Na expedição' AND codTurma ='{$_SESSION['codTurma']}'";
+                $sql = "SELECT * FROM solicitacoes WHERE Situacao = 'Nas docas' AND codTurma ='{$_SESSION['codTurma']}'";
                 $execute = $conexao -> query($sql);
 
                 if($execute && $execute -> num_rows > 0){
                     echo '
                         <div class="div-operacoes">
-                            <table class="tabela" style="width: 500px;">
+                            <table class="tabela" style="width:40vw;">
                                 <tr>
                                     <td> Número das solicitações </td>
+                                    <td> Doca </td>
                                     <td> Ações </td>
                                 </tr>
                     ';
@@ -98,13 +100,15 @@ if (empty($_SESSION['nome'])){
                         //Quandar cod_estoque
                         $cod_solicitacao = $row['cod_solicitacao'];
                         $id_solicitacao = $row['id_solicitacao'];
+                        $doca = $row['Doca'];
                         
                         echo '<tr>
                                 <td>' . htmlspecialchars($cod_solicitacao) . '</td>
-                                <td style="align-itens=center; display:flex; justify-content: center;">
-                                    <form action="processoexpedicao.php" method="POST">
-                                        <input type="hidden" name="id_solicitacao_expedicao" value="' . $id_solicitacao . '" style="display: block;"></label>
-                                        <input type="submit" name="AbrirSolicitacaoExpedicao" value="ABRIR" style="display: block;" class="InputPego">
+                                <td>' . htmlspecialchars($doca) . '</td>
+                                <td style="display:flex; justify-content:center; align-itens:center;">
+                                    <form action="processovistoriasolicitacoes.php" method="POST">
+                                        <input type="hidden" name="id_solicitacao_vistoria" value="' . $id_solicitacao . '" style="display: block;"></label>
+                                        <input type="submit" name="AbrirSolicitacao" value="ABRIR" style="display: block;" class="InputPego">
                                     </form>
                                 </td>
                             </tr>';
@@ -116,7 +120,7 @@ if (empty($_SESSION['nome'])){
                     </div>
                     ';
                 } else{
-                    echo 'Nenhuma solicitação na expedição';
+                    echo 'Nenhuma solicitação no processo de picking';
                 }
 echo '
             </div>
