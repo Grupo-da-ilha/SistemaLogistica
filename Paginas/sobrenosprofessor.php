@@ -70,34 +70,34 @@
                     <div class="caixaslider">
                        <div class="img-slider">
                                         <div class="slide active">
-                                        <img src="../css/imgsobrenos/sobrenos.png" alt="">
+                                        <img src="../css/imgsobrenos/todos.png" alt="">
                                         <div class="information">
                                             <h4>MOVESYS</h4>
                                         </div>
                                     </div>
                                    <div class="slide">
-                                       <img src="../css/imgsobrenos/sobrenos.png" alt="">
+                                       <img src="../css/imgsobrenos/iago.jpg" alt="">
                                        <div class="information">
                                            <h4>Iago Souza</h4>
                                            <p>Biografia</p>
                                        </div>
                                    </div>
                                    <div class="slide">
-                                       <img src="../css/imgsobrenos/sobrenos.png"" alt="">
+                                       <img src="../css/imgsobrenos/eliastres.jpg"" alt="">
                                        <div class="information">
                                            <h4>Elias Alves</h4>
                                            <p>Biografia</p>
                                        </div>
                                    </div>
                                    <div class="slide">
-                                    <img src="../css/imgsobrenos/sobrenos.png"" alt="">
+                                    <img src="../css/imgsobrenos/kauan.jpg"" alt="">
                                     <div class="information">
                                         <h4>Kauan Burguer</h4>
                                         <p>Biografia</p>
                                     </div>
                                 </div>
                                 <div class="slide">
-                                    <img src="../css/imgsobrenos/sobrenos.png"" alt="">
+                                    <img src="../css/imgsobrenos/jonasdois.jpg"" alt="">
                                     <div class="information">
                                         <h4>Jonas Frees</h4>
                                         <p>Biografia</p>
