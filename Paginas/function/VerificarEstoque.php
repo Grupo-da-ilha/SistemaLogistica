@@ -85,7 +85,7 @@ if ($conexao->connect_errno) {
                     }
                 }
             }  else{
-            echo json_encode(['success' => false, 'message' => 'Erro ao pesquisar pelos itens do pedido']);
+            echo json_encode(['success' => false, 'message' => 'Erro ao pesquisar pelos itens do pedido, este item não foi criado nessa turma']);
             exit();
         }
     }
