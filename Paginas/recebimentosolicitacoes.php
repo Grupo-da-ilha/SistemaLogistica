@@ -91,7 +91,7 @@ if (empty($_SESSION['nome'])){
             </div>
             <div class="criar-pedido-container">
                 <div class="titulo-pedido">
-                    <h3>CONTROLE DAS SOLICITAÇÕES</h3>    
+                    <h3>RECEBIMENTO DAS SOLICITAÇÕES</h3>    
                 </div>
                 <div class="info-total">
                     <div class="criar-pedido">

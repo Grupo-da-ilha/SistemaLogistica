@@ -45,10 +45,10 @@ if (empty($_SESSION['nome'])){
                     </label>
                     <nav>
                         <ul class="ul-button">
-                        <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
+                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="perfilaluno.php">PERFIL</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="sobrenosaluno.php">SOBRE NÓS</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                         </ul>
                     </nav>
@@ -67,12 +67,15 @@ if (empty($_SESSION['nome'])){
         <div class="container-prin">
             <div class="submenu">
                 <li class="lisubmenu">
-                    <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
-                    <a href="carga.php" class="functions-menu">RECEBIMENTO</a>
-                    <a href="estoque.php" class="functions-menu">ESTOQUE</a>
-                    <a href="picking.php" class="functions-menu">PICKING</a>
-                    <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
+                    <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
+                    <a href="danfealuno.php" class="functions-menu">DANFE</a>
+                    <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
+                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
+                    <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacaoaluno.php" class="functions-menu">OPERAÇÃO</a>
+                    <a href="pickingaluno.php" class="functions-menu">PICKING</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="movimentacao-container">
@@ -102,7 +105,7 @@ if (empty($_SESSION['nome'])){
                         echo '<tr>
                                 <td>' . htmlspecialchars($cod_solicitacao) . '</td>
                                 <td style="align-itens=center; display:flex; justify-content: center;">
-                                    <form action="processoexpedicao.php" method="POST">
+                                    <form action="processoexpedicaoaluno.php" method="POST">
                                         <input type="hidden" name="id_solicitacao_expedicao" value="' . $id_solicitacao . '" style="display: block;"></label>
                                         <input type="submit" name="AbrirSolicitacaoExpedicao" value="ABRIR" style="display: block;" class="InputPego">
                                     </form>

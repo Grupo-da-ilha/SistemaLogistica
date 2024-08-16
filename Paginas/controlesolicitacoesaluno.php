@@ -81,9 +81,9 @@ if (empty($_SESSION['nome'])) {
                         <nav>
                             <ul class="ul-button">
                                 <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                                <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
+                                <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
+                                <li class="li-vertical"><a class="a-vertical" href="perfilaluno.php">PERFIL</a></li>
+                                <li class="li-vertical"><a class="a-vertical" href="sobrenosaluno.php">SOBRE NÓS</a></li>
                                 <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                             </ul>
                         </nav>
@@ -102,19 +102,20 @@ if (empty($_SESSION['nome'])) {
         <div class="container-prin">
             <div class="submenu">
                 <li class="lisubmenu">
-                    <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
-                    <a href="danfe.php" class="functions-menu">DANFE</a>
-                    <a href="carga.php" class="functions-menu">VISTORIA</a>
-                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
-                    <a href="picking.php" class="functions-menu">PICKING</a>
-                    <a href="#" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="#" class="functions-menu">RELATÓRIOS</a>
+                    <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
+                    <a href="danfealuno.php" class="functions-menu">DANFE</a>
+                    <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
+                    <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacaoaluno.php" class="functions-menu">OPERAÇÃO</a>
+                    <a href="pickingaluno.php" class="functions-menu">PICKING</a>
+                    <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="criar-pedido-container">
                 <div class="titulo-pedido">
-                    <h3>CONTROLE DAS SOLICITAÇÕES</h3>    
+                    <h3>CONTROLE SOLICITAÇÕES</h3>    
                 </div>
                 <div class="info-total">
                     <div class="criar-pedido">
@@ -122,11 +123,11 @@ if (empty($_SESSION['nome'])) {
                             <h4> INFORMAÇÕES </h4>
                             <div class="info-pedido">
                                 <h5>SOLICITAÇÕES:</h5>
-                                    <a href="recebimentosolicitacoes.php" class="button-pedidos">Recebimento das solicitações</a>
+                                    <a href="recebimentosolicitacoesaluno.php" class="button-pedidos">Recebimento das solicitações</a>
                                 <h5>ESTOQUE:</h5>
-                                    <a href="estoque.php" class="button-pedidos">Meu Estoque</a>
+                                    <a href="estoquealuno.php" class="button-pedidos">Meu Estoque</a>
                                 <h5>DOCAS:</h5>
-                                    <a href="recebimentodoca.php" class="button-pedidos">Recebimento das docas</a>
+                                    <a href="recebimentodocaaluno.php" class="button-pedidos">Recebimento das docas</a>
                             </div>
                         </div>
                         <div class="criar-pedidos-container">
@@ -213,7 +214,7 @@ if (empty($_SESSION['nome'])) {
                                           </tr>';
                                 }
                             } else {
-                                echo '<tr><td colspan="3">Produto na solicitação não encontrado</td></tr>';
+                                echo '<tr><td colspan="3">Produto no pedido não encontrado</td></tr>';
                             }
                         }
                         echo '</table>
