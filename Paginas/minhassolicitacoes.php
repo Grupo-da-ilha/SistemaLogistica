@@ -155,9 +155,9 @@ if (empty($_SESSION['nome'])){
                                 <input type=\"hidden\" name=\"id_solicitacao\" value=\"" . $row['id_solicitacao'] . "\" >
                                 <input type=\"submit\" class=\"InputPego\" name=\"VerProdutos\" value=\"VER PRODUTOS\" style=\"display:block;\" class=\"vermais\">
                             </form>
-                            <form action=\"minhassolicitacoes.php\" method=\"POST\">
+                            <form action=\"minhassolicitacoes.php\" id='formDelete' method=\"POST\">
                                 <input type=\"hidden\" name=\"id_solicitacaoDelete\" value=\"" . $row['id_solicitacao'] . "\" >
-                                <input type=\"submit\" class=\"InputDeletar\" name=\"DeleteSolici\" value=\"EXCLUIR\" style=\"display:block; background-color:red; color: white;\" class=\"vermais\">
+                                <button onclick='submitFormDelete()' class=\"InputDeletar\" name=\"DeleteSolici\" style=\"display:block; background-color:red; color: white;\" class=\"vermais\">EXCLUIR</button>
                             </form>
                         </td>
                     </tr>";
@@ -207,7 +207,7 @@ if (empty($_SESSION['nome'])){
                 }   
             }
         }
-        if (isset($_POST['DeleteSolici']) && !empty($_POST['id_solicitacaoDelete'])) {
+        if (!empty($_POST['id_solicitacaoDelete'])) {
             $id_solicitacaoDelete = $conexao->real_escape_string($_POST['id_solicitacaoDelete']);
 
             $SelectSolicitacoes = "SELECT * FROM solicitacoes WHERE id_solicitacao = '$id_solicitacaoDelete'";
@@ -228,24 +228,31 @@ if (empty($_SESSION['nome'])){
                             echo "Erro ao excluir itens do picing";
                         }
                     }
+
+                    $DeleteNotaFiscal = "DELETE FROM nota_fiscal WHERE id_solicitacao = '$id_solicitacaoDelete'";
+                    $deleteNotaFiscal = $conexao -> query($DeleteNotaFiscal);
+
+                    if($deleteNotaFiscal){
+                        $DeleteItensSolicitacao = "DELETE FROM itenssolicitacao WHERE cod_solicitacao = '".$id_solicitacaoDelete."' AND codTurma ='$cod_turma'";
+                        $conexao->query($DeleteItensSolicitacao);
+                    
+                        // Agora, exclua o registro principal na tabela `solicitacoes`
+                        $DeleteSolicitacao = "DELETE FROM solicitacoes WHERE id_solicitacao = '".$id_solicitacaoDelete."' AND codTurma ='$cod_turma'";
+                        $executarDeleteSolicitacao = $conexao->query($DeleteSolicitacao);
+        
+                        if ($executarDeleteSolicitacao) {
+                            echo "Solicitação excluída com sucesso.";
+                        } else {
+                            echo "Nenhuma solicitação encontrada para excluir";
+                        }
+                    }else{
+                        echo 'erro ao excluir nota fiscal';
+                    }
                 } else{
                     echo "Erro ao buscar itens da solicitação";
                 }
-
-                $DeleteItensSolicitacao = "DELETE FROM itenssolicitacao WHERE cod_solicitacao = '".$id_solicitacaoDelete."' AND codTurma ='$cod_turma'";
-                $conexao->query($DeleteItensSolicitacao);
-            
-                // Agora, exclua o registro principal na tabela `solicitacoes`
-                $DeleteSolicitacao = "DELETE FROM solicitacoes WHERE id_solicitacao = '".$id_solicitacaoDelete."' AND codTurma ='$cod_turma'";
-                $executarDeleteSolicitacao = $conexao->query($DeleteSolicitacao);
-
-                if ($executarDeleteSolicitacao) {
-                    echo "Solicitação excluída com sucesso.";
-                } else {
-                    echo "Nenhuma solicitação encontrada para excluir";
-                }
             } else{
-
+                echo 'Solicitação já excluída';
             }
         }
     }
@@ -257,6 +264,11 @@ if (empty($_SESSION['nome'])){
             </div>
         </div>
     </main>
+    <script>
+        function submitFormDelete() {
+            document.getElementById('formDelete').submit();
+        }
+    </script>
 </body>
 </html>
 

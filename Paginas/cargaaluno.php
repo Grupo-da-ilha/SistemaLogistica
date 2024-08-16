@@ -55,7 +55,7 @@ if (empty($_SESSION['nome'])){
                     </label>
                     <nav>
                         <ul class="ul-button">
-                        <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="perfilaluno.php">PERFIL</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="sobrenosaluno.php">SOBRE NÓS</a></li>

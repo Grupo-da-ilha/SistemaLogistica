@@ -633,9 +633,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '</div>';
                     echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
-                    echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
-                    echo '<p>Data de Entrega: ' . htmlspecialchars($dataentrega) . '</p>';
-                    echo '<p>Valor Total: ' . htmlspecialchars($valortotal) . '</p>';
+                    echo '<p>Data de Emissão: ' . htmlspecialchars($data_criacao) . '</p>';
                     echo'</div>
                     <div class="barras-danfe">
                     </div>
@@ -656,7 +654,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     <div class="titulo-div-danfe">';
                     echo '<h7>FORNECEDOR: ' . htmlspecialchars($nomeFabri) . '</h7>';
                     echo '</div>';
-                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_fabricante) . '</p>';
+                    echo '<p>CNPJ: ' . htmlspecialchars($CNPJ_emitente) . '</p>';
                     echo '<p>Telefone: ' . htmlspecialchars($TelefeoneFabri) . '</p>';
                     echo '<p>CEP: ' . htmlspecialchars($CEPFabri) . '</p>';
                     echo '<p>Bairro: ' . htmlspecialchars($BairroFabri) . '</p>';
@@ -684,26 +682,23 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo'</div>';
                     echo'<div class="itens-danfe">
                     <div class="titulo-div-danfe">';
-                    echo '<h7>INFORMAÇÕES DO PEDIDO:</h7>';
+                    echo '<h7>INFORMAÇÕES DA SOLICITAÇÃO:</h7>';
                     echo '</div>';
                     echo '<div class="tabela-itens">
-                                <div class="sub-produtos"> NOME </div>
-                                <div class="sub-produtos"> QUANTIDADE </div>
-                                <div class="sub-produtos"> VALOR UNITÁRIO </div>
-                                <div class="sub-produtos"> VALOR TOTAL </div>
-                                <div class="sub-produtos"> UN </div>
-                                <div class="sub-produtos"> SKU </div>
+                                  <div class="sub-produtos"> NOME </div>
+                                    <div class="sub-produtos"> QUANTIDADE </div>
+                                    <div class="sub-produtos"> UN </div>
+                                    <div class="sub-produtos"> SKU</div>
+                                    <div class="sub-produtos"> NCM </div>
                             </div>';
                          //Buscas itenspedido 
-                            $selectItens = "SELECT * FROM itenspedido WHERE cod_pedido = '".$_SESSION['idpedido']."' AND codTurma ='{$_SESSION['codTurma']}'";
+                            $selectItens = "SELECT * FROM itenssolicitacao WHERE cod_solicitacao = '".$_SESSION['id_solicitacao']."' AND codTurma ='{$_SESSION['codTurma']}'";
                             $executeItens = $conexao -> query($selectItens);
                             if($executeItens && $executeItens -> num_rows > 0){
                                 while($rowitens = $executeItens -> fetch_assoc()){
                                     //Informações dos itens
                                     $cod_produto = $rowitens['cod_produto'];
                                     $QuantidadeItem = $rowitens['Quantidade'];
-                                    $ValorUnitario = $rowitens['ValorUnitario'];
-                                    $ValorTotalItem = $rowitens['ValorTotal'];
                                     $selectProdutos = "SELECT * FROM produtos WHERE cod_produto = '$cod_produto'";
                                     $executeProdutos = $conexao -> query($selectProdutos);
                                     if($executeProdutos && $executeProdutos -> num_rows > 0){
@@ -717,12 +712,11 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                                         echo '
                                         <div class="caixa-itens">
                                             <div class="itens-pedido">
-                                                <div class="info-itens-pedido">' . htmlspecialchars($nome_produto) . '</div>
-                                                <div class="info-itens-pedido">' . htmlspecialchars($QuantidadeItem) . '</div>
-                                                <div class="info-itens-pedido">' . htmlspecialchars($ValorUnitario) . '</div>
-                                                <div class="info-itens-pedido">' . htmlspecialchars($ValorTotalItem) . '</div>
-                                                <div class="info-itens-pedido">' . htmlspecialchars($UN_produto) . '</div>
-                                                <div class="info-itens-pedido">' . htmlspecialchars($SKU_produto) . '</div>
+                                                    <div class="info-itens-pedido">' . htmlspecialchars($nome_produto) . '</div>
+                                                    <div class="info-itens-pedido">' . htmlspecialchars($QuantidadeItem) . '</div>
+                                                    <div class="info-itens-pedido">' . htmlspecialchars($UN_produto) . '</div>
+                                                    <div class="info-itens-pedido">' . htmlspecialchars($SKU_produto) . '</div>
+                                                    <div class="info-itens-pedido">' . htmlspecialchars($NCM_produto) . '</div>
                                             </div>    
                                         </div>
                                         ';

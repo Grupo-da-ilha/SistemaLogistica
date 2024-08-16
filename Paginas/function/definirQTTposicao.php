@@ -80,6 +80,9 @@ if ($conexao->connect_errno) {
                             exit();
                         }
                     } else {
+                        $Updateitem = "UPDATE itenspedido SET Quantidade_doca = '$QttDoca' WHERE cod_itenPedido = '$cod_itempedido' AND cod_pedido = '$id_pedido' AND codTurma = '{$_SESSION['codTurma']}'";
+                        $executar = $conexao->query($Updateitem);
+
                         echo json_encode(['success' => false, 'message' => 'A posição selecionada não existe no estoque']);
                         exit();
                     }

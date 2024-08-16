@@ -21,7 +21,17 @@ if (empty($_SESSION['nome'])){
     header('Location: ../sair.php');
     exit();
 } else {
+    $hostname = "127.0.0.1";
+    $user = "root";
+    $password = "";
+    $database = "logistica";
 
+    $conexao = new mysqli($hostname, $user, $password, $database);
+
+    if ($conexao->connect_errno) {
+        echo "Failed to connect to MySQL: " . $conexao->connect_error;
+        exit();
+    }
     echo '<header>
     <div class="container">
         <div class="main-horizontal">
@@ -87,7 +97,15 @@ if (empty($_SESSION['nome'])){
             }
             echo '</div>';
         } else {
-            echo '<h5>Nenhum projeto encontrado para esta turma.</h5>';
+            $SelectTurma = "SELECT * FROM turmas WHERE codTurma = '$codTurma'";
+            $executeTurma = $conexao -> query($SelectTurma);
+
+            if($executeTurma -> num_rows > 0){
+                echo '<h5>Nenhum projeto encontrado para esta turma.</h5>';
+            }else{
+                echo '<h5>Turma inexistente</h5>';
+            }
+            
         }
 
         echo '<form id="projectForm" action="projetoprofessor.php" method="POST" style="display: none;">

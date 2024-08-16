@@ -100,10 +100,10 @@ if (empty($_SESSION['nome'])) {
                     </label>
                     <nav>
                         <ul class="ul-button">
-                        <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="professor.php">MENU</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="perfilprofessor.php">PERFIL</a></li>
-                            <li class="li-vertical"><a class="a-vertical" href="sobrenosprofessor.php">SOBRE NÓS</a></li>
+                            <li class="li-vertical-menu"><a class="a-vertical-menu" href="">MENU</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="aluno.php">MENU</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="perfilaluno.php">PERFIL</a></li>
+                            <li class="li-vertical"><a class="a-vertical" href="sobrenosaluno.php">SOBRE NÓS</a></li>
                             <li class="li-vertical"><a class="a-vertical" href="sair.php">SAIR</a></li>
                         </ul>
                     </nav>
@@ -122,15 +122,15 @@ if (empty($_SESSION['nome'])) {
         <div class="container-prin">
             <div class="submenu">
                 <li class="lisubmenu">
-                    <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="cargaaluno.php" class="functions-menu">VISTORIA</a>
-                    <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
-                    <a href="controledoca.php" class="functions-menu">CONTROLE</a>
-                    <a href="estoque.php" class="functions-menu">ESTOQUE</a>
-                    <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
-                    <a href="picking.php" class="functions-menu">PICKING</a>
-                    <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
+                    <a href="projetoaluno.php" class="functions-menu">VOLTAR</a>
+                    <a href="recebimentodocaaluno.php" class="functions-menu">RECEBIMENTO</a>
+                    <a href="controledocaaluno.php" class="functions-menu">CONTROLE</a>
+                    <a href="estoquealuno.php" class="functions-menu">ESTOQUE</a>
+                    <a href="movimentacaoaluno.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacaoaluno.php" class="functions-menu">OPERAÇÃO</a>
+                    <a href="pickingaluno.php" class="functions-menu">PICKING</a>
+                    <a href="expediçaoaluno.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoesaluno.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="criar-danfe-container">
@@ -140,12 +140,6 @@ if (empty($_SESSION['nome'])) {
                 <div class="info-total">
                     <div class="criar-danfe">
                         <div class="submenus-danfe">
-                            <h4>INFORMAÇÕES</h4>
-                            <div class="info-danfe">
-                                <h5>PEDIDOS:</h5>
-                                <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
-                                <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
-                            </div>
                         </div>
                         <div class="criar-danfes-container">
                             <h4>VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h4>
@@ -498,7 +492,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido']) && isset($_POST[
                         echo'</div>';
                         echo'<div class="itens-danfe">
                         <div class="titulo-div-danfe-itens">';
-                        echo '<h7>INFORMAÇÕES DO PEDIDO:</h7>';
+                        echo '<h7>INFORMAÇÕES DA SOLICITAÇÃO:</h7>';
                         echo '</div>';
                         echo '<div class="tabela-itens">
                                     <div class="sub-produtos"> NOME </div>
