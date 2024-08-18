@@ -89,7 +89,7 @@ if ($conexao->connect_errno) {
         }
     }
 }else{
-    echo json_encode(['success' => false, 'message' => 'Erro ao pesquisar produtos, o Nome e UN do produto']);
+    echo json_encode(['success' => false, 'message' => 'Erro ao pesquisar produtos, confira o Nome e UN do produto']);
     exit();
 }
     } else{
