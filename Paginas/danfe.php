@@ -124,14 +124,13 @@ if (empty($_SESSION['nome'])) {
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
+                    <a href="solicitacao.php" class="functions-menu">SOLICITAÇÕES</a>
                     <a href="carga.php" class="functions-menu">VISTORIA</a>
-                    <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
-                    <a href="controledoca.php" class="functions-menu">CONTROLE</a>
-                    <a href="estoque.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacao.php" class="functions-menu">OPERAÇÃO</a>
                     <a href="picking.php" class="functions-menu">PICKING</a>
                     <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
+                    <a href="vistoriasolicitacoes.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="criar-danfe-container">
@@ -146,6 +145,9 @@ if (empty($_SESSION['nome'])) {
                                 <h5>PEDIDOS:</h5>
                                 <a href="criarpedido.php" class="button-pedidos">Criar Pedidos</a>
                                 <a href="meuspedidos.php" class="button-pedidos">Meus Pedidos</a>
+                                <h5>SOLICITAÇÕES:</h5>
+                                    <a href="solicitacao.php" class="button-pedidos">Cria Solicitacao</a>
+                                    <a href="minhassolicitacoes.php" class="button-pedidos">Minhas Solicitações</a>
                             </div>
                         </div>
                         <div class="criar-danfes-container">
@@ -820,7 +822,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                         <div class="titulo-div-danfe">';
                         echo '<h7>INFORMAÇÕES DANFE</h7>';
                         echo '</div>';
-                        echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
+                        echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
                         echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                         echo '<p>Data de Emissão: ' . htmlspecialchars($dataEntrega) . '</p>';
                         echo'</div>
