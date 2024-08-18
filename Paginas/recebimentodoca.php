@@ -111,7 +111,7 @@ if (empty($_SESSION['nome'])){
                                 <div class="produtos-pedido">
                                     <h4>PEDIDOS:</h4>';
 
-
+    $temQuantidadeNaoZero = false;
     $sql = "SELECT * FROM pedido WHERE codTurma ='$codTurma' AND Situacao = 'Nas docas'";
     $executar = $conexao->query($sql);
 
@@ -141,29 +141,30 @@ if (empty($_SESSION['nome'])){
                     $avariado = $conexao->real_escape_string($row['Avariado']);
                     $QttDoca = $conexao->real_escape_string($row['Quantidade_doca']);
 
-                    if($QttDoca == 0){
-                        $sqlUpdatepedido = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE codTurma ='$codTurma' AND id_pedido = '$idpedidos'";
-                        $executeUpdate = $conexao->query($sqlUpdatepedido);
+                    if ($QttDoca != 0) {
+                        $temQuantidadeNaoZero = true;
                     }
 
-                    if($avariado == 1 && $faltando == 0){
-                        $Avariado = 'SIM';
-                        $Faltando = 'Não';
-                    } elseif($faltando == 1 && $avariado == 0){
-                        $Faltando = 'SIM';
-                        $Avariado = 'Não';
-                    } elseif($avariado == 1 && $faltando == 1){
-                        $Avariado = 'SIM';
-                        $Faltando = 'SIM';
-                    } else{
-                        $Avariado = 'Não';
-                        $Faltando = 'Não';
+                    if ($avariado == 1) {
+                        $temAvariado = true;
                     }
-                
+                    if ($faltando == 1) {
+                        $temFaltando = true;
+                    }
+                }
+            }
+
+            if (!$temQuantidadeNaoZero) {
+                $sqlUpdatepedido = "UPDATE pedido SET Situacao = 'Em movimentação' WHERE codTurma = '$codTurma' AND id_pedido = '$idpedidos'";
+                $executeUpdate = $conexao->query($sqlUpdatepedido);
+            }
+
+            $Avariado = $temAvariado ? 'SIM' : 'Não';
+            $Faltando = $temFaltando ? 'SIM' : 'Não';
 
             $sqlDoca = "SELECT * FROM docas WHERE codTurma ='$codTurma' AND id_pedido = '$idpedidos'";
             $executeDoca = $conexao->query($sqlDoca);
-                }
+                
             if($executeDoca && $executeDoca->num_rows > 0){
                 while($rowDoca = $executeDoca->fetch_assoc()){
                     echo '<tr>
