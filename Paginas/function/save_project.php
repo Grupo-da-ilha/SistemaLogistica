@@ -30,14 +30,28 @@ if (isset($_POST['person_id']) && isset($_POST['project_name']) && isset($_POST[
     if ($checkResult->num_rows > 0) {
         $sql = "INSERT INTO projetos (codTurma, nome) VALUES ('$projectClass', '$projectName')";
         if ($conexao->query($sql) === TRUE) {
-            echo "Projeto salvo com sucesso!";
+            $last_id = $conexao->insert_id;
+            
+            $sqlSelect = "SELECT codTurma FROM projetos WHERE idprojeto = '$last_id'";
+            $result = $conexao->query($sqlSelect);
+
+            if ($result && $result->num_rows > 0) {
+                $rowProjeto = $result->fetch_assoc();
+                $_SESSION['Idprojeto'] = $last_id;
+                $_SESSION['codTurma'] = $rowProjeto['codTurma'];
+                echo "Projeto salvo com sucesso!";
+            } else {
+                echo "Erro ao recuperar o projeto!";
+            }
         } else {
             echo "Erro ao salvar o projeto: " . $conexao->error;
         }
     } else {
+        http_response_code(400);
         echo "Erro: Código da turma inválido!";
     }
 } else {
+    http_response_code(400);
     echo "Erro: Dados incompletos!";
 }
 

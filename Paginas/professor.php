@@ -209,9 +209,16 @@ function saveProject() {
     xhr.open("POST", "function/save_project.php", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            alert(xhr.responseText);
-            window.location.href = "projetoprofessor.php";
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                alert(xhr.responseText);
+                window.location.href = "projetoprofessor.php";
+            } else if (xhr.status === 400) {
+                alert(xhr.responseText);
+                window.location.href = "professor.php"; // Redireciona para a página do professor
+            } else {
+                alert("Erro inesperado: " + xhr.responseText);
+            }
         }
     };
     xhr.send("person_id=" + personId + "&project_name=" + encodeURIComponent(projectName) + "&project_class=" + encodeURIComponent(projectClass));
