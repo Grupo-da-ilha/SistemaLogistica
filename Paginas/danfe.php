@@ -161,12 +161,12 @@ if (empty($_SESSION['nome'])) {
                             </form>
                             <form id="printFormPedido" action="imprimirdanfe.php" method="POST" style="display: none;">
                                 <input type="hidden" name="cod_pedido" value' .htmlspecialchars($_SESSION['cod_pedido']).'>
-                                <input type="hidden" name="tipoDanfe" value=' .htmlspecialchars($_POST['tipoDanfe']).'>
+                                <input type="hidden" name="tipoDanfe" value="Pedido">
                                 <input type="hidden" name="id_pedido" value=' .htmlspecialchars($_SESSION['idpedido']).'>
                             </form>
                             <form id="printFormSolicitacao" action="imprimirdanfe.php" method="POST" style="display: none;">
                                 <input type="hidden" name="cod_pedido" value' .htmlspecialchars($_SESSION['cod_solicitacao']).'>
-                                <input type="hidden" name="tipoDanfe" value=' .htmlspecialchars($_POST['tipoDanfe']).'>
+                                <input type="hidden" name="tipoDanfe" value="Solicitação">
                                 <input type="hidden" name="id_pedido" value=' .htmlspecialchars($_SESSION['id_solicitacao']).'>
                             </form>
                             <br>';
@@ -434,7 +434,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     <div class="titulo-div-danfe">';
                     echo '<h7>INFORMAÇÕES DANFE</h7>';
                     echo '</div>';
-                    echo '<p>Código da DANFE: ' . htmlspecialchars($cod_nota) . '</p>';
+                    echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
                     echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
                     echo '<p>Data de Entrega: ' . htmlspecialchars($dataEntrega) . '</p>';

@@ -350,8 +350,7 @@ if (empty($_SESSION['nome'])){
                 </div>
             </div>
         </div>
-    </main>'; 
-                    ?>
+    </main>
 <script>
     document.getElementById('NomeProduto').addEventListener('input', function() {
       var NomeProduto = this.value;
