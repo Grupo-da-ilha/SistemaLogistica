@@ -87,6 +87,7 @@ if (empty($_SESSION['nome'])){
                     <a href="solicitacao.php" class="functions-menu">SOLICITAÇÕES</a>
                     <a href="danfe.php" class="functions-menu">DANFE</a>
                     <a href="carga.php" class="functions-menu">VISTORIA</a>
+                    <a href="controledoca.php" class="functions-menu">CONTROLE</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
                     <a href="operacaomovimentacao.php" class="functions-menu">OPERAÇÃO</a>
                     <a href="picking.php" class="functions-menu">PICKING</a>

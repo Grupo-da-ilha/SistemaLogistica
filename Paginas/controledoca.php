@@ -81,12 +81,15 @@ if (empty($_SESSION['nome'])) {
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
                     <a href="criarpedido.php" class="functions-menu">PEDIDO</a>
+                    <a href="solicitacao.php" class="functions-menu">SOLICITAÇÕES</a>
                     <a href="danfe.php" class="functions-menu">DANFE</a>
                     <a href="carga.php" class="functions-menu">VISTORIA</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
+                    <a href="operacaomovimentacao.php" class="functions-menu">OPERAÇÃO</a>
+                    <a href="estoque.php" class="functions-menu">ESTOQUE</a>
                     <a href="picking.php" class="functions-menu">PICKING</a>
                     <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="relatorios.php" class="functions-menu">RELATÓRIOS</a>
+                    <a href="vistoriasolicitacoes.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="criar-pedido-container">
