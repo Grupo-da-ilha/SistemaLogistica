@@ -116,7 +116,6 @@ if (empty($_SESSION['nome'])){
                                     <form id="form-estoque-posicao"> 
                                         <input type="text" name="nome_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Produto:">
                                         <input type="text" name="UN_produto" style="display: block;" class="input-options-criar-pedido" placeholder="UN">
-                                        <input type="text" name="SKU_produto" style="display: block;" class="input-options-criar-pedido" placeholder="SKU:">
                                         <input type="text" name="Quantidade_produto" style="display: block;" class="input-options-criar-pedido" placeholder="Quantidade:">
                                         <input type="submit" value="CONSULTAR" style="display: block;" class="input-function-criar-pedido">
                                     </form>
