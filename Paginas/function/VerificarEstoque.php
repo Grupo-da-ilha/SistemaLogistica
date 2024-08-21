@@ -24,13 +24,14 @@ if ($conexao->connect_errno) {
         echo ''.$_SESSION['Idprojeto']. '';
     }
 
-    if(isset($_POST['nome_produto']) && isset($_POST['UN_produto']) && isset($_POST['Quantidade_produto'])){
+    if(isset($_POST['nome_produto']) && isset($_POST['UN_produto']) && isset($_POST['Quantidade_produto']) && isset($_POST['SKU_produto'])){
         $nome_produto_digitado = $conexao -> real_escape_string($_POST['nome_produto']);
         $UN_produto_digitado = $conexao -> real_escape_string($_POST['UN_produto']);
+        $SKU_produto_digitado = $conexao -> real_escape_string($_POST['SKU_produto']);
         $Quantidade_produto_digitada = $conexao -> real_escape_string($_POST['Quantidade_produto']);
 
         //Pesquisar os produtos e o código do produto com base no nome e UN que a pessoa digitou
-        $SelectProduto = "SELECT * FROM produtos WHERE Nome='$nome_produto_digitado' AND UN = '$UN_produto_digitado'";
+        $SelectProduto = "SELECT * FROM produtos WHERE Nome='$nome_produto_digitado' AND UN = '$UN_produto_digitado' AND SKU = '$SKU_produto_digitado'";
         $executeProdutos = $conexao -> query($SelectProduto);
 
         if($executeProdutos && $executeProdutos -> num_rows > 0){
@@ -89,7 +90,7 @@ if ($conexao->connect_errno) {
         }
     }
 }else{
-    echo json_encode(['success' => false, 'message' => 'Erro ao pesquisar produtos, confira o Nome e UN do produto']);
+    echo json_encode(['success' => false, 'message' => 'Erro ao pesquisar produtos, confira o Nome, UN e SKU do produto']);
     exit();
 }
     } else{

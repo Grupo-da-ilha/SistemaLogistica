@@ -113,6 +113,9 @@ if (empty($_SESSION['nome'])){
                                     <h4>PEDIDOS:</h4>';
 
     $temQuantidadeNaoZero = false;
+    $temFaltando = false;
+    $temAvariado = false;
+    
     $sql = "SELECT * FROM pedido WHERE codTurma ='$codTurma' AND Situacao = 'Nas docas'";
     $executar = $conexao->query($sql);
 
