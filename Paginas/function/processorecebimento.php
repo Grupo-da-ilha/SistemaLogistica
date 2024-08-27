@@ -27,7 +27,7 @@ if ($conexao->connect_errno) {
             $execute = $conexao -> query($sql);
 
             if($execute){
-                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de pedido avariado, por favor digite qual a quantidade de itens avariados', 'avariado' => true, 'faltando' => false));
+                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de produto avariado, por favor digite qual a quantidade de itens avariados', 'avariado' => true, 'faltando' => false));
                 exit();
             } else {
                 echo json_encode(array('success' => false, 'message' => 'Erro ao inserir cláusula de avariado no pedido'));
@@ -47,10 +47,10 @@ if ($conexao->connect_errno) {
             $execute = $conexao -> query($sql);
 
             if($execute){
-                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de pedido faltando, por favor digite quantos itens faltam', 'avariado' => false, 'faltando' => true));
+                echo json_encode(array('success' => true, 'message' => 'Adicionado cláusula de produto faltando, por favor digite quantos itens faltam', 'avariado' => false, 'faltando' => true));
                 exit();
             } else {
-                echo json_encode(array('success' => false, 'message' => 'Erro ao inserir cláusula de faltando no pedido'));
+                echo json_encode(array('success' => false, 'message' => 'Erro ao inserir cláusula de faltando no produto'));
                 exit();
             }
         }

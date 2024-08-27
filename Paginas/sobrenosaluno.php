@@ -66,7 +66,7 @@
     </header>
                 <main>
                     <div class="container-prin">
-                    <div class="caixaria">
+                    <div class="caixaria" style="padding-top: 15px;">
                     <div class="caixaslider">
                        <div class="img-slider">
                                         <div class="slide active">
@@ -111,7 +111,7 @@
                                     </div>
                                 </div>
                                    
-                                   <div class="navigationslider">
+                                   <div class="navigationslider" style="bottom:-0px;">
                                        <div class="btn active"></div>
                                        <div class="btn"></div>
                                        <div class="btn"></div>
