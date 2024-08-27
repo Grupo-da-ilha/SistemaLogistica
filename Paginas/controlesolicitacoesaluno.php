@@ -17,10 +17,15 @@
             position: absolute; /* Alterado de 'fixed' para 'absolute' */
             top: 100;
             left: 50;
-            width: 55%;
+            width: 60%;
             height: 60%;
             background: rgba(0, 0, 0, 0.7);
             display: none;
+            justify-content: center;
+            align-items: center;
+            border-radius: 30px;
+            display:flex;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
             z-index: 99; /* Certifique-se de que o overlay esteja acima de outros elementos */
@@ -33,6 +38,28 @@
             width: 70%; /* Ajuste a largura conforme necessário */
             height: 50%;
             max-width: 300px; /* Ajuste a largura máxima conforme necessário */
+        }
+        #fecharOverlayBtn {
+            cursor: pointer;
+            width: 90%;
+            background-color: rgb(0, 119, 255);
+            height: 50px;
+            border:none;
+            border-radius: 5px;
+            color: white;
+            transition: 1s;
+        }
+        #fecharOverlayBtn:hover {
+            transition: 1s;
+            transform: scale(1.05);
+            cursor: pointer;
+            width: 90%;
+            background-color: #3691fa;
+            height: 50px;
+            border:none;
+            border-radius: 5px;
+            color: black;
+            box-shadow: 0 0 5px rgb(0, 119, 255);
         }
     </style>
 </head>

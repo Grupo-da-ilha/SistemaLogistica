@@ -114,7 +114,7 @@ if (empty($_SESSION['nome'])){
                                     <h4>CRIAR:</h4>
                             <div class="options-criarpedido" style="height:53vh;">
                                 <h5>CÓDIGO DA SOLICITAÇÃO:</h5>
-                                <input type="text" name="codSolicitacao" style="display: block;" class="input-options-criar-pedido">
+                                <input type="text" name="codSolicitacao" style="display: block;" placeholder="Código da solicitação" class="input-options-criar-pedido">
                                 <h5>DESTINATÁRIO:</h5>
                                     <label class="label-input" for="">
                                         <i class="far fa-envelope icon-modify"></i>
@@ -143,9 +143,9 @@ if (empty($_SESSION['nome'])){
                                             <input type="text" name="NomeProduto" id="NomeProduto" style="display: block;" class="input-options-consulta"> 
                                             <input type="text" name="NomeProdutoEstoque" id="NomeProdutoEstoque" style="display: block;" class="input-options-consulta"> 
                                         </div>
-                                    <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido">
+                                    <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" class="input-function-criar-pedido">
                                     <br>
-                                    <a class="ahrefcadastrar" href="inventario.php"><input type="button" value="VER PRODUTOS ESTOCADOS" style="display:block"  id="verprodutoscadastrados" class="verprodutoscadastrados"></a>
+                                    <a class="ahrefcadastrar" href="inventario.php"><input type="button" value="VER PRODUTOS ESTOCADOS" style="display:block; margin-top:-15px;"  id="verprodutoscadastrados" class="verprodutoscadastrados"></a>
                                 </form>
                             </div>
                             <div class="options-pedido">

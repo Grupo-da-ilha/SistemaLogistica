@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/projetos.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
-<body>
+<body style="overflow:hidden">
 <?php
 // iniciar uma sessão
 session_start();

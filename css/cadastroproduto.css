@@ -80,9 +80,10 @@ h5 {
 }
 .formcadastro-produto {
   padding: 15px;
-  margin: 50px;
+  margin: 20px;
   width: 100%;
-  height:55vh;
+  min-height:55vh;
+  height: 60vh;
   border-radius: 30px;
   background-color: #eeeeee;
   display: flex;

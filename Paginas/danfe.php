@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="../css/danfe.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
-<body>
+<body style="overflow:hidden;">
 <?php
 session_start();
 if (isset($_POST['project_id'])) {
@@ -133,7 +133,7 @@ if (empty($_SESSION['nome'])) {
                     <a href="vistoriasolicitacoes.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
-            <div class="criar-danfe-container">
+            <div class="criar-danfe-container" style="margin:10px;">
                 <div class="titulo-pedido">
                     <h3>MINHAS DANFES</h3>
                 </div>
@@ -243,7 +243,7 @@ if (empty($_SESSION['nome'])) {
                     echo '<h7>INFORMAÇÕES DANFE</h7>';
                     echo '</div>';
                     echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
-                    echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
+                    echo '<p style="font-size:13px;">Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
                     echo '<p>Data de Entrega: ' . htmlspecialchars($dataentrega) . '</p>';
                     echo '<p>Valor Total: ' . htmlspecialchars($valortotal) . '</p>';
@@ -437,7 +437,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<h7>INFORMAÇÕES DANFE</h7>';
                     echo '</div>';
                     echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
-                    echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
+                    echo '<p style="font-size:13px;">Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($Data_expedicao) . '</p>';
                     echo '<p>Data de Entrega: ' . htmlspecialchars($dataEntrega) . '</p>';
                     echo '<p>Valor Total: ' . htmlspecialchars($valorTotal) . '</p>';
@@ -634,7 +634,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     echo '<h7>INFORMAÇÕES DANFE</h7>';
                     echo '</div>';
                     echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
-                    echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
+                    echo '<p style="font-size:13px;">Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                     echo '<p>Data de Emissão: ' . htmlspecialchars($data_criacao) . '</p>';
                     echo'</div>
                     <div class="barras-danfe">
@@ -823,7 +823,7 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                         echo '<h7>INFORMAÇÕES DANFE</h7>';
                         echo '</div>';
                         echo '<div style="display: flex; flex-direction: row;"><p>Código da DANFE:</p><p style="font-weight: bold;"> ' . htmlspecialchars($cod_nota) . '</p></div>';
-                        echo '<p>Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
+                        echo '<p style="font-size:13px;">Chave de acesso da DANFE: ' . htmlspecialchars($chave_acesso) . '</p>';
                         echo '<p>Data de Emissão: ' . htmlspecialchars($dataEntrega) . '</p>';
                         echo'</div>
                         <div class="barras-danfe">
