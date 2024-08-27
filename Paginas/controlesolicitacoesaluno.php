@@ -248,10 +248,10 @@ if (empty($_SESSION['nome'])) {
                                 </div>
                                 <div class="overlay" id="codigoOverlay" style="display:none;">
                                     <div class="overlay-content">
-                                        <p>Posições onde se encontra esse produto:</p>
+                                        <h7>Posições onde se encontra esse produto:</h7>
                                         <br>
                                         <div id="posicoesEstoque"></div>
-                                        <button type="button" id="fecharOverlayBtn">Fechar</button>
+                                        <button type="button" id="fecharOverlayBtn">FECHAR</button>
                                     </div>
                                 </div>';
                     } else {
