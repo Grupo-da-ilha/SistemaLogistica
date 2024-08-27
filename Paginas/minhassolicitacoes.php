@@ -184,7 +184,6 @@ if (empty($_SESSION['nome'])){
                 $execute = $conexao->query($sql2);
                 if ($execute && $execute->num_rows > 0) {
                     echo "
-                    <div class='main'>
                         <div class='tablebox'>
                             <h7>Confira os produtos já adicionados à solicitação ". $_SESSION['cod_solicitacao'].":</h7>
                             <table class='tabela'>
@@ -203,7 +202,7 @@ if (empty($_SESSION['nome'])){
                             <td>" . htmlspecialchars($row['NCM']) . "</td>
                         </tr>";
                     }
-                    echo "</table></div></div>"; // Fechar divs
+                    echo "</table></div>"; // Fechar divs
                 }   
             }
         }

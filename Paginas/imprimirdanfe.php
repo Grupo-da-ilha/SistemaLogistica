@@ -558,7 +558,6 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                         $RuaDest = $rowDest['rua'];
                         $CidadeDest = $rowDest['cidade'];
                         $EstadoDest = $rowDest['estado'];
-                        echo '<button class ="imprimir" onclick="submitPrintFormSolicitacao()">Imprimir</button>';
                         echo '<div class="danfe">
                     <div class="logo-danfe">
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
@@ -764,7 +763,6 @@ if (isset($_POST['enviar_cod']) && !empty($_POST['cod_pedido'])) {
                     $RuaDest = $rowDest['rua'];
                     $CidadeDest = $rowDest['cidade'];
                     $EstadoDest = $rowDest['estado'];
-                    echo '<button class ="imprimir" onclick="submitPrintFormSolicitacao()">Imprimir</button>';
                     echo '<div class="danfe">
                     <div class="logo-danfe">
                     <img src="../css/cssimg/logo.png" style="width: 100%;">
