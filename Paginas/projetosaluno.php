@@ -76,7 +76,7 @@ if (empty($_SESSION['nome'])){
             while($projeto = $executar -> fetch_assoc()){
                 echo '<div class="projetos-do-usuario">';
                     echo '<div class="card-projetos" onclick="selectProject(' . $projeto['idprojeto'] . ')">';
-                    echo '<h4>' . $projeto['nome'] . '</h4>';
+                    echo '<h4 style="margin-top:40%">' . $projeto['nome'] . '</h4>';
                     echo '</div>';
                 echo '</div>';
             }

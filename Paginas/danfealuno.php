@@ -140,6 +140,15 @@ if (empty($_SESSION['nome'])) {
                 <div class="info-total">
                     <div class="criar-danfe">
                         <div class="submenus-danfe">
+                         <h4> INFORMAÇÕES </h4>
+                            <div class="info-pedido">
+                                <h5>PEDIDO:</h5>
+                                    <a href="cargaaluno.php" class="button-pedidos">Vistoria</a>
+                                    <br>
+                                    <a href="recebimentodocaaluno.php" class="button-pedidos">Recebimento docas</a>
+                                <h5>Solicitações:</h5>
+                                    <a href="recebimentosolicitacoesaluno.php" class="button-pedidos">Recebimento</a>
+                            </div>
                         </div>
                         <div class="criar-danfes-container">
                             <h4>VEJA AQUI AS SUAS DANFES JÁ CRIADAS</h4>
