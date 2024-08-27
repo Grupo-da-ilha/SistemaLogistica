@@ -200,11 +200,6 @@ if (empty($_SESSION['nome'])){
                                                     if($execute){
                                                         $sql = "DELETE FROM nota_fiscal WHERE id_solicitacao = '$idsolicitacao'";
                                                         $execute = $conexao -> query($sql);
-
-                                                        if($execute){
-                                                            $sql = "DELETE FROM docas WHERE id_pedido = '$idpedido'";
-                                                            $execute = $conexao -> query($sql);
-                                                        }
                                                     }
                                                 }
                                             }                 

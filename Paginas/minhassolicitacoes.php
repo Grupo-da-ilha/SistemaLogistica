@@ -12,6 +12,20 @@
     <link rel="stylesheet" href="../css/meuspedidos.css"/>
     <link rel="shortcut icon" type="image/png" href="../css/cssimg/logo.png"/>
 </head>
+<style>
+    .tablebox{
+        text-align: center;
+        margin: 5px;
+        margin-left: 1em;
+        padding: 5px;
+        width: 97%;
+        height: auto;
+        background-color: rgb(0, 119, 255);
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgb(0, 119, 255);
+        text-wrap: nowrap;
+     }
+</style>
 <body>
 <?php
 // Iniciar uma sessão
@@ -184,9 +198,9 @@ if (empty($_SESSION['nome'])){
                 $execute = $conexao->query($sql2);
                 if ($execute && $execute->num_rows > 0) {
                     echo "
-                        <div class='tablebox'>
+                        <div class='tablebox' style='margin-left: 6.5em;'>
                             <h7>Confira os produtos já adicionados à solicitação ". $_SESSION['cod_solicitacao'].":</h7>
-                            <table class='tabela'>
+                            <table class='tabela' style=''>
                                 <tr>
                                     <th>Nome</th>
                                     <th>UN</th>
