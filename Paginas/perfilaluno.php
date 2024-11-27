@@ -31,6 +31,16 @@
 		header('Location: sair.php');
 		exit();
 	    } else {
+            $selectNomeTUrma="SELECT *  FROM `turmas` WHERE codTurma = '".$_SESSION['codTurma']."'";
+    
+            $resul = $conexao->query($selectNomeTUrma);
+    
+            if($resul -> num_rows > 0){
+                $row = $resul -> fetch_assoc();
+                $nome_turma = $row['nomeTurma'];
+            } else{
+                echo 'Erro ao pesquisar nome da turma';
+            }
         echo '<header>
         <div class="container">
             <div class="main-horizontal">
@@ -80,8 +90,8 @@
                                 <h4>'.$_SESSION['email'].'</h4>
                             </div>
                             <div class="info-dados">
-                                <h3>Senha:</h3>
-                                <h4>'.$_SESSION['senha'].'</h4>
+                                <h3>Turma:</h3>
+                                <h4>'.$nome_turma.'</h4>
                             </div>
                             <div class="info-dados">
                                 <h3>Aluno/Professor:</h3>

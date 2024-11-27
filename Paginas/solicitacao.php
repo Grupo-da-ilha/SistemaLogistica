@@ -83,14 +83,14 @@ if (empty($_SESSION['nome'])){
             <div class="submenu">
                 <li class="lisubmenu">
                     <a href="projetoprofessor.php" class="functions-menu">VOLTAR</a>
-                    <a href="carga.php" class="functions-menu">VISTORIA</a>
+                    <a href="danfe.php" class="functions-menu">DANFE</a>
                     <a href="recebimentodoca.php" class="functions-menu">RECEBIMENTO</a>
                     <a href="controledoca.php" class="functions-menu">CONTROLE</a>
                     <a href="estoque.php" class="functions-menu">ESTOQUE</a>
                     <a href="movimentacao.php" class="functions-menu">MOVIMENTAÇÃO</a>
-                    <a href="#" class="functions-menu">PICKING</a>
-                    <a href="#" class="functions-menu">EXPEDIÇÃO</a>
-                    <a href="#" class="functions-menu">RELATÓRIOS</a>
+                    <a href="picking.php" class="functions-menu">PICKING</a>
+                    <a href="expediçao.php" class="functions-menu">EXPEDIÇÃO</a>
+                    <a href="vistoriasolicitacoes.php" class="functions-menu">CONFERÊNCIA SOLICITACAÇÕES</a>
                 </li>
             </div>
             <div class="criar-pedido-container" style="height:68vh;">
@@ -114,7 +114,7 @@ if (empty($_SESSION['nome'])){
                                     <h4>CRIAR:</h4>
                             <div class="options-criarpedido" style="height:53vh;">
                                 <h5>CÓDIGO DA SOLICITAÇÃO:</h5>
-                                <input type="text" name="codSolicitacao" style="display: block;" class="input-options-criar-pedido">
+                                <input type="text" name="codSolicitacao" style="display: block;" placeholder="Código da solicitação" class="input-options-criar-pedido">
                                 <h5>DESTINATÁRIO:</h5>
                                     <label class="label-input" for="">
                                         <i class="far fa-envelope icon-modify"></i>
@@ -143,9 +143,9 @@ if (empty($_SESSION['nome'])){
                                             <input type="text" name="NomeProduto" id="NomeProduto" style="display: block;" class="input-options-consulta"> 
                                             <input type="text" name="NomeProdutoEstoque" id="NomeProdutoEstoque" style="display: block;" class="input-options-consulta"> 
                                         </div>
-                                    <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" style="display: block;" class="input-function-criar-pedido">
+                                    <input type="submit" name="enviar_produto" value="ADICIONAR PRODUTO" class="input-function-criar-pedido">
                                     <br>
-                                    <a class="ahrefcadastrar" href="inventario.php"><input type="button" value="VER PRODUTOS ESTOCADOS" style="display:block"  id="verprodutoscadastrados" class="verprodutoscadastrados"></a>
+                                    <a class="ahrefcadastrar" href="inventario.php"><input type="button" value="VER PRODUTOS ESTOCADOS" style="display:block; margin-top:-15px;"  id="verprodutoscadastrados" class="verprodutoscadastrados"></a>
                                 </form>
                             </div>
                             <div class="options-pedido">
@@ -200,11 +200,6 @@ if (empty($_SESSION['nome'])){
                                                     if($execute){
                                                         $sql = "DELETE FROM nota_fiscal WHERE id_solicitacao = '$idsolicitacao'";
                                                         $execute = $conexao -> query($sql);
-
-                                                        if($execute){
-                                                            $sql = "DELETE FROM docas WHERE id_pedido = '$idpedido'";
-                                                            $execute = $conexao -> query($sql);
-                                                        }
                                                     }
                                                 }
                                             }                 

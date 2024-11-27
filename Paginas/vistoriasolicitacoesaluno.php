@@ -92,7 +92,7 @@ if (empty($_SESSION['nome'])){
                     echo '
                         <div class="div-operacoes">
                             <table class="tabela" style="width:40vw;">
-                                <tr>
+                                <tr style="text-align: center;">
                                     <td> Número das solicitações </td>
                                     <td> Doca </td>
                                     <td> Ações </td>
@@ -104,7 +104,7 @@ if (empty($_SESSION['nome'])){
                         $id_solicitacao = $row['id_solicitacao'];
                         $doca = $row['Doca'];
                         
-                        echo '<tr>
+                        echo '<tr style="text-align: center;">
                                 <td>' . htmlspecialchars($cod_solicitacao) . '</td>
                                 <td>' . htmlspecialchars($doca) . '</td>
                                 <td style="display:flex; justify-content:center; align-itens:center;">

@@ -112,7 +112,6 @@ th, tr, td {
   align-items: center;
 }
 .irparaoperacao {
-    margin-left: 21vw;
     cursor: pointer;
     margin-top: 10px;
     background-color: rgb(0, 119, 255);

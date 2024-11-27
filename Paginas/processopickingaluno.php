@@ -95,7 +95,7 @@ if (empty($_SESSION['nome'])){
 
                 if($execute && $execute -> num_rows > 0){
                     echo '
-                        <div class="div-operacoes">
+                        <div class="div-operacoes" style="align-items:center; justify-content: center;">
                             <table class="tabela">
                                 <tr>
                                     <td> Produtos </td>
@@ -164,7 +164,7 @@ if (empty($_SESSION['nome'])){
                     echo '
                         </table>
                         <br>
-                        <form id="form-finalizar-picking">
+                        <form id="form-finalizar-picking" style="margin-left: 22vw;">
                             <input type="hidden" name="id_solicitacao" value="' . $id_solicitacao . '" style="display: block;">
                             <input type="submit" id="EnviarOperacao" name="EnviarOperacao" value="Finalizar Picking" style="display:block;" class="irparaoperacao">
                         </form>  

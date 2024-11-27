@@ -187,8 +187,8 @@ if (empty($_SESSION['nome'])){
                         echo '
                             </table>
                             <br>
-                            <form id="form-finalizar-expedicao">
-                                <div style="display: flex; flex-direction:row; justify-content:center; align-itens:center;">
+                            <form id="form-finalizar-expedicao" style="margin-left: 22vw;">
+                                <div style="display: flex; flex-direction:row; justify-content:center; align-itens:center; margin-left: -23vw;"">
                                     <h7>PARA QUAL DOCA SERÁ ENVIADO OS ITENS?</h7>
                                     <input type="text" name="doca" class="doca-itens" style="display: block; margin-left: 10px;" placeholder="Doca:">
                                 </div>
