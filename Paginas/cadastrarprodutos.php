@@ -117,6 +117,7 @@ if (empty($_SESSION['nome'])){
                     } else{
                         $sql="SELECT `cod_produto`, `PrecoUNI`, `Nome`, `PesoGramas`, `NCM`, `UN`, `SKU` FROM `produtos`";
                     }
+                
                     $result= $conexao->query($sql);
                 
                     if($result->num_rows > 0){
